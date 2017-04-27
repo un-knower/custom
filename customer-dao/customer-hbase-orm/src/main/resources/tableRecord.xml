@@ -1,0 +1,35 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="monitor" defaultFamily="MonitorFamily">
+		<HBaseColumnSchema qualifier="rawTds" typeName="float" />
+		<HBaseColumnSchema qualifier="purTds" typeName="float" />
+		<HBaseColumnSchema qualifier="temp" typeName="float" />
+		<HBaseColumnSchema qualifier="humidity" typeName="float" />
+		<HBaseColumnSchema qualifier="flow" typeName="float"/>
+		<HBaseColumnSchema qualifier="leak" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="d" typeName="float"/>
+		<HBaseColumnSchema qualifier="w" typeName="float"/>
+		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+	</HBaseTableSchema>
+
+	<statements>
+		<statement id="queryById">
+			select where monitorId equal #monitorId#			
+		</statement>
+	</statements>
+	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="MonitorFamily">
+		<field name="rawTds" qualifier="rawTds" />
+		<field name="purTds" />
+		<field name="temp" />
+		<field name="humidity" />
+		<field name="flow"/>
+		<field name="leak"/>
+		<field name="d"/>
+		<field name="w"/>
+		<field name="version" isVersioned="true"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

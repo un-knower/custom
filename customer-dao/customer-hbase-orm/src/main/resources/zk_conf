@@ -1,0 +1,1 @@
+hbase.zookeeper.quorum=master,s1,s2

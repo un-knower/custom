@@ -1,0 +1,42 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>com.qingting.customer</groupId>
+		<artifactId>customer-server</artifactId>
+		<version>0.0.1-SNAPSHOT</version>
+	</parent>
+	<artifactId>customer-server-impl</artifactId>
+	<packaging>war</packaging>
+	
+	<dependencies>
+		<!-- spring测试 -->
+		<dependency>  
+            <groupId>org.springframework</groupId>  
+            <artifactId>spring-test</artifactId>  
+            <version>4.2.1.RELEASE</version>
+            <scope>test</scope>  
+        </dependency>
+		<!-- demo-api支持 -->
+		<dependency>
+			<groupId>com.smart</groupId>
+			<artifactId>smart-demo-api</artifactId>
+			<version>0.0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>com.qingting.customer</groupId>
+			<artifactId>customer-server-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.qingting.customer</groupId>
+			<artifactId>customer-dao-api</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.qingting.customer</groupId>
+			<artifactId>customer-dao-impl</artifactId>
+			<version>${project.parent.version}</version>
+		</dependency>
+	</dependencies>
+	
+</project>
