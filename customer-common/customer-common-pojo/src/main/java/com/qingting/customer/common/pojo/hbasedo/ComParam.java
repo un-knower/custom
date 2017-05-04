@@ -7,6 +7,11 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
 public class ComParam {
+	private String rowKey;
+	/**
+	 * ID
+	 */
+	private Integer id;
 	/**
 	 * 采集频率：s/次
 	 */
@@ -49,12 +54,35 @@ public class ComParam {
 	 */
 	private Integer purSecWarn;
 	/**
+	 * 状态：true失能
+	 */
+	private Boolean enable;
+	/**
+	 * 创建时间
+	 */
+	private Calendar calendar;
+	/**
 	 * 数据的版本，更新时用，只需要一个版本
 	 */
 	private final Byte version = 0;
+
 	
-	
-	
+	public String getRowKey() {
+		return rowKey;
+	}
+
+	public void setRowKey(String rowKey) {
+		this.rowKey = rowKey;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public Byte getFreq() {
 		return freq;
 	}
@@ -135,6 +163,22 @@ public class ComParam {
 		this.purSecWarn = purSecWarn;
 	}
 
+	public Boolean getEnable() {
+		return enable;
+	}
+
+	public void setEnable(Boolean enable) {
+		this.enable = enable;
+	}
+
+	public Calendar getCalendar() {
+		return calendar;
+	}
+
+	public void setCalendar(Calendar calendar) {
+		this.calendar = calendar;
+	}
+
 	public Byte getVersion() {
 		return version;
 	}
@@ -152,5 +196,19 @@ public class ComParam {
 	@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
+	}
+	/**
+	 * 
+	 * @Title: setContentOfRowKey
+	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
+	 * @param rowkey
+	 * @return void
+	 * @throws
+	 */
+	public void setContentOfRowKey(byte[] rowkey){
+		this.rowKey=new String(rowkey);
+		if(rowkey.length<8){
+			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
+		}
 	}
 }

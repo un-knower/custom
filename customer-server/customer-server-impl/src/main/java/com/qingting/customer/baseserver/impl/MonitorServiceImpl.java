@@ -18,22 +18,30 @@ public class MonitorServiceImpl implements MonitorService{
 	MonitorDAO monitorDAO;
 
 	@Override
-	public void insertMonitorByEquipId(Monitor monitor, Integer equipId) {
-		monitorDAO.insertMonitorByEquipId(monitor, equipId);	
+	public void insertMonitor(Monitor monitor) {
+		monitorDAO.insertMonitor(monitor);
 	}
 
 	@Override
-	public Monitor getMonitorByEquipIdAndCalendar(Integer equipId,Calendar calendar) {
-		System.out.println("~~~~~~~~进入服务customer-server-impl的getMonitorByRowKey方法~~~~~~~");
-		Monitor monitor = monitorDAO.getMonitorByEquipIdAndCalendar(equipId,calendar);
-		System.out.println("查询的结果monitor:"+monitor);
-		return monitor;
+	public void deleteMonitorByRowKey(String rowKey) {
+		monitorDAO.deleteMonitorByRowKey(rowKey);
 	}
 
 	@Override
-	public List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId,Calendar startCalendar,Calendar endCalendar) {
-		System.out.println("startCalendar:"+startCalendar+","+"endCalendar:"+endCalendar);
-		System.out.println("monitorDAO注入："+monitorDAO);
+	public void updateMonitorByRowKey(Monitor monitor) {
+		monitorDAO.updateMonitorByRowKey(monitor);
+	}
+
+	@Override
+	public Monitor getMonitorByRowKey(String rowKey) {
+		return monitorDAO.getMonitorByRowKey(rowKey);
+	}
+
+	@Override
+	public List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId, Calendar startCalendar,
+			Calendar endCalendar) {
 		return monitorDAO.listMonitorByStartAndEndOfCalendar(equipId, startCalendar, endCalendar);
 	}
+
+	
 }

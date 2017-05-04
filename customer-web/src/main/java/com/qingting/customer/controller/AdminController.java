@@ -1,4 +1,4 @@
-package com.smart.demo.controller;
+package com.qingting.customer.controller;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -27,12 +27,13 @@ public class AdminController {
 	@ApiOperation("初始页")
 	@RequestMapping(method = RequestMethod.GET)
 	public String execute(HttpServletRequest request, Model model) {
+		System.out.println("进入首页~~");
 		SessionPermission sessionPermission = SessionUtils.getSessionPermission(request);
 		// 设置当前登录用户没有的权限
 		model.addAttribute("sessionUserNoPermissions", sessionPermission == null ? null : sessionPermission.getNoPermissions());
 		// 默认首页
 		// model.addAttribute("defaultPage", null);
-		return "/admin";
+		return "main/main";
 	}
 
 	@ApiOperation("菜单")

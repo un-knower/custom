@@ -1,59 +1,52 @@
 package com.qingting.customer.dao;
 
-import java.util.Calendar;
 import java.util.List;
 
 
 import com.qingting.customer.common.pojo.hbasedo.ComParam;
-import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 
 public interface ComParamDAO {
 	/**
 	 * 
-	 * @Title: insertComParamByEnable
-	 * @Description: 插入一条通用参数通过enable
+	 * @Title: insertComParam
+	 * @Description: 插入一条通用参数
 	 * @param comParam
-	 * @param enable 
 	 * @return void
 	 * @throws
 	 */
-	void insertComParamByEnable(ComParam comParam,Boolean enable);
+	void insertComParam(ComParam comParam);
 	/**
 	 * 
-	 * @Title: deleteComParamByEnableAndCalendar
-	 * @Description: 删除一条通用参数通过EnableAndCalendar
-	 * @param enable
-	 * @param calendar 
+	 * @Title: deleteComParamByRowKey
+	 * @Description: 删除一条通用参数通过rowKey
+	 * @param rowKey 
 	 * @return void
 	 * @throws
 	 */
-	void deleteComParamByEnableAndCalendar(Boolean enable,Calendar calendar);
+	void deleteComParamByRowKey(String rowKey);
 	/**
 	 * 
-	 * @Title: updateComParamByEnableAndCalendar
-	 * @Description: 更新一条通用参数通过EnableAndCalendar
-	 * @param enable
-	 * @param calendar 
+	 * @Title: updateComParamByRowKey
+	 * @Description: 更新一条通用参数通过rowKey
+	 * @param comParam 
 	 * @return void
 	 * @throws
 	 */
-	void updateComParamByEnableAndCalendar(ComParam comParam,Boolean enable,Calendar calendar);
+	void updateComParamByRowKey(ComParam comParam);
 	/**
 	 * 
 	 * @Title: getComParamByEnable
 	 * @Description: 获得激活的通用参数
-	 * @return 
 	 * @return ComParam
 	 * @throws
 	 */
 	ComParam getComParamOfEnable();
 	/**
 	 * 
-	 * @Title: listComParamAndKey
-	 * @Description: 获得所有的通用参数
-	 * @return 
-	 * @return List<SimpleHbaseDOWithKeyResult<ComParam>>
+	 * @Title: listComParam
+	 * @Description: 获得所有的通用参数(包括激活和未激活的)
+	 * @return List<ComParam>
 	 * @throws
 	 */
-	List<SimpleHbaseDOWithKeyResult<ComParam>> listComParamAndKey();
+	List<ComParam> listComParam();
 }

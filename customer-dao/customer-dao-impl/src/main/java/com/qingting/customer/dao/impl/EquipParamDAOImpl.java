@@ -1,48 +1,81 @@
 package com.qingting.customer.dao.impl;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
+import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.EquipParam;
-import com.qingting.customer.common.pojo.rowkey.EquipParamRowKey;
 import com.qingting.customer.common.pojo.util.DateUtil;
+import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.EquipParamDAO;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
+import com.qingting.customer.hbase.rowkey.RowKey;
 
+@Repository("equipParamDAO")
 public class EquipParamDAOImpl implements EquipParamDAO {
-
 	@Override
-	public void insertEquipParamByEquipIdAndEnable(EquipParam equipParam, Integer equipId, Boolean enable) {
-		SHCUtil.getSHC("equipParam").insertObject(new EquipParamRowKey(equipId,enable), equipParam);
+	public void insertEquipParam(EquipParam equipParam) {
+		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(equipParam.getEquipId(), DateUtil.getMillisOfStart()));
+		SHCUtil.getSHC("equipParam").insertObject(rowKey, equipParam);
 	}
 
 	@Override
-	public void deleteEquipParamByEquipIdAndEnableAndCalendar(Integer equipId, Boolean enable, Calendar calendar) {
-		SHCUtil.getSHC("equipParam").delete(new EquipParamRowKey(equipId,enable,calendar));
+	public void deleteEquipParamByRowKey(String rowKey) {
+		SHCUtil.getSHC("equipParam").delete(new StringRowKey(rowKey));
 	}
 
 	@Override
-	public void updateEquipParamByEquipIdAndEnableAndCalendar(EquipParam equipParam, Integer equipId, Boolean enable,
-			Calendar calendar) {
-		SHCUtil.getSHC("equipParam").updateObjectWithVersion(new EquipParamRowKey(equipId,enable,calendar), equipParam, equipParam.getVersion());
+	public void updateEquipParamByRowKey(EquipParam equipParam) {
+		SHCUtil.getSHC("equipParam").updateObjectWithVersion(new StringRowKey(equipParam.getRowKey()), equipParam, equipParam.getVersion());
 	}
 
 	@Override
-	public EquipParam getEquipParamByEquipIdOfEnable(Integer equipId) {
-		List<EquipParam> list=SHCUtil.getSHC("equipParam").findObjectList(new EquipParamRowKey(equipId,true,DateUtil.getStart()),new EquipParamRowKey(equipId,true,Calendar.getInstance()), EquipParam.class);
-		if(list.size()>1)
+	public EquipParam getEquipParamOfEnableByEquipId(Integer equipId) {
+		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getStartOfMillis()));
+		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart()));
+		List<SimpleHbaseDOWithKeyResult<EquipParam>> listDOWithKey = SHCUtil.getSHC("equipParam").findObjectAndKeyList(startRowKey,endRowKey, EquipParam.class);
+		
+		/*if(listDOWithKey.size()>1)
 			throw new RuntimeException("存在多个激活的通用参数！请检查程序逻辑");
-		else if(list.size()==1)
+		else if(listDOWithKey.size()==1){
+			List<EquipParam> list=new ArrayList<EquipParam>();
+			for (SimpleHbaseDOWithKeyResult<EquipParam> result : listDOWithKey) {
+				EquipParam equipParam = result.getT();
+				equipParam.setContentOfRowKey(result.getRowKey().toBytes());
+				list.add(equipParam);
+			}
 			return list.get(0);
+		}else 
+			return null;*/
+		List<EquipParam> list=new ArrayList<EquipParam>();
+		for (SimpleHbaseDOWithKeyResult<EquipParam> result : listDOWithKey) {
+			EquipParam equipParam = result.getT();
+			if(equipParam.getEnable()){
+				equipParam.setContentOfRowKey(result.getRowKey().toBytes());
+				list.add(equipParam);
+			}
+		}
+		if(listDOWithKey.size()>1)
+			throw new RuntimeException("存在多个激活的通用参数！请检查程序逻辑");
 		else 
-			return null;
+			return list.get(0); 
 	}
 
 	@Override
-	public List<SimpleHbaseDOWithKeyResult<EquipParam>> listEquipParamAndKeyByEquipId(Integer equipId) {
-		List<SimpleHbaseDOWithKeyResult<EquipParam>> list=SHCUtil.getSHC("equipParam").findObjectAndKeyList(new EquipParamRowKey(equipId,false,DateUtil.getStart()),new EquipParamRowKey(equipId,true,Calendar.getInstance()), EquipParam.class);
+	public List<EquipParam> listEquipParamByEquipId(Integer equipId) {
+		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getStartOfMillis()));
+		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart()));
+		List<SimpleHbaseDOWithKeyResult<EquipParam>> listDOWithKey = SHCUtil.getSHC("equipParam").findObjectAndKeyList(startRowKey,endRowKey, EquipParam.class);
+		List<EquipParam> list=new ArrayList<EquipParam>();
+		for (SimpleHbaseDOWithKeyResult<EquipParam> result : listDOWithKey) {
+			EquipParam equipParam = result.getT();
+			equipParam.setContentOfRowKey(result.getRowKey().toBytes());
+			list.add(equipParam);
+		}
 		return list;
 	}
-
 }

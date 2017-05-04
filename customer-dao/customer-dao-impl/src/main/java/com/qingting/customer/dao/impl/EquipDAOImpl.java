@@ -1,38 +1,56 @@
 package com.qingting.customer.dao.impl;
 
-import java.util.Calendar;
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.StringRowKey;
+import com.alipay.simplehbase.enums.SerialType;
+import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
-import com.qingting.customer.common.pojo.rowkey.EquipRowKey;
 import com.qingting.customer.common.pojo.util.DateUtil;
+import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.EquipDAO;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
+import com.qingting.customer.hbase.rowkey.RowKey;
 
 @Repository("equipDAO")
 public class EquipDAOImpl implements EquipDAO {
-
+	@Autowired
+	public RedisTemplate<String, Integer> redisTemplate;
 	@Override
-	public void insertEquipByProjectId(Equip equip, Integer projectId) {
-		SHCUtil.getSHC("equip").insertObject(new EquipRowKey(projectId), equip);
+	public void insertEquip(Equip equip) {
+		int num=RedisSerialNum.getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
+		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(equip.getProjectId(), DateUtil.getMillisOfStart(),num));
+		SHCUtil.getSHC("equip").insertObject(rowKey, equip);
 	}
 
 	@Override
-	public void deleteEquipByProjectIdAndCalendar(Integer projectId, Calendar calendar) {
-		SHCUtil.getSHC("equip").delete(new EquipRowKey(projectId,calendar));
+	public void deleteEquipByRowKey(String rowKey) {
+		SHCUtil.getSHC("equip").delete(new StringRowKey(rowKey));
 	}
 
 	@Override
-	public void updateEquipByProjectIdAndCalendar(Equip equip,Integer projectId, Calendar calendar) {
-		SHCUtil.getSHC("equip").updateObjectWithVersion(new EquipRowKey(projectId,calendar), equip, equip.getVersion());
+	public void updateEquipByRowKey(Equip equip) {
+		SHCUtil.getSHC("equip").updateObjectWithVersion(new StringRowKey(equip.getRowKey()), equip, equip.getVersion());
 	}
 
 	@Override
-	public List<SimpleHbaseDOWithKeyResult<Equip>> listEquipByProjectId(Integer projectId) {
-		return SHCUtil.getSHC("equip").findObjectAndKeyList(new EquipRowKey(projectId,DateUtil.getStart()),new EquipRowKey(projectId,Calendar.getInstance()), Equip.class);
+	public List<Equip> listEquipByProjectId(Integer projectId) {
+		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(projectId, DateUtil.getStartOfMillis()));
+		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(projectId, DateUtil.getMillisOfStart()));
+		List<SimpleHbaseDOWithKeyResult<Equip>> listDOWithKey = SHCUtil.getSHC("equip").findObjectAndKeyList(startRowKey,endRowKey, Equip.class);
+		List<Equip> list=new ArrayList<Equip>();
+		for (SimpleHbaseDOWithKeyResult<Equip> result : listDOWithKey) {
+			Equip equip = result.getT();
+			equip.setContentOfRowKey(result.getRowKey().toBytes());
+			list.add(equip);
+		}
+		return list;
 	}
-
 }

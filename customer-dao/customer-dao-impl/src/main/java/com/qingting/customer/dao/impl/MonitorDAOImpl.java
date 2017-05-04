@@ -1,42 +1,63 @@
 package com.qingting.customer.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
-import com.qingting.customer.common.pojo.rowkey.MonitorRowKey;
+import com.qingting.customer.common.pojo.util.DateUtil;
+import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.MonitorDAO;
+import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
+import com.qingting.customer.hbase.rowkey.RowKey;
 
-@Repository(value="monitorDAO")
+@Repository("monitorDAO")
 public class MonitorDAOImpl implements MonitorDAO {
-
+	
 	@Override
-	public void insertMonitorByEquipId(Monitor monitor, Integer equipId) {
-		SHCUtil.getSHC("monitor").putObject(new MonitorRowKey(equipId), monitor);
+	public void insertMonitor(Monitor monitor) {
+		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(monitor.getEquipId(), DateUtil.getMillisOfStart(),DateUtil.getMillisOfDay()));
+		SHCUtil.getSHC("monitor").insertObject(rowKey, monitor);
 	}
 
 	@Override
-	public void deleteMonitorByEquipIdAndCalendar(Integer equipId,Calendar calendar) {
-		SHCUtil.getSHC("monitor").delete(new MonitorRowKey(equipId,calendar));
+	public void deleteMonitorByRowKey(String rowKey) {
+		SHCUtil.getSHC("monitor").delete(new StringRowKey(rowKey));
 	}
 
 	@Override
-	public void updateMonitorByEquipIdAndCalendar(Monitor monitor, Integer equipId,Calendar calendar) {
-		SHCUtil.getSHC("monitor").updateObjectWithVersion(new MonitorRowKey(equipId,calendar), monitor,monitor.getVersion());
+	public void updateMonitorByRowKey(Monitor monitor) {
+		SHCUtil.getSHC("monitor").updateObjectWithVersion(new StringRowKey(monitor.getRowKey()), monitor, monitor.getVersion());
+	}
+	
+	@Override
+	public Monitor getMonitorByRowKey(String rowKey) {
+		SimpleHbaseDOWithKeyResult<Monitor> result = SHCUtil.getSHC("monitor").findObjectAndKey(new StringRowKey(rowKey), Monitor.class);
+		Monitor monitor=result.getT();
+		monitor.setContentOfRowKey(result.getRowKey().toBytes());
+		return monitor;
+	}
+	
+	@Override
+	public List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId, Calendar startCalendar,
+			Calendar endCalendar) {
+		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getStartOfMillis()));
+		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart()));
+		List<SimpleHbaseDOWithKeyResult<Monitor>> listDOWithKey = SHCUtil.getSHC("monitor").findObjectAndKeyList(startRowKey,endRowKey, Monitor.class);
+		List<Monitor> list=new ArrayList<Monitor>();
+		for (SimpleHbaseDOWithKeyResult<Monitor> result : listDOWithKey) {
+			Monitor monitor = result.getT();
+			monitor.setContentOfRowKey(result.getRowKey().toBytes());
+			list.add(monitor);
+		}
+		return list;
 	}
 
-	@Override
-	public Monitor getMonitorByEquipIdAndCalendar(Integer equipId,Calendar calendar) {
-		return SHCUtil.getSHC("monitor").findObject(new MonitorRowKey(equipId,calendar), Monitor.class);
-	}
-
-	@Override
-	public List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId,Calendar startCalendar,Calendar endCalendar) {
-		System.out.println("startTime:"+startCalendar+","+"endTime:"+endCalendar);
-		return SHCUtil.getSHC("monitor").findObjectList(new MonitorRowKey(equipId,startCalendar), new MonitorRowKey(equipId,endCalendar),Monitor.class);
-	}
+	
 
 }

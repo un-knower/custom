@@ -1,64 +1,53 @@
 package com.qingting.customer.dao;
 
-import java.util.Calendar;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.EquipParam;
-import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 
 public interface EquipParamDAO {
 	/**
 	 * 
-	 * @Title: insertEquipParamByEquipIdAndEnable
-	 * @Description: 插入一条设备参数通过EquipIdAndEnable
+	 * @Title: insertEquipParam
+	 * @Description: 插入一条设备参数
 	 * @param equipParam
-	 * @param equipId
-	 * @param enable
 	 * @return void
 	 * @throws
 	 */
-	void insertEquipParamByEquipIdAndEnable(EquipParam equipParam,Integer equipId,Boolean enable);
+	void insertEquipParam(EquipParam equipParam);
 	/**
 	 * 
-	 * @Title: deleteEquipParamByEquipIdAndEnableAndCalendar
-	 * @Description: 删除一条设备参数通过EquipIdAndEnableAndCalendar
-	 * @param equipId
-	 * @param enable
-	 * @param calendar 
+	 * @Title: deleteEquipParamByRowKey
+	 * @Description: 删除一条设备参数通过rowKey
+	 * @param rowKey 
 	 * @return void
 	 * @throws
 	 */
-	void deleteEquipParamByEquipIdAndEnableAndCalendar(Integer equipId,Boolean enable,Calendar calendar);
+	void deleteEquipParamByRowKey(String rowKey);
 	/**
 	 * 
-	 * @Title: updateEquipParamByEquipIdAndEnableAndCalendar
-	 * @Description: 更新一条设备参数通过EquipIdAndEnableAndCalendar
-	 * @param equipParam
-	 * @param equipId
-	 * @param enable
-	 * @param calendar 
+	 * @Title: updateEquipParamByRowKey
+	 * @Description: 更新一条设备参数通过RowKey
+	 * @param equipParam 
 	 * @return void
 	 * @throws
 	 */
-	void updateEquipParamByEquipIdAndEnableAndCalendar(EquipParam equipParam,Integer equipId,Boolean enable,Calendar calendar);
+	void updateEquipParamByRowKey(EquipParam equipParam);
 	/**
 	 * 
-	 * @Title: getEquipParamByEquipIdOfEnable
-	 * @Description: 查询一条设备激活参数通过equipId
+	 * @Title: getEquipParamByEquipId
+	 * @Description: 查询设备激活的参数通过equipId(如存在多个激活的公式，抛出逻辑异常)
 	 * @param equipId
-	 * @return 
 	 * @return EquipParam
 	 * @throws
 	 */
-	EquipParam getEquipParamByEquipIdOfEnable(Integer equipId);
+	EquipParam getEquipParamOfEnableByEquipId(Integer equipId);
 	/**
 	 * 
-	 * @Title: listEquipParamAndKeyByEquipIdOfEnable
-	 * @Description: 获得所有设备参数
+	 * @Title: listEquipParamByEquipId
+	 * @Description: 获得所有设备参数(激活和未激活)
 	 * @param equipId
-	 * @return 
-	 * @return List<SimpleHbaseDOWithKeyResult<EquipParam>>
+	 * @return List<EquipParam>
 	 * @throws
 	 */
-	List<SimpleHbaseDOWithKeyResult<EquipParam>> listEquipParamAndKeyByEquipId(Integer equipId);
+	List<EquipParam> listEquipParamByEquipId(Integer equipId);
 }

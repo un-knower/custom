@@ -1,10 +1,8 @@
 package com.qingting.customer.dao;
 
-import java.util.Calendar;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.Project;
-import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 
 /**
  * 
@@ -17,43 +15,39 @@ import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 public interface ProjectDAO {
 	/**
 	 * 
-	 * @Title: insertProjectByUserId
-	 * @Description: 插入一条项目数据通过userId
+	 * @Title: insertProject
+	 * @Description: 插入一条项目数据
 	 * @param project
-	 * @param userId 
 	 * @return void
 	 * @throws
 	 */
-	void insertProjectByUserId(Project project,Integer userId);
+	void insertProject(Project project);
 	/**
 	 * 
-	 * @Title: deleteProjectByUserIdAndCalendar
-	 * @Description: 删除一条项目数据通过userId和Calendar
-	 * @param userId
-	 * @param calendar 
+	 * @Title: deleteProjectByRowKey
+	 * @Description: 删除一条项目数据通过rowKey
+	 * @param rowKey
 	 * @return void
 	 * @throws
 	 */
-	void deleteProjectByUserIdAndCalendar(Integer userId,Calendar calendar);
+	void deleteProjectByRowKey(String rowKey);
 	/**
 	 * 
-	 * @Title: updateProjectByUserIdAndCalendar
-	 * @Description: 更新一条项目数据通过userId和Calendar
+	 * @Title: updateProjectByRowKey
+	 * @Description: 更新一条项目数据通过rowkey
 	 * @param project
-	 * @param userId
-	 * @param calendar
 	 * @return void
 	 * @throws
 	 */
-	void updateProjectByUserIdAndCalendar(Project project,Integer userId,Calendar calendar);
+	void updateProjectByRowKey(Project project);
 	/**
 	 * 
 	 * @Title: listProjectByUserId
-	 * @Description: 查询所有项目通过userId
+	 * @Description: 查询用户的所有项目
 	 * @param userId
 	 * @return 
-	 * @return List<SimpleHbaseDOWithKeyResult<Project>>
+	 * @return List<Project>
 	 * @throws
 	 */
-	List<SimpleHbaseDOWithKeyResult<Project>> listProjectByUserId(Integer userId);
+	List<Project> listProjectByUserId(Integer userId);
 }

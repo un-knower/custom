@@ -142,5 +142,6 @@
 		<module>customer-common</module>
 		<module>customer-dao</module>
 		<module>customer-web</module>
+		<module>opration-customer-web</module>
 	</modules>
 </project>

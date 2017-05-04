@@ -1,4 +1,4 @@
-package com.smart.demo.controller.admin;
+package com.qingting.opration.customer.controller.admin;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

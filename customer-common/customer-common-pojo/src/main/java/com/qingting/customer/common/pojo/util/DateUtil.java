@@ -42,6 +42,9 @@ public class DateUtil {
 	public static Calendar getStart(){
 		return START;
 	}
+	public static long getStartOfMillis(){
+		return START.getTimeInMillis();
+	}
 	/**
 	 * 
 	 * @Title: convert
@@ -225,8 +228,23 @@ public class DateUtil {
 	
 	/**
 	 * 
-	 * @Title: getMillisOfGMT
-	 * @Description: 返回给定时间距离GMT(1970年1月1日00:00:00.000 GMT)时间的毫秒数
+	 * @Title: getMillisOfStart
+	 * @Description: 返回现在时间距离START的毫秒数
+	 * @param calendar
+	 * @return 
+	 * @return long
+	 * @throws
+	 */
+	public static long getMillisOfStart() {
+		Calendar calendar = Calendar.getInstance();
+		long temp = calendar.getTimeInMillis()-START.getTimeInMillis();
+		logger.debug("距离开始计数毫秒数：" + temp);
+		return temp;
+	}
+	/**
+	 * 
+	 * @Title: getMillisOfStart
+	 * @Description: 返回给定时间距离START的毫秒数
 	 * @param calendar
 	 * @return 
 	 * @return long

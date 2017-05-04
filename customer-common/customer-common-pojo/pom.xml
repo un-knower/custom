@@ -9,6 +9,7 @@
 	
 	<properties>
 		<commons-lang3.version>3.5</commons-lang3.version>
+		<hbase.version>1.2.4</hbase.version>
 	</properties>	
 	
 	
@@ -21,10 +22,44 @@
 		
 		
 		<dependency>
-			<groupId>org.apache.hbase</groupId>
+            <groupId>org.apache.hbase</groupId>
             <artifactId>hbase-client</artifactId>  
-            <version>1.2.4</version>
-        </dependency>
+            <version>${hbase.version}</version>
+			<exclusions> 
+				<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+				<!-- <exclusion>
+					<groupId>org.apache.hbase</groupId>
+					<artifactId>hbase-common</artifactId>
+				</exclusion>-->
+				<exclusion>
+					<groupId>org.codehaus.jackson</groupId>
+					<artifactId>jackson-mapper-asl</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.jruby.joni</groupId>
+					<artifactId>joni</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>com.github.stephenc.findbugs</groupId>
+					<artifactId>findbugs-annotations</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>commons-io</groupId>
+					<artifactId>commons-io</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.hadoop</groupId>
+					<artifactId>hadoop-common</artifactId>
+				</exclusion>
+				<exclusion>
+					<groupId>org.apache.hadoop</groupId>
+					<artifactId>hadoop-mapreduce-client-core</artifactId>
+				</exclusion> 
+			</exclusions>				
+        </dependency>	
 	</dependencies>
   	
 </project>

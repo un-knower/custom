@@ -56,7 +56,7 @@ public class TestMonitorService {
 		monitor.setTemp((float) 1.5);
 		monitor.setW((float) 1.6);
 		
-		monitorService.insertMonitorByEquipId(monitor, 1);
+		monitorService.insertMonitor(monitor);
 
 		/*Calendar startCal = DateUtil.setDate(2017, 4, 7, 9, 42, 55, 790);
 		System.out.println(convertTime(startCal));

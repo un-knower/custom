@@ -10,25 +10,45 @@ import com.qingting.customer.common.pojo.hbasedo.Monitor;
 public interface MonitorService {
 	/**
 	 * 
-	 * @Title: insertMonitorByEquipId
+	 * @Title: insertMonitor
 	 * @Description: 插入一条监测值
 	 * @param monitor
-	 * @param equipId 
 	 * @return void
 	 * @throws
 	 */
-	void insertMonitorByEquipId(Monitor monitor, Integer equipId);
+	void insertMonitor(Monitor monitor);
+
 	/**
 	 * 
-	 * @Title: getMonitorByEquipIdAndCalendar
-	 * @Description: 查询一条监测值通过equipId和calendar
-	 * @param equipId
-	 * @param calendar
+	 * @Title: deleteMonitorByRowKey
+	 * @Description: 删除一条监测值通过rowKey
+	 * @param rowKey 
+	 * @return void
+	 * @throws
+	 */
+	void deleteMonitorByRowKey(String rowKey);
+
+	/**
+	 * 
+	 * @Title: updateMonitorByRowKey
+	 * @Description: 修改一条监测值通过RowKey
+	 * @param monitor 
+	 * @return void
+	 * @throws
+	 */
+	void updateMonitorByRowKey(Monitor monitor);
+
+	/**
+	 * 
+	 * @Title: getMonitorByRowKey
+	 * @Description: 查询一条监测值通过rowKey
+	 * @param rowKey
 	 * @return 
 	 * @return Monitor
 	 * @throws
 	 */
-	Monitor getMonitorByEquipIdAndCalendar(Integer equipId,Calendar calendar);
+	Monitor getMonitorByRowKey(String rowKey);
+
 	/**
 	 * 
 	 * @Title: listMonitorByStartAndEndOfCalendar

@@ -1,10 +1,8 @@
 package com.qingting.customer.dao;
 
-import java.util.Calendar;
-import java.util.List;
 
+import java.util.List;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
-import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 
 /**
  * 
@@ -17,43 +15,38 @@ import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 public interface EquipDAO {
 	/**
 	 * 
-	 * @Title: insertEquipByProjectId
-	 * @Description: 插入一条设备数据通过projectId
+	 * @Title: insertEquip
+	 * @Description: 插入一条设备数据
 	 * @param equip
-	 * @param projectId 
 	 * @return void
 	 * @throws
 	 */
-	void insertEquipByProjectId(Equip equip,Integer projectId);
+	void insertEquip(Equip equip);
 	/**
 	 * 
-	 * @Title: deleteEquipByProjectIdAndCalendar
-	 * @Description: 删除一条设备数据通过ProjectIdAndCalendar
-	 * @param projectId
-	 * @param calendar 
+	 * @Title: deleteEquipByRowKey
+	 * @Description: 删除一条设备数据通过rowKey
+	 * @param rowKey 
 	 * @return void
 	 * @throws
 	 */
-	void deleteEquipByProjectIdAndCalendar(Integer projectId,Calendar calendar);
+	void deleteEquipByRowKey(String rowKey);
 	/**
 	 * 
-	 * @Title: updateEquipByProjectIdAndCalendar
-	 * @Description: 更新一条设备数据通过ProjectIdAndCalendar
-	 * @param equip
-	 * @param projectId
-	 * @param calendar 
+	 * @Title: updateEquipByRowKey
+	 * @Description: 更新一条设备数据通过RowKey
+	 * @param equip 
 	 * @return void
 	 * @throws
 	 */
-	void updateEquipByProjectIdAndCalendar(Equip equip,Integer projectId,Calendar calendar);
+	void updateEquipByRowKey(Equip equip);
 	/**
 	 * 
 	 * @Title: listEquipByProjectId
-	 * @Description: 查询所有设备数据通过ProjectId
+	 * @Description: 查询项目的所有设备数据
 	 * @param projectId
-	 * @return 
-	 * @return List<SimpleHbaseDOWithKeyResult<Equip>>
+	 * @return List<Equip>
 	 * @throws
 	 */
-	List<SimpleHbaseDOWithKeyResult<Equip>> listEquipByProjectId(Integer projectId);
+	List<Equip> listEquipByProjectId(Integer projectId);
 }

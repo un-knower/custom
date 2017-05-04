@@ -25,49 +25,44 @@ import com.qingting.customer.common.pojo.hbasedo.Monitor;
 public interface MonitorDAO {
 	/**
 	 * 
-	 * @Title: insertMonitorByEquipId
+	 * @Title: insertMonitor
 	 * @Description: 插入一条监测值
 	 * @param monitor
-	 * @param equipId 
 	 * @return void
 	 * @throws
 	 */
-	void insertMonitorByEquipId(Monitor monitor, Integer equipId);
+	void insertMonitor(Monitor monitor);
 
 	/**
 	 * 
-	 * @Title: deleteMonitorByEquipIdAndCalendar
-	 * @Description: 删除一条监测值通过EquipIdAndCalendar
-	 * @param equipId
-	 * @param calendar 
+	 * @Title: deleteMonitorByRowKey
+	 * @Description: 删除一条监测值通过rowKey
+	 * @param rowKey 
 	 * @return void
 	 * @throws
 	 */
-	void deleteMonitorByEquipIdAndCalendar(Integer equipId,Calendar calendar);
+	void deleteMonitorByRowKey(String rowKey);
 
 	/**
 	 * 
-	 * @Title: updateMonitorByEquipIdAndCalendar
-	 * @Description: 修改一条监测值通过EquipIdAndCalendar
-	 * @param monitor
-	 * @param equipId
-	 * @param calendar 
+	 * @Title: updateMonitorByRowKey
+	 * @Description: 修改一条监测值通过RowKey
+	 * @param monitor 
 	 * @return void
 	 * @throws
 	 */
-	void updateMonitorByEquipIdAndCalendar(Monitor monitor, Integer equipId,Calendar calendar);
+	void updateMonitorByRowKey(Monitor monitor);
 
 	/**
 	 * 
-	 * @Title: getMonitorByEquipIdAndCalendar
-	 * @Description: 查询一条监测值通过equipId和Calendar
-	 * @param equipId
-	 * @param calendar
+	 * @Title: getMonitorByRowKey
+	 * @Description: 查询一条监测值通过rowKey
+	 * @param rowKey
 	 * @return 
 	 * @return Monitor
 	 * @throws
 	 */
-	Monitor getMonitorByEquipIdAndCalendar(Integer equipId,Calendar calendar);
+	Monitor getMonitorByRowKey(String rowKey);
 
 	/**
 	 * 

@@ -1,40 +1,59 @@
 package com.qingting.customer.dao.impl;
 
-import java.util.Calendar;
+
+import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.StringRowKey;
+import com.alipay.simplehbase.enums.SerialType;
+import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.Project;
-import com.qingting.customer.common.pojo.rowkey.ProjectRowKey;
 import com.qingting.customer.common.pojo.util.DateUtil;
+import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.ProjectDAO;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
+import com.qingting.customer.hbase.rowkey.RowKey;
+
+
 @Repository("projectDAO")
 public class ProjectDAOImpl implements ProjectDAO {
-
+	@Autowired
+	public RedisTemplate<String, Integer> redisTemplate;
 	@Override
-	public void insertProjectByUserId(Project project, Integer userId) {
-		SHCUtil.getSHC("project").insertObject(new ProjectRowKey(userId), project);
-	}
-	
-	@Override
-	public void deleteProjectByUserIdAndCalendar(Integer userId, Calendar calendar) {
-		SHCUtil.getSHC("project").delete(new ProjectRowKey(userId,calendar));
+	public void insertProject(Project project) {
+		int num=RedisSerialNum.getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
+		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(project.getUserId(), DateUtil.getMillisOfStart(),num));
+		SHCUtil.getSHC("project").insertObject(rowKey, project);
 	}
 
 	@Override
-	public void updateProjectByUserIdAndCalendar(Project project,Integer userId, Calendar calendar) {
-		SHCUtil.getSHC("project").updateObjectWithVersion(new ProjectRowKey(userId,calendar), project, project.getVersion());
+	public void deleteProjectByRowKey(String rowKey) {
+		SHCUtil.getSHC("project").delete(new StringRowKey(rowKey));
 	}
 
 	@Override
-	public List<SimpleHbaseDOWithKeyResult<Project>> listProjectByUserId(Integer userId) {
-		//return SHCUtil.getSHC("project").findObjectList(new ProjectRowKey(userId,DateUtil.getStart()),new ProjectRowKey(userId,Calendar.getInstance()), Project.class);
-		return SHCUtil.getSHC("project").findObjectAndKeyList(new ProjectRowKey(userId,DateUtil.getStart()),new ProjectRowKey(userId,Calendar.getInstance()), Project.class);
+	public void updateProjectByRowKey(Project project) {
+		SHCUtil.getSHC("project").updateObjectWithVersion(new StringRowKey(project.getRowKey()), project, project.getVersion());
+		                           
 	}
 
-	
-
+	@Override
+	public List<Project> listProjectByUserId(Integer userId) {
+		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(userId, DateUtil.getStartOfMillis()));
+		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(userId, DateUtil.getMillisOfStart()));
+		List<SimpleHbaseDOWithKeyResult<Project>> listDOWithKey = SHCUtil.getSHC("project").findObjectAndKeyList(startRowKey,endRowKey, Project.class);
+		List<Project> list=new ArrayList<Project>();
+		for (SimpleHbaseDOWithKeyResult<Project> result : listDOWithKey) {
+			Project project = result.getT();
+			project.setContentOfRowKey(result.getRowKey().toBytes());
+			list.add(project);
+		}
+		return list;
+	}
 }
