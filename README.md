@@ -18,7 +18,15 @@ customer
 ```
 
 ## 技术选型
-待添加...
+- JDK：1.8（支持1.7+）
+- 数据库：hbase
+- 项目构建工具：Maven 3.3.9
+- API文档：Springfox-Swagger2 2.6.1
+- MVC框架：SpringMVC 4.2.1.RELEASE
+- 核心框架：Spring 4.2.1.RELEASE
+- ORM框架：hbase-1.2.4
+- 日志管理：SLF4J 1.7.21、Logback 1.1.7
+- 单点登录：极简基于Cookie实现
 
 ## API文档
 ![API文档](http://img.blog.csdn.net/20170420095340652?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvYTQ2NjM1MDY2NQ==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast)
