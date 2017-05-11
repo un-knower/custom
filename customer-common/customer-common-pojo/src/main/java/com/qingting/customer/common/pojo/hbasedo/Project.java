@@ -26,6 +26,10 @@ public class Project {
 	 */
 	private String projectName;
 	/**
+	 * 备注
+	 */
+	private String projectMark;
+	/**
 	 * 设备数量
 	 */
 	private Integer equipCount;
@@ -90,6 +94,14 @@ public class Project {
 
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
+	}
+	
+	public String getProjectMark() {
+		return projectMark;
+	}
+
+	public void setProjectMark(String projectMark) {
+		this.projectMark = projectMark;
 	}
 
 	public Integer getEquipCount() {

@@ -2,7 +2,7 @@
 	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
 	   xsi:schemaLocation="http://www.springframework.org/schema/beans
-	   http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	   http://www.springframework.org/schema/beans/spring-beans.xsd
 	   http://code.alibabatech.com/schema/dubbo
 	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
@@ -22,4 +22,7 @@
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MonitorService" ref="monitorService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.ProjectService" ref="projectService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.EquipService" ref="equipService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MessageService" ref="messageService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.UserService" ref="userService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.external.TxMessageService" ref="txMessageService" />
 </beans>  

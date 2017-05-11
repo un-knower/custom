@@ -1,0 +1,14 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="message" defaultFamily="messageFamily">
+		<HBaseColumnSchema qualifier="phone" typeName="string" />
+		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Message" defaultFamily="messageFamily">
+		<field name="phone"/>
+		<field name="version" isVersioned="true"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

@@ -12,8 +12,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.smart.demo.model.Demo;
-import com.smart.demo.service.DemoService;
+//import com.smart.demo.model.Demo;
+//import com.smart.demo.service.DemoService;
 import com.smart.mvc.controller.BaseController;
 import com.smart.mvc.model.Pagination;
 import com.smart.mvc.model.Result;
@@ -29,8 +29,8 @@ import com.smart.mvc.validator.annotation.ValidateParam;
 @RequestMapping("/admin/demo")
 public class DemoController extends BaseController {
 
-	@Resource
-	private DemoService demoService;
+	//@Resource
+	//private DemoService demoService;
 
 	@ApiOperation("初始页")
 	@RequestMapping(method = RequestMethod.GET)
@@ -44,8 +44,9 @@ public class DemoController extends BaseController {
 			@ApiParam(value = "名称") String name,
 			@ApiParam(value = "开始页码", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
 			@ApiParam(value = "显示条数", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize) {
-		return Result.createSuccessResult().setData(
-				demoService.findPaginationByName(name, new Pagination<Demo>(pageNo, pageSize)));
+		//return Result.createSuccessResult().setData(
+		//		demoService.findPaginationByName(name, new Pagination<Demo>(pageNo, pageSize)));
+		return null;
 	}
 	
 	@ApiOperation("验证名称")
@@ -54,24 +55,24 @@ public class DemoController extends BaseController {
 			@ApiParam(value = "id") Integer id,
 			@ApiParam(value = "名称", required = true) @ValidateParam({ Validator.NOT_BLANK }) String name) {
 		Result result = Result.createSuccessResult();
-		Demo demo = demoService.findByName(name);
-		if (null != demo && !demo.getId().equals(id)) {
-			result.setCode(ResultCode.ERROR).setMessage("名称已存在");
-		}
+		//Demo demo = demoService.findByName(name);
+		//if (null != demo && !demo.getId().equals(id)) {
+		//	result.setCode(ResultCode.ERROR).setMessage("名称已存在");
+		//}
 		return result;
 	}
 
 	@ApiOperation("新增/修改页")
 	@RequestMapping(value = "/edit", method = RequestMethod.GET)
 	public String edit(@ApiParam(value = "id") Integer id, Model model) {
-		Demo demo;
+		//Demo demo;
 		if (id == null) {
-			demo = new Demo();
+			//demo = new Demo();
 		}
 		else {
-			demo = demoService.get(id);
+			//demo = demoService.get(id);
 		}
-		model.addAttribute("demo", demo);
+		//model.addAttribute("demo", demo);
 		return "/admin/demoEdit";
 	}
 
@@ -84,15 +85,15 @@ public class DemoController extends BaseController {
 		if (!(result = validateName(id, name)).isSuccess()) {
 			return result;
 		}
-		Demo demo;
+		//Demo demo;
 		if (id == null) {
-			demo = new Demo();
+			//demo = new Demo();
 		}
 		else {
-			demo = demoService.get(id);
+		//	demo = demoService.get(id);
 		}
-		demo.setName(name);
-		demoService.save(demo);
+		//demo.setName(name);
+		//demoService.save(demo);
 		return Result.createSuccessResult();
 	}
 
@@ -100,7 +101,7 @@ public class DemoController extends BaseController {
 	@RequestMapping(value = "/delete", method = RequestMethod.POST)
 	public @ResponseBody Result delete(
 			@ApiParam(value = "ids", required = true) @ValidateParam({ Validator.NOT_BLANK }) String ids) {
-		demoService.deleteById(getAjaxIds(ids));
+		//demoService.deleteById(getAjaxIds(ids));
 		return Result.createSuccessResult();
 	}
 }

@@ -30,9 +30,9 @@ public class RedisSerialNum {
 
    public static void main(String[] args) {
       ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-      RedisTemplate<String, Integer> redisTemplate = (RedisTemplate<String, Integer>) applicationContext.getBean("redisTemplate");
-      int num = getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
-      System.out.println("num:" + num);
+      //RedisTemplate<String, Integer> redisTemplate = (RedisTemplate<String, Integer>) applicationContext.getBean("redisTemplate");
+      //int num = getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
+      //System.out.println("num:" + num);
    }
    
    /**

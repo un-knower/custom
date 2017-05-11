@@ -44,6 +44,16 @@ public interface UserDAO {
 	User getUserByRowKey(String rowKey);
 	/**
 	 * 
+	 * @Title: getUserByAccount
+	 * @Description: 查询一个用户通过account
+	 * @param account
+	 * @return 
+	 * @return User
+	 * @throws
+	 */
+	User getUserByAccount(String account);
+	/**
+	 * 
 	 * @Title: listUser
 	 * @Description: 查询所有用户
 	 * @return 

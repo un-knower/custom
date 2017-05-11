@@ -6,9 +6,23 @@
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 	<artifactId>customer-dao-impl</artifactId>
- 
+ 	
+ 	<properties>
+        <httpclient.version>4.5.3</httpclient.version>
+        <commons-lang3.version>3.5</commons-lang3.version>
+    </properties>
  
  	<dependencies>
+ 		<dependency>
+			<groupId>com.aliyun.mns</groupId>
+			<artifactId>aliyun-sdk-mns</artifactId>
+			<version>1.1.8</version>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpasyncclient</artifactId>
+			<version>4.0.1</version>
+		</dependency>
 		<dependency>
 			<groupId>com.qingting.customer</groupId>
 			<artifactId>customer-common-pojo</artifactId>
@@ -25,6 +39,16 @@
 			<groupId>com.qingting.customer</groupId>
 			<artifactId>customer-hbase-orm</artifactId>
 			<version>${project.parent.version}</version>
+		</dependency>
+		 <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>${httpclient.version}</version>
+        </dependency>
+        <dependency>
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-lang3</artifactId>
+		    <version>${commons-lang3.version}</version>
 		</dependency>
 	</dependencies>
   

@@ -1,0 +1,44 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="user" defaultFamily="userFamily">
+		<HBaseColumnSchema qualifier="account" typeName="string" />
+		<HBaseColumnSchema qualifier="sex" typeName="boolean" />
+		<HBaseColumnSchema qualifier="age" typeName="int" />
+		<HBaseColumnSchema qualifier="address" typeName="string"/>
+		<HBaseColumnSchema qualifier="userSortId" typeName="int"/>
+		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.User" defaultFamily="userFamily">
+		<field name="account"/>
+		<field name="sex" />
+		<field name="age" />
+		<field name="address"/>
+		<field name="userSortId"/>
+		<field name="version" isVersioned="true"/>
+	</MappingType>
+	
+	<statements>	
+		
+		<!-- <statement id="queryByNameAndAge">
+			select where id greaterequal #id#
+			<isPropertyAvailable prepend="and" property="name">
+				name equal #name#
+			</isPropertyAvailable>
+			<isPropertyAvailable prepend="and" property="age">
+				age greater #age#
+			</isPropertyAvailable>
+		</statement>	
+		
+		<statement id="queryById">
+			select where id equal #id#			
+		</statement> -->
+		<statement id="getUserByAccount">
+			select where account equal #account#
+		</statement>			
+				
+	</statements>	
+	
+</SimpleHbase>   
+
+
+

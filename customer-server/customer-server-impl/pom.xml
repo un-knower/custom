@@ -8,7 +8,16 @@
 	<artifactId>customer-server-impl</artifactId>
 	<packaging>war</packaging>
 	
+	<properties>
+		<smart.version>1.0.0</smart.version>
+	</properties>
+	
 	<dependencies>
+		<dependency>
+		    <groupId>org.json</groupId>
+		    <artifactId>json</artifactId>
+		    <version>20160810</version>
+		</dependency>
 		<!-- spring测试 -->
 		<dependency>  
             <groupId>org.springframework</groupId>  
@@ -16,12 +25,36 @@
             <version>4.2.1.RELEASE</version>
             <scope>test</scope>  
         </dependency>
-		<!-- demo-api支持 -->
+        <!-- dubbo -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+        <!-- smart-mvc支持 -->
 		<dependency>
 			<groupId>com.smart</groupId>
+			<artifactId>smart-mvc</artifactId>
+			<version>${smart.version}</version>
+			<exclusions>
+		    	<exclusion>
+					<groupId>com.google.guava</groupId>
+					<artifactId>guava</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency> 
+		<!-- demo-api支持 -->
+		<!-- <dependency>
+			<groupId>com.smart</groupId>
 			<artifactId>smart-demo-api</artifactId>
-			<version>0.0.1</version>
-		</dependency>
+			<version>${smart.version}</version>
+		</dependency> -->
 		<dependency>
 			<groupId>com.qingting.customer</groupId>
 			<artifactId>customer-server-api</artifactId>
@@ -37,6 +70,11 @@
 			<artifactId>customer-dao-impl</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>com.google.guava</groupId>
+			<artifactId>guava</artifactId>
+			<version>15.0</version>
+		</dependency> -->
 	</dependencies>
 	
 </project>

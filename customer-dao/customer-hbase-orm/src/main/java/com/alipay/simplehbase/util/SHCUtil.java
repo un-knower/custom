@@ -8,7 +8,6 @@ import java.util.List;
 
 import org.apache.hadoop.hbase.HColumnDescriptor;
 import org.apache.hadoop.hbase.HTableDescriptor;
-import org.apache.hadoop.hbase.client.Table;
 import org.springframework.core.io.Resource;
 
 import com.alipay.simplehbase.cache.CachedFileSystemResource;
@@ -29,7 +28,10 @@ public class SHCUtil{
 	final public static String ZkConfigFile = classpath+"zk_conf";
 
 	final public static List<String> xmlFile=
-			new ArrayList<>(Arrays.asList("monitor","project","equip"));;
+			new ArrayList<>(Arrays.asList(
+					"project","equip","monitor",
+					"user","message"
+					));;
 	private static volatile SimpleHbaseClient simpleHbaseClient;
 	private static volatile SimpleHbaseAdminClient simpleHbaseAdminClient;
 	private static List<SimpleHbaseClient> listSHC=new ArrayList<SimpleHbaseClient>();

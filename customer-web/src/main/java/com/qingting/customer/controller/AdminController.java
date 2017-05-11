@@ -33,7 +33,7 @@ public class AdminController {
 		model.addAttribute("sessionUserNoPermissions", sessionPermission == null ? null : sessionPermission.getNoPermissions());
 		// 默认首页
 		// model.addAttribute("defaultPage", null);
-		return "main/main";
+		return "/home";
 	}
 
 	@ApiOperation("菜单")

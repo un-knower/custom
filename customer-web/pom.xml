@@ -18,6 +18,23 @@
 	</properties>
 
 	<dependencies>
+		<dependency>  
+		    <groupId>com.google.code.gson</groupId>  
+		    <artifactId>gson</artifactId>  
+		    <version>2.6.2</version>  
+		</dependency> 
+	 	<!-- dubbo -->
+		<dependency>
+			<groupId>com.alibaba</groupId>
+			<artifactId>dubbo</artifactId>
+			<version>2.5.3</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 		<!-- customer-server-api支持 -->
 		<dependency>
 			<groupId>com.qingting.customer</groupId>
@@ -25,11 +42,11 @@
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
 		<!-- demo-api支持 -->
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.smart</groupId>
 			<artifactId>smart-demo-api</artifactId>
 			<version>${smart.version}</version>
-		</dependency>
+		</dependency> -->
 		
 		<!-- sso单点登录客户端 -->
 		<dependency>

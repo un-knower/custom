@@ -164,6 +164,31 @@ public class RowKeyUtil {
 		return bytes;
 		
 	}
+	public static byte[] getBytes(long a,byte[] array,long b,int c){
+		byte[] a1 = Bytes.toBytes(a);
+		byte[] b1 = Bytes.toBytes(b);
+		byte[] c1 = Bytes.toBytes(c);
+		byte[] bytes=new byte[a1.length+array.length+b1.length+c1.length];
+		int i=0,j=0;
+		for(i=0;i<a1.length;i++){
+			bytes[j]=a1[i];
+			j++;
+		}
+		for(i=0;i<array.length;i++){
+			bytes[j]=array[i];
+			j++;
+		}
+		for(i=0;i<b1.length;i++){
+			bytes[j]=b1[i];
+			j++;
+		}
+		for(i=0;i<c1.length;i++){
+			bytes[j]=c1[i];
+			j++;
+		}
+		return bytes;
+		
+	}
 	public static String getString(RowKey rowKey){
 		return new String(rowKey.toBytes());
 	}

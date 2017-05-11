@@ -39,4 +39,9 @@ public class UserServiceImpl implements UserService {
 		return userDAO.listUser();
 	}
 
+	@Override
+	public User getUserByAccount(String account) {
+		return userDAO.getUserByAccount(account);
+	}
+
 }

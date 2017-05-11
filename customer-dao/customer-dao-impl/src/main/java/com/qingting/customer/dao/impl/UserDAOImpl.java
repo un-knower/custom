@@ -1,7 +1,9 @@
 package com.qingting.customer.dao.impl;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -9,7 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
-import com.alipay.simplehbase.enums.SerialType;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.User;
@@ -24,9 +25,12 @@ public class UserDAOImpl implements UserDAO {
 	public RedisTemplate<String, Integer> redisTemplate;
 	@Override
 	public void insertUser(User user) {
-		int num=RedisSerialNum.getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
+		//int num=RedisSerialNum.getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
+		int num=RedisSerialNum.getSerialNum(redisTemplate, "user_id_seq");
 		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(num, DateUtil.getMillisOfStart()));
-		SHCUtil.getSHC("user").insertObject(rowKey, user);
+		boolean result = SHCUtil.getSHC("user").insertObject(rowKey, user);
+		if(result==false)
+			throw new RuntimeException("插入user失败.");
 	}
 
 	@Override
@@ -60,6 +64,24 @@ public class UserDAOImpl implements UserDAO {
 			list.add(user);
 		}
 		return list;
+	}
+
+	@Override
+	public User getUserByAccount(String account) {
+		Map<String, Object> para = new HashMap<String, Object>();
+		para.put("account", account);
+		List<SimpleHbaseDOWithKeyResult<User>> list = SHCUtil.getSHC("user").findObjectAndKeyList(new StringRowKey(""),new StringRowKey(User.MAX_ROWKEY), User.class,"getUserByAccount",para);
+		SimpleHbaseDOWithKeyResult<User> result;
+		User user=null;
+		if(list.size()>1)
+			throw new RuntimeException("存在多个相同账户！请检查程序逻辑");
+		else if(list.size()==1){
+			result = list.get(0);
+			user=result.getT();
+			user.setContentOfRowKey(result.getRowKey().toBytes());
+		}
+		
+		return user;
 	}
 
 }

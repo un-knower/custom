@@ -15,11 +15,14 @@
 	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
 
 	<!-- 用户服务接口 -->
-	<dubbo:reference interface="com.smart.demo.service.DemoService" id="demoService" />
+	<!-- <dubbo:reference interface="com.smart.demo.service.DemoService" id="demoService" />  -->
 	<dubbo:reference interface="com.qingting.customer.baseserver.MonitorService" id="monitorService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.ProjectService" id="projectService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.EquipService" id="equipService" />
-
+	<dubbo:reference interface="com.qingting.customer.baseserver.MessageService" id="messageService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.UserService" id="userService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.external.TxMessageService" id="txMessageService" />
+	
 	<!-- 单点登录权限服务接口
 	<dubbo:reference interface="com.smart.sso.rpc.AuthenticationRpcService" id="authenticationRpcService" />
 	 -->
