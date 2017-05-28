@@ -54,6 +54,10 @@ public class Project {
 	 */
 	private Integer userId;
 	/**
+	 * 套餐ID
+	 */
+	private Integer comboId;
+	/**
 	 * 创建时间
 	 */
 	private Calendar calendar;
@@ -62,8 +66,6 @@ public class Project {
 	 */
 	private final Byte version = 0;
 
-	
-	
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -95,7 +97,7 @@ public class Project {
 	public void setProjectName(String projectName) {
 		this.projectName = projectName;
 	}
-	
+
 	public String getProjectMark() {
 		return projectMark;
 	}
@@ -152,6 +154,14 @@ public class Project {
 		this.userId = userId;
 	}
 
+	public Integer getComboId() {
+		return comboId;
+	}
+
+	public void setComboId(Integer comboId) {
+		this.comboId = comboId;
+	}
+
 	public Calendar getCalendar() {
 		return calendar;
 	}
@@ -194,6 +204,8 @@ public class Project {
 		byte[] dest=new byte[4];
 		System.arraycopy(rowkey, 0, dest, 0, 4);//前4个字节,所属用户id
 		this.userId=Bytes.toInt(dest);
+		System.arraycopy(rowkey, 4, dest, 0, 4);//中间4个字节,项目套餐id
+		this.comboId=Bytes.toInt(dest);
 		System.arraycopy(rowkey, rowkey.length-4, dest, 0, 4);//最后4个字节,项目id
 		this.id=Bytes.toInt(dest);
 	}

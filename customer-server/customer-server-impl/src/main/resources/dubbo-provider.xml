@@ -25,4 +25,5 @@
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MessageService" ref="messageService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.UserService" ref="userService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.external.TxMessageService" ref="txMessageService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WarnService" ref="warnService" />
 </beans>  

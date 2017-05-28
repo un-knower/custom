@@ -125,7 +125,7 @@ public class RegisterController {
 		return result;
 	}
 	@ApiOperation("获取验证码")
-	@RequestMapping(value="/getValidateCode",method = RequestMethod.POST)
+	@RequestMapping(value="/getValidateCode",method = RequestMethod.GET)
 	@ApiImplicitParam(paramType="query", name = "account", value = "手机号", required = true, dataType = "String")
 	public @ResponseBody Result getValidateCode(
 			HttpServletRequest request,

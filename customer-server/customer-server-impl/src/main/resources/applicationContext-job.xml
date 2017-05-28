@@ -6,11 +6,20 @@
 		
 	<!-- 工作的bean -->
 	<bean id="userJob" class="com.qingting.customer.baseserver.job.UserJob" />
+	<bean id="serviceJob" class="com.qingting.customer.baseserver.job.ServiceJob" />
 	
 	<!-- job的配置开始 -->
 	<bean id="userJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
 		<property name="targetObject">
 			<ref bean="userJob" />
+		</property>
+		<property name="targetMethod">
+			<value>execute</value>
+		</property>
+	</bean>
+	<bean id="serviceJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+		<property name="targetObject">
+			<ref bean="serviceJob" />
 		</property>
 		<property name="targetMethod">
 			<value>execute</value>
@@ -28,6 +37,15 @@
 			<value>0 0/1 * * * ?</value>
 		</property>
 	</bean>
+	<bean id="serviceJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+		<property name="jobDetail">
+			<ref bean="serviceJobDetail" />
+		</property>
+		<property name="cronExpression">
+			<!-- 每隔2分钟执行一次-->
+			<value>0 0/2 * * * ?</value>
+		</property>
+	</bean>
 	<!-- 调度的配置结束 -->
 	
 	<!-- 启动触发器的配置开始 -->
@@ -36,6 +54,7 @@
 		<property name="triggers">
 			<list>
 				<ref bean="userJobTrigger" />
+				<ref bean="serviceJobTrigger" />
 			</list>
 		</property>
 	</bean>

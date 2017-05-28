@@ -27,8 +27,8 @@ public class ProjectDAOImpl implements ProjectDAO {
 	public RedisTemplate<String, Integer> redisTemplate;
 	@Override
 	public void insertProject(Project project) {
-		int num=RedisSerialNum.getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
-		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(project.getUserId(), DateUtil.getMillisOfStart(),num));
+		int num=RedisSerialNum.getSerialNum(redisTemplate, "project_id_seq");
+		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(project.getUserId(), project.getComboId(),DateUtil.getMillisOfStart(),num));
 		SHCUtil.getSHC("project").insertObject(rowKey, project);
 	}
 
