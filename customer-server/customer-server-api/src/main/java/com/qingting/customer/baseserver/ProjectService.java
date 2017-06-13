@@ -34,6 +34,15 @@ public interface ProjectService {
 	void updateProjectByRowKey(Project project);
 	/**
 	 * 
+	 * @Title: getProjectByRowkey
+	 * @Description: 查询某个项目
+	 * @param rowKey
+	 * @return Project
+	 * @throws
+	 */
+	Project getProjectByRowkey(String rowKey);
+	/**
+	 * 
 	 * @Title: listProjectByUserId
 	 * @Description: 查询用户的所有项目
 	 * @param userId

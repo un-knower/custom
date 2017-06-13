@@ -61,4 +61,14 @@ public interface MonitorService {
 	 * @throws
 	 */
 	List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId,Calendar startCalendar,Calendar endCalendar);
+	/**
+	 * 
+	 * @Title: listMonitorofNew
+	 * @Description: 查询设备最新一段时间的监测数据
+	 * @param equipId
+	 * @return 
+	 * @return List<Monitor>
+	 * @throws
+	 */
+	List<Monitor> listMonitorofNew(Integer equipId);
 }

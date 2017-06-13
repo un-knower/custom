@@ -1,4 +1,4 @@
-package com.qingting.customer.controller.admin;
+package com.qingting.customer.controller.consumer;
 
 import java.util.List;
 
@@ -22,8 +22,8 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @Api(tags = "预警相关")
-@Controller
-@RequestMapping("/admin/warn")
+@Controller("consumerWarnController")
+@RequestMapping("/consumer/warn")
 public class WarnController {
 	@Resource
 	WarnService warnService;

@@ -12,7 +12,7 @@ public class ConnectionUtil {
 	private static Connection conn = null;
 	static {
 		cfg = HBaseConfiguration.create();
-		cfg.set("hbase.zookeeper.quorum", "192.168.10.200");
+		cfg.set("hbase.zookeeper.quorum", "119.29.225.162");
 		try {
 			conn = ConnectionFactory.createConnection(cfg);
 		} catch (IOException e) {

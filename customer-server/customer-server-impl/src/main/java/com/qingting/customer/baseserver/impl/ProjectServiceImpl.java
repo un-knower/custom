@@ -34,5 +34,10 @@ public class ProjectServiceImpl implements ProjectService {
 	public List<Project> listProjectByUserId(Integer userId) {
 		return projectDAO.listProjectByUserId(userId);
 	}
+
+	@Override
+	public Project getProjectByRowkey(String rowKey) {
+		return projectDAO.getProjectByRowkey(rowKey);
+	}
 	
 }

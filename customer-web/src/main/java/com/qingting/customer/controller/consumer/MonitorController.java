@@ -1,4 +1,4 @@
-package com.qingting.customer.controller.admin;
+package com.qingting.customer.controller.consumer;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -23,15 +23,15 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @Api(tags = "监测相关")
-@Controller
-@RequestMapping("/admin/monitor")
+@Controller("consumerMonitorController")
+@RequestMapping("/consumer/monitor")
 public class MonitorController {
 	@Resource
 	MonitorService monitorService;
 	@ApiOperation("页面跳转-监测页面")
 	@RequestMapping(method = RequestMethod.GET)
 	public String execute(){
-		return "/admin/monitor";
+		return "/consumer/monitor";
 	}
 	@ApiOperation("根据行健查询某个监测值")
 	@RequestMapping(value="/get",method = RequestMethod.POST)

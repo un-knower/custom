@@ -1,18 +1,10 @@
 package com.qingting.customer.common.pojo.hbasedo;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
-import org.apache.hadoop.hbase.util.Bytes;
-
-public class User implements Serializable{
-	
-	private static final long serialVersionUID = 6610579266435676798L;
-	
-	public static final String MAX_ROWKEY=getMaxRowKey(12);
+public class Employee {
 	
 	private String rowKey;
-	
 	/**
 	 * id
 	 */
@@ -62,9 +54,13 @@ public class User implements Serializable{
 	 */
 	private Float lat;
 	/**
-	 * 用户分类id
+	 * 入职时间
 	 */
-	private Integer userSortId;
+	private Calendar entryTime;
+	/**
+	 * 员工分类id
+	 */
+	private Integer employeeSortId;
 	/**
 	 * 账号状态
 	 */
@@ -156,11 +152,17 @@ public class User implements Serializable{
 	public void setLat(Float lat) {
 		this.lat = lat;
 	}
-	public Integer getUserSortId() {
-		return userSortId;
+	public Calendar getEntryTime() {
+		return entryTime;
 	}
-	public void setUserSortId(Integer userSortId) {
-		this.userSortId = userSortId;
+	public void setEntryTime(Calendar entryTime) {
+		this.entryTime = entryTime;
+	}
+	public Integer getEmployeeSortId() {
+		return employeeSortId;
+	}
+	public void setEmployeeSortId(Integer employeeSortId) {
+		this.employeeSortId = employeeSortId;
 	}
 	public String getStatus() {
 		return status;
@@ -177,28 +179,6 @@ public class User implements Serializable{
 	public Byte getVersion() {
 		return version;
 	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-		byte[] dest=new byte[4];
-		System.arraycopy(rowkey, 0, dest, 0, 4);//前4个字节id
-		this.id=Bytes.toInt(dest);
-	}
-	public static String getMaxRowKey(int num){
-		byte[] rowkey=new byte[num];
-		for(int i=0;i<num;i++){
-			rowkey[i]=(byte)0xff;
-		}
-		return new String(rowkey);
-	}
+	
+	
 }

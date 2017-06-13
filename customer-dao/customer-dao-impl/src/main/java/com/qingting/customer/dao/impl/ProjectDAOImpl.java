@@ -13,6 +13,7 @@ import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.enums.SerialType;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.SHCUtil;
+import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.qingting.customer.common.pojo.hbasedo.Project;
 import com.qingting.customer.common.pojo.util.DateUtil;
 import com.qingting.customer.common.pojo.util.RowKeyUtil;
@@ -42,7 +43,7 @@ public class ProjectDAOImpl implements ProjectDAO {
 		SHCUtil.getSHC("project").updateObjectWithVersion(new StringRowKey(project.getRowKey()), project, project.getVersion());
 		                           
 	}
-
+	
 	@Override
 	public List<Project> listProjectByUserId(Integer userId) {
 		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(userId, DateUtil.getStartOfMillis()));
@@ -55,5 +56,13 @@ public class ProjectDAOImpl implements ProjectDAO {
 			list.add(project);
 		}
 		return list;
+	}
+
+	@Override
+	public Project getProjectByRowkey(String rowKey) {
+		SimpleHbaseDOWithKeyResult<Project> result = SHCUtil.getSHC("project").findObjectAndKey(new StringRowKey(rowKey), Project.class);
+		Project project=result.getT();
+		project.setContentOfRowKey(result.getRowKey().toBytes());
+		return project;
 	}
 }

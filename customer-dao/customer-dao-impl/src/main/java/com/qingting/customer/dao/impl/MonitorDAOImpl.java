@@ -57,7 +57,20 @@ public class MonitorDAOImpl implements MonitorDAO {
 		}
 		return list;
 	}
-
+	@Override
+	public List<Monitor> listMonitorofNew(Integer equipId){
+		Calendar calendar = Calendar.getInstance();
+		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getBeforOfTime(calendar)));
+		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart(calendar)));
+		List<SimpleHbaseDOWithKeyResult<Monitor>> listDOWithKey = SHCUtil.getSHC("monitor").findObjectAndKeyList(startRowKey,endRowKey, Monitor.class);
+		List<Monitor> list=new ArrayList<Monitor>();
+		for (SimpleHbaseDOWithKeyResult<Monitor> result : listDOWithKey) {
+			Monitor monitor = result.getT();
+			monitor.setContentOfRowKey(result.getRowKey().toBytes());
+			list.add(monitor);
+		}
+		return list;
+	}
 	
 
 }

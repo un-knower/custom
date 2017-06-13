@@ -4,7 +4,6 @@
 		<HBaseColumnSchema qualifier="account" typeName="string" />
 		<HBaseColumnSchema qualifier="sex" typeName="boolean" />
 		<HBaseColumnSchema qualifier="age" typeName="int" />
-		<HBaseColumnSchema qualifier="address" typeName="string"/>
 		<HBaseColumnSchema qualifier="userSortId" typeName="int"/>
 		<HBaseColumnSchema qualifier="version" typeName="byte"/>
 	</HBaseTableSchema>	
@@ -12,7 +11,6 @@
 		<field name="account"/>
 		<field name="sex" />
 		<field name="age" />
-		<field name="address"/>
 		<field name="userSortId"/>
 		<field name="version" isVersioned="true"/>
 	</MappingType>

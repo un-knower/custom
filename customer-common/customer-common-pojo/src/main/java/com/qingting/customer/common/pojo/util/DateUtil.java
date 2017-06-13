@@ -31,6 +31,15 @@ public class DateUtil {
 		// 注意系统月份是从0~11，即0~1月，11~12月
 		START.set(year, month - 1, date, hourOfDay, minute, second);
 	}
+	public static long getBeforOfTime(Calendar calendar){
+		Date d=null;
+		try {
+			d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS").parse("1970-01-01 00:00:30 000");
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return calendar.getTimeInMillis() - d.getTime();
+	}
 	/**
 	 * 
 	 * @Title: getStart
@@ -241,6 +250,7 @@ public class DateUtil {
 		logger.debug("距离开始计数毫秒数：" + temp);
 		return temp;
 	}
+	
 	/**
 	 * 
 	 * @Title: getMillisOfStart

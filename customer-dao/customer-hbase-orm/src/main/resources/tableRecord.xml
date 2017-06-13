@@ -1,6 +1,6 @@
 <SimpleHbase>
 
-	<HBaseTableSchema tableName="monitor" defaultFamily="MonitorFamily">
+	<HBaseTableSchema tableName="monitor" defaultFamily="monitorFamily">
 		<HBaseColumnSchema qualifier="rawTds" typeName="float" />
 		<HBaseColumnSchema qualifier="purTds" typeName="float" />
 		<HBaseColumnSchema qualifier="temp" typeName="float" />
@@ -18,7 +18,7 @@
 		</statement>
 	</statements>
 	
-	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="MonitorFamily">
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="monitorFamily">
 		<field name="rawTds" qualifier="rawTds" />
 		<field name="purTds" />
 		<field name="temp" />

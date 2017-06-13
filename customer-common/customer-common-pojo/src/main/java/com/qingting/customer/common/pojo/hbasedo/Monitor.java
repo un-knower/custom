@@ -19,6 +19,14 @@ public class Monitor implements Serializable{
 	 */
 	private Long id;
 	/**
+	 * 调试用数据字段
+	 */
+	private String data;
+	/**
+	 * 调试用时间字段
+	 */
+	private String date;
+	/**
 	 * 原水TDS值
 	 */
 	private Float rawTds;
@@ -74,8 +82,6 @@ public class Monitor implements Serializable{
 	private final Byte version = 0;
 
 	
-	
-
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -90,6 +96,22 @@ public class Monitor implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public void setData(String data) {
+		this.data = data;
+	}
+
+	public String getDate() {
+		return date;
+	}
+
+	public void setDate(String date) {
+		this.date = date;
 	}
 
 	public Float getRawTds() {

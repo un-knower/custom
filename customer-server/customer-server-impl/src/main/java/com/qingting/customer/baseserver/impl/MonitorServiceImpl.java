@@ -43,5 +43,8 @@ public class MonitorServiceImpl implements MonitorService{
 		return monitorDAO.listMonitorByStartAndEndOfCalendar(equipId, startCalendar, endCalendar);
 	}
 
-	
+	@Override
+	public List<Monitor> listMonitorofNew(Integer equipId) {
+		return monitorDAO.listMonitorofNew(equipId);
+	}
 }
