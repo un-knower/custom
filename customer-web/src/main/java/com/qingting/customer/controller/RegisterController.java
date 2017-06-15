@@ -46,11 +46,11 @@ public class RegisterController {
 	//@ApiImplicitParam(paramType="query", name = "validateCode", value = "验证码", required = true, dataType = "String")
 	public @ResponseBody WebResult<Object> submit(
 			HttpServletRequest request,
-			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE }) String account,
+			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE }) String mobile,
 			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD }) String password,
 			@ApiParam(value = "验证码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) String validateCode
 			){
-		System.out.println("account:"+account);
+		System.out.println("account:"+mobile);
 		System.out.println("password:"+password);
 		System.out.println("validateCode:"+validateCode);
 		String saveValidateCode = SessionUtils.getSessionValidateCode(request);
@@ -58,15 +58,15 @@ public class RegisterController {
 		System.out.println("saveValidateCode:"+saveValidateCode);
 		WebResult<Object> result=null;
 		if(validateCode.equals(saveValidateCode)){
-			result=RegisterUtils.findByAccount(account);
+			result=RegisterUtils.findByAccount(mobile);
 			if(result.getCode()==ResultCode.FAILURE){//单点服务端用户不存在
-				if(userService.getUserByAccount(account)==null){//本地用户不存在
+				if(userService.getUserByAccount(mobile)==null){//本地用户不存在
 					System.out.println("准备开始存用户...");
-					result = RegisterUtils.register(account, password);//单点服务端注册用户
+					result = RegisterUtils.register(mobile, password);//单点服务端注册用户
 					System.out.println("单点注册结果result："+result);
 					
 					User user=new User();
-					user.setMobile(account);
+					user.setMobile(mobile);
 					user.setPassword(password);
 					userService.insertUser(user);//本地注册用户
 					
@@ -86,14 +86,14 @@ public class RegisterController {
 	}
 	@ApiOperation("验证账号是否存在")
 	@RequestMapping(value="/validateAccount",method = RequestMethod.POST)
-	@ApiImplicitParam(paramType="query", name = "account", value = "手机号", required = true, dataType = "String")
+	@ApiImplicitParam(paramType="query", name = "mobile", value = "手机号", required = true, dataType = "String")
 	public @ResponseBody WebResult<Object> validateAccount(
-			@ValidateParam({ Validator.NOT_BLANK }) String account
+			@ValidateParam({ Validator.NOT_BLANK }) String mobile
 			){
-		System.out.println("account:"+account);
-		WebResult<Object> result=RegisterUtils.findByAccount(account);
+		System.out.println("account:"+mobile);
+		WebResult<Object> result=RegisterUtils.findByAccount(mobile);
 		System.out.println("result:"+result);
-		User user=userService.getUserByAccount(account);
+		User user=userService.getUserByAccount(mobile);
 		System.out.println("user:"+user);
 		if(user!=null ||result.getCode()==ResultCode.SUCCESS){
 			result.setMessage("用户已存在");

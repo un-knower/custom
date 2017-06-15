@@ -1,6 +1,7 @@
 package com.qingting.customer.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,24 +25,26 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/forget")
 public class ForgetController {
 	@ApiOperation("修改密码")
-	@RequestMapping(value="/updatePassword",method = RequestMethod.POST)
+	@RequestMapping(value="/update",method = RequestMethod.POST)
 	public @ResponseBody WebResult<Object> updatePassword(
 			HttpServletRequest request,
-			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE }) String account,
+			HttpServletResponse response,
+			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE }) String mobile,
 			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD }) String password,
 			@ApiParam(value = "验证码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) String validateCode
 			){
-		System.out.println("account:"+account);
+		System.out.println("account:"+mobile);
 		System.out.println("password:"+password);
 		System.out.println("validateCode:"+validateCode);
 		String saveValidateCode = SessionUtils.getSessionValidateCode(request);
 		System.out.println("saveValidateCode:"+saveValidateCode);
 		WebResult<Object> result=null;
 		if(saveValidateCode.equals(validateCode)){
-			result=RegisterUtils.findByAccount(account);
+			result=RegisterUtils.findByAccount(mobile);
 			if(result.getCode()==ResultCode.SUCCESS){
-				result = RegisterUtils.updatePassword(account, password);
+				result = RegisterUtils.updatePassword(mobile, password);
 				result.setMessage("修改成功");
+				return result;
 			}else{
 				result.setMessage("用户不存在");
 			}

@@ -2,7 +2,7 @@ package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
 
-public class ProjectSort {
+public class EmployeeSort {
 	private String rowKey;
 	/**
 	 * ID
@@ -28,8 +28,6 @@ public class ProjectSort {
 	 * 数据的版本
 	 */
 	private final Byte version = 0;
-	
-	
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -69,18 +67,5 @@ public class ProjectSort {
 	public Byte getVersion() {
 		return version;
 	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-	}
+	
 }

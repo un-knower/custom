@@ -2,22 +2,37 @@ package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
 
-public class ProjectSort {
+/**
+ * 
+ * @ClassName: Evaluate
+ * @Description: 用户评价
+ * @author zlf
+ * @date 2017年6月15日 下午4:20:26
+ *
+ */
+public class Evaluate {
+	/**
+	 * rowkey
+	 */
 	private String rowKey;
 	/**
 	 * ID
 	 */
 	private Integer id;
 	/**
-	 * 分类编号
+	 * 等级
 	 */
-	private String sortCode;
+	private Integer rank;
 	/**
-	 * 分类名称
+	 * 评价内容
 	 */
-	private String sortName;
+	private String content;
 	/**
-	 * 创建者ID
+	 * 服务ID
+	 */
+	private Integer serviceId;
+	/**
+	 * 用户ID
 	 */
 	private Integer userId;
 	/**
@@ -28,8 +43,6 @@ public class ProjectSort {
 	 * 数据的版本
 	 */
 	private final Byte version = 0;
-	
-	
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -42,17 +55,23 @@ public class ProjectSort {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getSortCode() {
-		return sortCode;
+	public Integer getRank() {
+		return rank;
 	}
-	public void setSortCode(String sortCode) {
-		this.sortCode = sortCode;
+	public void setRank(Integer rank) {
+		this.rank = rank;
 	}
-	public String getSortName() {
-		return sortName;
+	public String getContent() {
+		return content;
 	}
-	public void setSortName(String sortName) {
-		this.sortName = sortName;
+	public void setContent(String content) {
+		this.content = content;
+	}
+	public Integer getServiceId() {
+		return serviceId;
+	}
+	public void setServiceId(Integer serviceId) {
+		this.serviceId = serviceId;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -69,18 +88,6 @@ public class ProjectSort {
 	public Byte getVersion() {
 		return version;
 	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-	}
+	
+	
 }

@@ -10,6 +10,10 @@ public class Employee {
 	 */
 	private Integer id;
 	/**
+	 * 员工编号
+	 */
+	private String employeeCode;
+	/**
 	 *  登录账号
 	 */
 	private String mobile;
@@ -40,11 +44,11 @@ public class Employee {
 	/**
 	 * 区外键
 	 */
-	private Integer area;
+	private Integer areaId;
 	/**
 	 * 联系地址
 	 */
-	private Integer address;
+	private String address;
 	/**
 	 * 经度
 	 */
@@ -61,6 +65,10 @@ public class Employee {
 	 * 员工分类id
 	 */
 	private Integer employeeSortId;
+	/**
+	 * 头像ID
+	 */
+	private Integer imageId;
 	/**
 	 * 账号状态
 	 */
@@ -85,6 +93,12 @@ public class Employee {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getEmployeeCode() {
+		return employeeCode;
+	}
+	public void setEmployeeCode(String employeeCode) {
+		this.employeeCode = employeeCode;
 	}
 	public String getMobile() {
 		return mobile;
@@ -128,16 +142,16 @@ public class Employee {
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
-	public Integer getArea() {
-		return area;
+	public Integer getAreaId() {
+		return areaId;
 	}
-	public void setArea(Integer area) {
-		this.area = area;
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
 	}
-	public Integer getAddress() {
+	public String getAddress() {
 		return address;
 	}
-	public void setAddress(Integer address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 	public Float getLng() {
@@ -164,6 +178,12 @@ public class Employee {
 	public void setEmployeeSortId(Integer employeeSortId) {
 		this.employeeSortId = employeeSortId;
 	}
+	public Integer getImageId() {
+		return imageId;
+	}
+	public void setImageId(Integer imageId) {
+		this.imageId = imageId;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -179,6 +199,4 @@ public class Employee {
 	public Byte getVersion() {
 		return version;
 	}
-	
-	
 }

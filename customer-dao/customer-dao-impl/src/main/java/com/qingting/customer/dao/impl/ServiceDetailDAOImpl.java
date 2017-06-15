@@ -11,7 +11,7 @@ import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.SHCUtil;
-import com.qingting.customer.common.pojo.hbasedo.ServiceDetail;
+import com.qingting.customer.common.pojo.hbasedo.ItemContext;
 import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.ServiceDetailDAO;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
@@ -21,7 +21,7 @@ public class ServiceDetailDAOImpl implements ServiceDetailDAO {
 	@Autowired
 	public RedisTemplate<String, Integer> redisTemplate;
 	@Override
-	public void insertServiceDetail(ServiceDetail serviceDetail) {
+	public void insertServiceDetail(ItemContext serviceDetail) {
 		int num=RedisSerialNum.getSerialNum(redisTemplate, "serviceDetail_id_seq");
 		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(num));
 		SHCUtil.getSHC("serviceDetail").insertObject(rowKey, serviceDetail);
@@ -33,26 +33,26 @@ public class ServiceDetailDAOImpl implements ServiceDetailDAO {
 	}
 
 	@Override
-	public void updateServiceDetailByRowKey(ServiceDetail serviceDetail) {
+	public void updateServiceDetailByRowKey(ItemContext serviceDetail) {
 		SHCUtil.getSHC("serviceDetail").updateObjectWithVersion(new StringRowKey(serviceDetail.getRowKey()), serviceDetail, serviceDetail.getVersion());
 	}
 
 	@Override
-	public ServiceDetail getServiceDetailByRowKey(String rowKey) {
-		SimpleHbaseDOWithKeyResult<ServiceDetail> result = SHCUtil.getSHC("serviceDetail").findObjectAndKey(new StringRowKey(rowKey), ServiceDetail.class);
-		ServiceDetail serviceDetail=result.getT();
+	public ItemContext getServiceDetailByRowKey(String rowKey) {
+		SimpleHbaseDOWithKeyResult<ItemContext> result = SHCUtil.getSHC("serviceDetail").findObjectAndKey(new StringRowKey(rowKey), ItemContext.class);
+		ItemContext serviceDetail=result.getT();
 		serviceDetail.setContentOfRowKey(result.getRowKey().toBytes());
 		return serviceDetail;
 	}
 
 	@Override
-	public List<ServiceDetail> listServiceDetail() {
+	public List<ItemContext> listServiceDetail() {
 		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(0));
 		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(Integer.MAX_VALUE));
-		List<SimpleHbaseDOWithKeyResult<ServiceDetail>> listDOWithKey = SHCUtil.getSHC("serviceDetail").findObjectAndKeyList(startRowKey,endRowKey, ServiceDetail.class);
-		List<ServiceDetail> list=new ArrayList<ServiceDetail>();
-		for (SimpleHbaseDOWithKeyResult<ServiceDetail> result : listDOWithKey) {
-			ServiceDetail serviceDetail = result.getT();
+		List<SimpleHbaseDOWithKeyResult<ItemContext>> listDOWithKey = SHCUtil.getSHC("serviceDetail").findObjectAndKeyList(startRowKey,endRowKey, ItemContext.class);
+		List<ItemContext> list=new ArrayList<ItemContext>();
+		for (SimpleHbaseDOWithKeyResult<ItemContext> result : listDOWithKey) {
+			ItemContext serviceDetail = result.getT();
 			serviceDetail.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(serviceDetail);
 		}

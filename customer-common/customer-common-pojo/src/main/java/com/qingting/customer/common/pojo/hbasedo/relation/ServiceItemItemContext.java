@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
-public class ServiceItemServiceDetail {
+public class ServiceItemItemContext {
 	private String rowKey;
 	/**
 	 * ID
@@ -30,7 +30,7 @@ public class ServiceItemServiceDetail {
 	/**
 	 * 服务内容ID
 	 */
-	private Integer serviceDetailId;
+	private Integer itemContextId;
 	/**
 	 * 上次服务时间
 	 */
@@ -38,7 +38,7 @@ public class ServiceItemServiceDetail {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本
 	 */
@@ -79,11 +79,11 @@ public class ServiceItemServiceDetail {
 	public void setServiceItemId(Integer serviceItemId) {
 		this.serviceItemId = serviceItemId;
 	}
-	public Integer getServiceDetailId() {
-		return serviceDetailId;
+	public Integer getItemContextId() {
+		return itemContextId;
 	}
-	public void setServiceDetailId(Integer serviceDetailId) {
-		this.serviceDetailId = serviceDetailId;
+	public void setItemContextId(Integer itemContextId) {
+		this.itemContextId = itemContextId;
 	}
 	public Calendar getLastTime() {
 		return lastTime;
@@ -91,11 +91,11 @@ public class ServiceItemServiceDetail {
 	public void setLastTime(Calendar lastTime) {
 		this.lastTime = lastTime;
 	}
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
 	public Byte getVersion() {
 		return version;

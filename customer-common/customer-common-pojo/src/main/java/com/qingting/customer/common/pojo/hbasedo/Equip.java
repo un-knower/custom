@@ -26,9 +26,29 @@ public class Equip {
 	 */
 	private String equipMark;
 	/**
-	 * 设备地址
+	 * 省外键
 	 */
-	private String equipAddr;
+	private Integer provinceId;
+	/**
+	 * 市外键
+	 */
+	private Integer cityId;
+	/**
+	 * 区外键
+	 */
+	private Integer areaId;
+	/**
+	 * 地址
+	 */
+	private String address;
+	/**
+	 * 经度
+	 */
+	private Float lng;
+	/**
+	 * 纬度
+	 */
+	private Float lat;
 	/**
 	 * 设备是否开放
 	 */
@@ -42,15 +62,13 @@ public class Equip {
 	 */
 	private Integer projectId;
 	/**
-	 * 时间
+	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本
 	 */
 	private final Byte version = 0;
-	
-	
 	
 	public String getRowKey() {
 		return rowKey;
@@ -92,12 +110,52 @@ public class Equip {
 		this.equipMark = equipMark;
 	}
 
-	public String getEquipAddr() {
-		return equipAddr;
+	public Integer getProvinceId() {
+		return provinceId;
 	}
 
-	public void setEquipAddr(String equipAddr) {
-		this.equipAddr = equipAddr;
+	public void setProvinceId(Integer provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public Integer getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+
+	public Integer getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Float getLng() {
+		return lng;
+	}
+
+	public void setLng(Float lng) {
+		this.lng = lng;
+	}
+
+	public Float getLat() {
+		return lat;
+	}
+
+	public void setLat(Float lat) {
+		this.lat = lat;
 	}
 
 	public Boolean getOpen() {
@@ -124,12 +182,12 @@ public class Equip {
 		this.projectId = projectId;
 	}
 
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
 
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
 
 	public Byte getVersion() {

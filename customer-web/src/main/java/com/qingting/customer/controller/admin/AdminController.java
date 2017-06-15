@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = "后台首页管理")
 @Controller
-@RequestMapping("/admin/admin")
+@RequestMapping("/admin/home")
 public class AdminController {
 
 	@ApiOperation("页面跳转-后台初始页")
@@ -37,7 +37,7 @@ public class AdminController {
 		model.addAttribute("sessionUserNoPermissions", sessionPermission == null ? null : sessionPermission.getNoPermissions());
 		// 默认首页
 		// model.addAttribute("defaultPage", null);
-		return "/admin/admin";
+		return "/admin/home";
 	}
 
 	@ApiOperation("后台菜单")

@@ -33,14 +33,14 @@ public class ValidateController {
 	
 	@ApiOperation("获取验证码")
 	@RequestMapping(value="/getValidateCode",method = RequestMethod.GET)
-	@ApiImplicitParam(paramType="query", name = "account", value = "手机号", required = true, dataType = "String")
+	@ApiImplicitParam(paramType="query", name = "mobile", value = "手机号", required = true, dataType = "String")
 	public @ResponseBody WebResult<Object> getValidateCode(
 			HttpServletRequest request,
-			@ValidateParam({ Validator.MOBILE }) String account
+			@ValidateParam({ Validator.MOBILE }) String mobile
 			){
 		String ip = getIpAddr(request);
 		System.out.println("请求ip地址:"+ip);
-		Result result = txMessageService.getValidateCode(account,ip);
+		Result result = txMessageService.getValidateCode(mobile,ip);
 		System.out.println("result:"+result);
 		System.out.println("result.getCode():"+result.getCode());
 		if(result.getCode()==200){ //发送验证码成功

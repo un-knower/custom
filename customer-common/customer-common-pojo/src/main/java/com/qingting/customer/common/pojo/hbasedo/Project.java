@@ -1,7 +1,6 @@
 package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
-import java.util.Date;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
@@ -10,7 +9,7 @@ import org.apache.hadoop.hbase.util.Bytes;
 
 public class Project {
 	/**
-	 * 组合rowkey
+	 * rowkey
 	 */
 	private String rowKey;
 	/**
@@ -34,21 +33,41 @@ public class Project {
 	 */
 	private Integer equipCount;
 	/**
+	 * 开始时间
+	 */
+	private Calendar startTime;
+	/**
 	 * 到期时间
 	 */
-	private Date deadline;
+	private Calendar endTime;
 	/**
-	 * 项目地址
+	 * 省外键
 	 */
-	private String projectAddr;
+	private Integer provinceId;
+	/**
+	 * 市外键
+	 */
+	private Integer cityId;
+	/**
+	 * 区外键
+	 */
+	private Integer areaId;
+	/**
+	 * 地址
+	 */
+	private String address;
+	/**
+	 * 经度
+	 */
+	private Float lng;
+	/**
+	 * 纬度
+	 */
+	private Float lat;
 	/**
 	 * 项目分类ID
 	 */
 	private Integer projectSortId;
-	/**
-	 * 分类名称
-	 */
-	private String projectSortName;
 	/**
 	 * 用户ID
 	 */
@@ -60,7 +79,7 @@ public class Project {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本
 	 */
@@ -114,20 +133,68 @@ public class Project {
 		this.equipCount = equipCount;
 	}
 
-	public Date getDeadline() {
-		return deadline;
+	public Calendar getStartTime() {
+		return startTime;
 	}
 
-	public void setDeadline(Date deadline) {
-		this.deadline = deadline;
+	public void setStartTime(Calendar startTime) {
+		this.startTime = startTime;
 	}
 
-	public String getProjectAddr() {
-		return projectAddr;
+	public Calendar getEndTime() {
+		return endTime;
 	}
 
-	public void setProjectAddr(String projectAddr) {
-		this.projectAddr = projectAddr;
+	public void setEndTime(Calendar endTime) {
+		this.endTime = endTime;
+	}
+
+	public Integer getProvinceId() {
+		return provinceId;
+	}
+
+	public void setProvinceId(Integer provinceId) {
+		this.provinceId = provinceId;
+	}
+
+	public Integer getCityId() {
+		return cityId;
+	}
+
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+
+	public Integer getAreaId() {
+		return areaId;
+	}
+
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public Float getLng() {
+		return lng;
+	}
+
+	public void setLng(Float lng) {
+		this.lng = lng;
+	}
+
+	public Float getLat() {
+		return lat;
+	}
+
+	public void setLat(Float lat) {
+		this.lat = lat;
 	}
 
 	public Integer getProjectSortId() {
@@ -137,15 +204,6 @@ public class Project {
 	public void setProjectSortId(Integer projectSortId) {
 		this.projectSortId = projectSortId;
 	}
-
-	public String getProjectSortName() {
-		return projectSortName;
-	}
-
-	public void setProjectSortName(String projectSortName) {
-		this.projectSortName = projectSortName;
-	}
-
 	public Integer getUserId() {
 		return userId;
 	}
@@ -162,12 +220,12 @@ public class Project {
 		this.comboId = comboId;
 	}
 
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
 
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
 
 	public Byte getVersion() {

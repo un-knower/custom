@@ -3,16 +3,16 @@
 	<HBaseTableSchema tableName="project" defaultFamily="projectFamily">
 		<HBaseColumnSchema qualifier="projectName" typeName="string" />
 		<HBaseColumnSchema qualifier="equipCount" typeName="int" />
-		<HBaseColumnSchema qualifier="deadline" typeName="date" />
-		<HBaseColumnSchema qualifier="projectAddr" typeName="string" />
+		<HBaseColumnSchema qualifier="endTime" typeName="java.util.Calendar"/>
+		<HBaseColumnSchema qualifier="address" typeName="string" />
 		<HBaseColumnSchema qualifier="projectSortId" typeName="int"/>
 		<HBaseColumnSchema qualifier="version" typeName="byte"/>
 	</HBaseTableSchema>	
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Project" defaultFamily="projectFamily">
 		<field name="projectName"/>
 		<field name="equipCount" />
-		<field name="deadline" />
-		<field name="projectAddr" />
+		<field name="endTime" />
+		<field name="address" />
 		<field name="projectSortId"/>
 		<field name="version" isVersioned="true"/>
 	</MappingType>

@@ -2,9 +2,7 @@ package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
 
-import org.apache.hadoop.hbase.util.Bytes;
-
-public class ServiceDetail {
+public class OtherContext {
 	private String rowKey;
 	/**
 	 * ID
@@ -49,21 +47,5 @@ public class ServiceDetail {
 	public Byte getVersion() {
 		return version;
 	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-		byte[] dest=new byte[4];
-		System.arraycopy(rowkey, 0, dest, 0, 4);//前4个字节,id
-		this.id=Bytes.toInt(dest);
-	}
+	
 }

@@ -85,7 +85,7 @@ public class EquipParam {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本，更新时用，只需要一个版本
 	 */
@@ -244,12 +244,12 @@ public class EquipParam {
 		this.enable = enable;
 	}
 
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
 
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
 
 	public Byte getVersion() {

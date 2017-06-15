@@ -1,14 +1,14 @@
 <SimpleHbase>
 
 	<HBaseTableSchema tableName="user" defaultFamily="userFamily">
-		<HBaseColumnSchema qualifier="account" typeName="string" />
+		<HBaseColumnSchema qualifier="mobile" typeName="string" />
 		<HBaseColumnSchema qualifier="sex" typeName="boolean" />
 		<HBaseColumnSchema qualifier="age" typeName="int" />
 		<HBaseColumnSchema qualifier="userSortId" typeName="int"/>
 		<HBaseColumnSchema qualifier="version" typeName="byte"/>
 	</HBaseTableSchema>	
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.User" defaultFamily="userFamily">
-		<field name="account"/>
+		<field name="mobile"/>
 		<field name="sex" />
 		<field name="age" />
 		<field name="userSortId"/>

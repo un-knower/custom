@@ -21,7 +21,7 @@ public class ConfigServiceItem {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本
 	 */
@@ -50,11 +50,11 @@ public class ConfigServiceItem {
 	public void setServiceItemId(Integer serviceItemId) {
 		this.serviceItemId = serviceItemId;
 	}
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
 	public Byte getVersion() {
 		return version;

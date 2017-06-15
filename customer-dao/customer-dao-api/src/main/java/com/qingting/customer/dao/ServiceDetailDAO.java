@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.common.pojo.hbasedo.ServiceDetail;
+import com.qingting.customer.common.pojo.hbasedo.ItemContext;
 
 public interface ServiceDetailDAO {
 	/**
@@ -13,7 +13,7 @@ public interface ServiceDetailDAO {
 	 * @return void
 	 * @throws
 	 */
-	void insertServiceDetail(ServiceDetail serviceDetail);
+	void insertServiceDetail(ItemContext serviceDetail);
 	/**
 	 * 
 	 * @Title: deleteServiceDetailByRowKey
@@ -31,7 +31,7 @@ public interface ServiceDetailDAO {
 	 * @return void
 	 * @throws
 	 */
-	void updateServiceDetailByRowKey(ServiceDetail serviceDetail);
+	void updateServiceDetailByRowKey(ItemContext serviceDetail);
 	/**
 	 * 
 	 * @Title: getServiceDetailByRowKey
@@ -41,7 +41,7 @@ public interface ServiceDetailDAO {
 	 * @return ServiceDetail
 	 * @throws
 	 */
-	ServiceDetail getServiceDetailByRowKey(String rowKey);
+	ItemContext getServiceDetailByRowKey(String rowKey);
 	/**
 	 * 
 	 * @Title: listServiceDetail
@@ -50,5 +50,5 @@ public interface ServiceDetailDAO {
 	 * @return List<ServiceDetail>
 	 * @throws
 	 */
-	List<ServiceDetail> listServiceDetail();
+	List<ItemContext> listServiceDetail();
 }	

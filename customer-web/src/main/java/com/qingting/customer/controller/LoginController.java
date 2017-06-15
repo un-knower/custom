@@ -31,15 +31,33 @@ public class LoginController {
 		System.out.println(this.getClass()+"客户端自定义登陆页面！login.jsp");
 		return "/admin";
 	}
-	@ApiOperation("登陆提交")
-	@RequestMapping(value="/login",method = RequestMethod.POST)
-	public String login(HttpServletRequest request,
+	@ApiOperation("客户端登陆提交-此处跳转顶层目录lead.jsp")
+	@RequestMapping(value="/consumer/login",method = RequestMethod.POST)
+	public String consumerLogin(HttpServletRequest request,
 			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE })String mobile,
 			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD })String password
 			){
 		String contextpath = request.getScheme() +"://" + request.getServerName()  + ":" +request.getServerPort() +request.getContextPath();
 		String ssoLoginUrl = new StringBuilder().append(Config.getSsoServerUrl()).append("/login/submit?").append("account="+mobile).append("&password="+password).
 				append("&backUrl=").append(contextpath+"/lead").append("&appCode=").append(Config.getSsoAppCode()).toString();
+		System.out.println(this.getClass()+"ssoLoginUrl:");
+		return "redirect:" + ssoLoginUrl;
+		/*String ssoLoginUrl = new StringBuilder().append(Config.getSsoServerUrl()).append("/login/submit").toString();
+		model.addAttribute("account", mobile);   
+	    model.addAttribute("password", password); 
+	    model.addAttribute("backUrl", request.getServletPath()+"/lead");
+	    model.addAttribute("appCode", Config.getSsoAppCode());
+	    return "redirect:" + ssoLoginUrl; */
+	}
+	@ApiOperation("后台登陆提交-此处跳转/admin/lead.jsp")
+	@RequestMapping(value="/admin/login",method = RequestMethod.POST)
+	public String adminLogin(HttpServletRequest request,
+			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE })String mobile,
+			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD })String password
+			){
+		String contextpath = request.getScheme() +"://" + request.getServerName()  + ":" +request.getServerPort() +request.getContextPath();
+		String ssoLoginUrl = new StringBuilder().append(Config.getSsoServerUrl()).append("/login/submit?").append("account="+mobile).append("&password="+password).
+				append("&backUrl=").append(contextpath+"/admin/home").append("&appCode=").append(Config.getSsoAppCode()).toString();
 		System.out.println(this.getClass()+"ssoLoginUrl:");
 		return "redirect:" + ssoLoginUrl;
 		/*String ssoLoginUrl = new StringBuilder().append(Config.getSsoServerUrl()).append("/login/submit").toString();

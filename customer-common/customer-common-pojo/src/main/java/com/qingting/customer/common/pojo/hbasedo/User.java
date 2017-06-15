@@ -48,11 +48,11 @@ public class User implements Serializable{
 	/**
 	 * 区外键
 	 */
-	private Integer area;
+	private Integer areaId;
 	/**
 	 * 联系地址
 	 */
-	private Integer address;
+	private String address;
 	/**
 	 * 经度
 	 */
@@ -65,6 +65,10 @@ public class User implements Serializable{
 	 * 用户分类id
 	 */
 	private Integer userSortId;
+	/**
+	 * 头像ID
+	 */
+	private Integer imageId;
 	/**
 	 * 账号状态
 	 */
@@ -132,16 +136,16 @@ public class User implements Serializable{
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
-	public Integer getArea() {
-		return area;
+	public Integer getAreaId() {
+		return areaId;
 	}
-	public void setArea(Integer area) {
-		this.area = area;
+	public void setAreaId(Integer areaId) {
+		this.areaId = areaId;
 	}
-	public Integer getAddress() {
+	public String getAddress() {
 		return address;
 	}
-	public void setAddress(Integer address) {
+	public void setAddress(String address) {
 		this.address = address;
 	}
 	public Float getLng() {
@@ -161,6 +165,12 @@ public class User implements Serializable{
 	}
 	public void setUserSortId(Integer userSortId) {
 		this.userSortId = userSortId;
+	}
+	public Integer getImageId() {
+		return imageId;
+	}
+	public void setImageId(Integer imageId) {
+		this.imageId = imageId;
 	}
 	public String getStatus() {
 		return status;
