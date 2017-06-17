@@ -10,10 +10,8 @@ import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
-import com.alipay.simplehbase.enums.SerialType;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.SHCUtil;
-import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.qingting.customer.common.pojo.hbasedo.Project;
 import com.qingting.customer.common.pojo.util.DateUtil;
 import com.qingting.customer.common.pojo.util.RowKeyUtil;

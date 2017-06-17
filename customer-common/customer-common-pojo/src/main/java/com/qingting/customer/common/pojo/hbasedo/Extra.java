@@ -23,9 +23,38 @@ public class Extra {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本
 	 */
 	private final Byte version = 0;
+	
+	public String getRowKey() {
+		return rowKey;
+	}
+	public void setRowKey(String rowKey) {
+		this.rowKey = rowKey;
+	}
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public Calendar getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
+	}
+	public Byte getVersion() {
+		return version;
+	}
+	
 }

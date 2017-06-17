@@ -4,6 +4,14 @@ import java.util.Calendar;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
+
+/**
+ * @ClassName: Warn
+ * @Description: 预警信息
+ * @author zlf
+ * @date 2017年6月17日 下午5:35:04
+ *
+ */
 public class Warn {
 	private String rowKey;
 	/**
@@ -20,9 +28,13 @@ public class Warn {
 	 */
 	private Integer equipId;
 	/**
+	 * 状态
+	 */
+	private String status;
+	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
+	private Calendar createTime;
 	/**
 	 * 数据的版本
 	 */
@@ -53,11 +65,17 @@ public class Warn {
 	public void setEquipId(Integer equipId) {
 		this.equipId = equipId;
 	}
-	public Calendar getCalendar() {
-		return calendar;
+	public String getStatus() {
+		return status;
 	}
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public Calendar getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
 	public Byte getVersion() {
 		return version;
