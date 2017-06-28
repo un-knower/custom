@@ -27,9 +27,9 @@
 	<script src="${_staticPath}/resource/ace/js/grid.locale-en.js"></script>
 	<script src="${_staticPath}/resource/ace/js/bootstrap-datepicker.min.js"></script>
 	<script type="text/javascript">
-		var _path = "http://192.168.10.20:8086/customer-web"; 
+		//var _path = "http://192.168.10.20:8086/customer-web"; 
 		var _staticpath;
-		//var _path="${_path}";		
+		var _path="${_path}";		
 	</script>
 	<style rel="stylesheet">
 		.onError{color:red;}
@@ -104,18 +104,18 @@
 												找回密码
 											</h4>
 											<div class="space-6"></div>
-											<form>
+											<form id="forget-form" method="post">
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input id="account" type="text"class="form-control" placeholder="用户名" autocomplete="off"/>
+															<input id="account" name="account" type="text"class="form-control" placeholder="用户名" autocomplete="off"/>
 															<i class="icon-user"></i>
 														</span>
 													</label>
 													
 													<label class="block clearfix">
 														<span class="input-icon input-icon-right">
-															<input id="code" type="text" class="form-control" placeholder="验证码" autocomplete="off"/>				
+															<input id="code" name="validateCode" type="text" class="form-control" placeholder="验证码" autocomplete="off"/>				
 														</span>
 														<button id="getCode" type="button" class="width-35 pull-right btn btn-sm btn-success">
 															获取验证码													
@@ -124,7 +124,7 @@
 
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
-															<input id="fpassword" type="password" class="form-control" placeholder="密码" autocomplete="off"/>
+															<input id="fpassword" type="password" name="password" class="form-control" placeholder="密码" autocomplete="off"/>
 															<i class="icon-lock"></i>
 														</span>
 													</label>
@@ -162,7 +162,12 @@
 		<script type="text/javascript">
 			function show_box(id) {
 			 jQuery('.widget-box.visible').removeClass('visible');
-			 jQuery('#'+id).addClass('visible');
+			 jQuery('#'+id).addClass('visible').find('.formtips').remove();
+			 jQuery('#'+id).find('form').trigger('reset');
+			 
+			 /* .find('form:input').
+			 not(":button,:submit,:reset,:hidden").val("").
+			 removeAttr("checked").remove("selected") */		
 			}						
 		</script>
 </body>
@@ -243,9 +248,9 @@ $(function(){
 			settime($(this));
 			var account = $('#account').val();
 			$.ajax({
-				type:'POST',
-				url:_path+'/validate/getValidateCode',
-				data:account,
+				type:'get',
+				url:_path+'/validate/getValidateCode'+'?'+'account='+account,
+				//data:{account:account},
 				success : function(msg){
 					if(msg) alert('验证码已成功发送至您手机！')								
 				}
@@ -287,7 +292,11 @@ $(function(){
 		});	
 		//忘记密码登录提交		
 		$('#resetPassword').click(function(){
-			var param ={},a = $('#fpassword').val(),b=$('#fpassword2').val();
+			/* var a = $('#fpassword').val(),b=$('#fpassword2').val();
+			if(a != b){alert('两次密码不一致')}
+			$('form[id=forget-form]').attr('action',_path+"/forget/updatePassword");
+			$('#forget-form').submit(); */	
+			 var param ={},a = $('#fpassword').val(),b=$('#fpassword2').val();
 			param.account = $('#account').val(),param.validateCode = $('#code').val(),
 			param.password = a;
 			if(a != b){alert('两次密码不一致')}
@@ -297,12 +306,14 @@ $(function(){
 				url:_path+'/forget/updatePassword',
 				data:param,
 				success : function(msg){
-					console.log(msg);
-					if(!msg) alert('后台需要验证 用户验证码是否输入正确！')
-					else window.location.href =_path + "admin/index";//登录成功后跳转到首页					
-				}
-			});
-			}
+					if(!msg) {alert('验证码不符！')}
+					else {
+						alert('密码修改成功！');
+						window.location.href =_path + "/admin/home";//登录成功后跳转到首页
+						}					
+					}
+				});
+			} 
 			
 		});		
 	})					

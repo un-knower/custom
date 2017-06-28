@@ -40,8 +40,8 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByAccount(String account) {
-		return userDAO.getUserByAccount(account);
+	public User getUserByMobile(String mobile) {
+		return userDAO.getUserByMobile(mobile);
 	}
 
 }

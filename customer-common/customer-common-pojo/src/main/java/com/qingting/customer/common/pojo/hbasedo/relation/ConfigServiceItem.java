@@ -69,7 +69,7 @@ public class ConfigServiceItem {
 	 */
 	public void setContentOfRowKey(byte[] rowkey){
 		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
+		if(rowkey.length<4){
 			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
 		}
 		byte[] dest=new byte[4];

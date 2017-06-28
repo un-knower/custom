@@ -13,6 +13,7 @@ import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
+import com.smart.sso.client.Config;
 import com.smart.sso.client.RegisterUtils;
 import com.smart.sso.client.SessionUtils;
 
@@ -24,6 +25,11 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("/forget")
 public class ForgetController {
+	@ApiOperation("页面跳转-忘记密码页面")
+	@RequestMapping(method = RequestMethod.GET)
+	public String execute(){
+		return "/forget";
+	}
 	@ApiOperation("修改密码")
 	@RequestMapping(value="/update",method = RequestMethod.POST)
 	public @ResponseBody WebResult<Object> updatePassword(
@@ -43,8 +49,18 @@ public class ForgetController {
 			result=RegisterUtils.findByAccount(mobile);
 			if(result.getCode()==ResultCode.SUCCESS){
 				result = RegisterUtils.updatePassword(mobile, password);
-				result.setMessage("修改成功");
-				return result;
+				WebResult<Object> loginResult = RegisterUtils.login(Config.getSsoAppCode(), mobile, password, request, response);
+				if(result.getCode()==ResultCode.SUCCESS&&loginResult.getCode()==ResultCode.SUCCESS){
+					result.setMessage("修改成功");
+					return result;
+				}else{
+					result.setCode(ResultCode.FAILURE);
+					if(result.getCode()!=ResultCode.SUCCESS){ //密码更新失败
+						result.setMessage("密码更新失败，可能SSO服务器未启动");
+					}else{//登陆失败
+						result.setMessage("登陆失败，可能SSO服务器未启动");
+					}
+				}
 			}else{
 				result.setMessage("用户不存在");
 			}

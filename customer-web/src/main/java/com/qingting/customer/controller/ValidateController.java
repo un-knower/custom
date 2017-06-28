@@ -39,7 +39,7 @@ public class ValidateController {
 			@ValidateParam({ Validator.MOBILE }) String mobile
 			){
 		String ip = getIpAddr(request);
-		System.out.println("请求ip地址:"+ip);
+		System.out.println("请求ip地址:"+ip+".mobile="+mobile+".");
 		Result result = txMessageService.getValidateCode(mobile,ip);
 		System.out.println("result:"+result);
 		System.out.println("result.getCode():"+result.getCode());

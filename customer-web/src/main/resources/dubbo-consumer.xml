@@ -12,7 +12,7 @@
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<!-- 注册中心地址 -->
-	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
+	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" timeout="60000"/>
 
 	<!-- 用户服务接口 -->
 	<!-- <dubbo:reference interface="com.smart.demo.service.DemoService" id="demoService" />  -->

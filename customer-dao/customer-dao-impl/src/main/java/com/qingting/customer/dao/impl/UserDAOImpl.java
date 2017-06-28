@@ -67,10 +67,10 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public User getUserByAccount(String account) {
+	public User getUserByMobile(String mobile) {
 		Map<String, Object> para = new HashMap<String, Object>();
-		para.put("account", account);
-		List<SimpleHbaseDOWithKeyResult<User>> list = SHCUtil.getSHC("user").findObjectAndKeyList(new StringRowKey(""),new StringRowKey(User.MAX_ROWKEY), User.class,"getUserByAccount",para);
+		para.put("mobile", mobile);
+		List<SimpleHbaseDOWithKeyResult<User>> list = SHCUtil.getSHC("user").findObjectAndKeyList(new StringRowKey(""),new StringRowKey(User.MAX_ROWKEY), User.class,"getUserByMobile",para);
 		SimpleHbaseDOWithKeyResult<User> result;
 		User user=null;
 		if(list.size()>1)

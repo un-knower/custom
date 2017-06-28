@@ -34,6 +34,11 @@ public class EquipServiceImpl implements EquipService {
 	public List<Equip> listEquipByProjectId(Integer projectId) {
 		return equipDAO.listEquipByProjectId(projectId);
 	}
+
+	@Override
+	public List<Equip> listEquipByUserId(Integer userId) {
+		return null;
+	}
 	
 
 }

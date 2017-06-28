@@ -60,7 +60,7 @@ public class RegisterController {
 		if(validateCode.equals(saveValidateCode)){
 			result=RegisterUtils.findByAccount(mobile);
 			if(result.getCode()==ResultCode.FAILURE){//单点服务端用户不存在
-				if(userService.getUserByAccount(mobile)==null){//本地用户不存在
+				if(userService.getUserByMobile(mobile)==null){//本地用户不存在
 					System.out.println("准备开始存用户...");
 					result = RegisterUtils.register(mobile, password);//单点服务端注册用户
 					System.out.println("单点注册结果result："+result);
@@ -93,7 +93,7 @@ public class RegisterController {
 		System.out.println("account:"+mobile);
 		WebResult<Object> result=RegisterUtils.findByAccount(mobile);
 		System.out.println("result:"+result);
-		User user=userService.getUserByAccount(mobile);
+		User user=userService.getUserByMobile(mobile);
 		System.out.println("user:"+user);
 		if(user!=null ||result.getCode()==ResultCode.SUCCESS){
 			result.setMessage("用户已存在");

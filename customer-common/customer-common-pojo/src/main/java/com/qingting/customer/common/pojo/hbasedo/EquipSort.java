@@ -17,6 +17,10 @@ public class EquipSort {
 	 */
 	private String sortName;
 	/**
+	 * 图像ID
+	 */
+	private Integer imageId;
+	/**
 	 * 创建者ID
 	 */
 	private Integer userId;
@@ -52,6 +56,12 @@ public class EquipSort {
 	}
 	public void setSortName(String sortName) {
 		this.sortName = sortName;
+	}
+	public Integer getImageId() {
+		return imageId;
+	}
+	public void setImageId(Integer imageId) {
+		this.imageId = imageId;
 	}
 	public Integer getUserId() {
 		return userId;

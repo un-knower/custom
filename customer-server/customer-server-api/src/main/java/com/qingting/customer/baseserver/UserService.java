@@ -44,14 +44,14 @@ public interface UserService {
 	User getUserByRowKey(String rowKey);
 	/**
 	 * 
-	 * @Title: getUserByAccount
-	 * @Description: 查询一个用户通过account
-	 * @param account
+	 * @Title: getUserByMobile
+	 * @Description: 查询一个用户通过mobile
+	 * @param mobile
 	 * @return 
 	 * @return User
 	 * @throws
 	 */
-	User getUserByAccount(String account);
+	User getUserByMobile(String mobile);
 	/**
 	 * 
 	 * @Title: listUser

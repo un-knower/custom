@@ -2,11 +2,13 @@ package com.qingting.customer.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.qingting.customer.baseserver.UserService;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
 import com.smart.sso.client.Config;
@@ -19,6 +21,10 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
+	
+	@Autowired
+	UserService userService;
+	
 	@ApiOperation("页面跳转-客户端登陆页,例外:此处跳转顶层目录login.jsp页")
 	@RequestMapping(value="/consumer",method = RequestMethod.GET)
 	public String consumerRedirect(){
@@ -29,6 +35,7 @@ public class LoginController {
 	@RequestMapping(value="/admin",method = RequestMethod.GET)
 	public String adminRedirect(){
 		System.out.println(this.getClass()+"客户端自定义登陆页面！login.jsp");
+		System.out.println("userService"+userService);
 		return "/admin";
 	}
 	@ApiOperation("客户端登陆提交-此处跳转顶层目录lead.jsp")

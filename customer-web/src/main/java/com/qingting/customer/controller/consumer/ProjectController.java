@@ -43,7 +43,7 @@ public class ProjectController {
 		SessionUser sessionUser = SessionUtils.getSessionUser(request);
 		String account = sessionUser.getAccount();
 		System.out.println("account:"+account);
-		User user = userService.getUserByAccount(account);
+		User user = userService.getUserByMobile(account);
 		
 		List<Project> list = projectService.listProjectByUserId(user.getId());
 		System.out.println("结果："+list);
@@ -60,7 +60,7 @@ public class ProjectController {
 		SessionUser sessionUser = SessionUtils.getSessionUser(request);
 		String account = sessionUser.getAccount();
 		System.out.println("account:"+account);
-		User user = userService.getUserByAccount(account);
+		User user = userService.getUserByMobile(account);
 		
 		Project project = projectService.getProjectByRowkey(rowKey);
 		System.out.println("结果："+project);

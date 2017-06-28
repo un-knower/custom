@@ -45,7 +45,7 @@ public class TxMessageServiceImpl implements TxMessageService {
 		String ret = MnsUtils.txValidateCode(account, validateCode);
 		System.out.println("ret:"+ret);*/
 		
-		System.out.println("获得"+account+"验证码...");
+		/*System.out.println("获得"+account+"验证码...");
 		Integer txCountForPhone = messageService.countMessageOfTodayByPhone(account);
 		System.out.println("今天给手机号"+account+"发送条数:"+txCountForPhone);
 		//String ip = getIpAddr(request);
@@ -63,7 +63,7 @@ public class TxMessageServiceImpl implements TxMessageService {
 		//System.out.println("验证码validateCode："+validateCode);
 		//SessionUtils.setSessionValidateCode(request, validateCode);
 		//String ret = MnsUtils.txValidateCode(account, validateCode);
-		//System.out.println("ret:"+ret);
+		//System.out.println("ret:"+ret);*/
 		
 		JSONObject jsonObject = new JSONObject(txMessageDAO.txValidateCode(account));
 		int code =jsonObject.getInt("code");

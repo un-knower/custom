@@ -1,76 +1,151 @@
 <%@ page language="java" pageEncoding="utf-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml-transitional.dtd">
-<html>
-<head data-genuitec="wc2-22-44">
-    <title data-genuitec="wc2-22-45">登录</title>
-	<meta charset="utf-8" data-genuitec="wc2-22-46"/>
-
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" data-genuitec="wc2-22-47"/>
-
-	<link href="${_staticPath}/resource/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet" data-genuitec="wc2-22-48"/>
-
-	
-	<script src="${_staticPath}/resource/bootstrap-3.3.5/js/html5shiv.js" data-genuitec="wc2-22-49"></script>
-	<script src="${_staticPath}/resource/bootstrap-3.3.5/js/respond.min.js" data-genuitec="wc2-22-50"></script>
-
-	<script src="${_staticPath}/resource/jquery/jquery-2.0.3.min.js" data-genuitec="wc2-22-51"></script>
-	<script src="${_staticPath}/resource/bootstrap-3.3.5/js/bootstrap.min.js" data-genuitec="wc2-22-52"></script>
-
-	
-	<link href="${_staticPath}/resource/datetime/datetimepicker.min.css" rel="stylesheet" data-genuitec="wc2-22-53"/>
-	<script src="${_staticPath}/resource/datetime/datetimepicker.min.js" data-genuitec="wc2-22-54"></script>
-	<script src="${_staticPath}/resource/datetime/datetimepicker.zh-CN.js" data-genuitec="wc2-22-55"></script> 
-	<link href="${_staticPath}/resource/css/index.css" rel="stylesheet" data-genuitec="wc2-22-113"/>
-	<script type="text/javascript" src="./main.js" data-genuitec="wc2-22-118"></script>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="description" content="">
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0"> 
+		<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
+		<meta name="apple-mobile-web-app-capable" content="yes">
+		<meta name="format-detection" content="telephone=no">
+		<title>净水器-登录</title>
+		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/weui.min.css" />
+		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
+		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
+	</head>
 	<script type="text/javascript">
 		var _path="${_path}";
 	</script>
-	<style>
-		 /* input:-webkit-autofill{
-	     
-		 -webkit-box-shadow:0 0 0px 1000px white inset !important;
-		-webkit-text-fill-color:#333; 
-		color:#fff;
-		background-color: transparent;
-		}  */
-	</style>
-<body style="background : url('${_staticPath}/resource/images/bg.jpg')" data-genuitec="wc2-22-116">
-	<header class="cui-header" style="display:none;" data-genuitec="wc2-22-119" data-genuitec-lp-enabled="true" data-genuitec-file-id="wc2-22" data-genuitec-path="/test/WebRoot/index.html">
-		<span class="glyphicon glyphicon-chevron-left tc" aria-hidden="true" data-genuitec="wc2-22-121"></span>
-		<h3 class="tc" data-genuitec="wc2-22-122">忘记密码</h3>
-		<span class="glyphicon glyphicon-option-horizontal tc  pull-righ" aria-hidden="true" data-genuitec="wc2-22-123"></span>
-		
-	</header>
-	<div class="login-inputs" data-genuitec="wc2-22-120">
-		<div class="logo tc" data-genuitec="wc2-22-124"><img src="${_staticPath}/resource/images/logo.png" data-genuitec="wc2-22-129"/></div>
-		<div class="tc" style="color:#fff;margin-bottom: 5%;" data-genuitec="wc2-22-125"><h4 data-genuitec="wc2-22-130">持续保障你的饮水安全</h4></div>
-		<div class="loginPage" data-genuitec="wc2-22-126">
-		    <form id="login-form" style="position:relative;" data-genuitec="wc2-22-131" method="post">
-				<input id="mobile" class="input-group-me " name="mobile" type="text" placeholder="请输入手机号" autocomplete="nope" data-genuitec="wc2-22-133">
-				<input id="passWord" class="input-group-me " name="password" type="password" placeholder="请输入密码" autocomplete="off" data-genuitec="wc2-22-134">
-				<img id="eye" src="${_staticPath}/resource/images/eye.png"/ style="position: absolute; left: 90%;top: 41%;width:10%;" data-genuitec="wc2-22-135">
-				<!-- <input id="loging" class="input-group-me input-login" name="login" type="button" value="登&nbsp&nbsp&nbsp&nbsp录" data-genuitec="wc2-22-136"> -->	
-				<button id="loging" class="btn btn-default btn-lg btn-block">登&nbsp&nbsp&nbsp&nbsp录</button>		
-			</form> 
-			<div class="down" data-genuitec="wc2-22-132"> <a href="#" id="fPassword" class="fl" data-genuitec="wc2-22-137">忘记密码？</a><a href="#" id="register" class="fr" data-genuitec="wc2-22-138">立即注册</a></div> 
-		</div>
-		<div class="fPwPage" style="display:none;" data-genuitec="wc2-22-127">
-		    <form style="position:relative;" data-genuitec="wc2-22-139" method="post">
-				<input id="rmobile" class="input-fPwPage input-group-me" name="mobile" type="number" placeholder="请输入手机号" data-genuitec="wc2-22-140">
-				<div class="yzmDiv" data-genuitec="wc2-22-141">
-					<input id="rYzm" class="input-fPwPage yzm fl"  type="text" placeholder="请输入验证码" style="display: block;width:60%;" data-genuitec="wc2-22-143">
-					<input id="getYzm" class="input-fPwPage fr" type="button" value="获取验证码" style="font-size:16px;border-radius:20px;color:#a09999;display: block;width:39%;" data-genuitec="wc2-22-144">
+	<body ontouchstart>
+		<div class="page flex js_show height100">
+			<div class="page__bd xy-container xy-container-t0b0">
+				<div class="xy-border-box height100">
+					<div class="xy-layout bg-blue-01" flex="dir:top main:justify">
+						<div class="xy-logo-bar" flex-box="1" flex="main:center cross:center">
+							<div>
+								<p flex="main:center cross:center">
+									<span class="logo-lovely" flex="main:center cross:center"><img src="${_staticPath}/resource/weuiWeb/img/logo-lovely.png" /></span>
+								</p>
+								<p class="logo-text xy-pad-t10 xy-tac"><img src="${_staticPath}/resource/weuiWeb/img/logo-text.png" /></p>
+							</div>
+						</div>
+						<!--pic-ripple-bg-other-->
+						<div class="xy-seat-01 xy-line-h0">
+							<div class="xy-waveBox xy-line-h0">
+								<div class="xy-wave" id="wave1"></div>
+								<div class="xy-wave" id="wave2"></div>
+								<div class="xy-wave" id="wave3"></div>
+							</div>
+							<div class="bg-blue-opacity xy-pad-lr10 xy-pad-b10">
+								<div class="lovely-state xy-tac xy-line-h0">
+									<img src="${_staticPath}/resource/weuiWeb/img/lovely-open-eye.png" />
+								</div><!--/lovely state-->
+								<form id="loginform" method="post" >
+									<div class="weui-cells weui-cells_form  xy-login-form xy-layout-bar xy-login-form-seat">
+										<div class="weui-cell xy-login-ImgLine xy-mar-lr10 xy-mar-t15">
+											<div class="weui-cell__hd"><label class="weui-label xy-pad-r5"><img src="${_staticPath}/resource/weuiWeb/img/form-tel.png" /></label></div>
+											<div class="weui-cell__bd">
+												<input id="mobile" class="weui-input xy-input-tel" name="mobile" type="number" maxLength="11" placeholder="请输入您的手机号">
+											</div>
+										</div>
+										<div class="weui-cell xy-login-ImgLine xy-mar-lr10 xy-mar-t8">
+											<div class="weui-cell__hd"><label class="weui-label xy-pad-r5"><img src="${_staticPath}/resource/weuiWeb/img/form-pwd.png" /></label></div>
+											<div class="weui-cell__bd">
+												<input id="password" class="weui-input xy-input-pwd" name="password" type="password" placeholder="请输入密码">
+											</div>
+										</div>
+										<div class="xy-mar-tb10 xy-mar-lr10">
+											<!-- <a href="#" class="weui-btn weui-btn_primary bg-light-blue" id="login" type="button">登录</a> -->
+											<button class="weui-btn weui-btn_primary bg-light-blue" id="login">登录</button>
+										</div>
+										<div class="bg-light-gray xy-clearfix">
+											<a href="#" id="fpassword" class="xy-fc-black xy-fs14 xy-pad-tb7lr10 xy-fll">忘记密码？</a>
+											<a href="#" id="register" class="xy-fc-black xy-fs14 xy-pad-tb7lr10 xy-flr">立即注册</a>
+										</div>
+									</div>								
+								</form>
+							</div>
+						</div><!--/bottom-->
+					</div><!--内容-->
 				</div>
-				<input id="setPassword" class="input-fPwPage input-group-me" name="password" type="password" placeholder="请设置大于6位的密码" data-genuitec="wc2-22-142">
-				<img id="eye1" src="${_staticPath}/resource/images/eye.png"/ style="position: absolute; left: 90%;top: 41%;width:10%;" data-genuitec="wc2-22-145">
-				<input id="setPasswordA" class="input-fPwPage input-group-me" name="password" type="password" placeholder="确认密码" data-genuitec="wc2-22-146">
-				<img id="eye2" src="${_staticPath}/resource/images/eye.png"/ style="position: absolute; left: 90%;top: 60%;width:10%;" data-genuitec="wc2-22-147">
-				<input id="login" class="input-group-me input-login" type="button" value="注&nbsp&nbsp&nbsp&nbsp册" style="margin-top: 10%;" data-genuitec="wc2-22-148">														
-			</form> 			
+			</div>
+			<!--/ container -->
+			
 		</div>
-
-	</div>
-	
-</body>
-
+		<!--/page End-->
+		
+		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
+		<script type="text/javascript" class="js_show">
+			function eventCollection(weui){
+				//alert("宽:"+$(window).width()+";"+"高:"+$(window).height());
+			
+				$('.xy-login-form .weui-input').focus(function(){//输入框 获取焦点 蜻蜓睁眼闭眼动作
+					$(this).parents('.weui-cell').css('border','1px solid #509ffc').siblings().removeAttr("style");
+					if($(this).is('.xy-input-pwd')){
+						$('.lovely-state img').attr('src','${_staticPath}/resource/weuiWeb/img/lovely-close-eye.png');
+					}else{
+						$('.lovely-state img').attr('src','${_staticPath}/resource/weuiWeb/img/lovely-open-eye.png');
+					}
+				})
+			}
+			$(function(){
+				/* $('input').blur(function(){
+			        //var $parent=$(this).parent().parent();
+			        //$parent.find('.formtips').remove();//清除之前的提醒消息
+			        this.value=$.trim($(this).val());//去掉前后的空格
+			        //验证手机号
+			        if($(this).is('#mobile')){                      
+			            if(this.value==''||(this.value!=''&& !/^1[3|4|5|7|8][0-9]\d{8}$/.test(this.value))){
+			                //var errorMsg='请输入正确的手机号码';
+			                //$parent.append('<span class="formtips onError">'+errorMsg+'</span>');
+			                alert('请输入正确的手机号码');
+			            } else{
+			                var okMsg='输入正确';
+			                $parent.append('<span class="formtips onSuccess">'+okMsg+'</span>');
+			            }   
+			        }
+			        //验证密码位数
+			        if($(this).is('#password')){                      
+			            if(this.value==''||this.value.length<6){
+			            	alert('请输入6位或者以上的密码');
+			                //var errorMsg='请输入6位或者以上的密码';
+			                //$parent.append('<span class="formtips onError">'+errorMsg+'</span>');
+			            } else{
+			                var okMsg='输入正确';
+			                $parent.append('<span class="formtips onSuccess">'+okMsg+'</span>');
+			            }   
+			        }
+		
+			    }).keyup(function(){
+			        $(this).triggerHandler("blur");
+			    }).focus(function(){
+			        $(this).triggerHandler("blur");
+			    });
+				}) */
+				$('#login').click(function(){
+					var mobile = $.trim($('#mobile').val()),password = $.trim($('#password').val());
+					if(mobile ==''||(mobile!=''&& !/^1[3|4|5|7|8][0-9]\d{8}$/.test(mobile))){
+			              $('#mobile').parents('.weui-cell').css('border','1px solid red').siblings().removeAttr("style");
+	            	}else if(password ==''||password.length<6){
+					  $('#password').parents('.weui-cell').css('border','1px solid red').siblings().removeAttr("style");
+		            }else{
+			            //alert('3434555');
+						$('form[id=loginform]').attr('action',_path+"/login/consumer/login");
+						$('#loginform').submit();
+					} 
+				});	
+				
+				$('#fpassword').click(function(){
+					window.location.href =_path+"/forget";
+				})
+				$('#register').click(function(){
+					//alert('233');
+					window.location.href =_path+"/register";
+				})			 				
+			});
+		</script>
+		
+		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>
+	</body>
 </html>

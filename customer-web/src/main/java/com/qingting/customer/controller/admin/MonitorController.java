@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 
 @Api(tags = "监测相关")
-@Controller
+@Controller("adminMonitorController")
 @RequestMapping("/admin/monitor")
 public class MonitorController {
 	@Resource

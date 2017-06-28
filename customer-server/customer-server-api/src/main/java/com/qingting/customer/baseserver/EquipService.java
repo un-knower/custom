@@ -41,4 +41,14 @@ public interface EquipService {
 	 * @throws
 	 */
 	List<Equip> listEquipByProjectId(Integer projectId);
+	/**
+	 * 
+	 * @Title: listEquipByUserId
+	 * @Description: 查询用户的所有设备
+	 * @param userId
+	 * @return 
+	 * @return List<Equip>
+	 * @throws
+	 */
+	List<Equip> listEquipByUserId(Integer userId);
 }

@@ -10,6 +10,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
 	</context-param>
+	
 	<filter>
 		<filter-name>crossOriginFilter</filter-name>
 		<filter-class>com.smart.mvc.filter.CrossOriginFilter</filter-class>
@@ -46,7 +47,11 @@
 		<filter-class>com.smart.sso.client.LogoutFilter</filter-class>
 		<init-param>
 			<param-name>ssoBackUrl</param-name>
-			<param-value>/admin/admin</param-value>
+			<param-value>/login/admin</param-value>
+		</init-param>
+		<init-param>
+			<param-name>consumerBackUrl</param-name>
+			<param-value>/login/consumer</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
@@ -57,6 +62,10 @@
 	<filter>
 		<filter-name>ssoFilter</filter-name>
 		<filter-class>com.smart.sso.client.CustomSsoFilter</filter-class>
+		<init-param>
+			<param-name>excludes</param-name>
+			<param-value></param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>ssoFilter</filter-name>
@@ -66,10 +75,31 @@
 		<filter-name>ssoFilter</filter-name>
 		<url-pattern>/consumer/*</url-pattern>
 	</filter-mapping>
+	<!-- 用户信息 -->
+	<!-- --><filter>
+		<filter-name>userMsgFilter</filter-name>
+		<filter-class>com.qingting.customer.controller.common.UserMsgFilter</filter-class>
+		<init-param>
+			<param-name>excludes</param-name>
+			<param-value></param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>userMsgFilter</filter-name>
+		<url-pattern>/admin/*</url-pattern>
+	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ssoFilter</filter-name>
+		<url-pattern>/consumer/*</url-pattern>
+	</filter-mapping> 
 	<!-- 权限控制(选配) -->
 	<filter>
 		<filter-name>permissionFilter</filter-name>
 		<filter-class>com.smart.sso.client.PermissionFilter</filter-class>
+		<init-param>
+			<param-name>excludes</param-name>
+			<param-value></param-value>
+		</init-param>
 	</filter>
 	<filter-mapping>
 		<filter-name>permissionFilter</filter-name>
@@ -93,6 +123,7 @@
 		<servlet-name>dispatcher</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
+	
 	<servlet>
 		<servlet-name>configInitServlet</servlet-name>
 		<servlet-class>com.smart.mvc.servlet.ConfigInitServlet</servlet-class>

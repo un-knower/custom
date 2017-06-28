@@ -1,2 +1,2 @@
-hbase.zookeeper.quorum=119.29.225.162,123.207.38.80,182.254.232.65
+hbase.zookeeper.quorum=39.108.52.207
 hbase.zookeeper.property.clientPort=2181

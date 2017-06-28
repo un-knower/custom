@@ -62,6 +62,10 @@ public class Equip {
 	 */
 	private Integer projectId;
 	/**
+	 * 用户ID
+	 */
+	private Integer userId;
+	/**
 	 * 创建时间
 	 */
 	private Calendar createTime;
@@ -180,6 +184,14 @@ public class Equip {
 
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
+	}
+	
+	public Integer getUserId() {
+		return userId;
+	}
+
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public Calendar getCreateTime() {
