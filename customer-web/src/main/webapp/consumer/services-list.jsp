@@ -28,7 +28,7 @@
 				<div class="xy-pad-lr10 xy-pad-t10 xy-border-box xy-list-top-bar">
 					<ul>
 						<!--------------------- 列表 --------------------------->
-						<li class="xy-layout-bar xy-pad-tb10 xy-border-box">
+						<%-- <li class="xy-layout-bar xy-pad-tb10 xy-border-box">
 							<a class="weui-cell weui-cell_access xy-linlk-listview" href="javascript:;">
 								<div class="weui-cell__bd xy-clearfix xy-mar-r5">
 									<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG xy-fll"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
@@ -250,7 +250,7 @@
 									</div>
 								</a>
 							</div>
-						</li><!--列表-->
+						</li> --%><!--列表-->
 					</ul><!--ul 列表-->
 				</div>
 			</div>
@@ -264,25 +264,112 @@
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
 			}
-			$(function(){
+			$(function(){				
 				//传来的值 若1==》历史服务记录列表; 
 				//传来的值 若2 ==》实时服务方案;
 				var iffuwu = sessionStorage.getItem('iffuwu');
 				if(iffuwu==1){
 					$('head title').text('净水器-历史服务记录列表');
 					$('.xy-h1-title').text('历史服务记录列表');
-					sessionStorage.setItem('ifel',1);//跳转页面，公用一个详情页，设假数据为1，若1 ==》 跳转页面显示评价按钮 可评价";
-					
+					getHisList();//画历史服务列表										
 				}else if(iffuwu==2){
 					$('head title').text('净水器-实时服务方案');
-					$('.xy-h1-title').text('实时服务方案');
-					sessionStorage.setItem('ifel',2);//跳转页面，公用一个详情页，设假数据为2，若2 ==》 跳转页面隐藏评价按钮 不可评价";
+					$('.xy-h1-title').text('实时服务方案');					
 				}
-				
-				$('.xy-linlk-listview').click(function(){
+				//点击查看详情
+				$('body').on('click','.xy-linlk-listview',function(){//列表点击事件跳转
+					var thisEvalue = $(this).parent().attr('evalue'),thisId=$(this).parent().attr('serveId');
+					if(thisEvalue == 'true'){
+						sessionStorage.setItem('ifel',2);//跳转页面，公用一个详情页，设假数据为2，若2 ==》 跳转页面隐藏评价按钮 不可评价";
+					}else if(thisEvalue == 'false'){
+						sessionStorage.setItem('ifel',1);//跳转页面，公用一个详情页，设假数据为1，若1 ==》 跳转页面显示评价按钮 可评价";
+					}
+					window.location.href =_path+"/consumer/services-details.jsp?serveId="+thisId;
+				}); 
+				/* $('#goRecord').click(function(){
+					alert($(this).parents('li').attr('serveId'));
+				}) */
+				$('body').on('click','#goRecord',function(){//跳转到评价
+					var thisId=$(this).parents('li').attr('serveId');
+					window.location.href =_path+"/consumer/evaluate.jsp?serveId="+thisId;
+				});
+				/* $('.xy-linlk-listview').click(function(){
+					alert('3445556');
 					window.location.href =_path+"/consumer/services-details.jsp";
-				})
+				})	 */			
 			})
+			function getHisList(){
+				$.ajax({
+					type:'get',
+					url:_path+'/consumer/service/listHis',
+					//data: {equipId:''},
+					success : function(r){
+						console.log(r);
+						if(r){
+								drawList(r.data);								
+							}						
+						}
+					});
+			}
+			function drawList(data){
+				//alert('3344');
+				var listDiv = '';
+				for (var i in data){
+				 	listDiv += '<li class="xy-layout-bar xy-pad-tb10 xy-border-box" evalue="'+data[i].evaFlag+'" serveId="'+data[i].serCode+'">'+
+									'<a class="weui-cell weui-cell_access xy-linlk-listview" href="javascript:;">'+
+										'<div class="weui-cell__bd xy-clearfix xy-mar-r5">'+
+											'<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG xy-fll"><img src="${_staticPath}'+data[i].image+'" /></p>'+
+											'<div class="xy-db xy-mar-l85p">'+
+												'<p class="xy-fs16 xy-pad-t2">'+data[i].serHead+'</p>'+
+												'<p class="xy-fc-light-gray xy-pad-t3 xy-fs13 xy-line-clamp2 xy-line-h20">'+data[i].serContent+
+												'</p>'+
+											'</div>'+
+										'</div>'+
+										'<div class="weui-cell__ft">'+
+										'</div>'+
+									'</a><!--信息模块-->'+
+										
+									'<div class="xy-fwb-title xy-border-box xy-pad-lr10 xy-pad-tb5 xy-clearfix">'+
+										'<ol class="xy-fc-light-gray xy-fs13 xy-line-h22 xy-fll">';
+  if(data[i].evaFlag==true)	{								
+								listDiv +=	'<dt class="xy-dibVat">服务评分:</dt>'+
+											'<dd class="xy-dibVat">'+
+												'<div class="xy-star-bar xy-mini-star xy-pad-t2 xy-dibVat">'+
+													'<div class="xy-emptys"></div>';
+												for(var j=0;j<5;j++){
+													if(j<data[i].rank) //有星星
+														listDiv+='<i class="icon-star xy-dibVat on"></i>';
+													else //无星星
+														listDiv+='<i class="icon-star xy-dibVat"></i>';
+												} 
+													/* '<i class="icon-star xy-dibVat on"></i>'+
+													'<i class="icon-star xy-dibVat on"></i>'+
+													'<i class="icon-star xy-dibVat on"></i>'+
+													'<i class="icon-star xy-dibVat on"></i>'+
+													'<i class="icon-star xy-dibVat"></i>'+ */
+										listDiv+='</div><!--/星星-->'+
+											'</dd>';
+								}
+								else{
+									listDiv +='<button id="goRecord">还未评价？快去评价吧</button>'
+								}	
+							  listDiv +='</ol>'+
+										'<ol class="xy-fc-light-gray xy-fs13 xy-line-h22 xy-flr">'+
+											'<dt class="xy-dibVat">服务时间:</dt>'+
+											'<dd class="xy-dibVat">'+data[i].time.slice(0,11)+'</dd>'+
+										'</ol>'+
+									'</div>'+
+									'<div class="main-img-address xy-pad-lr10">'+
+										'<a href="#" class="" flex="dir:left">'+
+											'<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>'+
+											'<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">'+data[i].adress+
+											'</div>'+
+										'</a>'+
+									'</div>'+
+								'</li>';
+				}
+				$('.xy-list-top-bar').html(listDiv);
+			}
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

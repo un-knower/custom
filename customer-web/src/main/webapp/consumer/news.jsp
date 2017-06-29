@@ -238,8 +238,18 @@
 			});
 			 $('body').on('click','.line-scroll-wrapper',function(){//列表点击事件跳转
 				//lineClick = $(this);
-				var thisSort = $(this).parent().attr('sortCode');
-				alert(thisSort);
+				var thisSort = $(this).parent().attr('sortCode'),followTime=$(this).find('#followTime').html(),
+				name=$(this).find('#name').html(),content=$(this).find('#content').html(),thisSrc=$(this).find('img').attr('src');
+				console.log(thisSort,followTime,name,content,thisSrc);
+				if(thisSort == 4){//关注处理
+window.location.href =_path+"/consumer/follow.jsp?followTime="+followTime+'&name='+name+'&content='+content+'&thisSrc='+thisSrc;
+				}else if(thisSort == 3){//跳转到服务提醒列表
+					window.location.href =_path+"/consumer/remind-list.jsp";
+				}else if(thisSort == 2){//服务提醒，跳转评价按钮页面
+					window.location.href =_path+"/consumer/sevices-details.jsp";
+				}else if(thisSort == 1){//服务提醒，跳转服务详情页面（还未服务）
+					window.location.href =_path+"/consumer/sevices-details.jsp";
+				}
 			}); 
 			
 			$(function(){				
@@ -265,11 +275,11 @@
 													'<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}'+data[i].path+'" /></p>'+
 													'<div class="xy-pad-l10 line-normal-msg">'+
 														'<ol class="xy-pad-t3">'+
-															'<span class="xy-flr xy-fs13 xy-pad-t2">'+data[i].createTime.slice(11,16)+'</span>'+
-															'<dt class=" xy-fs16">'+data[i].sortName+'</dt>'+
+															'<span class="xy-flr xy-fs13 xy-pad-t2" id="followTime">'+data[i].createTime.slice(11,16)+'</span>'+
+															'<dt class=" xy-fs16" id="name">'+data[i].sortName+'</dt>'+
 														'</ol>'+
 														'<ol class="xy-pad-t3 xy-fs13">'+
-															'<dt>此处是消息的内容！！！</dt>'+
+															'<dt id="content">此处是消息的内容！！！</dt>'+
 														'</ol>'+
 													'</div>'+
 												'</a>'+

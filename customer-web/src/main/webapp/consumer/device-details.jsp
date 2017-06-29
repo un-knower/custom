@@ -76,10 +76,20 @@
 			function eventCollection(weui){
 			}
 			$(function(){
-				//后台取warnType
+				var equipId='';
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				if(GetQueryString('equipCode')){
+					equipId = GetQueryString('equipCode');
+				}
+				//后台取warnType				
 				 $.ajax({
 					type:'get',
-					url:_path+'/consumer/warn/getWarnType',
+					url:_path+'/consumer/warn/getWarnType?equipId='+equipId,
 					success : function(msg){
 						//console.log(msg.data);
 						if(msg){
@@ -113,7 +123,12 @@
 				}				
 				//监测曲线图按钮跳转
 				$('#monitorEchart').click(function(){
-					window.location.href =_path+"/consumer/echarts.jsp";
+					if(GetQueryString('equipCode')){
+						equipId = GetQueryString('equipCode');
+						window.location.href =_path+"/consumer/echarts.jsp?equipId="+equipId;
+					}else{
+						window.location.href =_path+"/consumer/echarts.jsp";
+					}					
 				});
 			})
 		</script>

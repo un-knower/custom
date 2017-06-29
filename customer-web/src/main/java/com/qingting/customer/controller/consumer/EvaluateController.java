@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qingting.customer.common.pojo.dto.TagDTO;
 import com.qingting.customer.common.pojo.hbasedo.Tag;
@@ -21,9 +22,9 @@ import io.swagger.annotations.ApiParam;
 @Controller("consumerEvaluateController")
 @RequestMapping("/consumer/evaluate")
 public class EvaluateController {
-	@ApiOperation("评价服务")
+	@ApiOperation("提交评价")
 	@RequestMapping(value="/set",method = RequestMethod.POST)
-	public WebResult<String> setEvaluate(
+	public @ResponseBody WebResult<String> setEvaluate(
 			@ApiParam(value = "等级", required = true) @RequestParam Integer rank,
 			@ApiParam(value = "标签集合数组", required = true) @RequestParam List<Integer> tags,
 			@ApiParam(value = "文本内容", required = true) @RequestParam String content
@@ -32,9 +33,9 @@ public class EvaluateController {
 		result.setMessage("提交成功");
 		return null;
 	}
-	@ApiOperation("获得评价标签")
+	@ApiOperation("获得评价标签根据等级")
 	@RequestMapping(value="/listTag",method = RequestMethod.GET)
-	public WebResult<List<Tag>> listTag(
+	public @ResponseBody WebResult<List<Tag>> listTag(
 			@ApiParam(value = "等级", required = true) @RequestParam Integer rank
 			){
 		WebResult<List<Tag>> result=new WebResult<List<Tag>>(ResultCode.SUCCESS);
@@ -119,7 +120,7 @@ public class EvaluateController {
 	}
 	@ApiOperation("获得评价标签")
 	@RequestMapping(value="/listAllTag",method = RequestMethod.GET)
-	public WebResult<TagDTO> listAllTag(
+	public @ResponseBody WebResult<TagDTO> listAllTag(
 			){
 		WebResult<TagDTO> result=new WebResult<TagDTO>(ResultCode.SUCCESS);
 		TagDTO td=new TagDTO();
@@ -145,6 +146,6 @@ public class EvaluateController {
 		}
 		result.setData(td); 
 		result.setMessage("成功");
-		return null;
+		return result;
 	}
 }

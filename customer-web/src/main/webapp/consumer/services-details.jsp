@@ -32,24 +32,24 @@
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">
 								<div class="xy-layout-bar xy-query xy-query-other" flex="dir:top">
 									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-02" flex="dir:left">
-										<p class="xy-fs14"  flex-box="1">过程净化服务</p>
-										<p class="xy-fs12">通知时间：2017-05-09</p>
+										<p class="xy-fs14"  flex-box="1" id="serHead">过程净化服务</p>
+										<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
 									</div>
 									<div class="xy-pad-tb10 xy-border-box" flex-box="1" flex="dir:top">
 										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left" onclick="window.location.href='page-evaluate-query.html'">
-											<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+											<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><%-- <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /> --%></p>
 											<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
 												<ol class="xy-pad-t3 xy-fs16" flex="dir:left">
 													<dt>项目：</dt>
-													<dd flex-box="1">净化系统</dd>
+													<dd flex-box="1" id="equipName">净化系统</dd>
 												</ol>
 												<ol class="xy-pad-t3 xy-fs13" flex="dir:left">
 													<dt>工号：</dt>
-													<dd flex-box="1">QT20170212</dd>
+													<dd flex-box="1" id="empCode">QT20170212</dd>
 												</ol>
 												<ol class="xy-fc-light-gray xy-fs13" flex="dir:left">
 													<dt>服务时间：</dt>
-													<dd flex-box="1">2017-05-30</dd>
+													<dd flex-box="1" id="time">2017-05-30</dd>
 												</ol>
 											</div>
 											<div class="weui-cell__ft">
@@ -67,15 +67,15 @@
 														<i class="icon-star xy-dibVat on"></i>
 														<i class="icon-star xy-dibVat"></i>
 													</div><!--/星星-->
-													<P class="xy-dibVat xy-pad-l5 xy-fs15">4.8</P>
-													<P class="xy-dibVat xy-pad-l5">专业、高效</P>
+													<P class="xy-dibVat xy-pad-l5 xy-fs15" id="cord">4.8</P>
+													<P class="xy-dibVat xy-pad-l5" id="tag">专业、高效</P>
 												</dd>
 											</ol>
 										</div>
 										<div class="main-img-address xy-pad-lr10 xy-pad-t7">
 											<a href="#" class="" flex="dir:left">
 												<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
-												<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
+												<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1" id="adress">
 													成都市高兴西区天泉路200号 众创办公室茶水间 	
 												</div>
 											</a>
@@ -86,11 +86,11 @@
 								<div class="xy-layout-bar xy-mar-t10 xy-query-bottom" flex-box="1" flex="dir:top">
 									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01" flex="dir:left">
 										<p class="xy-fs14"  flex-box="1">服务方案</p>
-										<p class="xy-fs12">待服务</p>
+										<p class="xy-fs12" id="status">待服务</p>
 									</div>
 									
 									<div class="eva-con xy-pad-lr10 xy-pad-t10 xy-pad-b20 xy-fc-gray xy-height-1p xy-scrollY swiper-no-swiping" flex-box="1">
-										<p>
+										<p id="serContent">
 											补充评价：一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。
 二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。
 
@@ -160,12 +160,41 @@
 				//传来的值若1 ==》历史服务记录列表 ==》显示评价按钮 有评价入口;
 				//传来的值 若2==》实时服务方案==》隐藏评价按钮 无评价入口;
 				var ifel = sessionStorage.getItem('ifel');
+				console.log(ifel);
 				if(ifel==1){
+					//未评价，隐藏右边按钮
 					$('.xy-poab-menuBottom').show();
 				}else if(ifel==2){
 					$('.xy-poab-menuBottom').hide();
 				}
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				fillContent(GetQueryString('serveId'))
 			})
+			function fillContent(serveId){
+				//获取数据
+				$.ajax({
+					type:'get',
+					url:_path+'/consumer/service/getHis?serCode='+serveId,
+					success : function(msg){
+						console.log(msg);
+						if(msg.data){
+							$('#adress').html(msg.data.adress);
+							$('#empCode').html(msg.data.empCode);
+							$('#serHead').html(msg.data.serHead);
+							$('#status').html(msg.data.status);
+							$('#time').html(msg.data.time);
+							$('#notice').html(msg.data.notice);
+							$('#serContent').html(msg.data.serContent);
+							$('.xy-full-widthIMG').html('<img src="${_staticPath}'+msg.data.portrait+'" />');
+							}						
+						}
+				});
+			}
 			</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

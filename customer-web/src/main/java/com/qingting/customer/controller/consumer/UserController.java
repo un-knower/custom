@@ -53,6 +53,7 @@ public class UserController {
 		result.setData(user);*/
 		WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
 		MyDTO myDTO=new MyDTO();
+		myDTO.setPhone("17701879780");
 		myDTO.setAttentEquip(2);
 		myDTO.setMineEquip(2);
 		myDTO.setName("最可爱的人");

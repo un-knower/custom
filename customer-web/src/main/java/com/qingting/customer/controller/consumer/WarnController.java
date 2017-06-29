@@ -57,22 +57,24 @@ public class WarnController {
 		w1.setFlow(654987.0f);
 		w1.setHumidity(45f);
 		w1.setLeak(true);
-		w1.setPath("");
+		w1.setPath("/resource/images/customer/equip/xqt.jpg");
 		w1.setPurTds(17.5f);
 		w1.setRawTds(76.0f);
 		w1.setTemp(12.3f);
 		w1.setEquipCode("cdzb201706270052");
+		w1.setAddress("四川成都高新西区天全路222号 无线通信国家专业化众创空间2号楼8楼整层");
 		list.add(w1);
 		WarnDTO w2=new WarnDTO();
 		w2.setEquipName("小清渟");
 		w2.setFlow(5453.0f);
 		w2.setHumidity(63f);
 		w2.setLeak(false);
-		w2.setPath("");
+		w2.setPath("/resource/images/customer/equip/xxqt.png");
 		w2.setPurTds(12.5f);
 		w2.setRawTds(125.0f);
 		w2.setTemp(34.3f);
 		w2.setEquipCode("cdzb201706270053");
+		w2.setAddress("四川成都高新西区天全路222号 无线通信国家专业化众创空间2号楼8楼整层");
 		list.add(w2);
 		
 		result.setData(list);

@@ -6,9 +6,6 @@ function displayProp(obj){
     console.log(names);  
 }
 $(function(){	
-	$("#_btnExit").click(function(){
-		window.location.href=_path+"/logout?type=admin";
-    });
 	//$('#mapDevice').css('width',$('.tab-content').width());
 	$('#mapServe').css('width',$('.tab-content').width());
 	$('#mapQuality').css('width',$('.tab-content').width());
@@ -134,49 +131,7 @@ $(function(){
 		    '韶关': [113.7964, 24.7028]
 		};
 		;
-		/*var data = [
-		    [{name: '成都' }, { name: '上海',value: 85,value2: 45}],
-		    [{name: '成都'}, {name: '广州', value: 70,value2: 0}],
-		    [{name: '成都'}, { name: '大连', value: 60,value2: 15}],
-		    [{name: '成都'}, { name: '南宁',value: 50,value2: 0}],
-		    [{ name: '成都' }, {name: '南昌',value: 50,value2: 25}],
-		    [{name: '成都' }, {name: '拉萨', value: 45,value2: 25 }],
-		    [{name: '成都'}, {name: '长春', value: 40 ,value2: 0}],
-		    [{name: '成都' }, { name: '包头',value: 30,value2: 35}],
-		    [{name: '成都'}, {name: '重庆', value: 20 ,value2: 0}],
-		    [{name: '成都'}, {name: '常州',value: 10,value2: 5}]
-		];*/
-		
-		$.ajax({
-			url: _path+"/admin/map/listProvinceEquip",
-			//data : {account : rmobile},
-			type :'post',
-			dataType : 'JSON',
-			success : function(result){
-				var data=new Array();
-				console.log("result="+result+".success="+result.success);
-				if(result.success == true) {
-					var tempdata=new Array();
-					for(var i=0;i<result.data.length;i++){
-						var temp=new Array();
-						var focus={name:'成都'};
-						//var send=result.data[i];
-						var send=new Object;
-						send.name=result.data[i].name;
-						send.value=result.data[i].equipCount;
-						send.value2=result.data[i].warnCount;
-						temp.push(focus);
-						temp.push(send);
-						tempdata.push(temp);
-						
-						drawDeviceChart(mapChart,geoCoordMap,data);
-					}
-					data.push(tempdata);
-					console.log("data:"+data);
-				} 
-			}
-		}); 
-						
+		drawDeviceChart(mapChart,geoCoordMap);				
 		
 		var a ='china',t1='服务效率分布图',t2='服务评价分布图',t3='水质图',
 			dataServe = [
@@ -238,11 +193,8 @@ $(function(){
 		];	
 		drawChart(mapServe,geoCoordMap,a,dataServe,t1);
 		drawChart(mapQuality,geoCoordMap,a,dataQuality,t2);
-		drawChart(mapWater,geoCoordMap,a,dataWater,t3);
-	//tab页面切换重绘
-	/* function darwAgin(){
-		var mapDiv = $('.nav-tabs .active a').attr('href')
-	}; */
+		drawChart(mapWater,geoCoordMap,a,dataWater,t3);	 
+	//返回全国按钮
 	$('#back').click(function(){
 		
 		if($('.nav-tabs li:eq(1)').hasClass('active')){
@@ -258,304 +210,320 @@ $(function(){
 			$('#proviceDevice').hide();
 			$('#mapDevice').show();
 		}
-	}) 	
+	}) ;
+	darwAgin()	
 });
+//tab页面切换重绘
+ function darwAgin(){
+	 $('a[href="#efficieDiv"]').click(function(){
+	 	$('#proviceServe').hide();
+		$('#mapServe').show();
+	 })
+	 $('a[href="#recordDiv"]').click(function(){
+	 	$('#proviceQuality').hide();
+		$('#mapQuality').show();
+	 })
+	 $('a[href="#waterDiv"]').click(function(){
+	 	$('#proviceWater').hide();
+		$('#mapWater').show();
+	 })
+};
 function drawChart(mapDiv,geoCoordMap,a,data,text){	
-	var convertData = function(data) {
-	    var res = [];
-	    //console.log(data);
-	    for (var i = 0; i < data.length; i++) {
-	        var geoCoord = geoCoordMap[data[i].name];
-	        if (geoCoord) {
-	            res.push({
-	                name: data[i].name,
-	                value: geoCoord.concat(data[i].value)
-	            });
-	        }
-	    }
-	    return res;
-	};
-	
-	var convertedData = [
-	    convertData(data),
-	    convertData(data.sort(function(a, b) {
-	        return b.value - a.value;
-	    }).slice(0, 6))
-	];
-	data.sort(function(a, b) {
-	    return a.value - b.value;
-	})
-	
-	var selectedItems = [];
-	var categoryData = [];
-	var barData = [];
-	//   var maxBar = 30;
-	var sum = 0;
-	var count = data.length;
-	for (var i = 0; i < data.length; i++) {
-	    categoryData.push(data[i].name);
-	    barData.push(data[i].value);
-	    sum += data[i].value;
-	}
-	//console.log(categoryData);
-	//console.log(sum + "   " + count)
-	option = {
-	    backgroundColor: text =='服务评价分布图'?'#1b1b1b':'#404a59',
-	    animation: true,
-	    animationDuration: 1000,
-	    animationEasing: 'cubicInOut',
-	    animationDurationUpdate: 1000,
-	    animationEasingUpdate: 'cubicInOut',
-	    title: [{
-	        text: text,
-	        //link: 'http://pages.anjuke.com/expert/newexpert.html',
-	        subtext: '内部数据',
-	        //sublink: 'http://pages.anjuke.com/expert/newexpert.html',
-	        left: 'center',
-	        textStyle: {
-	            color: '#fff'
-	        }
-	    }, {
-	        id: 'statistic',
-	        text: count ? '平均: ' + parseInt((sum / count).toFixed(4)) : '',
-	        right: 120,
-	        top: 40,
-	        width: 100,
-	        textStyle: {
-	            color: '#fff',
-	            fontSize: 16
-	        }
-	    }],
-	    toolbox: {
-	        iconStyle: {
-	            normal: {
-	                borderColor: '#fff'
-	            },
-	            emphasis: {
-	                borderColor: '#b1e4ff'
-	            }
-	        },
-	        feature: {
-	            dataZoom: {},
-	            brush: {
-	                type: ['rect', 'polygon', 'clear']
-	            }, 
-	            saveAsImage: {
-	                show: true
-	            },
-	            myTool1:{
-	            	show:true,
-	            	title:'全屏显示',
-	            	icon:'image://'+_staticPath+'/resource/images/backPro/eyew.png',
-	            	onclick : function(){
-	            		$('#mapServe').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
-	            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
-	            		 $('#mapQuality').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
-	            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
-	            		 $('#mapWater').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
-	            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
-							var mapServe = echarts.init(document.getElementById('mapServe')),
-								mapQuality = echarts.init(document.getElementById('mapQuality')),
-								mapWater = echarts.init(document.getElementById('mapWater'));
-	            		 		mapServe.resize();
-								mapQuality.resize();
-								mapWater.resize();
-	            	}
-	            },
-	            myTool2:{
-	            	show:true,
-	            	title:'复原',
-	            	icon:'image://'+_staticPath+'/resource/images/backPro/eye.png',
-	            	onclick : function(){
-	            		$('#mapServe').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0});
-	            		$('#mapQuality').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0});
-	            		$('#mapWater').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0}); 
-	            		var mapServe = echarts.init(document.getElementById('mapServe')),
+var convertData = function(data) {
+    var res = [];
+    //console.log(data);
+    for (var i = 0; i < data.length; i++) {
+        var geoCoord = geoCoordMap[data[i].name];
+        if (geoCoord) {
+            res.push({
+                name: data[i].name,
+                value: geoCoord.concat(data[i].value)
+            });
+        }
+    }
+    return res;
+};
+
+var convertedData = [
+    convertData(data),
+    convertData(data.sort(function(a, b) {
+        return b.value - a.value;
+    }).slice(0, 6))
+];
+data.sort(function(a, b) {
+    return a.value - b.value;
+})
+
+var selectedItems = [];
+var categoryData = [];
+var barData = [];
+//   var maxBar = 30;
+var sum = 0;
+var count = data.length;
+for (var i = 0; i < data.length; i++) {
+    categoryData.push(data[i].name);
+    barData.push(data[i].value);
+    sum += data[i].value;
+}
+//console.log(categoryData);
+//console.log(sum + "   " + count)
+option = {
+    backgroundColor: text =='服务评价分布图'?'#1b1b1b':'#404a59',
+    animation: true,
+    animationDuration: 1000,
+    animationEasing: 'cubicInOut',
+    animationDurationUpdate: 1000,
+    animationEasingUpdate: 'cubicInOut',
+    title: [{
+        text: text,
+        //link: 'http://pages.anjuke.com/expert/newexpert.html',
+        subtext: '内部数据',
+        //sublink: 'http://pages.anjuke.com/expert/newexpert.html',
+        left: 'center',
+        textStyle: {
+            color: '#fff'
+        }
+    }, {
+        id: 'statistic',
+        text: count ? '平均: ' + parseInt((sum / count).toFixed(4)) : '',
+        right: 120,
+        top: 40,
+        width: 100,
+        textStyle: {
+            color: '#fff',
+            fontSize: 16
+        }
+    }],
+    toolbox: {
+        iconStyle: {
+            normal: {
+                borderColor: '#fff'
+            },
+            emphasis: {
+                borderColor: '#b1e4ff'
+            }
+        },
+        feature: {
+            dataZoom: {},
+            brush: {
+                type: ['rect', 'polygon', 'clear']
+            }, 
+            saveAsImage: {
+                show: true
+            },
+            myTool1:{
+            	show:true,
+            	title:'全屏显示',
+            	icon:'image://'+_staticPath+'/resource/images/backPro/eyew.png',
+            	onclick : function(){
+            		$('#mapServe').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
+            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
+            		 $('#mapQuality').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
+            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
+            		 $('#mapWater').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
+            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
+						var mapServe = echarts.init(document.getElementById('mapServe')),
 							mapQuality = echarts.init(document.getElementById('mapQuality')),
 							mapWater = echarts.init(document.getElementById('mapWater'));
-	          		 		mapServe.resize();
+            		 		mapServe.resize();
 							mapQuality.resize();
-							mapWater.resize();           		
-	            	}
-	            },
-	           /*  myTool3:{
-	            	show:true,
-	            	title:'返回第一级',
-	            	icon:'image://./images/home.png',
-	            	onclick : function(param){  
-	            		//console.log(param) 
-	           		var mapServe = echarts.init(document.getElementById('mapServe')),
+							mapWater.resize();
+            	}
+            },
+            myTool2:{
+            	show:true,
+            	title:'复原',
+            	icon:'image://'+_staticPath+'/resource/images/backPro/eye.png',
+            	onclick : function(){
+            		$('#mapServe').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0});
+            		$('#mapQuality').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0});
+            		$('#mapWater').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0}); 
+            		var mapServe = echarts.init(document.getElementById('mapServe')),
 						mapQuality = echarts.init(document.getElementById('mapQuality')),
-						mapWater = echarts.init(document.getElementById('mapWater'));        		
-	           			drawChart(mapServe,geoCoordMap,a,data,'服务效率分布图');
-	            	}
-	            } */
-	        }
-	    },
-	    brush: {
-	        outOfBrush: {
-	            color: '#abc'
-	        },
-	        brushStyle: {
-	            borderWidth: 2,
-	            color: 'rgba(0,0,0,0.2)',
-	            borderColor: 'rgba(0,0,0,0.5)',
-	        },
-	        seriesIndex: [0, 1],
-	        throttleType: 'debounce',
-	        throttleDelay: 300,
-	        geoIndex: 0
-	    },
-	    geo: {
-	        map: a,
-	        left: '0',
-	        right: '35%',
-	        label :{
-				normal:{show:true,
-						textStyle:{
-							color:'#fff'
-						}
-				}
-			},
-	       // center: [117.98561551896913, 31.205000490896193],
-	        //zoom: 1.5,
-	        //roam: true,
-	        itemStyle: {
-	            normal: {
-	                areaColor: '#323c48',
-	                borderColor: '#111'
-	            },
-	            emphasis: {
-	                areaColor: '#2a333d'
-	            }
-	        }
-	    },
-	    tooltip: {
-	        trigger: 'item',
-	        formatter: function(param){
-	        			return param.name +':' +param.value[2];},
-	    },
-	     grid: {
-	        right: 40,
-	        top: 100,
-	        bottom: 40,
-	        width: '30%'
-	    }, 
-	    xAxis: {
-	        type: 'value',
-	        scale: true,
-	        position: 'top',
-	        boundaryGap: false,
-	        splitLine: {
-	            show: false
-	        },
-	        axisLine: {
-	            show: false
-	        },
-	        axisTick: {
-	            show: false
-	        },
-	        axisLabel: {
-	            margin: 2,
-	            textStyle: {
-	                color: '#aaa'
-	            }
-	        },
-	    },
-	    yAxis: {
-	        type: 'category',
-	        //  name: 'TOP 20',
-	        nameGap: 16,
-	        axisLine: {
-	            show: true,
-	            lineStyle: {
-	                color: '#ddd'
-	            }
-	        },
-	        axisTick: {
-	            show: false,
-	            lineStyle: {
-	                color: '#ddd'
-	            }
-	        },
-	        axisLabel: {
-	            interval: 0,
-	            textStyle: {
-	                color: '#ddd'
-	            }
-	        },
-	        data: categoryData
-	    },     
-	    series: [{
-	        type: 'scatter',
-	        coordinateSystem: 'geo',
-	        data: convertedData[0],
-	        symbolSize: function(val) {
-	            return Math.max(val[2] / 3, 8);
-	        },
-	        label: {
-	            normal: {
-	                formatter: '{b}',
-	                position: 'right',
-	                show: false
-	            },
-	            emphasis: {
-	                show: true
-	            }
-	        },
-	        itemStyle: {
-	            normal: {
-	                color: '#FF8C00',
-	                position: 'right',
-	                show: true
-	            }
-	        }
-	    }, {		       
-	        type: 'effectScatter',
-	        coordinateSystem: 'geo',
-	        data: convertedData[0],
-	        zlevel: 2,
-	        symbol:'emptyCircle',//空心
-	        symbolSize: function(val) {
-	            return Math.max(val[2] / 5, 8);
-	        },
-	        showEffectOn: 'render',
-	        rippleEffect: {
-	       		scale:4,
-	            brushType: 'fill'
-	        },
-	        hoverAnimation: true,
-	        label: {
-	            normal: {
-	                formatter: function(param){
-	        			return param.name +':' +param.value[2];},
-	                position: 'right',
-	                show: true 
-	            }
-	        },
-	        itemStyle: {
-	            normal: {
-	                color: '#f4e925',
-	                shadowBlur: 50,
-	                shadowColor: '#EE0000'
-	            }
-	        },
-	        zlevel: 1 
-	        
-	    }, {
-	        id: 'bar',
-	        zlevel: 2,
-	        type: 'bar',
-	        symbol: 'none',
-	        itemStyle: {
-	            normal: {
-	                color: '#ddb926'
-	            }
-	        },
-	
-	        data: data
-	    }]
-	};
+						mapWater = echarts.init(document.getElementById('mapWater'));
+          		 		mapServe.resize();
+						mapQuality.resize();
+						mapWater.resize();           		
+            	}
+            },
+           /*  myTool3:{
+            	show:true,
+            	title:'返回第一级',
+            	icon:'image://./images/home.png',
+            	onclick : function(param){  
+            		//console.log(param) 
+           		var mapServe = echarts.init(document.getElementById('mapServe')),
+					mapQuality = echarts.init(document.getElementById('mapQuality')),
+					mapWater = echarts.init(document.getElementById('mapWater'));        		
+           			drawChart(mapServe,geoCoordMap,a,data,'服务效率分布图');
+            	}
+            } */
+        }
+    },
+    brush: {
+        outOfBrush: {
+            color: '#abc'
+        },
+        brushStyle: {
+            borderWidth: 2,
+            color: 'rgba(0,0,0,0.2)',
+            borderColor: 'rgba(0,0,0,0.5)',
+        },
+        seriesIndex: [0, 1],
+        throttleType: 'debounce',
+        throttleDelay: 300,
+        geoIndex: 0
+    },
+    geo: {
+        map: a,
+        left: '0',
+        right: '35%',
+        label :{
+			normal:{show:true,
+					textStyle:{
+						color:'#fff'
+					}
+			}
+		},
+       // center: [117.98561551896913, 31.205000490896193],
+        //zoom: 1.5,
+        //roam: true,
+        itemStyle: {
+            normal: {
+                areaColor: '#323c48',
+                borderColor: '#111'
+            },
+            emphasis: {
+                areaColor: '#2a333d'
+            }
+        }
+    },
+    tooltip: {
+        trigger: 'item',
+        formatter: function(param){
+        			return param.name +':' +param.value[2];},
+    },
+     grid: {
+        right: 0,
+        top: 100,
+        bottom: 40,
+        width: '30%'
+    }, 
+    xAxis: {
+        type: 'value',
+        scale: true,
+        position: 'top',
+        boundaryGap: false,
+        splitLine: {
+            show: false
+        },
+        axisLine: {
+            show: false
+        },
+        axisTick: {
+            show: false
+        },
+        axisLabel: {
+            margin: 2,
+            textStyle: {
+                color: '#aaa'
+            }
+        },
+    },
+    yAxis: {
+        type: 'category',
+        //  name: 'TOP 20',
+        nameGap: 16,
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#ddd'
+            }
+        },
+        axisTick: {
+            show: false,
+            lineStyle: {
+                color: '#ddd'
+            }
+        },
+        axisLabel: {
+            interval: 0,
+            textStyle: {
+                color: '#ddd'
+            }
+        },
+        data: categoryData
+    },     
+    series: [{
+        type: 'scatter',
+        coordinateSystem: 'geo',
+        data: convertedData[0],
+        symbolSize: function(val) {
+            return Math.max(val[2] / 3, 8);
+        },
+        label: {
+            normal: {
+                formatter: '{b}',
+                position: 'right',
+                show: false
+            },
+            emphasis: {
+                show: true
+            }
+        },
+        itemStyle: {
+            normal: {
+                color: '#FF8C00',
+                position: 'right',
+                show: true
+            }
+        }
+    }, {		       
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        data: convertedData[0],
+        zlevel: 2,
+        symbol:'emptyCircle',//空心
+        symbolSize: function(val) {
+            return Math.max(val[2] / 5, 8);
+        },
+        showEffectOn: 'render',
+        rippleEffect: {
+       		scale:4,
+            brushType: 'fill'
+        },
+        hoverAnimation: true,
+        label: {
+            normal: {
+                formatter: function(param){
+        			return param.name +':' +param.value[2];},
+                position: 'right',
+                show: true 
+            }
+        },
+        itemStyle: {
+            normal: {
+                color: '#f4e925',
+                shadowBlur: 50,
+                shadowColor: '#EE0000'
+            }
+        },
+        zlevel: 1 
+        
+    }, {
+        id: 'bar',
+        zlevel: 2,
+        type: 'bar',
+        symbol: 'none',
+        itemStyle: {
+            normal: {
+                color: '#ddb926'
+            }
+        },
+
+        data: data
+    }]
+};
 	if(text == '水质图'){
 		option.visualMap ={
 			type:'continuous',
@@ -603,309 +571,319 @@ function clickDown(param,geoCoordMap){
 
 
 
-function drawDeviceChart(mapChart,geoCoordMap,data){
-	
-	
-	var convertData = function(data) {
-	    var res = [];
-	    for (var i = 0; i < data.length; i++) {
-	        var dataItem = data[i];
-	        var fromCoord = geoCoordMap[dataItem[1].name];
-	        var toCoord = geoCoordMap[dataItem[0].name];
-	        if (fromCoord && toCoord) {
-	            res.push({
-	                fromName: dataItem[1].name,
-	                toName: dataItem[0].name,
-	                coords: [fromCoord, toCoord]
-	            });
-	        }
-	    }
-	    //console.log(res);
-	    return res;
-	};
-	//此处是排序 ，后台排好？
-	 /* var convertedData = [
-	    convertData(data),
-	    convertData(data.sort(function(a, b) {
-	        return b.value - a.value;
-	    }).slice(0, 6))
-	];
-	data.sort(function(a, b) {
-	    return a.value - b.value;
-	})  */
-	
-	//var selectedItems = [];
-	var categoryData = [];
-	var barData = [];
-	//   var maxBar = 30;
-	var sum = 0;
-	var count = data.length;
-	for (var i = 0; i < data.length; i++) {
-		var dataItem = data[i];
-	    categoryData.push(dataItem[1].name);
-	    //barData.push(dataItem[1].value);
-	    barData.push({
-	                name: dataItem[1].name,
-	                value: dataItem[1].value
-	            });
-	    sum += dataItem[1].value;
-	}
-	//console.log(selectedItems);
-	//console.log(categoryData);
-	//console.log(barData);
-	//console.log(data);
-	var color = ['#a6c84c', '#ffa022', '#46bee9'];
-	var series = [];
-	    series.push({
-	        name: '',
-	        type: 'lines',
-	        zlevel: 1,
-	        effect: {
-	            show: true,
-	            period: 6,
-	            trailLength: 0.7,
-	            color: 'red',
-	            symbol:'pin',
-	            symbolSize: 3
-	        },
-	        lineStyle: {
-	            normal: {
-	                color: '#a6c84c',
-	                width: 0,
-	                curveness: 0.2
-	            }
-	        },        
-	        data: convertData(data)
-	    }, {
-	        name: '',
-	        type: 'lines',
-	        zlevel: 2,
-	        symbol: ['none', 'roundRect'],
-	        symbolSize: 8,
-	        effect: {
-	            show: true,
-	            period: 6,
-	            trailLength: 0,
-	           	symbol:'diamond',
-	            symbolSize: 2
-	        },
-	        lineStyle: {
-	            normal: {
-	                color: '#F9EE9F',
-	                width: 1,
-	                opacity: 0.6,
-	                curveness: 0.2
-	            }
-	        },
-	        data: convertData(data)
-	    }, {
-	        name: '',
-	        type: 'effectScatter',
-	        coordinateSystem: 'geo',
-	        zlevel: 2,
-	        rippleEffect: {
-	        	scale:4,
-	            brushType: 'fill'
-	        },
-	        symbol:'emptyCircle',
-	        symbolSize: function(val) {
-	            return val[2] / 5;
-	        },
-	        itemStyle:{
-	           normal:{
-	               label:{show:true},
-	               color:function(param){
-	               		if(param.value[3] > 0)return 'orange'
-	               		else return 'aqua'
-	               },
-	               opacity:0,
-	               //borderClolor:'red',
-	               //shadowColor:'yellow',
-	               shadowBlur:50,
-	           },
-	           emphasis: {
-	               label:{position:'top'}
-	             }
-	          },
-	        tooltip : {
-		        //trigger: 'item',
-		        formatter: function(param){
-		        	return param.name +':' +param.value[2] + '/'+param.value[3];
-		        }
-		    },           
-	        data:data.map(function(dataItem) {
-	            return {
-	                name: dataItem[1].name,
-	                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value,dataItem[1].value2])
-	            };
-	        }) 
-	    },
-	    {
-	        id: 'bar',
-	        zlevel: 2,
-	        type: 'bar',
-	        symbol: 'none',
-	        itemStyle: {
-	            normal: {
-	                color: '#ddb926'
-	            }
-	        },
-	
-	        data: barData.reverse()
-	    }
-	  )
-	  console.log(series);
-	option = {
-	    backgroundColor: '#1b1b1b',
-	    title: [{
-	        text: '项目/设备分布图',
-	        subtext: '内部数据请勿外传',
-	        left: 'center',
-	        textStyle: {
-	            color: '#fff'
-	        }
-	    },
-	    {
-	        id: 'statistic',
-	        text: count ? '平均: ' + parseInt((sum / count).toFixed(4)) : '',
-	        right: 120,
-	        top: 40,
-	        width: 100,
-	        textStyle: {
-	            color: '#fff',
-	            fontSize: 16
-	        }
-	    }
-	    ],
-	      tooltip : {
-	        trigger: 'item',
-	        /* formatter: function(param){
+function drawDeviceChart(mapChart,geoCoordMap){
+var data = [
+    [{name: '成都' }, { name: '上海',value: 85,value2: 45}],
+    [{name: '成都'}, {name: '广州', value: 70,value2: 0}],
+    [{name: '成都'}, { name: '大连', value: 60,value2: 15}],
+    [{name: '成都'}, { name: '南宁',value: 50,value2: 0}],
+    [{ name: '成都' }, {name: '南昌',value: 50,value2: 25}],
+    [{name: '成都' }, {name: '拉萨', value: 45,value2: 25 }],
+    [{name: '成都'}, {name: '长春', value: 40 ,value2: 0}],
+    [{name: '成都' }, { name: '包头',value: 30,value2: 35}],
+    [{name: '成都'}, {name: '重庆', value: 20 ,value2: 0}],
+    [{name: '成都'}, {name: '常州',value: 10,value2: 5}]
+];
+var convertData = function(data) {
+    var res = [];
+    for (var i = 0; i < data.length; i++) {
+        var dataItem = data[i];
+        var fromCoord = geoCoordMap[dataItem[1].name];
+        var toCoord = geoCoordMap[dataItem[0].name];
+        if (fromCoord && toCoord) {
+            res.push({
+                fromName: dataItem[1].name,
+                toName: dataItem[0].name,
+                coords: [fromCoord, toCoord]
+            });
+        }
+    }
+    //console.log(res);
+    return res;
+};
+//此处是排序 ，后台排好？
+ /* var convertedData = [
+    convertData(data),
+    convertData(data.sort(function(a, b) {
+        return b.value - a.value;
+    }).slice(0, 6))
+];
+data.sort(function(a, b) {
+    return a.value - b.value;
+})  */
+
+//var selectedItems = [];
+var categoryData = [];
+var barData = [];
+//   var maxBar = 30;
+var sum = 0;
+var count = data.length;
+for (var i = 0; i < data.length; i++) {
+	var dataItem = data[i];
+    categoryData.push(dataItem[1].name);
+    //barData.push(dataItem[1].value);
+    barData.push({
+                name: dataItem[1].name,
+                value: dataItem[1].value
+            });
+    sum += dataItem[1].value;
+}
+//console.log(selectedItems);
+//console.log(categoryData);
+//console.log(barData);
+//console.log(data);
+var color = ['#a6c84c', '#ffa022', '#46bee9'];
+var series = [];
+    series.push({
+        name: '',
+        type: 'lines',
+        zlevel: 1,
+        effect: {
+            show: true,
+            period: 6,
+            trailLength: 0.7,
+            color: 'red',
+            symbol:'pin',
+            symbolSize: 3
+        },
+        lineStyle: {
+            normal: {
+                color: '#a6c84c',
+                width: 0,
+                curveness: 0.2
+            }
+        },        
+        data: convertData(data)
+    }, {
+        name: '',
+        type: 'lines',
+        zlevel: 2,
+        symbol: ['none', 'roundRect'],
+        symbolSize: 8,
+        effect: {
+            show: true,
+            period: 6,
+            trailLength: 0,
+           	symbol:'diamond',
+            symbolSize: 2
+        },
+        lineStyle: {
+            normal: {
+                color: '#F9EE9F',
+                width: 1,
+                opacity: 0.6,
+                curveness: 0.2
+            }
+        },
+        data: convertData(data)
+    }, {
+        name: '',
+        type: 'effectScatter',
+        coordinateSystem: 'geo',
+        zlevel: 2,
+        rippleEffect: {
+        	scale:4,
+            brushType: 'fill'
+        },
+        symbol:'emptyCircle',
+        symbolSize: function(val) {
+            return val[2] / 5;
+        },
+        itemStyle:{
+           normal:{
+               label:{show:true},
+               color:function(param){
+               		if(param.value[3] > 0)return 'orange'
+               		else return 'aqua'
+               },
+               opacity:0,
+               //borderClolor:'red',
+               //shadowColor:'yellow',
+               shadowBlur:50,
+           },
+           emphasis: {
+               label:{position:'top'}
+             }
+          },
+        tooltip : {
+	        //trigger: 'item',
+	        formatter: function(param){
 	        	return param.name +':' +param.value[2] + '/'+param.value[3];
-	        } */
-	    }, 
-	    toolbox: {
-	        show : true,
-	        //orient : 'vertical',
-	        //x: 'right',
-	        //y: 'center',
-	        feature : {
-	            mark : {show: false},
-	            dataView : {show: false, readOnly: false},
-	            restore : {show: false},
-	            saveAsImage : {show: true},
-	            myTool3:{
-	            	show:true,
-	            	title:'全屏显示',
-	            	icon:'image://'+_staticPath+'/resource/images/backPro/eyew.png',
-	            	onclick : function(){
-	            		$('#mapDevice').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
-	            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
-							var mapChart = echarts.init(document.getElementById('mapDevice'));
-	            		 		mapChart.resize();
-	            	}
-	            },
-	            myTool4:{
-	            	show:true,
-	            	title:'复原',
-	            	icon:'image://'+_staticPath+'/resource/images/backPro/eye.png',
-	            	onclick : function(){
-	            		$('#mapDevice').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0});
-	            		var mapChart = echarts.init(document.getElementById('mapDevice'));
-	           		 		mapChart.resize();        		
-	            	}
-	            },
 	        }
-			    },
-	    brush: {
-	        outOfBrush: {
-	            color: '#abc'
-	        },
-	        brushStyle: {
-	            borderWidth: 2,
-	            color: 'rgba(0,0,0,0.2)',
-	            borderColor: 'rgba(0,0,0,0.5)',
-	        },
-	        seriesIndex: [0, 1],
-	        throttleType: 'debounce',
-	        throttleDelay: 300,
-	        geoIndex: 0
-	    },
-	    geo :{
-			map : 'china',
-			selectedMode: 'single',
-			left: '0',
-	        right: '35%',
-			center: [103.9526, 30.7617],
-	        zoom: 1.5,
-			roam:true,
-			label :{
-				normal:{show:true,
-						textStyle:{
-							color:'#ccc'
-						}
-				}
-			},
-			itemStyle:{
-	              normal:{
-	                  borderColor:'rgba(100,149,237,1)',
-	                  borderWidth:0.5,
-	                  areaColor:'#1b1b1b'
-	              }
-	            },
+	    },           
+        data:data.map(function(dataItem) {
+            return {
+                name: dataItem[1].name,
+                value: geoCoordMap[dataItem[1].name].concat([dataItem[1].value,dataItem[1].value2])
+            };
+        }) 
+    },
+    {
+        id: 'bar',
+        zlevel: 2,
+        type: 'bar',
+        symbol: 'none',
+        itemStyle: {
+            normal: {
+                color: '#ddb926'
+            }
+        },
+
+        data: barData.reverse()
+    }
+  )
+  console.log(series);
+option = {
+    backgroundColor: '#1b1b1b',
+    title: [{
+        text: '项目/设备分布图',
+        subtext: '内部数据请勿外传',
+        left: 'center',
+        textStyle: {
+            color: '#fff'
+        }
+    },
+    {
+        id: 'statistic',
+        text: count ? '平均: ' + parseInt((sum / count).toFixed(4)) : '',
+        right: 120,
+        top: 40,
+        width: 100,
+        textStyle: {
+            color: '#fff',
+            fontSize: 16
+        }
+    }
+    ],
+      tooltip : {
+        trigger: 'item',
+        /* formatter: function(param){
+        	return param.name +':' +param.value[2] + '/'+param.value[3];
+        } */
+    }, 
+    toolbox: {
+        show : true,
+        //orient : 'vertical',
+        //x: 'right',
+        //y: 'center',
+        feature : {
+            mark : {show: false},
+            dataView : {show: false, readOnly: false},
+            restore : {show: false},
+            saveAsImage : {show: true},
+            myTool3:{
+            	show:true,
+            	title:'全屏显示',
+            	icon:'image://'+_staticPath+'/resource/images/backPro/eyew.png',
+            	onclick : function(){
+            		$('#mapDevice').css({'width':$(window).width(),'position':"absolute",'top':'-200px',
+            		 'left':'-225px','right':0,'bottom':0,'height':$(window).height(),'z-index':9999999});
+						var mapChart = echarts.init(document.getElementById('mapDevice'));
+            		 		mapChart.resize();
+            	}
+            },
+            myTool4:{
+            	show:true,
+            	title:'复原',
+            	icon:'image://'+_staticPath+'/resource/images/backPro/eye.png',
+            	onclick : function(){
+            		$('#mapDevice').css({'width':$('.tab-content').width(),'top':'0px','height':'700px','left':0});
+            		var mapChart = echarts.init(document.getElementById('mapDevice'));
+           		 		mapChart.resize();        		
+            	}
+            },
+        }
+		    },
+    brush: {
+        outOfBrush: {
+            color: '#abc'
+        },
+        brushStyle: {
+            borderWidth: 2,
+            color: 'rgba(0,0,0,0.2)',
+            borderColor: 'rgba(0,0,0,0.5)',
+        },
+        seriesIndex: [0, 1],
+        throttleType: 'debounce',
+        throttleDelay: 300,
+        geoIndex: 0
+    },
+    geo :{
+		map : 'china',
+		selectedMode: 'single',
+		left: '0',
+        right: '35%',
+		center: [103.9526, 30.7617],
+        zoom: 1.5,
+		roam:true,
+		label :{
+			normal:{show:true,
+					textStyle:{
+						color:'#ccc'
+					}
+			}
 		},
-		grid: {
-	        right: 40,
-	        top: 100,
-	        bottom: 40,
-	        width: '30%'
-	    }, 
-	    xAxis: {
-	        type: 'value',
-	        scale: true,
-	        position: 'top',
-	        boundaryGap: false,
-	        splitLine: {
-	            show: false
-	        },
-	        axisLine: {
-	            show: false
-	        },
-	        axisTick: {
-	            show: false
-	        },
-	        axisLabel: {
-	            margin: 2,
-	            textStyle: {
-	                color: '#aaa'
-	            }
-	        },
-	    },
-	    yAxis: {
-	        type: 'category',
-	        //  name: 'TOP 20',
-	        nameGap: 16,
-	        axisLine: {
-	            show: true,
-	            lineStyle: {
-	                color: '#ddd'
-	            }
-	        },
-	        axisTick: {
-	            show: false,
-	            lineStyle: {
-	                color: '#ddd'
-	            }
-	        },
-	        axisLabel: {
-	            interval: 0,
-	            textStyle: {
-	                color: '#ddd'
-	            }
-	        },
-	        data: categoryData.reverse()
-	    },         
-	    series: series   
-	};
+		itemStyle:{
+              normal:{
+                  borderColor:'rgba(100,149,237,1)',
+                  borderWidth:0.5,
+                  areaColor:'#1b1b1b'
+              }
+            },
+	},
+	grid: {
+        right: 0,
+        top: 100,
+        bottom: 40,
+        width: '30%'
+    }, 
+    xAxis: {
+        type: 'value',
+        scale: true,
+        position: 'top',
+        boundaryGap: false,
+        splitLine: {
+            show: false
+        },
+        axisLine: {
+            show: false
+        },
+        axisTick: {
+            show: false
+        },
+        axisLabel: {
+            margin: 2,
+            textStyle: {
+                color: '#aaa'
+            }
+        },
+    },
+    yAxis: {
+        type: 'category',
+        //  name: 'TOP 20',
+        nameGap: 16,
+        axisLine: {
+            show: true,
+            lineStyle: {
+                color: '#ddd'
+            }
+        },
+        axisTick: {
+            show: false,
+            lineStyle: {
+                color: '#ddd'
+            }
+        },
+        axisLabel: {
+            interval: 0,
+            textStyle: {
+                color: '#ddd'
+            }
+        },
+        data: categoryData.reverse()
+    },         
+    series: series   
+};
 	mapChart.setOption(option);	
 	window.onresize = mapChart.resize;
 	mapChart.on('click',function(param){
@@ -1004,7 +982,7 @@ function clickProviceDown(param,data){
 		        }
 		    },
 		     grid: {
-		        right: 40,
+		        right: 0,
 		        top: 100,
 		        bottom: 40,
 		        width: '30%'

@@ -45,143 +45,7 @@
 				<!--<div class="weui-tab xy-border-box xy-pad-tb10 xy-pad-b45p xy-scrollY">-->
 					
 				<div class="page__bd xy-container xy-container-zb10 xy-scrollY">
-					<div class="xy-pad-lr10 xy-pad-t10 xy-border-box xy-list-top-bar" id="followList">
-						<!-- <div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：11111111111</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：22222222222</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：3333333333</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：44444444444</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：55555555555</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：6666666666</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：7777777777777</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div>关注列表
-						<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">
-							<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-								<div class="line-btn-follow"><button>关注</button></div>
-								<div class="line-normal-wrapper">
-									<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-										<div class="xy-pad-l10 line-normal-msg">
-											<ol class="xy-pad-t3">
-												<dt class=" xy-fs16">设备名称：一号设备</dt>
-											</ol>
-											<ol class="xy-pad-t3 xy-fs13">
-												<dt>设备编号：88888888888</dt>
-											</ol>
-										</div>
-									</a>
-								</div>
-							</div>
-						</div> --><!--关注列表-->
+					<div class="xy-pad-lr10 xy-pad-t10 xy-border-box xy-list-top-bar" id="followList">						
 					</div>
 				</div>
 			</div>
@@ -249,9 +113,14 @@
 						console.log(msg);
 						console.log(msg.data.length);
 						if(msg.data.length>0){
+							//alert('找到啦');
+							$("#followList").show();
 							showList(msg.data);							
 							}
-						else if(msg.data.length==0){ alert('设备未找到');return}						
+						else if(msg.data.length==0){ 
+							$("#followList").hide();
+							alert('设备未找到');return
+							}						
 						}
 				});
 			}
@@ -322,17 +191,27 @@
 					hideSearchResult();
 				}
 				$searchInput[0].focus();
-				$searchInput.on('blur', function () {
+				$searchInput.bind('input propertychange', function() {
+				   //alert( $(this).val());
+				   if(!this.value.length){
+				   		cancelSearch();
+						$("#followList").hide();
+				   }else{
+				   		drawList(this.value);
+				   }
+				   
+				});
+				/* $searchInput.on('blur', function () {
 					if(!this.value.length){
 						cancelSearch();
-						//$("#followList").hide();
+						$("#followList").hide();
 					}else{
 						//console.log(this.value);
 						drawList(this.value);
-						$("#followList").show();
+						//$("#followList").show();
 					}
 				});
-				$searchInput.on('keypress', function(evt) {
+				 $searchInput.on('keypress', function(evt) {
 					//console.log(evt.keyCode);
 					//回车键 13
 					if(evt.keyCode == 13){
@@ -340,7 +219,7 @@
 						drawList(this.value);
 						$("#followList").show();
 					}
-				});
+				}); */
 				$searchClear.on('click', function(){
 					hideSearchResult();
 					$searchInput[0].focus();

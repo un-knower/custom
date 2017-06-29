@@ -9,6 +9,10 @@ public class Service {
 	 */
 	private Integer id;
 	/**
+	 * 服务编号
+	 */
+	private String serCode;
+	/**
 	 * 员工ID
 	 */
 	private Integer employeeId;
@@ -35,6 +39,12 @@ public class Service {
 	}
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	public String getSerCode() {
+		return serCode;
+	}
+	public void setSerCode(String serCode) {
+		this.serCode = serCode;
 	}
 	public Integer getEmployeeId() {
 		return employeeId;

@@ -87,7 +87,7 @@
 				</div>
 				<div class="textarea-bar-style xy-line-h0 xy-hide">
 					<div class="xy-mar-lr10 xy-mar-b7 xy-pad-7 xy-line-h0 xy-layout-bar textarea-bar">
-						<textarea placeholder="我要吐槽"></textarea>
+						<textarea placeholder="我要吐槽" id="textRecord"></textarea>
 					</div><!--/写评价窗口-->
 				</div>
 				
@@ -97,7 +97,7 @@
 			<div class="weui-footer weui-footer_fixed-bottom xy-footer">
 				<div class="xy-pad-lr10 xy-clearfix">
 					<a href="javascript:history.go(-1);" class="weui-btn weui-btn_primary xy-fll bg-light-blue">不评价了</a>
-					<a href="page-evaluate-ok.html" class="weui-btn weui-btn_primary xy-fll bg-blue">提交评价</a>
+					<a href="#" class="weui-btn weui-btn_primary xy-fll bg-blue">提交评价</a>
 				</div>
 			</div>
 			<!--/ footer -->
@@ -109,29 +109,57 @@
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
-			}
+			}						
 			$(function(){
+				var serveId='';
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				serveId = GetQueryString('serveId');
+				//showCard();				
+				//获取评价标签
+				 $.ajax({
+					type:'get',
+					url:_path+'/consumer/evaluate/listAllTag',
+					success : function(msg){
+						console.log(msg.data);
+						if(msg){
+							showCard(msg.data[0]);
+							return msg.data
+						}						
+					}
+				});		
 				//星星评价
 				function changeGIF(el){
+					console.log(msg.data)
 					var elNum = el.parent().find('.on').length;
 					if(elNum==0){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-00.gif');
 						$('.my-msg').text('无表情');
+						showCard(msg.data[0]);
 					}else if(elNum==1){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-11.gif');
 						$('.my-msg').text('哭了');
+						showCard(msg.data[1]);
 					}else if(elNum==2){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-22.gif');
 						$('.my-msg').text('快哭了');
+						showCard(msg.data[2]);
 					}else if(elNum==3){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-33.gif');
 						$('.my-msg').text('微笑');
+						showCard(msg.data[3]);
 					}else if(elNum==4){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-44.gif');
 						$('.my-msg').text('开心');
+						showCard(msg.data[4]);
 					}else if(elNum==5){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-55.gif');
 						$('.my-msg').text('感动');
+						showCard(msg.data[5]);
 					}
 					
 				}
@@ -160,7 +188,26 @@
 				$('.select-menubar__item').on('click', function () {
 					$(this).toggleClass('select-menubar__item_on');
 				});
+				//根据星星画对应的标签
+				function showCard(data){
+					var cardDiv='';
+					for(var i in data){
+						cardDiv +=  '<a href="javascript:;" class="select-menubar__item">'+
+										'<p class="select-menubar__label">专业</p>'+
+									'</a>';
+					}
+					$('.select-menubar').html(cardDiv);
+				}
+				bindEvent();
 			});
+			function bindEvent(){
+				//提交评价
+				$('.bg-blue').click(function(){
+					var rank = $('.xy-emptys .on').length,content=$('#textRecord').val(),
+					tags = [];
+										
+				});
+			}
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

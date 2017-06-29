@@ -11,6 +11,7 @@ public class WarnDTO {
 	 * 设备名称
 	 */
 	private String equipName;
+	private String address;
 	/**
 	 * 原水TDS值
 	 */
@@ -55,6 +56,14 @@ public class WarnDTO {
 
 	public void setPath(String path) {
 		this.path = path;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
 	public String getEquipName() {

@@ -43,14 +43,14 @@ function bindEvent(){
 		$('#monitorPage').siblings().hide();
 		$('#monitorPage').show();
 	});
-	/*$('#record').click(function(){
+	$('#record').click(function(){
 		alert('4');
 		$('.nav-list li').removeClass('active');
 		$(this).addClass('active');
 		$('#recordTablePage').siblings().hide();
 		$('#recordTablePage').show();
 		drawRecordTable(_path);
-	});*/
+	});
 }
 function drawTable(){
 	var grid_data = 

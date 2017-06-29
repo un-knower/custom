@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qingting.customer.common.pojo.dto.EvaDTO;
+import com.qingting.customer.common.pojo.dto.HisSerSimpleDTO;
 import com.qingting.customer.common.pojo.dto.HisServiceDTO;
 import com.qingting.customer.common.pojo.dto.PlanDTO;
 import com.smart.mvc.model.ResultCode;
@@ -31,8 +32,37 @@ public class ServiceController {
 			{"思想成熟","精明能干","为人诚实"},
 			{"个性稳重","具高度责任感","工作很有条理","办事效率高"}
 			};
+	String[] str1={"fw201706291134","fw201706291135","fw201706291136","fw201706291137",
+					"fw201706291138","fw201706291139","fw201706291140","fw201706291141"};
 	static Integer rank=1-1;//1星
-	private HisServiceDTO getDTO(boolean evaFlag){
+	
+	private HisSerSimpleDTO getSimpleDTO(boolean evaFlag,String serCode,Integer imageNo){
+		HisSerSimpleDTO his=new HisSerSimpleDTO();
+		his.setAdress("四川省成都市郫县犀浦镇樟菊园3幢2单元1201");
+		
+		his.setImage("/resource/images/customer/serType/type-"+imageNo+".png");
+		his.setRank(rank);
+		his.setSerContent("1、第一级5微米PP棉滤芯（检查或更换）2、第二级颗粒活性炭滤芯（检查或更换）3、第三级烧结活性炭滤芯（检查或更换）4、第四级RO反渗透膜（检查或更换）5、第五级后置活性炭滤芯（检查或更换）");
+		his.setSerHead("原水净化服务");
+	
+		his.setEvaFlag(evaFlag);
+		his.setTime(Calendar.getInstance());
+		his.setSerCode(serCode);
+		return his;
+	}
+	@ApiOperation("获取当前用户的所有历史服务记录")
+	@RequestMapping(value="/listHis",method = RequestMethod.GET)
+	public @ResponseBody WebResult<List<HisSerSimpleDTO>> listHis(){
+		List<HisSerSimpleDTO> list=new ArrayList<HisSerSimpleDTO>();
+		for(int i=0;i<8;i++){
+			list.add(getSimpleDTO(i%2==1,str1[i],i+1));
+		}
+		WebResult<List<HisSerSimpleDTO>> result=new WebResult<List<HisSerSimpleDTO>>(ResultCode.SUCCESS);
+		result.setData(list);
+		result.setMessage("获取成功");
+		return result;
+	}
+	private HisServiceDTO getDTO(boolean evaFlag,String serCode){
 		HisServiceDTO his=new HisServiceDTO();
 		his.setAdress("四川省成都市郫县犀浦镇樟菊园3幢2单元1201");
 		his.setEmpCode("cdzb201701010140");
@@ -62,26 +92,16 @@ public class ServiceController {
 		his.setStatus("已完成");
 		his.setEvaFlag(evaFlag);
 		his.setTime(Calendar.getInstance());
+		his.setSerCode(serCode);
 		return his;
 	}
-	@ApiOperation("获取当前用户的所有历史服务记录")
+	@ApiOperation("获取当前用户的某条历史服务记录")
 	@RequestMapping(value="/getHis",method = RequestMethod.GET)
-	public @ResponseBody WebResult<List<HisServiceDTO>> getHis(){
-		List<HisServiceDTO> list=new ArrayList<HisServiceDTO>();
-		list.add(getDTO(true));
-		list.add(getDTO(false));
-		list.add(getDTO(true));
-		list.add(getDTO(false));
-		list.add(getDTO(true));
-		list.add(getDTO(false));
-		list.add(getDTO(true));
-		list.add(getDTO(true));
-		list.add(getDTO(true));
-		list.add(getDTO(true));
-		list.add(getDTO(true));
-		list.add(getDTO(true));
-		WebResult<List<HisServiceDTO>> result=new WebResult<List<HisServiceDTO>>(ResultCode.SUCCESS);
-		result.setData(list);
+	public @ResponseBody WebResult<HisServiceDTO> getHis(
+			@ApiParam(value = "服务编号", required = true) @RequestParam String serCode
+			){
+		WebResult<HisServiceDTO> result=new WebResult<HisServiceDTO>(ResultCode.SUCCESS);
+		result.setData(getDTO(true,serCode));
 		result.setMessage("获取成功");
 		return result;
 	}
@@ -110,9 +130,9 @@ public class ServiceController {
 		return p;
 	}
 	@ApiOperation("获取当前设备下次服务方案")
-	@RequestMapping(value="/getPlan",method = RequestMethod.GET)
-	public @ResponseBody WebResult<List<PlanDTO>> getPlan(
-			@ApiParam(value = "设备编号", required = true) @RequestParam String equipCode
+	@RequestMapping(value="/listPlan",method = RequestMethod.GET)
+	public @ResponseBody WebResult<List<PlanDTO>> listPlan(
+			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode
 			){
 		List<PlanDTO> list=new ArrayList<PlanDTO>();
 		list.add(getPlanDTO());

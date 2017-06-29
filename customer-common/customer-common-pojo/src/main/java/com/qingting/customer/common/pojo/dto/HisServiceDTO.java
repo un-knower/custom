@@ -5,6 +5,10 @@ import java.util.List;
 
 public class HisServiceDTO {
 	/**
+	 * 服务编号
+	 */
+	private String serCode;
+	/**
 	 * 员工编号
 	 */
 	private String empCode;
@@ -33,6 +37,13 @@ public class HisServiceDTO {
 	private String adress;  //地址
 	private List<String> images; //服务照片
 	private boolean evaFlag; //评价标志
+	
+	public String getSerCode() {
+		return serCode;
+	}
+	public void setSerCode(String serCode) {
+		this.serCode = serCode;
+	}
 	public String getEmpCode() {
 		return empCode;
 	}
