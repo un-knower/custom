@@ -15,9 +15,6 @@
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
-	<script type="text/javascript">
-		var _path="${_path}";
-	</script>
 	<body ontouchstart  translate="no">
 		<div class="page flex js_show height100">
 			<div class="weui-flex xy-header">
@@ -57,7 +54,7 @@
 						</div><!--/星星-->
 						<div class="xy-pad-b10 bg-blue-opacity">
 							<div class="select-menubar xy-clearfix xy-pad-lr5 xy-scrollY xy-height-68p">
-								<a href="javascript:;" class="select-menubar__item">
+								<!-- <a href="javascript:;" class="select-menubar__item">
 									<p class="select-menubar__label">专业</p>
 								</a>
 								<a href="javascript:;" class="select-menubar__item">
@@ -80,7 +77,7 @@
 								</a>
 								<a href="javascript:;" class="select-menubar__item">
 									<p class="select-menubar__label">粗心</p>
-								</a>
+								</a> -->
 							</div>
 						</div><!--/评价多选-->
 					</div>
@@ -108,6 +105,8 @@
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
+			var _path="${_path}";
+			cordData='';
 			function eventCollection(weui){
 			}						
 			$(function(){
@@ -127,39 +126,41 @@
 					success : function(msg){
 						console.log(msg.data);
 						if(msg){
-							showCard(msg.data[0]);
-							return msg.data
+							showCard(msg.data.one);//默认进来是0的标签
+							cordData = msg.data;
+							return cordData;
 						}						
 					}
-				});		
+				});	
+				//console.log(cordData);
 				//星星评价
 				function changeGIF(el){
-					console.log(msg.data)
+					console.log(cordData)
 					var elNum = el.parent().find('.on').length;
 					if(elNum==0){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-00.gif');
 						$('.my-msg').text('无表情');
-						showCard(msg.data[0]);
+						showCard(cordData.one);
 					}else if(elNum==1){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-11.gif');
 						$('.my-msg').text('哭了');
-						showCard(msg.data[1]);
+						showCard(cordData.one);
 					}else if(elNum==2){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-22.gif');
 						$('.my-msg').text('快哭了');
-						showCard(msg.data[2]);
+						showCard(cordData.two);
 					}else if(elNum==3){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-33.gif');
 						$('.my-msg').text('微笑');
-						showCard(msg.data[3]);
+						showCard(cordData.three);
 					}else if(elNum==4){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-44.gif');
 						$('.my-msg').text('开心');
-						showCard(msg.data[4]);
+						showCard(cordData.four);
 					}else if(elNum==5){
 						$('.my-lovely img').attr('src','${_staticPath}/resource/weuiWeb/img/pic-lovely-55.gif');
 						$('.my-msg').text('感动');
-						showCard(msg.data[5]);
+						showCard(cordData.five);
 					}
 					
 				}
@@ -184,27 +185,57 @@
 						changeGIF(el);
 					}
 				});
-				//评价多选
-				$('.select-menubar__item').on('click', function () {
-					$(this).toggleClass('select-menubar__item_on');
-				});
+				
 				//根据星星画对应的标签
 				function showCard(data){
 					var cardDiv='';
-					for(var i in data){
-						cardDiv +=  '<a href="javascript:;" class="select-menubar__item">'+
-										'<p class="select-menubar__label">专业</p>'+
+					console.log(data);
+					for(var i=0,len=data.length;i<len; i++){
+						cardDiv +=  '<a href="javascript:;" class="select-menubar__item" tagId="'+data[i].id+'">'+
+										'<p class="select-menubar__label">'+data[i].tagName+'</p>'+
 									'</a>';
 					}
 					$('.select-menubar').html(cardDiv);
 				}
-				bindEvent();
+				bindEvent(serveId);
 			});
-			function bindEvent(){
+			function bindEvent(serveId){
+				//评价多选
+				/* $('.select-menubar__item').on('click', function () {
+					alert('34454');
+					$(this).toggleClass('select-menubar__item_on');
+				}); */
+				//评价多选
+				$('body').on('click','.select-menubar__item',function(){
+					$(this).toggleClass('select-menubar__item_on');
+				});
 				//提交评价
 				$('.bg-blue').click(function(){
-					var rank = $('.xy-emptys .on').length,content=$('#textRecord').val(),
-					tags = [];
+					var rank = $('.on').length,content=$('#textRecord').val(),
+					tags = [],red = $('.select-menubar__item_on');
+					 for(var i=0,len=red.length;i<len;i++){
+					 	//console.log(red[i]);
+						tags.push(parseInt(red[i].getAttribute('tagId')));
+					} 			
+					$.ajax({
+						type:'post',
+						traditional: true,
+						cache: false,
+						contentType: "application/json; charset=utf-8",
+						dataType:"json",
+						url:_path+'/consumer/evaluate/set',
+						data: JSON.stringify({
+								'rank':rank,'content':content,'serveCode':serveId,
+								'tags':tags
+								    }),
+						success : function(r){
+							console.log(r);
+							if(r){
+								alert('成功！！');	
+								window.location.href =_path+"/consumer/evaluate-ok.jsp";							
+								}						
+							}
+					});
 										
 				});
 			}

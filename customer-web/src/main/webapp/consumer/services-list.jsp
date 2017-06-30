@@ -262,6 +262,7 @@
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
+			var _path="${_path}";
 			function eventCollection(weui){
 			}
 			$(function(){				
@@ -274,10 +275,11 @@
 					getHisList();//画历史服务列表										
 				}else if(iffuwu==2){
 					$('head title').text('净水器-实时服务方案');
-					$('.xy-h1-title').text('实时服务方案');					
+					$('.xy-h1-title').text('实时服务方案');	
+					getPlanList();//画实时服务列表				
 				}
-				//点击查看详情
-				$('body').on('click','.xy-linlk-listview',function(){//列表点击事件跳转
+				//点击查看详情(历史)
+				$('body').on('click','.goHisDetail',function(){//列表点击事件跳转
 					var thisEvalue = $(this).parent().attr('evalue'),thisId=$(this).parent().attr('serveId');
 					if(thisEvalue == 'true'){
 						sessionStorage.setItem('ifel',2);//跳转页面，公用一个详情页，设假数据为2，若2 ==》 跳转页面隐藏评价按钮 不可评价";
@@ -285,6 +287,11 @@
 						sessionStorage.setItem('ifel',1);//跳转页面，公用一个详情页，设假数据为1，若1 ==》 跳转页面显示评价按钮 可评价";
 					}
 					window.location.href =_path+"/consumer/services-details.jsp?serveId="+thisId;
+				}); 
+				//点击查看详情(实时)
+				$('body').on('click','.goPlanDetail',function(){//列表点击事件跳转
+					var thisId=$(this).parent().attr('serveId');
+					window.location.href =_path+"/consumer/service-offerings-details.jsp?serveId="+thisId;
 				}); 
 				/* $('#goRecord').click(function(){
 					alert($(this).parents('li').attr('serveId'));
@@ -316,7 +323,7 @@
 				var listDiv = '';
 				for (var i in data){
 				 	listDiv += '<li class="xy-layout-bar xy-pad-tb10 xy-border-box" evalue="'+data[i].evaFlag+'" serveId="'+data[i].serCode+'">'+
-									'<a class="weui-cell weui-cell_access xy-linlk-listview" href="javascript:;">'+
+									'<a class="weui-cell weui-cell_access xy-linlk-listview goHisDetail" href="javascript:;">'+
 										'<div class="weui-cell__bd xy-clearfix xy-mar-r5">'+
 											'<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG xy-fll"><img src="${_staticPath}'+data[i].image+'" /></p>'+
 											'<div class="xy-db xy-mar-l85p">'+
@@ -351,9 +358,66 @@
 											'</dd>';
 								}
 								else{
-									listDiv +='<button id="goRecord">还未评价？快去评价吧</button>'
+									listDiv +='<a id="goRecord" style="color: #2a85ca;text-decoration: underline;">还未评价？快去评价吧</a>'
 								}	
 							  listDiv +='</ol>'+
+										'<ol class="xy-fc-light-gray xy-fs13 xy-line-h22 xy-flr">'+
+											'<dt class="xy-dibVat">服务时间:</dt>'+
+											'<dd class="xy-dibVat">'+data[i].time.slice(0,11)+'</dd>'+
+										'</ol>'+
+									'</div>'+
+									'<div class="main-img-address xy-pad-lr10">'+
+										'<a href="#" class="" flex="dir:left">'+
+											'<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>'+
+											'<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">'+data[i].adress+
+											'</div>'+
+										'</a>'+
+									'</div>'+
+								'</li>';
+				}
+				$('.xy-list-top-bar').html(listDiv);
+			}
+			function getPlanList(){
+				var equipCode='';
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				//var equipCode = GetQueryString('equipCode');
+				GetQueryString('equipCode')?equipCode=GetQueryString('equipCode'):equipCode='';
+				$.ajax({
+					type:'get',
+					url:_path+'/consumer/service/listPlan?equipCode='+equipCode,
+					//data: {equipId:''},
+					success : function(r){
+						console.log(r);
+						if(r){
+								drawPlanList(r.data);								
+							}						
+						}
+				});
+			}
+			function drawPlanList(data){
+				//alert('3344');
+				var listDiv = '';
+				for (var i in data){
+				 	listDiv += '<li class="xy-layout-bar xy-pad-tb10 xy-border-box" serveId="'+data[i].serCode+'">'+
+									'<a class="weui-cell weui-cell_access xy-linlk-listview goPlanDetail" href="javascript:;">'+
+										'<div class="weui-cell__bd xy-clearfix xy-mar-r5">'+
+											'<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG xy-fll"><img src="${_staticPath}'+data[i].image+'" /></p>'+
+											'<div class="xy-db xy-mar-l85p">'+
+												'<p class="xy-fs16 xy-pad-t2">'+data[i].serHead+'</p>'+
+												'<p class="xy-fc-light-gray xy-pad-t3 xy-fs13 xy-line-clamp2 xy-line-h20">'+data[i].serContent+
+												'</p>'+
+											'</div>'+
+										'</div>'+
+										'<div class="weui-cell__ft">'+
+										'</div>'+
+									'</a><!--信息模块-->'+
+										
+									'<div class="xy-fwb-title xy-border-box xy-pad-lr10 xy-pad-tb5 xy-clearfix">'+
 										'<ol class="xy-fc-light-gray xy-fs13 xy-line-h22 xy-flr">'+
 											'<dt class="xy-dibVat">服务时间:</dt>'+
 											'<dd class="xy-dibVat">'+data[i].time.slice(0,11)+'</dd>'+

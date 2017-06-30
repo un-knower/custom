@@ -56,7 +56,7 @@ public class LoginController {
 	    model.addAttribute("appCode", Config.getSsoAppCode());
 	    return "redirect:" + ssoLoginUrl; */
 	}
-	@ApiOperation("后台登陆提交-此处跳转/admin/lead.jsp")
+	@ApiOperation("后台登陆提交-此处跳转/admin/admin.jsp")
 	@RequestMapping(value="/admin/login",method = RequestMethod.POST)
 	public String adminLogin(HttpServletRequest request,
 			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE })String mobile,
@@ -64,7 +64,7 @@ public class LoginController {
 			){
 		String contextpath = request.getScheme() +"://" + request.getServerName()  + ":" +request.getServerPort() +request.getContextPath();
 		String ssoLoginUrl = new StringBuilder().append(Config.getSsoServerUrl()).append("/login/submit?").append("account="+mobile).append("&password="+password).
-				append("&backUrl=").append(contextpath+"/admin/home").append("&appCode=").append(Config.getSsoAppCode()).toString();
+				append("&backUrl=").append(contextpath+"/admin/admin").append("&appCode=").append(Config.getSsoAppCode()).toString();
 		System.out.println(this.getClass()+"ssoLoginUrl:");
 		return "redirect:" + ssoLoginUrl;
 		/*String ssoLoginUrl = new StringBuilder().append(Config.getSsoServerUrl()).append("/login/submit").toString();

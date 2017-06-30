@@ -2,7 +2,7 @@
 /*var  filename = location.href;
 filename=filename.substr(filename.lastIndexOf('/')+1);  
 */
-var PublicJs = {},_staticPath="http://192.168.10.201:8083/smart-static",_path="http://192.168.10.201:8086/customer-web";
+var PublicJs = {},_staticPath="http://192.168.10.201:8083/smart-static",_path="http://192.168.10.20:8086/customer-web";
 PublicJs.IsPhone = function () {//判断是否是手机浏览器
     try {
         if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {

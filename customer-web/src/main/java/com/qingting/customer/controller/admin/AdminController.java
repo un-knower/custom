@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiOperation;
  */
 @Api(tags = "后台首页管理")
 @Controller
-@RequestMapping("/admin/home")
+@RequestMapping("/admin/admin")
 public class AdminController {
 
 	@ApiOperation("页面跳转-后台初始页")
@@ -37,7 +37,7 @@ public class AdminController {
 		model.addAttribute("sessionUserNoPermissions", sessionPermission == null ? null : sessionPermission.getNoPermissions());
 		// 默认首页
 		// model.addAttribute("defaultPage", null);
-		return "/admin/home";
+		return "/admin/admin";
 	}
 
 	@ApiOperation("后台菜单")
@@ -51,6 +51,11 @@ public class AdminController {
 		result.setData(
 				sessionPermission == null ? ApplicationPermissionUtils.getApplicationMenuList() : sessionPermission.getMenuList()
 				);
+		for (RpcPermission  rp: result.getData()) {
+			System.out.println("RpcPermission:"+rp);
+		}
+		System.out.println("sessionPermission:"+sessionPermission.getMenuList());
+		System.out.println("ApplicationMenuList:"+ApplicationPermissionUtils.getApplicationMenuList());
 		return result;
 	}
 }

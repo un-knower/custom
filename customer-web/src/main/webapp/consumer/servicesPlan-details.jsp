@@ -9,57 +9,73 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="format-detection" content="telephone=no">
-		<title>净水器-服务评价查看</title>
+		<title>净水器-服务详情</title>
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/weui.min.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/swiper.min.css">
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
-	<script type="text/javascript">
-		var _path="${_path}";
-	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
 			<div class="weui-flex xy-header">
 				<div>
 					<a href="javascript:history.go(-1);" class="weui-btn weui-btn_mini xy-btn-back"></a>
 				</div>
-				<div class="weui-flex__item"><div class="xy-h1-title">木木家的服务评价查看</div></div>
+				<div class="weui-flex__item"><div class="xy-h1-title">木木家的服务详情</div></div>
 				<div class="xy-width-45"></div>
 			</div><!--/header-->
 			<div class="page__bd xy-container xy-container-t45b42">
 				<div class="swiper-container ve-swiper-container height100">
 					<div class="swiper-wrapper">
-						<!--------------- swiper-slide ---------------->
-						<div class="swiper-slide"> 
-							
+						<div class="swiper-slide">
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">
-								<div class="xy-layout-bar xy-query" flex="dir:top">
+								<div class="xy-layout-bar xy-query xy-query-other" flex="dir:top">
 									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-02" flex="dir:left">
 										<p class="xy-fs14"  flex-box="1" id="serHead">过程净化服务</p>
 										<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
 									</div>
 									<div class="xy-pad-tb10 xy-border-box" flex-box="1" flex="dir:top">
-										<div class="xy-border-box xy-tac" flex-box="1">
-											<div class="xy-dibVat">
-												<p class="mini-lovely width100"><%-- <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /> --%></p>
-												<p class="xy-pad-t3 xy-fs16" id="empName">蒙奇浩浩</p>
-												<p class="xy-pad-t3 xy-fc-light-gray xy-fs12" id="time">服务时间：2017-05-30</p>
-												<div class="xy-star-bar xy-mini-star xy-tac xy-pad-lr10 xy-pad-t5">
-													<div class="xy-emptys"></div>
-													<i class="icon-star xy-dibVat on"></i>
-													<i class="icon-star xy-dibVat on"></i>
-													<i class="icon-star xy-dibVat on"></i>
-													<i class="icon-star xy-dibVat on"></i>
-													<i class="icon-star xy-dibVat"></i>
-												</div><!--/星星-->
+										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left">
+											<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><%-- <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /> --%></p>
+											<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
+												<ol class="xy-pad-t3 xy-fs16" flex="dir:left">
+													<dt>项目：</dt>
+													<dd flex-box="1" id="equipName">净化系统</dd>
+												</ol>
+												<ol class="xy-pad-t3 xy-fs13" flex="dir:left">
+													<dt>工号：</dt>
+													<dd flex-box="1" id="empCode">QT20170212</dd>
+												</ol>
+												<ol class="xy-fc-light-gray xy-fs13" flex="dir:left">
+													<dt>服务时间：</dt>
+													<dd flex-box="1" id="time">2017-05-30</dd>
+												</ol>
 											</div>
+											<div class="weui-cell__ft">
+											</div>
+										</div>
+										<div class="xy-fwb-title xy-border-box xy-pad-10 xy-pad-b5">
+											<ol class="xy-fc-light-gray xy-line-h22" flex="dir:left">
+												<dt>综合评分：</dt>
+												<dd flex-box="1">
+													<div class="xy-star-bar xy-mini-star xy-pad-t2 xy-dibVat">
+														<div class="xy-emptys"></div>
+														<i class="icon-star xy-dibVat on"></i>
+														<i class="icon-star xy-dibVat on"></i>
+														<i class="icon-star xy-dibVat on"></i>
+														<i class="icon-star xy-dibVat on"></i>
+														<i class="icon-star xy-dibVat"></i>
+													</div><!--/星星-->
+													<P class="xy-dibVat xy-pad-l5 xy-fs15" id="cord">4.8</P>
+													<P class="xy-dibVat xy-pad-l5" id="tag">专业、高效</P>
+												</dd>
+											</ol>
 										</div>
 										<div class="main-img-address xy-pad-lr10 xy-pad-t7">
 											<a href="#" class="" flex="dir:left">
 												<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
-												<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
+												<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1" id="adress">
 													成都市高兴西区天泉路200号 众创办公室茶水间 	
 												</div>
 											</a>
@@ -67,43 +83,26 @@
 									</div>
 								</div><!--用户信息-->
 								
-								<div class="xy-layout-bar xy-mar-t10 xy-border-box xy-pad-b10 xy-pad-t5 xy-query-bottom" flex-box="1" flex="dir:top">
-									<div class="select-menubar xy-clearfix xy-pad-lr5">
-										<a href="javascript:;" class="select-menubar__item select-menubar__item_on">
-											<p class="select-menubar__label">专业</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item select-menubar__item_on">
-											<p class="select-menubar__label">高效</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item">
-											<p class="select-menubar__label">礼貌</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item">
-											<p class="select-menubar__label">细心</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item">
-											<p class="select-menubar__label">不专业</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item">
-											<p class="select-menubar__label">拖拉</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item">
-											<p class="select-menubar__label">粗鲁</p>
-										</a>
-										<a href="javascript:;" class="select-menubar__item">
-											<p class="select-menubar__label">粗心</p>
-										</a>
-									</div><!--/评价 head-->
-									<div class="eva-con xy-pad-b5 xy-mar-t3 xy-fc-gray xy-pad-lr10 xy-height-1p xy-scrollY swiper-no-swiping" flex-box="1">
-										<p id="textContent">
+								<div class="xy-layout-bar xy-mar-t10 xy-query-bottom" flex-box="1" flex="dir:top">
+									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01" flex="dir:left">
+										<p class="xy-fs14"  flex-box="1">服务方案</p>
+										<p class="xy-fs12" id="status">待服务</p>
+									</div>
+									
+									<div class="eva-con xy-pad-lr10 xy-pad-t10 xy-pad-b20 xy-fc-gray xy-height-1p xy-scrollY swiper-no-swiping" flex-box="1">
+										<p id="serContent">
+											补充评价：一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。
+二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。
+
 										</p>
 									</div>
-								</div><!--评价信息-->
+								</div><!--信息-->
 							</div>
 						</div>
-						<!--/列表-->
-						<!--------------- swiper-slide ---------------->
+						<!--列表-->
+					
 						<div class="swiper-slide"> 
+							
 							<div class="swiper-container xy-swiper-container picLayout-swiper-container height100">
 								
 								<div class="xy-head-title bg-blue xy-pad-lr20 xy-mar-10">服务相关图片</div>
@@ -138,14 +137,14 @@
 							<div class="swiper-pagination swiper-pagination-fraction xy-swiper-pagination xy-swiper-paginationB0">&nbsp;</div>
 							
 						</div>
-						<!--/列表-->
+						<!--列表-->
 					</div>
 				</div>
 				<div class="swiper-button-prev xy-bottom_btnPrve"></div>
 				<div class="swiper-button-next xy-bottom_btnNext"></div>
 			</div>
 			<!--/ container -->
-			
+			<div class="xy-poab-menuBottom"><a href="#" class="xy-db xy-fc-white xy-tac xy-border-box xy-pad-t9">评价</a></div>
 		</div>
 		<!--/page End-->
 		
@@ -170,62 +169,15 @@
 				//获取数据
 				$.ajax({
 					type:'get',
-					url:_path+'/consumer/service/getHis?serCode='+serveId,
+					url:_path+'/consumer/service/getPlan?serCode='+serveId,
 					success : function(msg){
 						console.log(msg);
 						if(msg.data){
-							$('.xy-h1-title').html(msg.data.equipName+'家的服务评价查看');
-							$('#empName').html(msg.data.empName);
-							$('#adress').html(msg.data.adress);
-							$('#empCode').html(msg.data.empCode);
-							$('#serHead').html(msg.data.serHead);
-							$('#equipName').html(msg.data.equipName);
-							$('#status').html(msg.data.status);
-							$('#time').html('服务时间：'+msg.data.time.slice(0,10));
-							$('#notice').html('通知时间：'+msg.data.notice.slice(0,10));
-							$('#serContent').html(msg.data.serContent);
-							$('#textContent').html('我是文字评价！！');//此处数据需要后台添加
-							$('.mini-lovely').html('<img src="${_staticPath}'+msg.data.portrait+'" />');
-							drawImg(msg.data.images);
-							drawStar(msg.data.rank);
-							drawTags(msg.data.evaContent);
 							}						
 						}
 				});
 			}
-			function drawImg(imgData){
-				//console.log(imgData);
-				var imgDiv='';
-				for(var i=0,len=imgData.length;i<len;i++){
-					imgDiv +=  '<div class="swiper-slide">'+
-									'<div class="main-img">'+
-										'<img src="${_staticPath}'+imgData[i]+'" />'+
-									'</div>	'+
-								'</div>';
-				}
-				$('#imgContainer').html(imgDiv);
-			}
-			function drawStar(rank){
-				var starDiv ='',tag=[];
-				for(var j=0;j<5;j++){
-					if(j<rank) //有星星
-						starDiv+='<i class="icon-star xy-dibVat on"></i>';
-					else //无星星
-						starDiv+='<i class="icon-star xy-dibVat"></i>';
-				}
-				$('.xy-star-bar').html(starDiv);
-			}
-			function drawTags(evaContent){
-				var cardDiv='';
-				console.log(evaContent);
-				for(var i=0,len=evaContent.length;i<len; i++){
-					cardDiv +=  '<a href="javascript:;" class="select-menubar__item select-menubar__item_on" tagId="'+evaContent[i].id+'">'+
-									'<p class="select-menubar__label">'+evaContent[i].tagName+'</p>'+
-								'</a>';
-				}
-				$('.select-menubar').html(cardDiv);
-			}
-		</script>
+			</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>
 	</body>

@@ -14,6 +14,7 @@ import com.qingting.customer.common.pojo.dto.EvaDTO;
 import com.qingting.customer.common.pojo.dto.HisSerSimpleDTO;
 import com.qingting.customer.common.pojo.dto.HisServiceDTO;
 import com.qingting.customer.common.pojo.dto.PlanDTO;
+import com.qingting.customer.common.pojo.dto.PlanSimpleDTO;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 
@@ -105,7 +106,7 @@ public class ServiceController {
 		result.setMessage("获取成功");
 		return result;
 	}
-	private PlanDTO getPlanDTO(){
+	private PlanDTO getPlanDTO(Integer imageNo){
 		PlanDTO p=new PlanDTO();
 		p.setAdress("四川成都高新西区天全路222号 无线通信国家专业化众创空间2号楼8楼整层");
 		p.setEquipCode("xqt201701010143");
@@ -126,29 +127,63 @@ public class ServiceController {
 		p.setRemark("饮水机出水口快要脱落,需要更换.入水口螺帽有裂纹,有漏水风险,需要更换");
 		p.setSerHead("原水净化服务");
 		p.setStatus("待服务");
-		p.setWarnContent("1、第三级烧结活性炭滤芯（检查或更换）2、第四级RO反渗透膜（检查或更换）");
+		p.setWarnContent("1、第三级烧结活性炭滤芯快到期了 2、第四级RO反渗透膜快到期了");
+		p.setImage("/resource/images/customer/serType/type-"+imageNo+".png");
+		p.setSerCode(imageNo+"");
+		p.setSerContent("1、第三级烧结活性炭滤芯（检查或更换）2、第四级RO反渗透膜（检查或更换）");
+		p.setTime(Calendar.getInstance());
 		return p;
 	}
-	@ApiOperation("获取当前设备下次服务方案")
+	@ApiOperation("获取当前设备下次服务方案列表")
 	@RequestMapping(value="/listPlan",method = RequestMethod.GET)
-	public @ResponseBody WebResult<List<PlanDTO>> listPlan(
+	public @ResponseBody WebResult<List<PlanSimpleDTO>> listPlan(
 			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode
 			){
-		List<PlanDTO> list=new ArrayList<PlanDTO>();
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		list.add(getPlanDTO());
-		WebResult<List<PlanDTO>> result=new WebResult<List<PlanDTO>>(ResultCode.SUCCESS);
+		List<PlanSimpleDTO> list=new ArrayList<PlanSimpleDTO>();
+		for(int i=0;i<8;i++){
+			list.add(getPlanSimpleDTO(i));
+		}
+		
+		WebResult<List<PlanSimpleDTO>> result=new WebResult<List<PlanSimpleDTO>>(ResultCode.SUCCESS);
 		result.setData(list);
+		result.setMessage("获取成功");
+		return result;
+	}
+	private PlanSimpleDTO getPlanSimpleDTO(Integer imageNo){
+		PlanSimpleDTO p=new PlanSimpleDTO();
+		p.setAdress("四川成都高新西区天全路222号 无线通信国家专业化众创空间2号楼8楼整层");
+		//p.setEquipCode("xqt201701010143");
+		//p.setEquipName("小清渟");
+		
+		//List<String> list2=new ArrayList<String>();
+		//list2.add("/resource/images/customer/plan/fw1.png");
+		//list2.add("/resource/images/customer/plan/fw2.png");
+		//list2.add("/resource/images/customer/plan/fw3.png");
+		//list2.add("/resource/images/customer/plan/fw4.png");
+		//list2.add("/resource/images/customer/plan/fw5.png");
+		//list2.add("/resource/images/customer/plan/fw6.png");
+		//p.setImages(list2);
+		
+		//p.setEmpName("陈应刚");
+		//p.setNotice(Calendar.getInstance());
+		//p.setPortrait("/resource/images/customer/head/cyg.png");
+		//p.setRemark("饮水机出水口快要脱落,需要更换.入水口螺帽有裂纹,有漏水风险,需要更换");
+		p.setSerHead("原水净化服务");
+		//p.setStatus("待服务");
+		//p.setWarnContent("1、第三级烧结活性炭滤芯快到期了 2、第四级RO反渗透膜快到期了");
+		p.setImage("/resource/images/customer/serType/type-"+imageNo+".png");
+		p.setSerCode(imageNo+"");
+		p.setSerContent("1、第三级烧结活性炭滤芯（检查或更换）2、第四级RO反渗透膜（检查或更换）");
+		p.setTime(Calendar.getInstance());
+		return p;
+	}
+	@ApiOperation("获取当前设备下次服务方案详细")
+	@RequestMapping(value="/getPlan",method = RequestMethod.GET)
+	public @ResponseBody WebResult<PlanDTO> getPlan(
+			@ApiParam(value = "服务编号", required = true) @RequestParam String serCode
+			){
+		WebResult<PlanDTO> result=new WebResult<PlanDTO>(ResultCode.SUCCESS);
+		result.setData(getPlanDTO(Integer.valueOf(serCode)));
 		result.setMessage("获取成功");
 		return result;
 	}

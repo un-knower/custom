@@ -21,7 +21,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 
 @Api(tags = "用户相关")
-@Controller
+@Controller("consumerUserController")
 @RequestMapping("/consumer/user")
 public class UserController {
 	@Resource

@@ -54,13 +54,13 @@
 								<div class="xy-wave" id="wave3"></div>
 							</div>
 							<div class="main-img-device xy-fs14 bg-blue-opacity xy-clearfix xy-pad-t7 xy-pad-b7" flex="main:center cross:center">
-								<ul class="width100 xy-border-box xy-pad-lr10">
+								<ul class="width100 xy-border-box xy-pad-lr10" id="deviceUl">
 									<li>
 										<p>设备总数</p>
 										<p id="totalDevice">120个</p>
 									</li>
 									<li>
-										<a href="page-device-list.html" class="xy-db xy-fc-black">
+										<a href="#" class="xy-db xy-fc-black">
 											<p>我的设备</p>
 											<p id="mineDevice">120个</p>
 										</a>
@@ -80,6 +80,12 @@
 									<div class="weui-cell__hd xy-pore">
 										<img src="${_staticPath}/resource/weuiWeb/img/icon-list-message.png">
 										<i class="xy-poab icon-new-message">&nbsp;</i>
+										<!-- <script type="text/javascript">
+											var a = 1;
+											if(a == 1){
+												return '<i class="xy-poab icon-new-message">&nbsp;</i>'
+											}											
+										</script> -->
 									</div>
 									<div class="weui-cell__bd">
 										<p>消息</p>
@@ -113,7 +119,7 @@
 									</div>
 									<div class="weui-cell__ft"></div>
 								</a>
-								<a class="weui-cell weui-cell_access" href="javascript:;">
+								<a class="weui-cell weui-cell_access" href="javascript:;" id="exit">
 									<div class="weui-cell__hd"><img src="${_staticPath}/resource/weuiWeb/img/icon-list-exit.png"></div>
 									<div class="weui-cell__bd">
 										<p>退出</p>
@@ -140,11 +146,32 @@
 					window.location.href =_path+"/consumer/news.jsp";
 				});
 				$('#attent').click(function(){
-					alert('3344');
+					//alert('3344');
 					window.location.href =_path+"/consumer/device-follow.jsp";
 				});
 				$('#setNewPassword').click(function(){
 					window.location.href =_path+"/consumer/forget.jsp";
+				});
+				$('#deviceUl li:eq(1)').click(function(){
+					window.location.href =_path+"/consumer/project.jsp";
+				});
+				$('#deviceUl li:eq(2)').click(function(){
+					//sessionStorage.setItem('number',2);
+					window.location.href =_path+"/consumer/project.jsp?number=2";
+				});
+				$('#exit').click(function(){
+					//退出
+					$.ajax({
+						type:'get',
+						//url:_path+'/logout',
+						url:'http://192.168.10.201:8086/customer-web/logout',
+						success : function(msg){
+							console.log(msg);
+							if(msg){
+								
+								}						
+							}
+					});
 				});
 			}
 			$(function(){

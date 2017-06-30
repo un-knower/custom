@@ -14,10 +14,10 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
+		<script type="text/javascript">
+			var _path="${_path}";
+		</script>
 	</head>
-	<script type="text/javascript">
-		var _path="${_path}";
-	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
 			<div class="page__bd xy-container xy-container-b10">

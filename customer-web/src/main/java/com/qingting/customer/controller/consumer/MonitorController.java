@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -88,83 +89,53 @@ public class MonitorController {
 		//别忘记验证传参和用户身份是否匹配
 		//Calendar startCal = DateUtil.getDate(2017, 4, 7, 9, 42, 55, 790);
 		System.out.println("输入参数:"+equipId+" "+endCalendar);
-		MonitorDTO monitorDTO=new MonitorDTO();
-		monitorDTO.setUserName("武双");
-		List<Float> purDatas=new ArrayList<Float>();
-		purDatas.add(9.7f);
-		purDatas.add(5.8f);
-		purDatas.add(17.3f);
-		purDatas.add(5.8f);
-		monitorDTO.setPurDatas(purDatas);
 		
-		List<Float> rawDatas=new ArrayList<Float>();
-		rawDatas.add(17.3f);
-		rawDatas.add(38.2f);
-		rawDatas.add(12.3f);
-		rawDatas.add(23.2f);
-		monitorDTO.setRawDatas(rawDatas);
-		List<Calendar> secondDates =new ArrayList<Calendar>();
-		Calendar cal1 = Calendar.getInstance();
-		secondDates.add(cal1);
-		
-		Calendar cal2=Calendar.getInstance();
-		cal2.setTimeInMillis(cal1.getTimeInMillis()-5000);
-		secondDates.add(cal2);
-		
-		Calendar cal3=Calendar.getInstance();
-		cal3.setTimeInMillis(cal2.getTimeInMillis()-5000);
-		secondDates.add(cal3);
-		
-		Calendar cal4=Calendar.getInstance();
-		cal4.setTimeInMillis(cal3.getTimeInMillis()-5000);
-		secondDates.add(cal4);
-		
-		monitorDTO.setSecondDates(secondDates);
 		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);
-		result.setData(monitorDTO);
+		result.setData(getMonitorDTO(endCalendar));
 		return result;
 	}
 	
 	@ApiOperation("查询最新时间段的监测值")
 	@RequestMapping(value="/listNew",method = RequestMethod.POST)
 	public @ResponseBody WebResult<MonitorDTO> listNewMonitor(
-			@ApiParam(value = "设备ID", required = false) @RequestParam Integer equipId
+			@ApiParam(value = "设备ID", required = false) @RequestParam(value="equipId", required=false) Integer equipId
 			){
 		System.out.println("输入参数:"+equipId);
+		
+		
+		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);
+		result.setData(getMonitorDTO(Calendar.getInstance()));
+		return result;
+	}
+	public MonitorDTO getMonitorDTO(Calendar cal){
 		MonitorDTO monitorDTO=new MonitorDTO();
 		monitorDTO.setUserName("武双");
+		
 		List<Float> purDatas=new ArrayList<Float>();
-		purDatas.add(9.7f);
-		purDatas.add(5.8f);
-		purDatas.add(17.3f);
-		purDatas.add(5.8f);
+		int random=new Random().nextInt(15);
+		for(int i=0;i<random;i++){
+			purDatas.add(new Random().nextFloat()*20);
+		}
 		monitorDTO.setPurDatas(purDatas);
 		
 		List<Float> rawDatas=new ArrayList<Float>();
-		rawDatas.add(17.3f);
-		rawDatas.add(38.2f);
-		rawDatas.add(12.3f);
-		rawDatas.add(23.2f);
+		for(int i=0;i<random;i++){
+			rawDatas.add(new Random().nextFloat()*200);
+		}
 		monitorDTO.setRawDatas(rawDatas);
+		
 		List<Calendar> secondDates =new ArrayList<Calendar>();
-		Calendar cal1 = Calendar.getInstance();
+		Calendar cal1 = cal;
 		secondDates.add(cal1);
-		
-		Calendar cal2=Calendar.getInstance();
-		cal2.setTimeInMillis(cal1.getTimeInMillis()-5000);
-		secondDates.add(cal2);
-		
-		Calendar cal3=Calendar.getInstance();
-		cal3.setTimeInMillis(cal2.getTimeInMillis()-5000);
-		secondDates.add(cal3);
-		
-		Calendar cal4=Calendar.getInstance();
-		cal4.setTimeInMillis(cal3.getTimeInMillis()-5000);
-		secondDates.add(cal4);
+		Calendar temp=cal1;
+		for(int i=0;i<random-1;i++){
+			Calendar cal2=Calendar.getInstance();
+			cal2.setTimeInMillis(temp.getTimeInMillis()-30000/random);
+			secondDates.add(cal2);
+			temp=cal2;
+		}
 		
 		monitorDTO.setSecondDates(secondDates);
-		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);
-		result.setData(monitorDTO);
-		return result;
+		return monitorDTO;
 	}
 }

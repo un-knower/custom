@@ -36,7 +36,7 @@
 										<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
 									</div>
 									<div class="xy-pad-tb10 xy-border-box" flex-box="1" flex="dir:top">
-										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left" onclick="window.location.href='page-evaluate-query.html'">
+										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left">
 											<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><%-- <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /> --%></p>
 											<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
 												<ol class="xy-pad-t3 xy-fs16" flex="dir:left">
@@ -106,7 +106,7 @@
 							<div class="swiper-container xy-swiper-container picLayout-swiper-container height100">
 								
 								<div class="xy-head-title bg-blue xy-pad-lr20 xy-mar-10">服务相关图片</div>
-								<div class="swiper-wrapper">
+								<div class="swiper-wrapper" id="imgContainer">
 									<div class="swiper-slide"> 
 										<div class="main-img">
 											<img src="${_staticPath}/resource/weuiWeb/img/pic-list.png" />
@@ -144,7 +144,7 @@
 				<div class="swiper-button-next xy-bottom_btnNext"></div>
 			</div>
 			<!--/ container -->
-			<div class="xy-poab-menuBottom"><a href="page-evaluate.html" class="xy-db xy-fc-white xy-tac xy-border-box xy-pad-t9">评价</a></div>
+			<div class="xy-poab-menuBottom"><a href="#" class="xy-db xy-fc-white xy-tac xy-border-box xy-pad-t9">评价</a></div>
 		</div>
 		<!--/page End-->
 		
@@ -154,9 +154,23 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/xy-swiper.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
+			var _path="${_path}";
 			function eventCollection(weui){
 			}
+			function bindEvent(serveId){
+				$('.xy-poab-menuBottom').click(function(){
+					window.location.href =_path+"/consumer/evaluate.jsp?serveId="+serveId;
+				});
+				
+			}
 			$(function(){
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+								
 				//传来的值若1 ==》历史服务记录列表 ==》显示评价按钮 有评价入口;
 				//传来的值 若2==》实时服务方案==》隐藏评价按钮 无评价入口;
 				var ifel = sessionStorage.getItem('ifel');
@@ -164,16 +178,17 @@
 				if(ifel==1){
 					//未评价，隐藏右边按钮
 					$('.xy-poab-menuBottom').show();
+					$('.weui-cell__ft').hide();
+					$('.xy-fwb-title').hide();
 				}else if(ifel==2){
+					//评价了，显示右边按钮，跳转评价详情
+					$('.xy-linlk-listview').click(function(){
+						window.location.href =_path+"/consumer/evaluate-query.jsp?serveId="+GetQueryString('serveId');
+					});
 					$('.xy-poab-menuBottom').hide();
 				}
-				//获取地址栏参数				
-				function GetQueryString(name){
-				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-				     var r = window.location.search.substr(1).match(reg);
-				     if(r!=null)return  decodeURI(r[2]); return null;
-				}
 				fillContent(GetQueryString('serveId'))
+				bindEvent(GetQueryString('serveId'));
 			})
 			function fillContent(serveId){
 				//获取数据
@@ -183,17 +198,48 @@
 					success : function(msg){
 						console.log(msg);
 						if(msg.data){
+							$('.xy-h1-title').html(msg.data.equipName+'家的服务详情');
 							$('#adress').html(msg.data.adress);
 							$('#empCode').html(msg.data.empCode);
 							$('#serHead').html(msg.data.serHead);
+							$('#equipName').html(msg.data.equipName);
 							$('#status').html(msg.data.status);
-							$('#time').html(msg.data.time);
-							$('#notice').html(msg.data.notice);
+							$('#time').html(msg.data.time.slice(0,10));
+							$('#notice').html('通知时间：'+msg.data.notice.slice(0,10));
 							$('#serContent').html(msg.data.serContent);
 							$('.xy-full-widthIMG').html('<img src="${_staticPath}'+msg.data.portrait+'" />');
+							drawImg(msg.data.images);
+							drawStar(msg.data.evaContent,msg.data.rank);
+							$('#cord').html('3.0');//此处需要后台传值
 							}						
 						}
 				});
+			}
+			function drawImg(imgData){
+				//console.log(imgData);
+				var imgDiv='';
+				for(var i=0,len=imgData.length;i<len;i++){
+					imgDiv +=  '<div class="swiper-slide">'+
+									'<div class="main-img">'+
+										'<img src="${_staticPath}'+imgData[i]+'" />'+
+									'</div>	'+
+								'</div>';
+				}
+				$('#imgContainer').html(imgDiv);
+			}
+			function drawStar(evaContent,rank){
+				var starDiv ='',tag=[];
+				for(var j=0;j<5;j++){
+					if(j<rank) //有星星
+						starDiv+='<i class="icon-star xy-dibVat on"></i>';
+					else //无星星
+						starDiv+='<i class="icon-star xy-dibVat"></i>';
+				}
+				$('.xy-star-bar').html(starDiv);
+				$.each(evaContent,function(i,n){
+					tag.push(evaContent[i].tagName)
+				})
+				$('#tag').html(tag.join(' ').slice(0,11)+'……');
 			}
 			</script>
 		

@@ -448,9 +448,24 @@
 				});
 			}
 			$(function(){
-				var type = 'mine';
-				//画列表
-				showDeviceList(type);										
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				var number = GetQueryString("number");
+
+				if(number == 2){
+					//alert('2');
+					$('.bg-white a:eq(1)').addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+					type = 'attent';
+					showDeviceList(type);
+				}else{
+					 type = 'mine';
+					//画列表
+					showDeviceList(type);
+				}																		
 				$('.weui-tabbar__item').on('click', function () {
 					$(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
 					var thisNum = $(this).index();

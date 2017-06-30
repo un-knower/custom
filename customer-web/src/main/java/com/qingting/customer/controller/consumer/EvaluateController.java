@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.common.pojo.dto.Evaluate;
 import com.qingting.customer.common.pojo.dto.TagDTO;
 import com.qingting.customer.common.pojo.hbasedo.Tag;
 import com.smart.mvc.model.ResultCode;
@@ -23,15 +25,18 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/consumer/evaluate")
 public class EvaluateController {
 	@ApiOperation("提交评价")
-	@RequestMapping(value="/set",method = RequestMethod.POST)
+	@RequestMapping(value="/set",method = RequestMethod.POST,consumes = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> setEvaluate(
-			@ApiParam(value = "等级", required = true) @RequestParam Integer rank,
-			@ApiParam(value = "标签集合数组", required = true) @RequestParam List<Integer> tags,
-			@ApiParam(value = "文本内容", required = true) @RequestParam String content
+			//@ApiParam(value = "等级", required = true) @RequestParam Integer rank,
+			//@ApiParam(value = "标签集合数组", required = true) @RequestParam List<Integer> tags,
+			//@ApiParam(value = "文本内容", required = true) @RequestParam String content,
+			//@ApiParam(value = "服务编号", required = true) @RequestParam String serCode
+			@ApiParam(value = "评价", required = true) @RequestBody Evaluate evaluate
 			){
 		WebResult<String> result=new WebResult<String>(ResultCode.SUCCESS);
 		result.setMessage("提交成功");
-		return null;
+		result.setData(evaluate.getSerCode());
+		return result;
 	}
 	@ApiOperation("获得评价标签根据等级")
 	@RequestMapping(value="/listTag",method = RequestMethod.GET)
@@ -74,7 +79,7 @@ public class EvaluateController {
 		list.add(t8);
 		result.setData(list); 
 		result.setMessage("成功");
-		return null;
+		return result;
 	}
 	public List<Tag> get(Integer rank,String[] str){
 		List<Tag> arr=new ArrayList<Tag>();

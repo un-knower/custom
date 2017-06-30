@@ -73,6 +73,7 @@
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
+			var _path="${_path}";
 			function eventCollection(weui){
 			}
 			$(function(){
@@ -124,8 +125,8 @@
 				//监测曲线图按钮跳转
 				$('#monitorEchart').click(function(){
 					if(GetQueryString('equipCode')){
-						equipId = GetQueryString('equipCode');
-						window.location.href =_path+"/consumer/echarts.jsp?equipId="+equipId;
+						equipCode = GetQueryString('equipCode');
+						window.location.href =_path+"/consumer/echarts.jsp?equipCode="+equipCode;
 					}else{
 						window.location.href =_path+"/consumer/echarts.jsp";
 					}					
