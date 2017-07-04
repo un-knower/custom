@@ -40,4 +40,16 @@
     <import resource="applicationContext-job.xml"/>
     <!-- 引入Dubbo服务相关 -->
     <import resource="dubbo-provider.xml"/>
+    
+    <!-- <import resource="area.xml"/>
+    <import resource="city.xml"/>
+    <import resource="equip.xml"/>
+    <import resource="hbase_site"/>
+    <import resource="message.xml"/>
+    <import resource="monitor.xml"/>
+    <import resource="project.xml"/>
+    <import resource="province.xml"/>
+    <import resource="user.xml"/>
+    <import resource="zk_conf.xml"/> -->
+    
 </beans>

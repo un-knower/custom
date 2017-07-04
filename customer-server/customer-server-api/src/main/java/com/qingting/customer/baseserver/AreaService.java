@@ -1,11 +1,11 @@
-package com.qingting.customer.dao;
+package com.qingting.customer.baseserver;
 
 import java.util.List;
 
-import com.qingting.customer.Dao;
+import com.qingting.customer.Service;
 import com.qingting.customer.common.pojo.hbasedo.Area;
 
-public interface AreaDAO extends Dao<Area, Integer>{
+public interface AreaService extends Service<Area, Integer> {
 	/**
 	 * 
 	 * @Title: insertAreaList

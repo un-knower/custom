@@ -30,17 +30,15 @@ public class EmployeeEquipImpl implements EmployeeEquipDAO {
 	}
 
 	@Override
-	public boolean insert(EmployeeEquip t) {
+	public void insert(EmployeeEquip t) {
 		int num=RedisSerialNum.getSerialNum(redisTemplate, "employeeEquip_id_seq");
 		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(num));
 		SHCUtil.getSHC("employeeEquip").insertObject(rowKey, t);
-		return true;
 	}
 
 	@Override
-	public boolean update(EmployeeEquip t) {
+	public void update(EmployeeEquip t) {
 		SHCUtil.getSHC("employeeEquip").updateObjectWithVersion(new StringRowKey(t.getRowKey()), t, t.getVersion());
-		return false;
 	}
 
 	@Override

@@ -37,13 +37,50 @@ public class Util {
 
     /**
      * Check for string is NOT null or empty string.
+     * No return.
+     * Throw SimpleHBaseException.
      * */
     public static void checkEmptyString(String str) {
         if (StringUtil.isEmptyString(str)) {
             throw new SimpleHBaseException("str is null or empty.");
         }
     }
-
+    
+    /**
+	 * 验证可能为空格或者""及null的字符串
+	 * 
+	 * <pre>
+	 *   Util.stringIsBlank(null)      = true
+	 *   Util.stringIsBlank(&quot;&quot;)        = true
+	 *   Util.stringIsBlank(&quot; &quot;)       = true
+	 *   Util.stringIsBlank(&quot;bob&quot;)     = false
+	 *   Util.stringIsBlank(&quot;  bob  &quot;) = false
+	 * </pre>
+	 * 
+	 * @param cs
+	 *            可能为空格或者""及null的字符序列
+	 * @return
+	 */
+	public static boolean stringIsBlank(final CharSequence cs) {
+		int strLen;
+		if (cs == null || (strLen = cs.length()) == 0) {
+			return true;
+		}
+		for (int i = 0; i < strLen; i++) {
+			if ((Character.isWhitespace(cs.charAt(i)) == false)) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	public static boolean integerIsBlank(Integer integer){
+		if(integer==null || integer.equals(0))
+			return true;
+		else
+			return false;
+	}
+	
     /**
      * Check the value's length.
      * */

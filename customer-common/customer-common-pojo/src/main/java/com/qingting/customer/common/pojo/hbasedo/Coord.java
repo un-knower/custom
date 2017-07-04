@@ -3,7 +3,7 @@ package com.qingting.customer.common.pojo.hbasedo;
 import java.util.Calendar;
 
 public class Coord {
-	private String rowKey;
+	
 	/**
 	 * ID
 	 */
@@ -24,17 +24,8 @@ public class Coord {
 	 * 创建时间
 	 */
 	private Calendar createTime;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
 	
-	public String getRowKey() {
-		return rowKey;
-	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -64,9 +55,6 @@ public class Coord {
 	}
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
-	}
-	public Byte getVersion() {
-		return version;
 	}
 	
 	

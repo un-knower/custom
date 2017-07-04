@@ -1,18 +1,36 @@
 <SimpleHbase>
 
 	<HBaseTableSchema tableName="user" defaultFamily="userFamily">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
 		<HBaseColumnSchema qualifier="mobile" typeName="string" />
 		<HBaseColumnSchema qualifier="sex" typeName="boolean" />
 		<HBaseColumnSchema qualifier="age" typeName="int" />
+		<HBaseColumnSchema qualifier="provinceId" typeName="int" />
+		<HBaseColumnSchema qualifier="cityId" typeName="int" />
+		<HBaseColumnSchema qualifier="areaId" typeName="int" />
+		<HBaseColumnSchema qualifier="address" typeName="string" />
+		<HBaseColumnSchema qualifier="lng" typeName="float" />
+		<HBaseColumnSchema qualifier="lat" typeName="float" />
 		<HBaseColumnSchema qualifier="userSortId" typeName="int"/>
-		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+		<HBaseColumnSchema qualifier="portrait" typeName="String"/>
+		<HBaseColumnSchema qualifier="status" typeName="string"/>
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.User" defaultFamily="userFamily">
+		<field name="id"/>
 		<field name="mobile"/>
 		<field name="sex" />
 		<field name="age" />
+		<field name="provinceId" />
+		<field name="cityId" />
+		<field name="areaId" />
+		<field name="address" />
+		<field name="lng" />
+		<field name="lat" />
 		<field name="userSortId"/>
-		<field name="version" isVersioned="true"/>
+		<field name="portrait"/>
+		<field name="status"/>
+		<field name="createTime"/>
 	</MappingType>
 	
 	<statements>	

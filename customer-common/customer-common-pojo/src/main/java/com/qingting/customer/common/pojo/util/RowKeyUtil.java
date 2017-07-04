@@ -8,8 +8,7 @@ import com.qingting.customer.hbase.rowkey.RowKey;
 
 public class RowKeyUtil {
 	public static byte[] getBytes(long a){
-		byte[] a1 = Bytes.toBytes(a);
-		return a1;
+		return Bytes.toBytes(a);
 	}
 	public static byte[] getBytes(boolean a,long b){
 		byte[] a1 = Bytes.toBytes(a);

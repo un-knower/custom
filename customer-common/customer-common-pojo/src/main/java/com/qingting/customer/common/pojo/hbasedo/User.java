@@ -5,13 +5,13 @@ import java.util.Calendar;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import io.swagger.annotations.ApiModelProperty;
+
 public class User implements Serializable{
 	
 	private static final long serialVersionUID = 6610579266435676798L;
-	
-	public static final String MAX_ROWKEY=getMaxRowKey(12);
-	
-	private String rowKey;
 	
 	/**
 	 * id
@@ -25,10 +25,6 @@ public class User implements Serializable{
 	 * 姓名
 	 */
 	private String name;
-	/**
-	 * 密码
-	 */
-	private String password;
 	/** 
 	 * 性别 
 	 */
@@ -68,7 +64,7 @@ public class User implements Serializable{
 	/**
 	 * 头像ID
 	 */
-	private Integer imageId;
+	private String portrait;
 	/**
 	 * 账号状态
 	 */
@@ -76,18 +72,10 @@ public class User implements Serializable{
 	/**
 	 * 创建时间
 	 */
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
+	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
 	
-	public String getRowKey() {
-		return rowKey;
-	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
 	public Integer getId() {
 		return id;
 	}
@@ -105,12 +93,6 @@ public class User implements Serializable{
 	}
 	public void setName(String name) {
 		this.name = name;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public Boolean getSex() {
 		return sex;
@@ -166,11 +148,11 @@ public class User implements Serializable{
 	public void setUserSortId(Integer userSortId) {
 		this.userSortId = userSortId;
 	}
-	public Integer getImageId() {
-		return imageId;
+	public String getPortrait() {
+		return portrait;
 	}
-	public void setImageId(Integer imageId) {
-		this.imageId = imageId;
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
 	}
 	public String getStatus() {
 		return status;
@@ -184,9 +166,7 @@ public class User implements Serializable{
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	public Byte getVersion() {
-		return version;
-	}
+	
 	/**
 	 * 
 	 * @Title: setContentOfRowKey
@@ -195,7 +175,7 @@ public class User implements Serializable{
 	 * @return void
 	 * @throws
 	 */
-	public void setContentOfRowKey(byte[] rowkey){
+	/*public void setContentOfRowKey(byte[] rowkey){
 		this.rowKey=new String(rowkey);
 		if(rowkey.length<8){
 			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
@@ -210,5 +190,5 @@ public class User implements Serializable{
 			rowkey[i]=(byte)0xff;
 		}
 		return new String(rowkey);
-	}
+	}*/
 }

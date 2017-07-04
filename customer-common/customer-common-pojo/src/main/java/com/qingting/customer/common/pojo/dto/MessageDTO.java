@@ -9,6 +9,10 @@ import io.swagger.annotations.ApiModelProperty;
 
 public class MessageDTO {
 	/**
+	 * 消息id
+	 */
+	private Integer id;
+	/**
 	 * 分类名称
 	 */
 	private String sortName;
@@ -16,6 +20,11 @@ public class MessageDTO {
 	 * 分类编号
 	 */
 	private String sortCode;
+	/**
+	 * 消息内容
+	 */
+	private String content;
+	
 	/**
 	 * 创建时间
 	 */
@@ -27,9 +36,25 @@ public class MessageDTO {
 	 */
 	private String path;
 	/**
+	 * 详细ID
+	 */
+	private Integer detailId;
+	/**
 	 * 用户Id
 	 */
 	private Integer userId;
+	/**
+	 * 已读标志
+	 */
+	private boolean readFlag;
+	
+	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getSortName() {
 		return sortName;
 	}
@@ -54,11 +79,29 @@ public class MessageDTO {
 	public void setPath(String path) {
 		this.path = path;
 	}
+	public Integer getDetailId() {
+		return detailId;
+	}
+	public void setDetailId(Integer detailId) {
+		this.detailId = detailId;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public boolean isReadFlag() {
+		return readFlag;
+	}
+	public void setReadFlag(boolean readFlag) {
+		this.readFlag = readFlag;
+	}
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
 	}
 	
 }

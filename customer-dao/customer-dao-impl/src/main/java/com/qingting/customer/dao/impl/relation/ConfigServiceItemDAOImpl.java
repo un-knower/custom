@@ -31,17 +31,15 @@ public class ConfigServiceItemDAOImpl implements ConfigServiceItemDAO {
 	}
 
 	@Override
-	public boolean insert(ConfigServiceItem t) {
+	public void insert(ConfigServiceItem t) {
 		int num=RedisSerialNum.getSerialNum(redisTemplate, "configServiceItem_id_seq");
 		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(num));
 		SHCUtil.getSHC("configServiceItem").insertObject(rowKey, t);
-		return true;
 	}
 
 	@Override
-	public boolean update(ConfigServiceItem t) {
+	public void update(ConfigServiceItem t) {
 		SHCUtil.getSHC("configServiceItem").updateObjectWithVersion(new StringRowKey(t.getRowKey()), t, t.getVersion());
-		return true;
 	}
 
 	@Override

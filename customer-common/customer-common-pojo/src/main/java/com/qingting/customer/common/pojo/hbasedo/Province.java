@@ -2,11 +2,11 @@ package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
 
-public class Province {
-	/**
-	 * rowkey
-	 */
-	private String rowKey;
+import com.qingting.customer.common.pojo.common.PersistentObject;
+
+public class Province extends PersistentObject{
+
+	private static final long serialVersionUID = 5697613037100670153L;
 	/**
 	 * ID
 	 */
@@ -20,28 +20,11 @@ public class Province {
 	 */
 	private String name;
 	/**
-	 * 经度
-	 */
-	private Float lng;
-	/**
-	 * 纬度
-	 */
-	private Float lat;
-	/**
 	 * 创建时间
 	 */
 	private Calendar createTime;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
 	
-	public String getRowKey() {
-		return rowKey;
-	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
+	
 	public int getId() {
 		return id;
 	}
@@ -60,28 +43,15 @@ public class Province {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Float getLng() {
-		return lng;
-	}
-	public void setLng(Float lng) {
-		this.lng = lng;
-	}
-	public Float getLat() {
-		return lat;
-	}
-	public void setLat(Float lat) {
-		this.lat = lat;
-	}
 	public Calendar getCreateTime() {
 		return createTime;
 	}
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	public Byte getVersion() {
-		return version;
+	@Override
+	public String toString() {
+		return "Province [id=" + id + ", code=" + code + ", name=" + name + ", createTime=" + createTime + "]";
 	}
-	
-	
 	
 }

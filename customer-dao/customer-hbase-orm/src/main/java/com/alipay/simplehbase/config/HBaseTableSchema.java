@@ -137,7 +137,14 @@ public class HBaseTableSchema {
      * */
     public HBaseColumnSchema findColumnSchema(String qualifier) {
         Util.checkEmptyString(qualifier);
-
+        for(String str: columnSchemas.keySet()){
+        	Map<String, HBaseColumnSchema> map=columnSchemas.get(str);
+        	System.out.println("1:"+str);
+        	for (String strr : map.keySet()) {
+        		HBaseColumnSchema hcs=map.get(strr);
+        		System.out.println("2:"+hcs);
+			}
+        }
         Map<String, HBaseColumnSchema> tem = columnSchemas.get(qualifier);
         if (tem.size() == 1) {
             for (HBaseColumnSchema t : tem.values()) {

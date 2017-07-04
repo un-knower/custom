@@ -1,6 +1,7 @@
 package com.qingting.customer.common.pojo.dto;
 
 public class WarnDTO {
+	private Integer id;
 	private String equipCode;
 	/**
 	 * 图片路径
@@ -41,6 +42,14 @@ public class WarnDTO {
 	 */
 	private Boolean leak;
 	
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getEquipCode() {
 		return equipCode;

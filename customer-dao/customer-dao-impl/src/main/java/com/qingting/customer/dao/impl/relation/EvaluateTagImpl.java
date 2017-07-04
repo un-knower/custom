@@ -21,15 +21,13 @@ public class EvaluateTagImpl implements EvaluateTagDAO {
 	}
 
 	@Override
-	public boolean insert(EvaluateTag t) {
+	public void insert(EvaluateTag t) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override
-	public boolean update(EvaluateTag t) {
+	public void update(EvaluateTag t) {
 		// TODO Auto-generated method stub
-		return false;
 	}
 
 	@Override

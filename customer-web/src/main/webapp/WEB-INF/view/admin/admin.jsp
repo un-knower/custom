@@ -632,6 +632,8 @@
 		<script src="${_staticPath}/assets/js/ace/ace.settings-skin.js"></script>
 		<script src="${_staticPath}/assets/js/ace/ace.widget-on-reload.js"></script>
 		<script src="${_staticPath}/assets/js/ace/ace.searchbox-autocomplete.js"></script>
+		<!-- 省市区联动 
+		<script src="${_staticPath}/resource/addr/jquery.cityselect.js"></script> -->
 		<script type="text/javascript">
 			jQuery(function ($) {
 				$("#_btnExit").click(function(){
@@ -639,7 +641,6 @@
 	            });
 			
 				$.getJSON("${_path}/admin/admin/menu",function(d) {
-   					//console.log(tree(d.data));
    					$('.nav-list').append(tree(d.data));
 				});
 				
@@ -654,7 +655,7 @@
 							
 							html += '<li class="';
 							
-							/*if(defaultPage == null && data.url){
+							if(defaultPage == null && data.url){
 								if(window.location.href.indexOf("#") < 0){
 									// 登录成功后首次加载，跳转到第一个页面
 									defaultPage = data.url;
@@ -666,20 +667,16 @@
 									defaultPage = data.url;
 									html += 'active';
 								}
-							}*/
+							}
 						
 							html += '">';
 							
-							//var childrens=new Array();// = _getChildrens(list, data.id);
-							var childrens= _getChildrens(list, data.id);
-							console.log("childrens:"+childrens);
-							console.log("childrens.length:"+childrens.length);
+							var childrens = _getChildrens(list, data.id);
+							
 							if(data.url){
-								alert("url非空"+data.url);
 								html += '	<a data-url="' + data.url + '" href="#' + data.url + '" class="' + (childrens.length > 0 ? 'dropdown-toggle' : '') + '">';
 							}
 							else{
-								alert("url空"+data.url);
 								html += '	<a href="#" class="' + (childrens.length > 0 ? 'dropdown-toggle' : '') + '">';
 							}
 							html += '		<i class="menu-icon fa ' + data.icon + '"></i>';
@@ -705,23 +702,21 @@
 						for ( var i = 0; i < childrens.length; i++) {
 							data = childrens[i];
 							
-							/*if(defaultPage == null && data.url){
+							if(defaultPage == null && data.url){
 								if(window.location.href.indexOf("#") < 0){
 									// 登录成功后首次加载，跳转到第一个页面
 									defaultPage = data.url;
-									//window.location.href = "${_path}/admin/admin#" + defaultPage;
+									window.location.href = "${_path}/admin/admin#" + defaultPage;
 								}
-							}*/
+							}
 							
 							html += '<li class="">';
 							
 							var tempChildrens = _getChildrens(list, data.id);
 							if(data.url){
-								alert("子菜单url非空"+data.url);
 								html += '	<a data-url="' + data.url + '" href="#' + data.url + '" class="' + (tempChildrens.length > 0 ? 'dropdown-toggle' : '') + '">';
 							}
 							else{
-								alert("子菜单url空"+data.url);
 								html += '	<a href="#" class="' + (tempChildrens.length > 0 ? 'dropdown-toggle' : '') + '">';
 							}
 							html += '		<i class="menu-icon fa ' + data.icon + '"></i>';

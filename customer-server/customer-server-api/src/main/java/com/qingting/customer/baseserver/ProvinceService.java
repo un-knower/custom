@@ -1,11 +1,11 @@
-package com.qingting.customer.dao;
+package com.qingting.customer.baseserver;
 
 import java.util.List;
 
-import com.qingting.customer.Dao;
+import com.qingting.customer.Service;
 import com.qingting.customer.common.pojo.hbasedo.Province;
 
-public interface ProvinceDAO extends Dao<Province, Integer>{
+public interface ProvinceService extends Service<Province, Integer> {
 	/**
 	 * 
 	 * @Title: insertProvinceList
@@ -18,9 +18,7 @@ public interface ProvinceDAO extends Dao<Province, Integer>{
 	/**
 	 * 
 	 * @Title: listProvince
-	 * @Description: 查询省信息
-	 * @param id
-	 * @param code
+	 * @Description: 查询所有省信息
 	 * @return 
 	 * @return List<Province>
 	 * @throws

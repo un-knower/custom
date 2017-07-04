@@ -5,6 +5,31 @@ import java.util.Collection;
 
 
 public interface Service<T, RK extends Serializable> {
+
+	/**
+	 * 插入实体
+	 * 
+	 * @param T
+	 *            t
+	 */
+	public void insert(T t);
+	
+	/**
+	 * 删除实体
+	 * 
+	 * @param T
+	 *            t
+	 */
+	public void deleteById(Collection<RK> rkList);
+
+	/**
+	 * 更新实体
+	 * 
+	 * @param T
+	 *            t
+	 */
+	public void update(T t);
+	
 	/**
 	 * 
 	 * @Title: get
@@ -14,28 +39,4 @@ public interface Service<T, RK extends Serializable> {
 	 * @throws
 	 */
 	public T get(RK rk);
-
-	/**
-	 * 插入实体
-	 * 
-	 * @param T
-	 *            t
-	 */
-	public boolean insert(T t);
-
-	/**
-	 * 更新实体
-	 * 
-	 * @param T
-	 *            t
-	 */
-	public boolean update(T t);
-	
-	/**
-	 * 删除实体
-	 * 
-	 * @param T
-	 *            t
-	 */
-	public void deleteById(Collection<RK> rkList);
 }

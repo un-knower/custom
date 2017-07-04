@@ -21,7 +21,7 @@ public interface Dao<T, RK extends Serializable> {
 	 * @param T
 	 *            t
 	 */
-	public boolean insert(T t);
+	public void insert(T t);
 
 	/**
 	 * 更新实体
@@ -29,7 +29,7 @@ public interface Dao<T, RK extends Serializable> {
 	 * @param T
 	 *            t
 	 */
-	public boolean update(T t);
+	public void update(T t);
 	
 	/**
 	 * 删除实体

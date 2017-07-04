@@ -83,12 +83,12 @@ public class MonitorController {
 	@ApiOperation("查询某个时间段的监测值")
 	@RequestMapping(value="/list",method = RequestMethod.POST)
 	public @ResponseBody WebResult<MonitorDTO> listMonitor(
-			@ApiParam(value = "设备ID", required = false) @RequestParam(value="equipId", required=false) Integer equipId,
+			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode,
 			@ApiParam(value = "查询的结束时间", required = true,example="2017-01-01 12:00:00") @RequestParam @ValidateParam({ Validator.NOT_BLANK })GregorianCalendar endCalendar
 			){
 		//别忘记验证传参和用户身份是否匹配
 		//Calendar startCal = DateUtil.getDate(2017, 4, 7, 9, 42, 55, 790);
-		System.out.println("输入参数:"+equipId+" "+endCalendar);
+		System.out.println("输入参数:"+equipCode+" "+endCalendar);
 		
 		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);
 		result.setData(getMonitorDTO(endCalendar));
@@ -98,9 +98,9 @@ public class MonitorController {
 	@ApiOperation("查询最新时间段的监测值")
 	@RequestMapping(value="/listNew",method = RequestMethod.POST)
 	public @ResponseBody WebResult<MonitorDTO> listNewMonitor(
-			@ApiParam(value = "设备ID", required = false) @RequestParam(value="equipId", required=false) Integer equipId
+			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode
 			){
-		System.out.println("输入参数:"+equipId);
+		System.out.println("输入参数:"+equipCode);
 		
 		
 		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);

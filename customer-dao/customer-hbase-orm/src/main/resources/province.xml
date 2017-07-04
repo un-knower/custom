@@ -1,0 +1,17 @@
+<SimpleHbase>
+	<HBaseTableSchema tableName="province" defaultFamily="provinceFamily">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="name" typeName="string" />
+		<HBaseColumnSchema qualifier="code" typeName="string" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Province" defaultFamily="provinceFamily">
+		<field name="id"/>
+		<field name="name"/>
+		<field name="code" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

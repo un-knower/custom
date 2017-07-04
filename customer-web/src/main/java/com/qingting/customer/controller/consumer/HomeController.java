@@ -11,8 +11,6 @@ import com.qingting.customer.common.pojo.common.MsgType;
 import com.qingting.customer.common.pojo.dto.HomeMonitorDTO;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
-import com.smart.sso.client.SessionUser;
-import com.smart.sso.client.SessionUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,8 +29,8 @@ public class HomeController {
 	public @ResponseBody WebResult<HomeMonitorDTO> listStickMonitor(
 			HttpServletRequest request
 			){
-		SessionUser sessionUser = SessionUtils.getSessionUser(request);
-		String account = sessionUser.getAccount();
+		//SessionUser sessionUser = SessionUtils.getSessionUser(request);
+		//String account = sessionUser.getAccount();
 		//这里查询用户的置顶设备监测数据
 		
 		HomeMonitorDTO homeMonitor=new HomeMonitorDTO();

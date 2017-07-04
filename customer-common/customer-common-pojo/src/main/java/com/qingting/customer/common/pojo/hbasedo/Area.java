@@ -2,11 +2,11 @@ package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
 
-public class Area {
-	/**
-	 * rowkey
-	 */
-	private String rowKey;
+import com.qingting.customer.common.pojo.common.PersistentObject;
+
+public class Area extends PersistentObject{
+	
+	private static final long serialVersionUID = 4647693858179820993L;
 	/**
 	 * ID
 	 */
@@ -20,14 +20,6 @@ public class Area {
 	 */
 	private String name;
 	/**
-	 * 经度
-	 */
-	private Float lng;
-	/**
-	 * 纬度
-	 */
-	private Float lat;
-	/**
 	 * 市编码
 	 */
 	private String cityCode;
@@ -35,17 +27,8 @@ public class Area {
 	 * 创建时间
 	 */
 	private Calendar createTime;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
 	
-	public String getRowKey() {
-		return rowKey;
-	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
+	
 	public int getId() {
 		return id;
 	}
@@ -64,18 +47,6 @@ public class Area {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Float getLng() {
-		return lng;
-	}
-	public void setLng(Float lng) {
-		this.lng = lng;
-	}
-	public Float getLat() {
-		return lat;
-	}
-	public void setLat(Float lat) {
-		this.lat = lat;
-	}
 	public String getCityCode() {
 		return cityCode;
 	}
@@ -88,7 +59,10 @@ public class Area {
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	public Byte getVersion() {
-		return version;
+	@Override
+	public String toString() {
+		return "Area [id=" + id + ", code=" + code + ", name=" + name + ", cityCode=" + cityCode + ", createTime="
+				+ createTime + "]";
 	}
+	
 }

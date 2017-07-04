@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.dto.MyDTO;
 import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.controller.common.SessionUserMsg;
+import com.qingting.customer.controller.common.SessionUserMsgUtils;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.sso.client.SessionUser;
@@ -60,6 +62,13 @@ public class UserController {
 		myDTO.setPath("/resource/images/customer/head/zlf.png");
 		result.setData(myDTO);
 		result.setMessage("获取成功");
+		/*WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
+		MyDTO myDTO=new MyDTO();
+		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
+		User user=(User)sessionUserMsg.getProfile();
+		myDTO.setPhone(sessionUserMsg.getMobile());
+		myDTO.setName(user.getName());*/
+		result.setData(myDTO);
 		return result;
 	}
 }

@@ -24,6 +24,10 @@
 	<dubbo:reference interface="com.qingting.customer.baseserver.external.TxMessageService" id="txMessageService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.WarnService" id="warnService" />
 	
+	<dubbo:reference interface="com.qingting.customer.baseserver.ProvinceService" id="provinceService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.CityService" id="cityService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.AreaService" id="areaService" />
+	
 	<!-- 单点登录权限服务接口
 	<dubbo:reference interface="com.smart.sso.rpc.AuthenticationRpcService" id="authenticationRpcService" />
 	 -->

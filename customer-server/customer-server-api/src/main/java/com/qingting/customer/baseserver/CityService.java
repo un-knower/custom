@@ -1,11 +1,11 @@
-package com.qingting.customer.dao;
+package com.qingting.customer.baseserver;
 
 import java.util.List;
 
-import com.qingting.customer.Dao;
+import com.qingting.customer.Service;
 import com.qingting.customer.common.pojo.hbasedo.City;
 
-public interface CityDAO extends Dao<City, Integer>{
+public interface CityService extends Service<City, Integer> {
 	/**
 	 * 
 	 * @Title: insertCityList
