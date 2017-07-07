@@ -19,11 +19,10 @@ public interface ProvinceDAO extends Dao<Province, Integer>{
 	 * 
 	 * @Title: listProvince
 	 * @Description: 查询省信息
-	 * @param id
 	 * @param code
 	 * @return 
 	 * @return List<Province>
 	 * @throws
 	 */
-	List<Province> listProvince(Integer id,String code);
+	List<Province> listProvince(String code);
 }

@@ -45,8 +45,8 @@ public class AreaServiceImpl implements AreaService {
 	}
 
 	@Override
-	public List<Area> listArea(Integer id, String code) {
-		return areaDAO.listArea(id, code);
+	public List<Area> listArea(String cityCode) {
+		return areaDAO.listArea(cityCode);
 	}
 
 }

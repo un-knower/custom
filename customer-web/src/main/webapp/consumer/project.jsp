@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page tabbar flex js_show height100">
@@ -366,9 +366,12 @@
 						}
 					});
 				function drawList(data){
-					//console.log(data)
+					//console.log(data)				 					 	
 					var deviceDiv = '';
 					for(var i in data){
+						var years =  Math.floor(data[i].remainTime / (1000 * 60 * 60 * 24 * 365)),
+							 months = Math.floor(data[i].remainTime / (1000 * 60 * 60 * 24 * 30) - years * 12),
+							 days = Math.floor(data[i].remainTime / (1000 * 60 * 60 * 24) - months * 30);
 						deviceDiv += '<div class="swiper-slide" data-value="'+data[i].open+'" No="'+data[i].equipCode+'">'+
 										'<div class="height100" flex="dir:top">'+
 											'<div class="main-img" flex-box="1">'+
@@ -395,8 +398,9 @@
 															'<div class="main-img-service xy-pad-t7 xy-border-t width100" flex-box="1" flex="main:center cross:center">'+
 																'<div>'+
 																	'<p class="xy-tac">剩余服务时长</p>'+
-																'<p class="xy-timer xy-tac">'+data[i].remainTime+'</p>';
-							        if(data[i].remainTime < 1000){deviceDiv += '<p class="xy-fs12 xy-fc-red xy-line-h20 xy-pad-t2 xy-pad-lr10 xy-line-clamp2">'+		
+																//'<p class="xy-timer xy-tac">'+data[i].remainTime+'</p>';
+																'<p class="xy-timer xy-tac">'+years+ ':'+months+':'+days+'</p>';
+							     if(data[i].remainTime < 10000000){deviceDiv += '<p class="xy-fs12 xy-fc-red xy-line-h20 xy-pad-t2 xy-pad-lr10 xy-line-clamp2">'+		
 																					'净水设备快到维护期了，建议及时更换第五级滤芯'+
 																				'</p>';
 																  }
@@ -417,10 +421,16 @@
 									'</div>'
 					}
 					//console.log(deviceDiv);
-					$('.swiper-wrapper').html(deviceDiv);										
+					$('.swiper-wrapper').html(deviceDiv);
+					
+					//展示公有或者私有状态
+					setTimeout(function(){
+							showStatu();
+					},0);
+															
 				}
 			}
-			function binEvent(equipCode){							
+			function binEvent(){							
 				//点击置顶按钮
 				$('#xy-btn_setTop').click(function(){
 					var equipCode = $('.swiper-slide-active').attr('No');	
@@ -436,11 +446,20 @@
 							realIndex =mySwiper.realIndex,slide = mySwiper.slides[realIndex]//获取当前活动slide;	
 							console.log(slideLength,realIndex) 						
 							 if(slideLength>1){
-							 	mySwiper.removeSlide(realIndex);//删除当前slide
-							 	//mySwiper.getSlide(realIndex).insertAfter(0);
-							 	mySwiper.prependSlide(slide);	//添加当前slide到第一个						 	
-							 	//realIndex = 0;
-								//slideLength%2 == 0?realIndex = slideLength/2:realIndex = (slideLength-1)/2	
+								 	if(realIndex == 0){
+								 		alert('此设备已置顶');
+								 	}else{
+								 		mySwiper.removeSlide(realIndex);//删除当前slide
+									 	//mySwiper.getSlide(realIndex).insertAfter(0);
+									 	mySwiper.prependSlide(slide);	//添加当前slide到第一个						 	
+									 	//realIndex = 0;
+										//slideLength%2 == 0?realIndex = slideLength/2:realIndex = (slideLength-1)/2
+										setTimeout(function(){
+												showStatu();
+										},0);	
+								 	}							 	
+								}else{
+									alert('只有一个设备，无法置顶！')
 								}												
 							}						
 						}
@@ -458,9 +477,11 @@
 
 				if(number == 2){
 					//alert('2');
-					$('.bg-white a:eq(1)').addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+					$('.bg-white a:eq(1)').addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');					
 					type = 'attent';
 					showDeviceList(type);
+					/* $("#switchBox").addClass("xy-dn");
+					$("#xy-btn_del").removeClass("xy-dn"); */
 				}else{
 					 type = 'mine';
 					//画列表
@@ -486,10 +507,9 @@
 				});
 				
 				switchCP();
-				var equipCode = $('.swiper-slide-active').attr('No'),open;
 				$("body").on("click","#switchCP", function () {				
 					//console.log('当前状态：'+ $("#btn").val() );										
-					//var equipCode = $('.swiper-slide-active').attr('No'),open;					
+					var equipCode = $('.swiper-slide-active').attr('No'),open;					
 					if($("#btn").val()=="on"){
 						$("#btn").val("off");
 						$('.xy-lock-off').show();
@@ -515,7 +535,7 @@
 							}
 						});
 				});
-				binEvent(equipCode);
+				binEvent();
 						
 				var $iosDialog1 = $('#iosDialog1');
 				var $iosDialog2 = $('#iosDialog2');
@@ -551,29 +571,37 @@
 				
 				$('#xy-btn_del').click(function(){//删除slide事件
 					$iosDialog1.show();
-				});
-				//展示公有或者私有状态
-				showStatu();
+				});				
 			});
 			function switchCP(){
 				$('#switchStyle').remove();
 				var cpLengthAll = $('.xy-switchCp-bar .weui-switch-cp__box').width();
+				console.log(cpLengthAll);
 				var cpSlideLength = cpLengthAll - 40;
 				$('head').append('<style id="switchStyle">.xy-switchCp-bar .weui-switch-cp__input:checked~.weui-switch-cp__box:after, .xy-switchCp-bar .weui-switch:checked:after {-webkit-transform: translateX('+cpSlideLength+'px); transform: translateX('+cpSlideLength+'px);</style>');
 			}
 			$(window).resize(function(){
 				switchCP();
-			});			
-			function showStatu(){				
-				//console.log($('.swiper-slide-active').html());
-				/* if($('.swiper-slide-active').attr('data-value') == 'true') {
-					alert('on');
+			});						
+			function showStatu(){
+				var realIndex =mySwiper.realIndex,slide = mySwiper.slides[realIndex]//获取当前活动slide;
+				console.log(slide);				
+				var a = $('.swiper-slide-active').attr('data-value');
+				console.log(a)
+				 if(a  == 'true') {
+					//alert('on');
+					$("#btn").val("on");
 					$('.xy-lock-off').hide();
 					$('.xy-lock-on').show();
+					$('.xy-switchCp-bar .weui-switch-cp__input').prop('checked','checked');
 				}else{
+					//alert('off');
+					$("#btn").val("off");
 					$('.xy-lock-off').show();
 					$('.xy-lock-on').hide();
-				} */
+					$('.xy-switchCp-bar .weui-switch-cp__input').prop('checked',false);
+				}  
+
 			}
 		</script>
 		

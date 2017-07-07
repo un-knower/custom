@@ -1,30 +1,33 @@
 <SimpleHbase>
 
 	<HBaseTableSchema tableName="monitor" defaultFamily="monitorFamily">
-		<HBaseColumnSchema qualifier="data" typeName="string" />
-		<HBaseColumnSchema qualifier="date" typeName="string" />
+		<HBaseColumnSchema qualifier="id" typeName="long" />
 		<HBaseColumnSchema qualifier="rawTds" typeName="float" />
 		<HBaseColumnSchema qualifier="purTds" typeName="float" />
-		<HBaseColumnSchema qualifier="temp" typeName="float" />
-		<HBaseColumnSchema qualifier="humidity" typeName="float" />
-		<HBaseColumnSchema qualifier="flow" typeName="float"/>
+		<HBaseColumnSchema qualifier="temp" typeName="byte" />
+		<HBaseColumnSchema qualifier="humidity" typeName="byte" />
+		<HBaseColumnSchema qualifier="flow" typeName="long"/>
 		<HBaseColumnSchema qualifier="leak" typeName="boolean"/>
-		<HBaseColumnSchema qualifier="d" typeName="float"/>
-		<HBaseColumnSchema qualifier="w" typeName="float"/>
-		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+		<HBaseColumnSchema qualifier="magnetic" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="outRelay" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="powerRelay" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="equipCode" typeName="string"/>
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+		
 	</HBaseTableSchema>
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="monitorFamily">
-		<field name="data"/>
-		<field name="date"/>
+		<field name="id"/>
 		<field name="rawTds"/>
 		<field name="purTds" />
 		<field name="temp" />
 		<field name="humidity" />
 		<field name="flow"/>
 		<field name="leak"/>
-		<field name="d"/>
-		<field name="w"/>
-		<field name="version" isVersioned="true"/>
+		<field name="magnetic"/>
+		<field name="outRelay"/>
+		<field name="powerRelay"/>
+		<field name="equipCode"/>
+		<field name="createTime"/>
 	</MappingType>
 </SimpleHbase>   
 

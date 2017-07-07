@@ -30,9 +30,9 @@ public class UserDAOImpl implements UserDAO {
 	/**
 	 * RowKey=Mobile倒叙+用户ID(12字节)
 	 */
-	private static RowKey createRowKey(User user,Integer num){
+	private static RowKey createRowKey(String mobile,Integer num){
 		//反转
-		String temp=new StringBuffer(user.getMobile()).reverse().toString();
+		String temp=new StringBuffer(mobile).reverse().toString();
 		return RowKeyUtil.getRowKey(Long.parseLong(temp),num);
 	}
 	private static List<User> setContentOfRowKey(List<SimpleHbaseDOWithKeyResult<User>> listHbase){
@@ -48,7 +48,7 @@ public class UserDAOImpl implements UserDAO {
 			String temp=String.valueOf(Bytes.toLong(mobile));
 			user.setMobile(new StringBuffer(temp).reverse().toString());
 			byte[] id=new byte[4];
-			System.arraycopy(rowkey, 0, id, 0, 4);//前4个字节id
+			System.arraycopy(rowkey, 8, id, 0, 4);//后4个字节id
 			user.setId(Bytes.toInt(id));
 			
 			list.add(user);
@@ -60,7 +60,7 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println("插入user");
 		int num=RedisSerialNum.getSerialNum(redisTemplate, SEQUENCE);
 		user.setId(num);
-		tClient.putObject(createRowKey(user,num), user);
+		tClient.putObject(createRowKey(user.getMobile(),num), user);
 	}
 
 	@Override
@@ -76,10 +76,7 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public User getUserByRowKey(String rowKey) {
-		SimpleHbaseDOWithKeyResult<User> result = tClient.findObjectAndKey(new StringRowKey(rowKey), User.class);
-		User user=result.getT();
-		//user.setContentOfRowKey(result.getRowKey().toBytes());
-		return user;
+		return null;
 	}
 
 	@Override
@@ -95,7 +92,7 @@ public class UserDAOImpl implements UserDAO {
 		}
 		return list;*/
 		return setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getMinRowKey(null, 11, null),RowKeyUtil.getMaxRowKey(null, 11, null), User.class)
+				tClient.findObjectAndKeyList(RowKeyUtil.getIntLongMinRowKey(),RowKeyUtil.getIntLongMaxRowKey(), User.class)
 				);
 	}
 
@@ -114,7 +111,7 @@ public class UserDAOImpl implements UserDAO {
 			user.setContentOfRowKey(result.getRowKey().toBytes());
 		}*/
 		List<User> list=setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getMinRowKey(mobile, 11, null), RowKeyUtil.getMaxRowKey(mobile, 11, null), User.class)
+				tClient.findObjectAndKeyList(createRowKey(mobile,0), createRowKey(mobile,Integer.MAX_VALUE), User.class)
 				);
 		if(list.size()>1)
 			throw new RuntimeException("存在多个相同账户！请检查程序逻辑");

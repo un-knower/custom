@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -156,6 +156,8 @@
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
+			}
+			function showStatu(){
 			}
 			$(function(){
 				//获取地址栏参数				

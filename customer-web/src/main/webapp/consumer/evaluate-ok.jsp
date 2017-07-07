@@ -14,10 +14,10 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
-		<script type="text/javascript">
-			var _path="${_path}";
-		</script>
 	</head>
+	<script type="text/javascript">
+		var _path="${_path}",_staticPath="${_staticPath}";
+	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
 			<div class="page__bd xy-container xy-container-b10">
@@ -45,7 +45,7 @@
 								<div class="xy-wave" id="wave3"></div>
 							</div>
 							<div class="xy-tac xy-pad-t20 xy-pad-b10 xy-pad-lr10 bg-blue-opacity xy-clearfix xy-fc-blue xy-fs16">
-								<a href="page-services-list.html" class="weui-btn weui-btn_primary bg-light-blue xy-mar-tb10">好的，你去处理吧</a>
+								<a href="#" class="weui-btn weui-btn_primary bg-light-blue xy-mar-tb10">好的，你去处理吧</a>
 							</div>
 						</div><!--/bottom-->
 					</div><!--内容-->
@@ -61,6 +61,12 @@
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
 			}
+			$(function(){
+				$('.xy-mar-tb10').click(function(){
+					sessionStorage.setItem('iffuwu',1);//跳转页面，公用一个列表页，设假数据为1，若1 ==》 跳转页面标题改成"历史服务记录列表";
+					window.location.href =_path+"/consumer/services-list.jsp";
+				});
+			})
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

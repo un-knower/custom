@@ -1,5 +1,6 @@
 package com.alipay.simplehbase.util;
 
+import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,7 +14,9 @@ import com.alipay.simplehbase.core.Nullable;
  * @author xinzhi
  */
 public class BytesUtil {
-
+	
+	private static ByteBuffer buffer = ByteBuffer.allocate(8); 
+	
     /** Empty bytes. */
     public static final byte[] EMPTY = {};
 
@@ -138,7 +141,24 @@ public class BytesUtil {
 
         return result;
     }
-
+    public static long bytesToLong(byte[] bytes,int offset,int length) {  
+        /*buffer.put(bytes, offset, length);  
+        buffer.flip();//need flip   
+        return buffer.getLong();*/
+    	long temp=0;
+    	for(int i=0;i<length;i++){
+    		temp<<=8;
+    		temp |= (bytes[offset+i] & 0xFF);
+    	}
+    	return temp;
+    }
+    public static int byteArrayToInt(byte[] b) {  
+        return   b[3] & 0xFF |  
+                (b[2] & 0xFF) << 8 |  
+                (b[1] & 0xFF) << 16 |  
+                (b[0] & 0xFF) << 24;  
+    }  
+    
     private BytesUtil() {
     }
 }

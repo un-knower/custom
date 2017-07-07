@@ -1,5 +1,7 @@
 package com.alipay.simplehbase.client.rowkey;
 
+import java.nio.ByteBuffer;
+
 import org.apache.hadoop.hbase.util.Bytes;
 
 import com.alipay.simplehbase.exception.SimpleHBaseException;
@@ -13,6 +15,7 @@ import com.qingting.customer.hbase.rowkey.RowKey;
  * @author xinzhi.zhang
  * */
 public class RowKeyUtil {
+	
     /**
      * Used by scanners, etc when they want to start at the beginning of a
      * region
@@ -67,8 +70,21 @@ public class RowKeyUtil {
         return new BytesRowKey(BytesUtil.increaseLastByte(rowkeyBytes));
     }
     
-    private static final int INTEGET_BYTENUM=4;
+    private static final byte[] INT_MAX_BYTES=new byte[]{(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF};
+    private static final byte[] INT_MIN_BYTES=new byte[]{(byte)0,(byte)0,(byte)0,(byte)0};
     
+    private static final byte[] LONG_MAX_BYTES=new byte[]{(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF,
+    		(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF};
+    private static final byte[] LONG_MIN_BYTES=new byte[]{(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0,(byte)0};
+    
+    private static final byte[] INT_LONG_MAX_BYTES=new byte[]{(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF,
+    		(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF,
+    		(byte)0xFF,(byte)0xFF,(byte)0xFF,(byte)0xFF
+    	};
+    private static final byte[] INT_LONG_MIN_BYTES=new byte[]{(byte)0,(byte)0,(byte)0,(byte)0,
+    		(byte)0,(byte)0,(byte)0,(byte)0,
+    		(byte)0,(byte)0,(byte)0,(byte)0
+    	};
     /**
      * 
      * @Title: getRowKey
@@ -81,33 +97,6 @@ public class RowKeyUtil {
     public static RowKey getRowKey(Integer value){
     	return new IntRowKey(value);
     }
-    public static RowKey getMaxRowKey(Integer value){
-    	
-    	byte[] bytes=new byte[INTEGET_BYTENUM];
-    	
-    	if(Util.integerIsBlank(value)){//Integer空
-    		for(int i=0;i<INTEGET_BYTENUM;i++)
-    			bytes[i]=(byte)0xFF;
-    		return new BytesRowKey(bytes);
-    	}else if(!Util.integerIsBlank(value)){//Integer不为空
-    		return getEndRowKeyOfPrefix(getRowKey(value));
-    	}else{
-    		throw new SimpleHBaseException("Unable to get the MaxRowKey.");
-    	}
-    }
-    public static RowKey getMinRowKey(Integer value){
-    	
-    	byte[] bytes=new byte[INTEGET_BYTENUM];
-    	
-    	if(Util.integerIsBlank(value)){//Integer空
-    		return new BytesRowKey(bytes);
-    	}else if(!Util.integerIsBlank(value)){//Integer不为空
-    		return getRowKey(value);
-    	}else{
-    		throw new SimpleHBaseException("Unable to get the MinRowKey.");
-    	}
-    }
-    
     public static RowKey getRowKey(Long value){
     	return new LongRowKey(value);
     }
@@ -117,36 +106,37 @@ public class RowKeyUtil {
     public static RowKey getRowKey(byte[] value){
     	return new BytesRowKey(value);
     }
-    
-    /**
-     * 
-     * @Title: getRowKey
-     * @Description: 获得RowKey(value1+value2)
-     * @param value1
-     * @param value2
-     * @return RowKey
-     * @throws
-     */
     public static RowKey getRowKey(Long value1,Integer value2){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
     			);
     }
-    /**
-     * 
-     * @Title: getRowKey
-     * @Description: 获得RowKey(longText+value)
-     * @param longText long类型数据的字符串
-     * @param value
-     * @return RowKey
-     * @throws
-     */
-    public static RowKey getRowKey(String longText,Integer value){
+    public static RowKey getRowKey(String str,Integer value){
     	return new BytesRowKey(
-    			BytesUtil.merge(Bytes.toBytes(longText),Bytes.toBytes(value))
+    			BytesUtil.merge(Bytes.toBytes(str),Bytes.toBytes(value))
     			);
     }
-    public static RowKey getMaxRowKey(String longText,Integer longTextLength,Integer value){
+    public static RowKey getRowKey(String str,Long value){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(str),Bytes.toBytes(value))
+    			);
+    }
+    public static RowKey getRowKey(String str1,String str2){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(str1),Bytes.toBytes(str2))
+    			);
+    }
+    public static RowKey getRowKey(String value1,Long value2,Integer value3){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
+    			);
+    }
+    
+    
+    
+    
+    
+    /*public static RowKey getMaxRowKey(String longText,Integer longTextLength,Integer value){
     	
     	byte[] bytes=new byte[longTextLength+INTEGET_BYTENUM];
     	
@@ -181,5 +171,111 @@ public class RowKeyUtil {
     	}else{
     		throw new SimpleHBaseException("Unable to get the MinRowKey.");
     	}
+    }
+    
+    
+    
+    public static RowKey getMinRowKey(String value1,Long value2,Integer value3){
+    	byte[] temp;
+    	if(value1==null){
+    		temp=new byte[1];
+    	}else{
+    		temp=Bytes.toBytes(value1);
+    	}
+    	return new BytesRowKey(
+    			BytesUtil.merge(temp,Bytes.toBytes(value2), Bytes.toBytes(value3))
+    			);
+    }
+    public static RowKey getMaxRowKey(String value1,Long value2,Integer value3){
+    	byte[] temp;
+    	if(value1==null){
+    		temp=new byte[32];
+    		for(int i=0;i<32;i++){
+    			temp[i]=(byte)0xff;
+    		}
+    	}else{
+    		temp=Bytes.toBytes(value1);
+    	}
+    	return new BytesRowKey(
+    			BytesUtil.merge(temp,Bytes.toBytes(value2), Bytes.toBytes(value3))
+    			);
+    }*/
+    //===================================获得最大最小RowKey================================
+    /**
+     * 
+     * @Title: getIntMaxRowKey
+     * @Description: 
+     * @param value
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntMaxRowKey(){
+    	return new BytesRowKey(INT_MAX_BYTES);
+    }
+    public static RowKey getIntMinRowKey(){
+    	return new BytesRowKey(INT_MIN_BYTES);
+    }
+    public static RowKey getStringMaxRowKey(int strLength){
+    	byte[] bytes=new byte[strLength];
+    	for (int i=0;i<strLength;i++) {
+			bytes[i]=(byte)0xFF;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getStringMinRowKey(int strLength){
+    	byte[] bytes=new byte[strLength];
+    	for (int i=0;i<strLength;i++) {
+			bytes[i]=(byte)0;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getIntLongMaxRowKey(){
+    	return new BytesRowKey(INT_LONG_MAX_BYTES);
+    }
+    public static RowKey getIntLongMinRowKey(){
+    	return new BytesRowKey(INT_LONG_MIN_BYTES);
+    }
+    public static RowKey getStringLongMaxRowKey(int strLength){
+    	byte[] bytes=new byte[strLength+8];
+    	for (int i=0;i<strLength+8;i++) {
+			bytes[i]=(byte)0xFF;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getStringLongMinRowKey(int strLength){
+    	byte[] bytes=new byte[strLength+8];
+    	for (int i=0;i<strLength+8;i++) {
+			bytes[i]=(byte)0;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getStringStringMaxRowKey(int length1,int length2){
+    	byte[] bytes=new byte[length1+length2];
+    	for (int i=0;i<length1+length2;i++) {
+			bytes[i]=(byte)0xFF;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getStringStringMinRowKey(int length1,int length2){
+    	byte[] bytes=new byte[length1+length2];
+    	for (int i=0;i<length1+length2;i++) {
+			bytes[i]=(byte)0;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getStringIntIntMaxRowKey(int strLength){
+    	byte[] bytes=new byte[strLength+8];
+    	for (int i=0;i<strLength+8;i++) {
+			bytes[i]=(byte)0xFF;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getStringIntIntMinRowKey(int strLength){
+    	byte[] bytes=new byte[strLength+8];
+    	for (int i=0;i<strLength+8;i++) {
+			bytes[i]=(byte)0;
+		}
+    	return new BytesRowKey(bytes);
     }
 }

@@ -16,6 +16,9 @@
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
+	<script type="text/javascript">
+		var _path="${_path}",_staticPath="${_staticPath}";
+	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
 			<div class="weui-flex xy-header">
@@ -154,8 +157,9 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/xy-swiper.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
-			var _path="${_path}";
 			function eventCollection(weui){
+			}
+			function showStatu(){
 			}
 			function bindEvent(serveId){
 				$('.xy-poab-menuBottom').click(function(){

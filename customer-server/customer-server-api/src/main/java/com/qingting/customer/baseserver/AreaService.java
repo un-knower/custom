@@ -19,11 +19,10 @@ public interface AreaService extends Service<Area, Integer> {
 	 * 
 	 * @Title: listArea
 	 * @Description: 查询区信息
-	 * @param id
-	 * @param code
+	 * @param cityCode
 	 * @return 
 	 * @return List<Area>
 	 * @throws
 	 */
-	List<Area> listArea(Integer id,String code);
+	List<Area> listArea(String cityCode);
 }

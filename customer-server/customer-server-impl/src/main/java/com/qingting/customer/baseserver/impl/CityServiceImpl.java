@@ -44,8 +44,8 @@ public class CityServiceImpl implements CityService {
 	}
 
 	@Override
-	public List<City> listCity(Integer id, String code) {
-		return cityDAO.listCity(id, code);
+	public List<City> listCity(String proCode) {
+		return cityDAO.listCity(proCode);
 	}
 
 }

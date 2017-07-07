@@ -46,8 +46,8 @@ public class ProvinceServiceImpl implements ProvinceService {
 	}
 
 	@Override
-	public List<Province> listProvince(Integer id,String code) {
-		return provinceDAO.listProvince(id,code);
+	public List<Province> listProvince(String code) {
+		return provinceDAO.listProvince(code);
 	}
 
 }

@@ -221,7 +221,7 @@ public class AddrController {
 			id=null;
 		if(StringUtils.isBlank(code))
 			code=null;
-		result.setData(provinceService.listProvince(id,code));
+		result.setData(provinceService.listProvince(code));
 		result.setMessage("成功");
 		return result;
 	}
@@ -238,7 +238,7 @@ public class AddrController {
 			id=null;
 		if(StringUtils.isBlank(code))
 			code=null;
-		result.setData(cityService.listCity(id,code));
+		result.setData(cityService.listCity(code));
 		result.setMessage("成功");
 		return result;
 	}
@@ -255,7 +255,7 @@ public class AddrController {
 			id=null;
 		if(StringUtils.isBlank(code))
 			code=null;
-		result.setData(areaService.listArea(id,code));
+		result.setData(areaService.listArea(code));
 		result.setMessage("成功");
 		return result;
 	}

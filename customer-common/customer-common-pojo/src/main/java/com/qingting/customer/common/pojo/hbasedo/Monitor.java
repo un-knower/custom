@@ -1,6 +1,7 @@
 package com.qingting.customer.common.pojo.hbasedo;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import org.apache.commons.lang3.builder.EqualsBuilder;
@@ -18,14 +19,7 @@ public class Monitor implements Serializable{
 	 * ID
 	 */
 	private Long id;
-	/**
-	 * 调试用数据字段
-	 */
-	private String data;
-	/**
-	 * 调试用时间字段
-	 */
-	private String date;
+	
 	/**
 	 * 原水TDS值
 	 */
@@ -39,23 +33,37 @@ public class Monitor implements Serializable{
 	/**
 	 * 温度值
 	 */
-	private Float temp;
+	private Byte temp;
 
 	/**
 	 * 湿度值
 	 */
-	private Float humidity;
+	private Byte humidity;
 
 	/**
 	 * 流量值
 	 */
-	private Float flow;
+	private Long flow;
 
 	/**
 	 * 漏水状态开关：true-漏水、false-无漏水
 	 */
 	private Boolean leak;
-
+	
+	/**
+	 * 电磁阀输出状态 true:电磁阀供电 false:电池阀不供电
+	 */
+	private Boolean magnetic;
+	
+	/**
+	 * 输出继电器 true:闭合 false:断开
+	 */
+	private Boolean outRelay;
+	
+	/**
+	 * 电源继电器 true:有输出 false:无输出
+	 */
+	private Boolean powerRelay;
 	/**
 	 * d值
 	 */
@@ -70,18 +78,20 @@ public class Monitor implements Serializable{
 	 * 设备Id
 	 */
 	private Integer equipId;
-
+	/**
+	 * 设备编号
+	 */
+	private String equipCode;
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
-
+	private Calendar createTime;
 	/**
-	 * 数据的版本，更新时用，监测数据只需要一个版本
+	 * 时间DTO
 	 */
-	private final Byte version = 0;
-
+	private String time;
 	
+
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -96,22 +106,6 @@ public class Monitor implements Serializable{
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	public String getData() {
-		return data;
-	}
-
-	public void setData(String data) {
-		this.data = data;
-	}
-
-	public String getDate() {
-		return date;
-	}
-
-	public void setDate(String date) {
-		this.date = date;
 	}
 
 	public Float getRawTds() {
@@ -130,27 +124,27 @@ public class Monitor implements Serializable{
 		this.purTds = purTds;
 	}
 
-	public Float getTemp() {
+	public Byte getTemp() {
 		return temp;
 	}
 
-	public void setTemp(Float temp) {
+	public void setTemp(Byte temp) {
 		this.temp = temp;
 	}
 
-	public Float getHumidity() {
+	public Byte getHumidity() {
 		return humidity;
 	}
 
-	public void setHumidity(Float humidity) {
+	public void setHumidity(Byte humidity) {
 		this.humidity = humidity;
 	}
 
-	public Float getFlow() {
+	public Long getFlow() {
 		return flow;
 	}
 
-	public void setFlow(Float flow) {
+	public void setFlow(Long flow) {
 		this.flow = flow;
 	}
 
@@ -160,6 +154,30 @@ public class Monitor implements Serializable{
 
 	public void setLeak(Boolean leak) {
 		this.leak = leak;
+	}
+
+	public Boolean getMagnetic() {
+		return magnetic;
+	}
+
+	public void setMagnetic(Boolean magnetic) {
+		this.magnetic = magnetic;
+	}
+
+	public Boolean getOutRelay() {
+		return outRelay;
+	}
+
+	public void setOutRelay(Boolean outRelay) {
+		this.outRelay = outRelay;
+	}
+
+	public Boolean getPowerRelay() {
+		return powerRelay;
+	}
+
+	public void setPowerRelay(Boolean powerRelay) {
+		this.powerRelay = powerRelay;
 	}
 
 	public Float getD() {
@@ -186,16 +204,29 @@ public class Monitor implements Serializable{
 		this.equipId = equipId;
 	}
 
-	public Calendar getCalendar() {
-		return calendar;
+	public String getEquipCode() {
+		return equipCode;
 	}
 
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setEquipCode(String equipCode) {
+		this.equipCode = equipCode;
 	}
 
-	public Byte getVersion() {
-		return version;
+	public Calendar getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
+	}
+	
+
+	public String getTime() {
+		return time;
+	}
+
+	public void setTime(String time) {
+		this.time = time;
 	}
 
 	@Override
@@ -208,10 +239,11 @@ public class Monitor implements Serializable{
 		return HashCodeBuilder.reflectionHashCode(this);
 	}
 
-	@Override
+	/*@Override
 	public String toString() {
 		return ToStringBuilder.reflectionToString(this);
-	}
+	}*/
+	
 	
 	/**
 	 * 
@@ -232,4 +264,26 @@ public class Monitor implements Serializable{
 		//System.arraycopy(rowkey, rowkey.length-4, dest, 0, 4);//最后4个字节,设备id
 		//this.id=Bytes.toInt(dest);
 	}
+
+	@Override
+	public String toString() {
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+		return "Monitor [rowKey=" + rowKey + ", id=" + id + ", rawTds=" + rawTds + ", purTds=" + purTds + ", temp="
+				+ temp + ", humidity=" + humidity + ", flow=" + flow + ", leak=" + leak + ", magnetic=" + magnetic
+				+ ", outRelay=" + outRelay + ", powerRelay=" + powerRelay + ", d=" + d + ", w=" + w + ", equipId="
+				+ equipId + ", equipCode=" + equipCode + ", createTime=" + format.format(createTime.getTime()) + "]";
+	}
+
+	/*@Override
+	public String toString() {
+		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
+		
+		return "Monitor [rowKey=" + rowKey + ", id=" + id + ", data=" + data + ", date=" + date + ", rawTds=" + rawTds
+				+ ", purTds=" + purTds + ", temp=" + temp + ", humidity=" + humidity + ", flow=" + flow + ", leak="
+				+ leak + ", magnetic=" + magnetic + ", outRelay=" + outRelay + ", powerRelay=" + powerRelay + ", d=" + d
+				+ ", w=" + w + ", equipId=" + equipId + ", equipCode=" + equipCode + ", createTime=" + format.format(createTime.getTime())
+				+ ", version=" + version + "]";
+	}*/
+	
+	
 }

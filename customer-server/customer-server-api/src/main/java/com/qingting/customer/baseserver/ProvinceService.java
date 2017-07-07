@@ -18,10 +18,11 @@ public interface ProvinceService extends Service<Province, Integer> {
 	/**
 	 * 
 	 * @Title: listProvince
-	 * @Description: 查询所有省信息
+	 * @Description: 查询省信息
+	 * @param code
 	 * @return 
 	 * @return List<Province>
 	 * @throws
 	 */
-	List<Province> listProvince(Integer id,String code);
+	List<Province> listProvince(String code);
 }

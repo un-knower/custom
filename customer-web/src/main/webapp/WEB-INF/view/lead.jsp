@@ -48,9 +48,9 @@ img{
 <body>
 	<div id="lead" class="swiper-container" data-genuitec-lp-enabled="false" data-genuitec-file-id="wc2-23" data-genuitec-path="/test/WebRoot/lead.html">
 		<div class="swiper-wrapper">
-			<div class="swiper-slide"> <img src="${_staticPath}/resource/images/1.jpg"> </div>
-	        <div class="swiper-slide"> <img src="${_staticPath}/resource/images/2.jpg"> </div>
-	        <div class="swiper-slide"><img src="${_staticPath}/resource/images/3.jpg"> </div> 
+			<div class="swiper-slide"> <img src="${_staticPath}/resource/images/customer/1.jpg"> </div>
+	        <div class="swiper-slide"> <img src="${_staticPath}/resource/images/customer/2.jpg"> </div>
+	        <div class="swiper-slide"><img src="${_staticPath}/resource/images/customer/3.jpg"> </div> 
 		</div>
 	</div>
 	<div class="pagination"></div>

@@ -19,11 +19,10 @@ public interface CityService extends Service<City, Integer> {
 	 * 
 	 * @Title: listCity
 	 * @Description: 查询市信息
-	 * @param id
-	 * @param code
+	 * @param proCode
 	 * @return 
 	 * @return List<City>
 	 * @throws
 	 */
-	List<City> listCity(Integer id,String code);
+	List<City> listCity(String proCode);
 }

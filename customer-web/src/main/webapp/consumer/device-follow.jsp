@@ -18,7 +18,7 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/echarts.min.js"></script>
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page tabbar flex js_show height100">

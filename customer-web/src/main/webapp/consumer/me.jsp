@@ -16,7 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -79,13 +79,6 @@
 								<a class="weui-cell weui-cell_access" href="#" id="message">
 									<div class="weui-cell__hd xy-pore">
 										<img src="${_staticPath}/resource/weuiWeb/img/icon-list-message.png">
-										<i class="xy-poab icon-new-message">&nbsp;</i>
-										<!-- <script type="text/javascript">
-											var a = 1;
-											if(a == 1){
-												return '<i class="xy-poab icon-new-message">&nbsp;</i>'
-											}											
-										</script> -->
 									</div>
 									<div class="weui-cell__bd">
 										<p>消息</p>
@@ -155,23 +148,14 @@
 				$('#deviceUl li:eq(1)').click(function(){
 					window.location.href =_path+"/consumer/project.jsp";
 				});
-				$('#deviceUl li:eq(2)').click(function(){
+				$('#deviceUl li:eq(2)').click(function(){//跳转到我关注的设备
 					//sessionStorage.setItem('number',2);
-					window.location.href =_path+"/consumer/project.jsp?number=2";
+					//window.location.href =_path+"/consumer/project.jsp?number=2";
 				});
 				$('#exit').click(function(){
+					console.log(_path);
 					//退出
-					$.ajax({
-						type:'get',
-						//url:_path+'/logout',
-						url:'http://192.168.10.201:8086/customer-web/logout',
-						success : function(msg){
-							console.log(msg);
-							if(msg){
-								
-								}						
-							}
-					});
+					window.location.href =_path+'/logout';
 				});
 			}
 			$(function(){
@@ -193,10 +177,18 @@
 							$('#totalDevice').html(msg.data.attentEquip+msg.data.mineEquip+'个');
 							$('#mineDevice').html(msg.data.mineEquip+'个');
 							$('#attentDevice').html(msg.data.attentEquip+'个');
+							$('#mobile').html(msg.data.phone);
+							showRedDot();//如果有消息，显示小圆点
 							}						
 						}
 				});
 			});
+			function showRedDot(){
+				var message = true;
+				if(message = true){
+					$('.xy-pore').append('<i class="xy-poab icon-new-message">&nbsp;</i>');
+				}				
+			}
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

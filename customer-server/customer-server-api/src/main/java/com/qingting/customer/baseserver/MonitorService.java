@@ -11,13 +11,12 @@ public interface MonitorService {
 	/**
 	 * 
 	 * @Title: insertMonitor
-	 * @Description: 插入一条监测值
-	 * @param monitor
+	 * @Description: 插入一条数据
+	 * @param monitor 
 	 * @return void
 	 * @throws
 	 */
 	void insertMonitor(Monitor monitor);
-
 	/**
 	 * 
 	 * @Title: deleteMonitorByRowKey
@@ -51,24 +50,35 @@ public interface MonitorService {
 
 	/**
 	 * 
-	 * @Title: listMonitorByStartAndEndOfCalendar
+	 * @Title: listMonitorByStartTimeAndEndTime
 	 * @Description: 查询一段时间的监测数据
-	 * @param equipId
-	 * @param startCalendar
-	 * @param endCalendar
+	 * @param equipCode
+	 * @param startTime
+	 * @param endTime
 	 * @return 
 	 * @return List<Monitor>
 	 * @throws
 	 */
-	List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId,Calendar startCalendar,Calendar endCalendar);
+	List<Monitor> listMonitorByStartTimeAndEndTime(String equipCode, Calendar startTime,
+			Calendar endTime);
 	/**
 	 * 
-	 * @Title: listMonitorofNew
+	 * @Title: listMonitorOfNew
 	 * @Description: 查询设备最新一段时间的监测数据
-	 * @param equipId
+	 * @param equipCode
+	 * @param wide
 	 * @return 
 	 * @return List<Monitor>
 	 * @throws
 	 */
-	List<Monitor> listMonitorofNew(Integer equipId);
+	List<Monitor> listMonitorOfNew(String equipCode,Long wide);
+	/**
+	 * 
+	 * @Title: listMonitor
+	 * @Description: 查询所有监测值
+	 * @return 
+	 * @return List<Monitor>
+	 * @throws
+	 */
+	List<Monitor> listMonitor();
 }

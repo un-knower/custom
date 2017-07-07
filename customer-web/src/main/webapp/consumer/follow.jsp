@@ -15,7 +15,7 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -33,14 +33,14 @@
 						<p class="xy-fc-blue">昨天</p>
 						<div class="xy-tac">
 							<div class="xy-dib xy-pad-b7">
-								<p class="mini-lovely"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-								<p class="xy-pad-t3 xy-fs16">蒙奇浩浩</p>
-								<p class="xy-pad-t3 xy-fs16 xy-fc-gray">申请关注您的饮水安全状态</p>
+								<p class="mini-lovely"><img /></p>
+								<p class="xy-pad-t3 xy-fs16" id="name">蒙奇浩浩</p>
+								<p class="xy-pad-t3 xy-fs16 xy-fc-gray" id="content">申请关注您的饮水安全状态</p>
 							</div>
 						</div>
 					</div>
 					<div class="xy-pad-10">
-						<a href="javascript:history.go(-1);" class="weui-btn weui-btn_primary bg-light-blue">同意</a>
+						<a href="javascript:;" class="weui-btn weui-btn_primary bg-light-blue">同意</a>
 						<a href="javascript:;" class="weui-btn weui-btn_primary xy-marIM-t10 bg-orange">拒绝</a>
 					</div>
 				</div>
@@ -54,6 +54,51 @@
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
+			}
+			$(function(){
+				//获取地址栏参数				
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				 
+				// 调用方法
+				/* alert(GetQueryString("followTime"));
+				alert(GetQueryString("name"));
+				alert(GetQueryString("content"));
+				alert(GetQueryString("thisSrc")); */
+				$('#content').html(GetQueryString("content"));
+				$('.xy-fc-blue').html(GetQueryString("followTime"));
+				$('#name').html(GetQueryString("name"));
+				$('.mini-lovely img').attr('src',GetQueryString("thisSrc"));
+				bindEvent();
+			})
+			function bindEvent(){
+				var agree='';
+				$('.bg-light-blue').click(function(){
+					agree = 'true'; 
+					attentHandle(agree);
+				});
+				$('.bg-orange').click(function(){
+					//alert('45');
+					agree = 'false';
+					attentHandle(agree);
+				});				
+			}
+			function attentHandle(agree){
+				//关注处理
+				$.ajax({
+					type:'get',
+					url:_path+'/consumer/equip/attentHandle?agree='+agree,
+					success : function(r){
+						console.log(r);
+						if(r){
+							alert(r.message);
+							window.location.href =_path+"/consumer/news.jsp?handle=1";
+							}						
+						}
+				});
 			}
 		</script>
 		

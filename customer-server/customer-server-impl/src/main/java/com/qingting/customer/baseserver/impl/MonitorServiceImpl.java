@@ -38,13 +38,18 @@ public class MonitorServiceImpl implements MonitorService{
 	}
 
 	@Override
-	public List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId, Calendar startCalendar,
-			Calendar endCalendar) {
-		return monitorDAO.listMonitorByStartAndEndOfCalendar(equipId, startCalendar, endCalendar);
+	public List<Monitor> listMonitorByStartTimeAndEndTime(String equipCode, Calendar startTime, Calendar endTime) {
+		return monitorDAO.listMonitorByStartTimeAndEndTime(equipCode, startTime, endTime);
 	}
 
 	@Override
-	public List<Monitor> listMonitorofNew(Integer equipId) {
-		return monitorDAO.listMonitorofNew(equipId);
+	public List<Monitor> listMonitorOfNew(String equipCode, Long wide) {
+		return monitorDAO.listMonitorOfNew(equipCode, wide);
+	}
+
+	@Override
+	public List<Monitor> listMonitor() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -17,7 +17,7 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -237,7 +237,22 @@
 				$iosDialog1.show();
 			});
 			 $('body').on('click','.line-scroll-wrapper',function(){//列表点击事件跳转
-				//lineClick = $(this);
+			 	//$(this).find('i').remove();			 					
+				if($(this).find('i').length > 0){//如果有小红点，调消息已读接口
+					alert('you')
+					var detailId = $(this).attr('detailId');//获取detailId
+					$.ajax({
+					type:'get',
+					url:_path+'/consumer/message/setRead?id='+detailId,
+					success : function(msg){
+						console.log(msg);
+						if(msg){
+								alert('成功');
+							}						
+						}
+					});
+				}
+				if($(this).attr('detailId')) var thisId=$(this).attr('detailId');//获取detailId,
 				var thisSort = $(this).parent().attr('sortCode'),followTime=$(this).find('#followTime').html(),
 				name=$(this).find('#name').html(),content=$(this).find('#content').html(),thisSrc=$(this).find('img').attr('src');
 				console.log(thisSort,followTime,name,content,thisSrc);
@@ -245,10 +260,11 @@
 window.location.href =_path+"/consumer/follow.jsp?followTime="+followTime+'&name='+name+'&content='+content+'&thisSrc='+thisSrc;
 				}else if(thisSort == 3){//跳转到服务提醒列表
 					window.location.href =_path+"/consumer/remind-list.jsp";
-				}else if(thisSort == 2){//服务提醒，跳转评价按钮页面
-					window.location.href =_path+"/consumer/sevices-details.jsp";
+				}else if(thisSort == 2){//未评价服务，跳转有评价按钮页面
+					sessionStorage.setItem('ifel',1);
+					window.location.href =_path+"/consumer/services-details.jsp?serveId="+thisId;
 				}else if(thisSort == 1){//服务提醒，跳转服务详情页面（还未服务）
-					window.location.href =_path+"/consumer/sevices-details.jsp";
+					window.location.href =_path+"/consumer/service-offerings-details.jsp?serveId="+thisId;
 				}
 			}); 
 			
@@ -268,18 +284,46 @@ window.location.href =_path+"/consumer/follow.jsp?followTime="+followTime+'&name
 				function drawMessageList(data){
 					var messageDiv = '';
 					for (var i in data){
+						//处理消息显示的时间
+						var dateNew = new Date().getTime() - new Date(data[i].createTime).getTime(),timeContent;   //时间差的毫秒数   
+						 //计算出相差天数  
+					    var days=Math.floor(dateNew/(24*3600*1000))  					  
+					    //计算相差小时数  					  
+					    var leave1=dateNew%(24*3600*1000)    //计算天数后剩余的毫秒数  
+					    var hours=Math.floor(leave1/(3600*1000))  
+					    //计算相差分钟数  
+					    var leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数  
+					    var minutes=Math.floor(leave2/(60*1000))   
+					     if(days >= 1){
+					     	 timeContent = days+'天前';
+					     }else if(days < 1&&hours >= 1){
+					     	 timeContent = hours+'小时前';
+					     }else if(hours < 1){
+					     	 timeContent = minutes+'分钟前';
+					     }else{
+					     	timeContent = '刚刚';
+					     }        
 					 	messageDiv += '<div class="xy-layout-bar xy-mar-b10 line-wrapper" sortCode="'+data[i].sortCode+'">'+
-										'<div class="xy-border-box line-scroll-wrapper xy-clearfix">'+
+//if(data[i].sortCode == 1||data[i].sortCode == 2){
+										 '<div class="xy-border-box line-scroll-wrapper xy-clearfix" detailId="'+data[i].detailId+'">'+
+							//}else{
+							//messageDiv +='<div class="xy-border-box line-scroll-wrapper xy-clearfix">';
+							//}
 											'<div class="xy-fll line-normal-wrapper">'+
 												'<a href="#" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">'+
-													'<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}'+data[i].path+'" /></p>'+
+													'<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG" style="position:absolute"><img src="${_staticPath}'+data[i].path+'" />';
+													  //此处需要根据消息未读标志来判断显不显示小圆点
+							  if(data[i].readFlag == false)
+									   messageDiv +='<i class="xy-poab icon-new-message " style="left: 44px;">&nbsp;</i>';
+									   messageDiv +='</p>'+
 													'<div class="xy-pad-l10 line-normal-msg">'+
 														'<ol class="xy-pad-t3">'+
-															'<span class="xy-flr xy-fs13 xy-pad-t2" id="followTime">'+data[i].createTime.slice(11,16)+'</span>'+
+															//'<span class="xy-flr xy-fs13 xy-pad-t2" id="followTime">'+data[i].createTime.slice(11,16)+'</span>'+
+															'<span class="xy-flr xy-fs13 xy-pad-t2" id="followTime">'+timeContent+'</span>'+
 															'<dt class=" xy-fs16" id="name">'+data[i].sortName+'</dt>'+
 														'</ol>'+
 														'<ol class="xy-pad-t3 xy-fs13">'+
-															'<dt id="content">此处是消息的内容！！！</dt>'+
+															'<dt id="content" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data[i].content+'</dt>'+
 														'</ol>'+
 													'</div>'+
 												'</a>'+

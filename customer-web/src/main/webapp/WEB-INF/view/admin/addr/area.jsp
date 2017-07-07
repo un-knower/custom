@@ -7,7 +7,7 @@
 
 <div class="page-header">
 	<h1>
-		市列表
+		区列表
 	</h1>
 </div>
 

@@ -26,7 +26,7 @@ public class TestMonitorService {
 	MonitorService monitorService;
 	@Test
 	public void testListMonitor(){
-		List<Monitor> listMonitor = monitorService.listMonitorByStartAndEndOfCalendar(1,DateUtil.getDate(2017,4,7,0,0,0,0), DateUtil.getDate(2017,4,27,9,42,56,0));
+		//List<Monitor> listMonitor = monitorService.listMonitorByStartAndEndOfCalendar(1,DateUtil.getDate(2017,4,7,0,0,0,0), DateUtil.getDate(2017,4,27,9,42,56,0));
 
 		/*logger.debug("测试打印startRowKey:");
 		for (byte b : startRowKey.toBytes()) {
@@ -36,10 +36,10 @@ public class TestMonitorService {
 		for (byte b : endRowKey.toBytes()) {
 			System.out.print(b + " ");
 		}*/
-		logger.debug("\n测试打印result:");
+		/*logger.debug("\n测试打印result:");
 		for (Monitor m : listMonitor) {
 			System.out.println(m + " ");
-		}
+		}*/
 		
 		//monitorService.listMonitor(startRowKey, endRowKey);
 	}
@@ -47,14 +47,14 @@ public class TestMonitorService {
 	@Test
 	public void testInsertMonitor1() {
 		Monitor monitor = new Monitor();
-		monitor.setD((float) 1.0);
+		/*monitor.setD((float) 1.0);
 		monitor.setFlow((float) 1.1);
 		monitor.setHumidity((float) 1.2);
 		monitor.setLeak(true);
 		monitor.setPurTds((float) 1.3);
 		monitor.setRawTds((float) 1.4);
 		monitor.setTemp((float) 1.5);
-		monitor.setW((float) 1.6);
+		monitor.setW((float) 1.6);*/
 		
 		monitorService.insertMonitor(monitor);
 

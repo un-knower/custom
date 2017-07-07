@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.hadoop.hbase.util.Bytes;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.PutRequest;
@@ -12,6 +11,7 @@ import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.qingting.customer.common.pojo.hbasedo.Area;
 import com.qingting.customer.dao.AreaDAO;
+import com.qingting.customer.dao.util.Common;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -23,18 +23,18 @@ public class AreaDAOImpl implements AreaDAO {
 	private final static String SEQUENCE="area_id_seq";
 	private final static byte dataVersion=0;
 	
-	/**
-	 * RowKey=ID(4字节)
-	 */
-	private static RowKey createRowKey(Integer num){
-		return RowKeyUtil.getRowKey(num);
+	
+	
+	private static RowKey createRowKey(String cityCode,String code){
+		return RowKeyUtil.getRowKey(cityCode,code);
 	}
 	private static List<Area> setContentOfRowKey(List<SimpleHbaseDOWithKeyResult<Area>> listHbase){
 		List<Area> list=new ArrayList<Area>();
 		for (SimpleHbaseDOWithKeyResult<Area> result : listHbase) {
 			Area Area = result.getT();
 			byte[] rowkey=result.getRowKey().toBytes();
-			Area.setId(Bytes.toInt(rowkey));
+			Area.setCityCode(new String(rowkey,0,6));
+			Area.setCode(new String(rowkey,6,6));
 			list.add(Area);
 		}
 		return list;
@@ -67,25 +67,21 @@ public class AreaDAOImpl implements AreaDAO {
 	public void insertAreaList(List<Area> areaList) {
 		List<PutRequest<Area>> list=new ArrayList<PutRequest<Area>>();
 		for (Area Area : areaList) {
-			list.add(new PutRequest<Area>(createRowKey(Area.getId()), Area));
+			list.add(new PutRequest<Area>(createRowKey(Area.getCityCode(),Area.getCode()), Area));
 		}
 		tClient.putObjectList(list);
 	}
 
 	@Override
-	public List<Area> listArea(Integer id, String code) {
+	public List<Area> listArea(String cityCode) {
 		List<Area> list=null;
-		if(id==null && code==null)
+		if(cityCode==null || cityCode.equals(""))//城市代码空，查所有
 			list=setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getMinRowKey(0), RowKeyUtil.getMaxRowKey(0), Area.class)
+				tClient.findObjectAndKeyList(RowKeyUtil.getStringStringMinRowKey(6,6), RowKeyUtil.getStringStringMaxRowKey(6,6), Area.class)
 				);
-		else if(id!=null)
-			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getMinRowKey(id), RowKeyUtil.getMaxRowKey(id), Area.class)
-					);
 		else
 			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getMinRowKey(0), RowKeyUtil.getMaxRowKey(0), Area.class)
+					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(cityCode,Common.MINCITYCODE), RowKeyUtil.getRowKey(cityCode,Common.MAXCITYCODE), Area.class)
 					);
 		return list;
 	}

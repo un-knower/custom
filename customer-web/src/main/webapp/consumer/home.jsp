@@ -15,6 +15,9 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
+	<script type="text/javascript">
+		var _path="${_path}",_staticPath="${_staticPath}";
+	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100 page-navbar">
 			<div class="page__bd xy-container xy-container-other">
@@ -173,7 +176,6 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/swiper.min.js"></script>
 		<script src="${_staticPath}/resource/weuiWeb/js/xy-swiper-vertical.js"></script>
 		<script type="text/javascript" class="js_show">
-			var _path="${_path}";
 			function eventCollection(weui){
 				
 			}
@@ -185,7 +187,7 @@
 					//data:{account:account},
 					success : function(msg){
 						//console.log(msg);
-						if(msg)	{
+						if(msg.data)	{
 							$('#flow').html(msg.data.flow);
 							$('#humidity').html(msg.data.humidity);
 							$('#moitorCount').html(msg.data.moitorCount);

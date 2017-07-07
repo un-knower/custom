@@ -6,12 +6,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import com.alipay.simplehbase.client.rowkey.BytesRowKey;
-import com.alipay.simplehbase.client.rowkey.StringRowKey;
+import com.alipay.simplehbase.client.SimpleHbaseClient;
+import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
+import com.alipay.simplehbase.util.BytesUtil;
 import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
-import com.qingting.customer.common.pojo.util.DateUtil;
-import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.MonitorDAO;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -19,58 +18,74 @@ import com.qingting.customer.hbase.rowkey.RowKey;
 @Repository("monitorDAO")
 public class MonitorDAOImpl implements MonitorDAO {
 	
+	/*@Autowired
+	public RedisTemplate<String, Integer> redisTemplate;*/
+	
+	private static SimpleHbaseClient tClient=SHCUtil.getSHC("monitor");
+	private final static String SEQUENCE="monitor_id_seq";
+	private final static byte dataVersion=0;
+	/**
+	 * RowKey=(设备编号32字节+时间戳)
+	 */
+	private static RowKey createRowKey(String equipCode,Long millis){
+		
+		return RowKeyUtil.getRowKey(equipCode,millis);
+	}
+	private static List<Monitor> setContentOfRowKey(List<SimpleHbaseDOWithKeyResult<Monitor>> listHbase){
+		List<Monitor> list=new ArrayList<Monitor>();
+		for (SimpleHbaseDOWithKeyResult<Monitor> result : listHbase) {
+			Monitor monitor = result.getT();
+			byte[] rowkey=result.getRowKey().toBytes();
+			
+			monitor.setEquipCode(new String(rowkey,0,rowkey.length-8));//最前边是设备编号
+			Calendar time=Calendar.getInstance();
+			time.setTimeInMillis(BytesUtil.bytesToLong(rowkey, rowkey.length-8, 8));
+			monitor.setCreateTime(time);//后8字节字节是时间
+			list.add(monitor);
+		}
+		return list;
+	}
+	
 	@Override
 	public void insertMonitor(Monitor monitor) {
-		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(monitor.getEquipId(), DateUtil.getMillisOfStart(),DateUtil.getMillisOfDay()));
-		SHCUtil.getSHC("monitor").insertObject(rowKey, monitor);
+		tClient.putObject(createRowKey(monitor.getEquipCode(),monitor.getCreateTime().getTimeInMillis()), monitor);
 	}
 
+	
 	@Override
 	public void deleteMonitorByRowKey(String rowKey) {
-		SHCUtil.getSHC("monitor").delete(new StringRowKey(rowKey));
+		// TODO Auto-generated method stub
+		
 	}
-
 	@Override
 	public void updateMonitorByRowKey(Monitor monitor) {
-		SHCUtil.getSHC("monitor").updateObjectWithVersion(new StringRowKey(monitor.getRowKey()), monitor, monitor.getVersion());
+		// TODO Auto-generated method stub
+		
 	}
-	
 	@Override
 	public Monitor getMonitorByRowKey(String rowKey) {
-		SimpleHbaseDOWithKeyResult<Monitor> result = SHCUtil.getSHC("monitor").findObjectAndKey(new StringRowKey(rowKey), Monitor.class);
-		Monitor monitor=result.getT();
-		monitor.setContentOfRowKey(result.getRowKey().toBytes());
-		return monitor;
-	}
-	
-	@Override
-	public List<Monitor> listMonitorByStartAndEndOfCalendar(Integer equipId, Calendar startCalendar,
-			Calendar endCalendar) {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getStartOfMillis()));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart()));
-		List<SimpleHbaseDOWithKeyResult<Monitor>> listDOWithKey = SHCUtil.getSHC("monitor").findObjectAndKeyList(startRowKey,endRowKey, Monitor.class);
-		List<Monitor> list=new ArrayList<Monitor>();
-		for (SimpleHbaseDOWithKeyResult<Monitor> result : listDOWithKey) {
-			Monitor monitor = result.getT();
-			monitor.setContentOfRowKey(result.getRowKey().toBytes());
-			list.add(monitor);
-		}
-		return list;
+		// TODO Auto-generated method stub
+		return null;
 	}
 	@Override
-	public List<Monitor> listMonitorofNew(Integer equipId){
-		Calendar calendar = Calendar.getInstance();
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getBeforOfTime(calendar)));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart(calendar)));
-		List<SimpleHbaseDOWithKeyResult<Monitor>> listDOWithKey = SHCUtil.getSHC("monitor").findObjectAndKeyList(startRowKey,endRowKey, Monitor.class);
-		List<Monitor> list=new ArrayList<Monitor>();
-		for (SimpleHbaseDOWithKeyResult<Monitor> result : listDOWithKey) {
-			Monitor monitor = result.getT();
-			monitor.setContentOfRowKey(result.getRowKey().toBytes());
-			list.add(monitor);
-		}
-		return list;
+	public List<Monitor> listMonitorByStartTimeAndEndTime(String equipCode, Calendar startTime,
+			Calendar endTime) {
+		return setContentOfRowKey(
+				tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(equipCode,startTime.getTimeInMillis()),RowKeyUtil.getRowKey(equipCode,endTime.getTimeInMillis()), Monitor.class)
+				);
 	}
-	
+	@Override
+	public List<Monitor> listMonitorOfNew(String equipCode,Long wide) {
+		long now=Calendar.getInstance().getTimeInMillis();
+		return setContentOfRowKey(
+				tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(equipCode,now-wide),RowKeyUtil.getRowKey(equipCode,now), Monitor.class)
+				);
+	}
+	@Override
+	public List<Monitor> listMonitor() {
+		return setContentOfRowKey(
+				tClient.findObjectAndKeyList(RowKeyUtil.getStringLongMinRowKey(32),RowKeyUtil.getStringLongMaxRowKey(32), Monitor.class)
+				);
+	}
 
 }

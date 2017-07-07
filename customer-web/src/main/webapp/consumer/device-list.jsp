@@ -16,7 +16,7 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -177,10 +177,56 @@
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
-		<script type="text/javascript" class="js_show">
-			function eventCollection(weui){
+<script type="text/javascript" class="js_show">
+	function eventCollection(weui){
+	}
+	$(function(){
+		//获取拉取该用户下所有设备
+		 $.ajax({
+				type:'get',
+				url:_path+'/consumer/equip/list',
+				//data: {equipId:''},
+				success : function(msg){
+					console.log(msg);
+					if(msg){
+						//根据后台数据画列表
+						drawList(msg.data);
+					}						
+				}
+			});
+		function drawList(data){
+			var deviceDiv = '';
+			for(var i in data){
+				deviceDiv += '<li class="xy-layout-bar xy-border-box">'+
+							'<a class="weui-cell weui-cell_access xy-linlk-listview xy-linlk-listview-oter" href="page-remind-list.html">'+
+								'<div class="weui-cell__bd xy-clearfix xy-mar-r5">'+
+									'<div class="xy-fll">'+
+										'<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>'+
+										'<p class="xy-fc-light-gray xy-pad-t5 xy-tac xy-line-h16">木木家</p>'+
+									'</div>'+
+									'<div class="xy-db xy-mar-l85p">'+
+										'<p class="xy-fs16 xy-pad-t5">检测内容解读</p>'+
+										'<p class="xy-fc-light-gray xy-pad-t5 xy-fs14 xy-line-clamp2 xy-line-h20">'+
+											'净水设备快到维护期了，建议及时更换第五级滤芯。'+
+										'</p>'+
+									'</div>'+
+								'</div>'+
+								'<div class="weui-cell__ft">'+
+								'</div>'+
+							'</a><!--信息模块-->'+
+							'<div class="main-img-address xy-pad-lr10 xy-border-t xy-pad-tb7">'+
+								'<a href="#" class="" flex="dir:left">'+
+									'<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>'+
+									'<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">'+
+										'成都市高兴西区天泉路200号 众创办公室茶水间 	'+
+									'</div>'+
+								'</a>'+
+							'</div>'+
+						'</li>'
 			}
-		</script>
+		}
+	})
+</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>
 	</body>

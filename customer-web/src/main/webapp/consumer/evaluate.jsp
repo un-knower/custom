@@ -14,6 +14,9 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
+		<script type="text/javascript">
+			var _path="${_path}",_staticPath="${_staticPath}";
+		</script>
 	</head>
 	<body ontouchstart  translate="no">
 		<div class="page flex js_show height100">

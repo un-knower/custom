@@ -18,7 +18,7 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/echarts.min.js"></script>
 	</head>
 	<script type="text/javascript">
-		var _path="${_path}";
+		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
 	<body ontouchstart>
 		<div class="page tabbar flex js_show height100">
@@ -112,10 +112,15 @@
 					data: {equipId:''},
 					success : function(msg){
 						console.log(msg);
-						if(msg){
+						/* if(msg){
 							$('.xy-h1-title').html(msg.data.userName+"家的监测曲线图")
 							drawEchart(msg.data);
-						}						
+						}	 */	
+						if(msg.data.secondDates.length == msg.data.purDatas.length&&msg.data.purDatas.length != 0)	{
+							//alert('xiangdeng');
+							$('.xy-h1-title').html(msg.data.userName+"家的监测曲线图")
+							drawEchart(msg.data);
+						}			
 					}
 				});
 				function drawEchart(data){
@@ -177,7 +182,7 @@
 							{
 								type : 'category',
 								boundaryGap : false,
-								data : newData, 
+								data : newData.reverse(), 
 								//data : ["22:49:23", "22:49:24", "22:49:25", "22:49:26"], 				          
 							}
 						],
@@ -241,7 +246,7 @@
 									}
 								  }
 								},
-								data:data.purDatas,
+								data:data.purDatas.reverse(),
 								symbolSize: 10,
 							},
 							{
@@ -281,7 +286,7 @@
 										}
 								  }
 								},
-								data:data.rawDatas,
+								data:data.rawDatas.reverse(),
 								symbolSize: 10,
 								//绘制Y轴平行线 
 								markLine: { 
@@ -626,8 +631,7 @@
 							success : function(msg){
 								//console.log(msg);
 								//a = data.secondDates,b=
-								if(msg){	
-									//需要判断数据未更新的情况								
+								if(msg){							
 									data.secondDates.push.apply(data.secondDates,msg.data.secondDates);
 									data.purDatas.push.apply(data.purDatas,msg.data.purDatas);
 									data.rawDatas.push.apply(data.rawDatas,msg.data.rawDatas);
