@@ -32,7 +32,7 @@ public class ValidateController {
 	TxMessageService txMessageService;
 	
 	@ApiOperation("获取验证码")
-	@RequestMapping(value="/getValidateCode",method = RequestMethod.GET)
+	@RequestMapping(value="/getValidateCode",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	@ApiImplicitParam(paramType="query", name = "mobile", value = "手机号", required = true, dataType = "String")
 	public @ResponseBody WebResult<Object> getValidateCode(
 			HttpServletRequest request,

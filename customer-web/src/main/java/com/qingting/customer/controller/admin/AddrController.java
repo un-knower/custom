@@ -14,6 +14,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +24,7 @@ import com.qingting.customer.baseserver.ProvinceService;
 import com.qingting.customer.common.pojo.hbasedo.Area;
 import com.qingting.customer.common.pojo.hbasedo.City;
 import com.qingting.customer.common.pojo.hbasedo.Province;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.util.StringUtils;
@@ -45,22 +47,22 @@ public class AddrController {
 	AreaService areaService;
 	
 	@ApiOperation("地址管理-页面跳转省页")
-	@RequestMapping(value="/province",method = RequestMethod.GET)
+	@RequestMapping(value="/province",method = RequestMethod.GET,produces = "text/html")
 	public String province(){
 		return "/admin/addr/province";
 	}
 	@ApiOperation("地址管理-页面跳转市页")
-	@RequestMapping(value="/city",method = RequestMethod.GET)
+	@RequestMapping(value="/city",method = RequestMethod.GET,produces = "text/html")
 	public String city(){
 		return "/admin/addr/city";
 	}
 	@ApiOperation("地址管理-页面跳转区页")
-	@RequestMapping(value="/area",method = RequestMethod.GET)
+	@RequestMapping(value="/area",method = RequestMethod.GET,produces = "text/html")
 	public String area(){
 		return "/admin/addr/area";
 	}
 	@ApiOperation("按文本文件插入省市区")
-	@RequestMapping(value = "/insertBytxt", method = RequestMethod.POST)
+	@RequestMapping(value = "/insertBytxt", method = RequestMethod.POST,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> insertBytxt(MultipartFile file){
 		InputStream is=null;//字节流
 		InputStreamReader isr=null;//将字节转换到字符的输入流
@@ -209,53 +211,50 @@ public class AddrController {
 		return result;
 	}
 	@ApiOperation("查询所有省")
-	@RequestMapping(value = "/listProvince", method = RequestMethod.GET)
-	public @ResponseBody WebResult<List<Province>> listProvince(
-			@ApiParam(value = "ID") Integer id,
-			@ApiParam(value = "编码") String code,
-			@ApiParam(value = "开始页码", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
-			@ApiParam(value = "显示条数", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
+	@RequestMapping(value = "/listProvince", method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Pagination<Province>> listProvince(
+			@ApiParam(value = "省编码") @RequestParam String code,
+			@ApiParam(value = "开始页码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
+			@ApiParam(value = "显示条数", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
 			){
-		WebResult<List<Province>> result=new WebResult<List<Province>>(ResultCode.SUCCESS);
-		if(id==null || id==0)
-			id=null;
+		WebResult<Pagination<Province>> result=new WebResult<Pagination<Province>>(ResultCode.SUCCESS);
 		if(StringUtils.isBlank(code))
 			code=null;
-		result.setData(provinceService.listProvince(code));
+		result.setData(provinceService.listProvince(code,pageNo,pageSize));
 		result.setMessage("成功");
 		return result;
 	}
 	@ApiOperation("查询所有市")
-	@RequestMapping(value = "/listCity", method = RequestMethod.GET)
-	public @ResponseBody WebResult<List<City>> listCity(
-			@ApiParam(value = "ID") Integer id,
-			@ApiParam(value = "编码") String code,
-			@ApiParam(value = "开始页码", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
-			@ApiParam(value = "显示条数", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
+	@RequestMapping(value = "/listCity", method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Pagination<City>> listCity(
+			@ApiParam(value = "省编码") @RequestParam String proCode,
+			@ApiParam(value = "市编码") @RequestParam String code,
+			@ApiParam(value = "开始页码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
+			@ApiParam(value = "显示条数", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
 			){
-		WebResult<List<City>> result=new WebResult<List<City>>(ResultCode.SUCCESS);
-		if(id==null || id==0)
-			id=null;
+		WebResult<Pagination<City>> result=new WebResult<Pagination<City>>(ResultCode.SUCCESS);
+		if(StringUtils.isBlank(proCode))
+			proCode=null;
 		if(StringUtils.isBlank(code))
 			code=null;
-		result.setData(cityService.listCity(code));
+		result.setData(cityService.listCity(proCode,code,pageNo,pageSize));
 		result.setMessage("成功");
 		return result;
 	}
 	@ApiOperation("查询所有区")
-	@RequestMapping(value = "/listArea", method = RequestMethod.GET)
-	public @ResponseBody WebResult<List<Area>> listArea(
-			@ApiParam(value = "ID") Integer id,
-			@ApiParam(value = "编码") String code,
-			@ApiParam(value = "开始页码", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
-			@ApiParam(value = "显示条数", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
+	@RequestMapping(value = "/listArea", method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Pagination<Area>> listArea(
+			@ApiParam(value = "市编码") @RequestParam String cityCode,
+			@ApiParam(value = "区编码") @RequestParam String code,
+			@ApiParam(value = "开始页码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
+			@ApiParam(value = "显示条数", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
 			){
-		WebResult<List<Area>> result=new WebResult<List<Area>>(ResultCode.SUCCESS);
-		if(id==null || id==0)
-			id=null;
+		WebResult<Pagination<Area>> result=new WebResult< Pagination<Area>>(ResultCode.SUCCESS);
+		if(StringUtils.isBlank(cityCode))
+			cityCode=null;
 		if(StringUtils.isBlank(code))
 			code=null;
-		result.setData(areaService.listArea(code));
+		result.setData(areaService.listArea(cityCode,code,pageNo,pageSize));
 		result.setMessage("成功");
 		return result;
 	}

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qingting.customer.Service;
 import com.qingting.customer.common.pojo.hbasedo.Area;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 public interface AreaService extends Service<Area, Integer> {
 	/**
@@ -20,9 +21,12 @@ public interface AreaService extends Service<Area, Integer> {
 	 * @Title: listArea
 	 * @Description: 查询区信息
 	 * @param cityCode
+	 * @param code
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<Area>
+	 * @return Pagination<Area>
 	 * @throws
 	 */
-	List<Area> listArea(String cityCode);
+	Pagination<Area> listArea(String cityCode,String code,Integer pageNo,Integer pageSize);
 }

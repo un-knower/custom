@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.MonitorService;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.MonitorDAO;
 
 @Service(value="monitorService")
@@ -48,8 +49,7 @@ public class MonitorServiceImpl implements MonitorService{
 	}
 
 	@Override
-	public List<Monitor> listMonitor() {
-		// TODO Auto-generated method stub
-		return null;
+	public Pagination<Monitor> listMonitor(String equipCode,Integer pageNo,Integer pageSize){
+		return monitorDAO.listMonitor(equipCode,pageNo, pageSize);
 	}
 }

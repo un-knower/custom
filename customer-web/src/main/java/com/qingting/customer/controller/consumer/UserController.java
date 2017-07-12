@@ -29,7 +29,7 @@ public class UserController {
 	@Resource
 	UserService userService;
 	@ApiOperation("页面跳转-我的页面")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,consumes="text/html")
 	public String execute(){
 		return "/consumer/user";
 	}
@@ -45,7 +45,7 @@ public class UserController {
 		return result;
 	}*/
 	@ApiOperation("获取当前登陆用户的信息")
-	@RequestMapping(value="/get",method = RequestMethod.GET)
+	@RequestMapping(value="/get",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<MyDTO> getUserMsg(HttpServletRequest request){
 		/*SessionUser sessionUser = SessionUtils.getSessionUser(request);
 		String account = sessionUser.getAccount();

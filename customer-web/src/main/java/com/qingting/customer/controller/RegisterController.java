@@ -35,12 +35,12 @@ public class RegisterController {
 	MessageService messageService;
 	
 	@ApiOperation("页面跳转-注册页面")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,produces="text/html")
 	public String execute(){
 		return "/register";
 	}
 	@ApiOperation("注册用户")
-	@RequestMapping(value="/submit",method = RequestMethod.POST)
+	@RequestMapping(value="/submit",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
 	//@ApiImplicitParam(paramType="query", name = "account", value = "手机号", required = true, dataType = "String")
 	//@ApiImplicitParam(paramType="query", name = "password", value = "密码", required = true, dataType = "String")
 	//@ApiImplicitParam(paramType="query", name = "validateCode", value = "验证码", required = true, dataType = "String")
@@ -60,7 +60,7 @@ public class RegisterController {
 		if(validateCode.equals(saveValidateCode)){
 			result=RegisterUtils.findByAccount(mobile);
 			if(result.getCode()==ResultCode.FAILURE){//单点服务端用户不存在
-				if(userService.getUserByMobile(mobile)==null){//本地用户不存在
+				if(userService.getUserByMobileAndId(null, mobile)==null){//本地用户不存在
 					System.out.println("准备开始存用户...");
 					result = RegisterUtils.register(mobile, password);//单点服务端注册用户
 					System.out.println("单点注册结果result："+result);
@@ -85,7 +85,7 @@ public class RegisterController {
 		
 	}
 	@ApiOperation("验证账号是否存在")
-	@RequestMapping(value="/validateAccount",method = RequestMethod.POST)
+	@RequestMapping(value="/validateAccount",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	@ApiImplicitParam(paramType="query", name = "mobile", value = "手机号", required = true, dataType = "String")
 	public @ResponseBody WebResult<Object> validateAccount(
 			@ValidateParam({ Validator.NOT_BLANK }) String mobile
@@ -93,7 +93,7 @@ public class RegisterController {
 		System.out.println("account:"+mobile);
 		WebResult<Object> result=RegisterUtils.findByAccount(mobile);
 		System.out.println("result:"+result);
-		User user=userService.getUserByMobile(mobile);
+		User user=userService.getUserByMobileAndId(null, mobile);
 		System.out.println("user:"+user);
 		if(user!=null ||result.getCode()==ResultCode.SUCCESS){
 			result.setMessage("用户已存在");

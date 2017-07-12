@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.ProvinceService;
 import com.qingting.customer.common.pojo.hbasedo.Province;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.ProvinceDAO;
 @Service("provinceService")
 public class ProvinceServiceImpl implements ProvinceService {
@@ -46,8 +47,8 @@ public class ProvinceServiceImpl implements ProvinceService {
 	}
 
 	@Override
-	public List<Province> listProvince(String code) {
-		return provinceDAO.listProvince(code);
+	public Pagination<Province> listProvince(String code,Integer pageNo,Integer pageSize) {
+		return provinceDAO.listProvince(code,pageNo,pageSize);
 	}
 
 }

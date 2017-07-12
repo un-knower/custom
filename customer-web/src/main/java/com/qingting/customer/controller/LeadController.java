@@ -18,7 +18,7 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/lead")
 public class LeadController {
 	@ApiOperation("页面跳转-引导页")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,produces="text/html")
 	public String execute(HttpServletRequest request, Model model) {
 		System.out.println("进入引导页~~");
 		SessionPermission sessionPermission = SessionUtils.getSessionPermission(request);

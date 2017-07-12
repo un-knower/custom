@@ -20,12 +20,12 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/consumer/home")
 public class HomeController {
 	@ApiOperation("页面跳转-用户主页")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,produces="text/html")
 	public String execute(){
 		return "/consumer/home";
 	}
 	@ApiOperation("查询置顶设备监测数据")
-	@RequestMapping(value="/listStickMonitor",method = RequestMethod.GET)
+	@RequestMapping(value="/listStickMonitor",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<HomeMonitorDTO> listStickMonitor(
 			HttpServletRequest request
 			){

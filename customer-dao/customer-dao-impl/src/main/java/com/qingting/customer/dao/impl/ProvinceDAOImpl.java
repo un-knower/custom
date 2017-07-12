@@ -7,9 +7,14 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.PutRequest;
+import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
+import com.alipay.simplehbase.util.FilterUtils;
+import com.qingting.customer.common.pojo.common.StringUtils;
+import com.qingting.customer.common.pojo.hbasedo.Area;
 import com.qingting.customer.common.pojo.hbasedo.Province;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.ProvinceDAO;
 import com.qingting.customer.dao.util.Common;
 import com.qingting.customer.dao.util.SHCUtil;
@@ -72,17 +77,31 @@ public class ProvinceDAOImpl implements ProvinceDAO {
 	}
 
 	@Override
-	public List<Province> listProvince(String code) {
+	public Pagination<Province> listProvince(String code,Integer pageNo,Integer pageSize) {
+		QueryExtInfo queryExtInfo = new QueryExtInfo();
+		queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
+		Pagination<Province> page=new Pagination<Province>();
 		List<Province> list=null;
-		if(code==null||code.equals(""))
+		System.out.println("省代码:"+(code!=null?code:null)+".length:"+(code!=null?code.length():null)+".");
+		if(StringUtils.isBlank(code)){//省代码空（查所有）
 			list=setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(Common.MINCITYCODE), RowKeyUtil.getRowKey(Common.MAXCITYCODE), Province.class)
+				tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(Common.MINCITYCODE), RowKeyUtil.getRowKey(Common.MAXCITYCODE), Province.class,queryExtInfo)
 				);
-		else
+			page.setRowCount(tClient.count(RowKeyUtil.getRowKey(Common.MINCITYCODE), RowKeyUtil.getRowKey(Common.MAXCITYCODE), null));
+		}else{ //不为空（查对应的省）
 			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(code), RowKeyUtil.getEndRowKeyOfPrefix(RowKeyUtil.getRowKey(code)), Province.class)
+					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(code), RowKeyUtil.lastByteOfRowKeyPlusOne(RowKeyUtil.getRowKey(code)), Province.class,FilterUtils.getContainFilter(code),queryExtInfo)
 					);
-		return list;
+			page.setRowCount(tClient.count(RowKeyUtil.getRowKey(code), RowKeyUtil.lastByteOfRowKeyPlusOne(RowKeyUtil.getRowKey(code)), FilterUtils.getContainFilter(code)));
+		}
+		if(list!=null){
+			page.setList(list);
+			page.setPageNo(pageNo);
+			page.setPageSize(pageSize);
+			return page;
+		}else{
+			return null;
+		}
 	}
 
 }

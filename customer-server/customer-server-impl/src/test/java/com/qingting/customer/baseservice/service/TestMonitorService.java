@@ -3,6 +3,7 @@ package com.qingting.customer.baseservice.service;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import javax.annotation.Resource;
 
@@ -18,32 +19,38 @@ import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.qingting.customer.common.pojo.util.DateUtil;
 
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations="classpath*:applicationContext.xml")
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations="classpath*:applicationContext.xml")
 public class TestMonitorService {
 	private static final Logger logger = LoggerFactory.getLogger(TestMonitorService.class);
-	@Resource
-	MonitorService monitorService;
+	//@Resource
+	//MonitorService monitorService;
+	 public static byte[] plusOne(byte[] bytes){
+    	int temp=0;
+    	for(int i=bytes.length-1;i>-1;i--){
+    		temp=(int)(bytes[i]&0xFF)+1;
+    		if(temp<256){
+    			bytes[i]=(byte)temp;
+    			break;
+    		}else{
+    			bytes[i]=0;
+    		}
+    	}
+    	return bytes;
+    }
 	@Test
 	public void testListMonitor(){
-		//List<Monitor> listMonitor = monitorService.listMonitorByStartAndEndOfCalendar(1,DateUtil.getDate(2017,4,7,0,0,0,0), DateUtil.getDate(2017,4,27,9,42,56,0));
-
-		/*logger.debug("测试打印startRowKey:");
-		for (byte b : startRowKey.toBytes()) {
-			System.out.print(b + " ");
+		byte[] bytes=new byte[]{0x01,(byte)0xFF,(byte)0xFF};
+		byte[] plusOne = plusOne(bytes);
+		System.out.println("加1结果:");
+		for (byte b : plusOne) {
+			System.out.print((b&0xFF)+" ");
 		}
-		logger.debug("\n测试打印endRowKey");
-		for (byte b : endRowKey.toBytes()) {
-			System.out.print(b + " ");
-		}*/
-		/*logger.debug("\n测试打印result:");
-		for (Monitor m : listMonitor) {
-			System.out.println(m + " ");
-		}*/
-		
-		//monitorService.listMonitor(startRowKey, endRowKey);
 	}
-	
+	@Test
+	public void testCoprocess(){
+		
+	}
 	@Test
 	public void testInsertMonitor1() {
 		Monitor monitor = new Monitor();
@@ -56,7 +63,7 @@ public class TestMonitorService {
 		monitor.setTemp((float) 1.5);
 		monitor.setW((float) 1.6);*/
 		
-		monitorService.insertMonitor(monitor);
+		//monitorService.insertMonitor(monitor);
 
 		/*Calendar startCal = DateUtil.setDate(2017, 4, 7, 9, 42, 55, 790);
 		System.out.println(convertTime(startCal));

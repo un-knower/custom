@@ -7,9 +7,14 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.PutRequest;
+import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
+import com.alipay.simplehbase.util.FilterUtils;
+import com.qingting.customer.common.pojo.common.StringUtils;
+import com.qingting.customer.common.pojo.hbasedo.Area;
 import com.qingting.customer.common.pojo.hbasedo.City;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.CityDAO;
 import com.qingting.customer.dao.util.Common;
 import com.qingting.customer.dao.util.SHCUtil;
@@ -34,8 +39,8 @@ public class CityDAOImpl implements CityDAO {
 		for (SimpleHbaseDOWithKeyResult<City> result : listHbase) {
 			City city = result.getT();
 			byte[] rowkey=result.getRowKey().toBytes();
-			city.setProvinceCode(new String(rowkey,0,6));
-			city.setCode(new String(rowkey,6,6));
+			city.setProvinceCode(new String(rowkey,0,6));//省编码
+			city.setCode(new String(rowkey,6,6));//自身编号
 			list.add(city);
 		}
 		return list;
@@ -75,17 +80,42 @@ public class CityDAOImpl implements CityDAO {
 	}
 
 	@Override
-	public List<City> listCity(String proCode) {
+	public Pagination<City> listCity(String proCode,String code,Integer pageNo,Integer pageSize){
+		QueryExtInfo queryExtInfo = new QueryExtInfo();
+		queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
+		Pagination<City> page=new Pagination<City>();
 		List<City> list=null;
-		if(proCode==null || proCode.equals(""))
+		System.out.println("省代码:"+(proCode!=null?proCode:null)+".length:"+(proCode!=null?proCode.length():null)+".");
+		System.out.println("市代码:"+(code!=null?code:null)+".length:"+(code!=null?code.length():null)+".");
+		if( StringUtils.isBlank(proCode) && StringUtils.isBlank(code)){//都为空
 			list=setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getStringStringMinRowKey(6,6), RowKeyUtil.getStringStringMaxRowKey(6,6), City.class)
+				tClient.findObjectAndKeyList(RowKeyUtil.getStringStringMinRowKey(6,6), RowKeyUtil.getStringStringMaxRowKey(6,6), City.class,queryExtInfo)
 				);
-		else
+			page.setRowCount(tClient.count(RowKeyUtil.getStringStringMinRowKey(6,6), RowKeyUtil.getStringStringMaxRowKey(6,6), null));
+		}else if(!StringUtils.isBlank(proCode) && StringUtils.isBlank(code)){//省不为空，自身代码空
 			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(proCode,Common.MINCITYCODE), RowKeyUtil.getRowKey(proCode,Common.MAXCITYCODE), City.class)
+					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(proCode,Common.MINCITYCODE), RowKeyUtil.getRowKey(proCode,Common.MAXCITYCODE), City.class,FilterUtils.getContainFilter(proCode),queryExtInfo)
 					);
-		return list;
+			page.setRowCount(tClient.count(RowKeyUtil.getRowKey(proCode,Common.MINCITYCODE), RowKeyUtil.getRowKey(proCode,Common.MAXCITYCODE),FilterUtils.getContainFilter(proCode)));
+		}else if(StringUtils.isBlank(proCode) && !StringUtils.isBlank(code)){//省代码空，自身代码不为空
+			list=setContentOfRowKey(
+					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(Common.MINCITYCODE,code), RowKeyUtil.getRowKey(Common.MAXCITYCODE,code), City.class,FilterUtils.getContainFilter(code),queryExtInfo)
+					);
+			page.setRowCount(tClient.count(RowKeyUtil.getRowKey(Common.MINCITYCODE,code), RowKeyUtil.getRowKey(Common.MAXCITYCODE,code),FilterUtils.getContainFilter(code)));
+		}else{//都不为空
+			list=setContentOfRowKey(
+					tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(proCode,code), RowKeyUtil.lastByteOfRowKeyPlusOne(RowKeyUtil.getRowKey(proCode,code)), City.class,queryExtInfo)
+					);
+			page.setRowCount(tClient.count(RowKeyUtil.getRowKey(proCode,code), RowKeyUtil.lastByteOfRowKeyPlusOne(RowKeyUtil.getRowKey(proCode,code)),null));
+		}
+		if(list!=null){
+			page.setList(list);
+			page.setPageNo(pageNo);
+			page.setPageSize(pageSize);
+			return page;
+		}else{
+			return null;
+		}
 	}
-
+	
 }

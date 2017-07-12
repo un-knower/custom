@@ -8,6 +8,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.hbase.client.Connection;
 import org.apache.hadoop.hbase.client.Delete;
 import org.apache.hadoop.hbase.client.Get;
 import org.apache.hadoop.hbase.client.Put;
@@ -15,6 +17,8 @@ import org.apache.hadoop.hbase.client.Result;
 import org.apache.hadoop.hbase.client.ResultScanner;
 import org.apache.hadoop.hbase.client.Scan;
 import org.apache.hadoop.hbase.client.Table;
+import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
+import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
 import org.apache.hadoop.hbase.filter.Filter;
 
 import com.alipay.simplehbase.antlr.auto.StatementsParser.Constant2Context;
@@ -33,10 +37,12 @@ import com.alipay.simplehbase.config.HBaseColumnSchema;
 import com.alipay.simplehbase.core.Nullable;
 import com.alipay.simplehbase.exception.SimpleHBaseException;
 import com.alipay.simplehbase.hql.HBaseQuery;
+import com.alipay.simplehbase.util.ConnectionUtil;
 import com.alipay.simplehbase.util.StringUtil;
 import com.alipay.simplehbase.util.Util;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+
 
 /**
  * SimpleHbaseClient default implementation.
@@ -210,7 +216,17 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 		return findObjectAndKeyList_internal(startRowKey, endRowKey, type,
 				filter, queryExtInfo);
 	}
-
+	/**
+	 * author: zlf
+	 * date: 2017-07-11
+	 */
+	@Override
+	public <T> List<SimpleHbaseDOWithKeyResult<T>> findObjectAndKeyList(
+            RowKey startRowKey, RowKey endRowKey, Class<? extends T> type,
+            Filter filter,QueryExtInfo queryExtInfo){
+		return findObjectAndKeyList_internal(startRowKey, endRowKey, type,
+				filter, queryExtInfo);
+	}
 	private <T> List<SimpleHbaseDOWithKeyResult<T>> findObjectAndKeyList_internal(
 			RowKey startRowKey, RowKey endRowKey, Class<? extends T> type,
 			@Nullable Filter filter, @Nullable QueryExtInfo queryExtInfo) {
@@ -1249,6 +1265,22 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 			}
 		}
 
+	}
+
+	@Override
+	public long count(RowKey startRowKey, RowKey endRowKey,@Nullable Filter filter) throws SimpleHBaseException {
+		try {
+            Scan scan = constructScan(startRowKey, endRowKey, filter, null);
+
+            LongColumnInterpreter columnInterpreter = new LongColumnInterpreter();
+            AggregationClient aggregationClient = aggregationClient();
+            
+            // No need to close HTable,the AggregationClient close it.
+            return aggregationClient.rowCount(table().getName(),
+                            columnInterpreter, scan);
+        } catch (Throwable e) {
+            throw new SimpleHBaseException(e);
+        }
 	}
 
 }

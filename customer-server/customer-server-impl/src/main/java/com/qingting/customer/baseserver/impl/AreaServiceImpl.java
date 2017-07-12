@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.AreaService;
 import com.qingting.customer.common.pojo.hbasedo.Area;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.AreaDAO;
 import com.qingting.customer.dao.ProvinceDAO;
 @Service("areaService")
@@ -45,8 +46,8 @@ public class AreaServiceImpl implements AreaService {
 	}
 
 	@Override
-	public List<Area> listArea(String cityCode) {
-		return areaDAO.listArea(cityCode);
+	public Pagination<Area> listArea(String cityCode,String code,Integer pageNo,Integer pageSize) {
+		return areaDAO.listArea(cityCode,code,pageNo,pageSize);
 	}
 
 }

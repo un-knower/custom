@@ -19,7 +19,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/logout")
 public class LogoutController {
 	@ApiOperation("登出")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,produces="text/html")
 	public String logout(HttpServletRequest request,
 			@ApiParam(value = "你是客户端还是后台？例:只有传参(admin)返回后台登陆页，不传参或其他参数返回客户端登陆页", required = false) @RequestParam(value="type", required=false) String type
 			) {

@@ -26,20 +26,20 @@ public class LoginController {
 	UserService userService;
 	
 	@ApiOperation("页面跳转-客户端登陆页,例外:此处跳转顶层目录login.jsp页")
-	@RequestMapping(value="/consumer",method = RequestMethod.GET)
+	@RequestMapping(value="/consumer",method = RequestMethod.GET,produces="text/html")
 	public String consumerRedirect(){
 		System.out.println(this.getClass()+"客户端自定义登陆页面！login.jsp");
 		return "/login";
 	}
 	@ApiOperation("页面跳转-后台登陆页,例外:此处跳转顶层目录admin.jsp页")
-	@RequestMapping(value="/admin",method = RequestMethod.GET)
+	@RequestMapping(value="/admin",method = RequestMethod.GET,produces="text/html")
 	public String adminRedirect(){
 		System.out.println(this.getClass()+"客户端自定义登陆页面！login.jsp");
 		System.out.println("userService"+userService);
 		return "/admin";
 	}
-	@ApiOperation("客户端登陆提交-此处跳转顶层目录lead.jsp")
-	@RequestMapping(value="/consumer/login",method = RequestMethod.POST)
+	@ApiOperation(value="客户端登陆提交-此处跳转顶层目录lead.jsp")
+	@RequestMapping(value="/consumer/login",method = RequestMethod.POST,produces="text/html")
 	public String consumerLogin(HttpServletRequest request,
 			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE })String mobile,
 			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD })String password
@@ -56,8 +56,8 @@ public class LoginController {
 	    model.addAttribute("appCode", Config.getSsoAppCode());
 	    return "redirect:" + ssoLoginUrl; */
 	}
-	@ApiOperation("后台登陆提交-此处跳转/admin/admin.jsp")
-	@RequestMapping(value="/admin/login",method = RequestMethod.POST)
+	@ApiOperation(value="后台登陆提交-此处跳转/admin/admin.jsp")
+	@RequestMapping(value="/admin/login",method = RequestMethod.POST,produces="text/html")
 	public String adminLogin(HttpServletRequest request,
 			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE })String mobile,
 			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD })String password

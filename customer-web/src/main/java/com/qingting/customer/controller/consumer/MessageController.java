@@ -28,8 +28,8 @@ public class MessageController {
 	static boolean m2Flag=false;
 	static boolean m3Flag=true;
 	static boolean m4Flag=false;
-	@ApiOperation(value="标记已读消息",produces="application/json")
-	@RequestMapping(value="/setRead",method = RequestMethod.GET)
+	@ApiOperation(value="标记已读消息")
+	@RequestMapping(value="/setRead",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> setRead(
 			@ApiParam(value = "消息ID", required = true)Integer id
 			){
@@ -47,7 +47,7 @@ public class MessageController {
 	}
 	
 	@ApiOperation("查询所有消息")
-	@RequestMapping(value="/list",method = RequestMethod.GET)
+	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<MessageDTO>> list(){
 		WebResult<List<MessageDTO>> result=new WebResult<List<MessageDTO>>(ResultCode.SUCCESS);
 		List<MessageDTO> list=new ArrayList<MessageDTO>();

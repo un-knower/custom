@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.qingting.customer.Service;
 import com.qingting.customer.common.pojo.hbasedo.City;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 public interface CityService extends Service<City, Integer> {
 	/**
@@ -20,9 +21,12 @@ public interface CityService extends Service<City, Integer> {
 	 * @Title: listCity
 	 * @Description: 查询市信息
 	 * @param proCode
+	 * @param code
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<City>
+	 * @return Pagination<City>
 	 * @throws
 	 */
-	List<City> listCity(String proCode);
+	Pagination<City> listCity(String proCode,String code,Integer pageNo,Integer pageSize);
 }

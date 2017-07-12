@@ -23,32 +23,8 @@
 					<div class="widget-body">
 						<div class="widget-main">
 							<form id="_form" class="form-inline">
-								<label>
-									<label class="control-label" for="form-field-1"> 省： </label>
-									<select id="_pro" name="id">
-										<option value="">--请选择--</option>
-									</select> 
-								</label>
-								<!-- <label>
-									<label class="control-label" for="form-field-1"> 市： </label>
-									<select id="_city" name="city">
-										<option value="">--请选择--</option>
-										<c:forEach var="item" items="${appList}">
-											<option value="${item.id}">${item.name}</option>
-										</c:forEach>
-									</select> 
-								</label>
-								<label>
-									<label class="control-label" for="form-field-1"> 区： </label>
-									<select id="_area" name="area">
-										<option value="">--请选择--</option>
-										<c:forEach var="item" items="${appList}">
-											<option value="${item.id}">${item.name}</option>
-										</c:forEach>
-									</select> 
-								</label>-->
 								<label >
-									<label class="control-label" for="form-field-1"> 编号： </label>
+									<label class="control-label" for="form-field-1"> 省编号： </label>
 									<input name="code" type="text" class="form-data input-medium search-data">
 								</label> 
 							</form>
@@ -210,9 +186,9 @@
 			}*/
 			
 			//搜索
-			$("#_pro").change(function(){
+			/* $("#_pro").change(function(){
 				$table.search();
-			});
+			}); */
 			$(".search-data").keyup(function () { 
 				$table.search();
 			});
@@ -223,11 +199,11 @@
 			});
 			//初始化省下拉选择框
 			//$("#_pro").empty();
-			$.getJSON("${_path}/admin/addr/listProvince?pageNo=1&pageSize=20",function(d) {
+			/* $.getJSON("${_path}/admin/addr/listProvince?pageNo=1&pageSize=20",function(d) {
  				$.each(d.data,function(index,element){
  					$("#_pro").append("<option value='"+element.id+"'>"+element.name+"</option>");
  				});
-			});
+			}); */
 			
 			try {
 				Dropzone.autoDiscover = false;

@@ -9,6 +9,10 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.hadoop.hbase.util.Bytes;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
+import io.swagger.annotations.ApiModelProperty;
+
 
 public class Monitor implements Serializable{
 
@@ -83,14 +87,17 @@ public class Monitor implements Serializable{
 	 */
 	private String equipCode;
 	/**
+	 * 采集时间
+	 */
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
+	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
+	private Calendar collectTime;
+	/**
 	 * 创建时间
 	 */
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
+	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
-	/**
-	 * 时间DTO
-	 */
-	private String time;
-	
 
 	public String getRowKey() {
 		return rowKey;
@@ -219,14 +226,13 @@ public class Monitor implements Serializable{
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	
 
-	public String getTime() {
-		return time;
+	public Calendar getCollectTime() {
+		return collectTime;
 	}
 
-	public void setTime(String time) {
-		this.time = time;
+	public void setCollectTime(Calendar collectTime) {
+		this.collectTime = collectTime;
 	}
 
 	@Override

@@ -26,12 +26,12 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/forget")
 public class ForgetController {
 	@ApiOperation("页面跳转-忘记密码页面")
-	@RequestMapping(method = RequestMethod.GET)
+	@RequestMapping(method = RequestMethod.GET,produces="text/html")
 	public String execute(){
 		return "/forget";
 	}
 	@ApiOperation("修改密码")
-	@RequestMapping(value="/update",method = RequestMethod.POST)
+	@RequestMapping(value="/update",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<Object> updatePassword(
 			HttpServletRequest request,
 			HttpServletResponse response,

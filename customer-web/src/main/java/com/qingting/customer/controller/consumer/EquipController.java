@@ -44,7 +44,7 @@ public class EquipController {
 	EquipService equipService;
 	
 	@ApiOperation("查询所有设备")
-	@RequestMapping(value="/list",method = RequestMethod.GET)
+	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<EquipDTO>> listEquip(
 			HttpServletRequest request,
 			@ApiParam(value = "设备类型,mine(我的)或attent(关注的)", required = true) @RequestParam String type,
@@ -130,7 +130,7 @@ public class EquipController {
 		return result;
 	}
 	@ApiOperation("设置设备是否公开")
-	@RequestMapping(value="/setOpen",method = RequestMethod.GET)
+	@RequestMapping(value="/setOpen",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> setOpen(
 			HttpServletRequest request,
 			@ApiParam(value = "设备编号", required = true) @RequestParam String equipCode,
@@ -152,7 +152,7 @@ public class EquipController {
 		return result;
 	}
 	@ApiOperation("设置设备置顶")
-	@RequestMapping(value="/setStick",method = RequestMethod.GET)
+	@RequestMapping(value="/setStick",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> setStick(
 			HttpServletRequest request,
 			@ApiParam(value = "设备类型,mine(我的)或attent(关注的)", required = true) @RequestParam String type,
@@ -181,7 +181,7 @@ public class EquipController {
 		return result;
 	}
 	@ApiOperation("删除关注")
-	@RequestMapping(value="/deleteAttent",method = RequestMethod.GET)
+	@RequestMapping(value="/deleteAttent",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> deleteAttent(
 			HttpServletRequest request,
 			@ApiParam(value = "设备编号", required = true) @RequestParam String equipCode
@@ -197,7 +197,7 @@ public class EquipController {
 		return result;
 	}
 	@ApiOperation("关注处理")
-	@RequestMapping(value="/attentHandle",method = RequestMethod.GET)
+	@RequestMapping(value="/attentHandle",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> attentHandle(
 			HttpServletRequest request,
 			@ApiParam(value = "是否同意", required = true) @RequestParam Boolean agree
@@ -215,7 +215,7 @@ public class EquipController {
 		return result;
 	}
 	@ApiOperation("添加关注")
-	@RequestMapping(value="/addAttent",method = RequestMethod.GET)
+	@RequestMapping(value="/addAttent",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> addAttent(
 			HttpServletRequest request,
 			@ApiParam(value = "设备编号", required = true) @RequestParam String equipCode
@@ -234,7 +234,7 @@ public class EquipController {
 		return result;
 	}
 	@ApiOperation("搜索设备")
-	@RequestMapping(value="/searchEquip",method = RequestMethod.GET)
+	@RequestMapping(value="/searchEquip",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<EquipDTO>> searchEquip(
 			HttpServletRequest request,
 			@ApiParam(value = "设备编号", required = true) @RequestParam String equipCode

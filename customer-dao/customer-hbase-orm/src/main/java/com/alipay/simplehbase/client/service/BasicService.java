@@ -3,11 +3,15 @@ package com.alipay.simplehbase.client.service;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.hadoop.hbase.filter.Filter;
+
 import com.alipay.simplehbase.client.PutRequest;
 import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.core.Nullable;
+import com.alipay.simplehbase.exception.SimpleHBaseException;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+
 
 /**
  * BasicService
@@ -319,4 +323,39 @@ public interface BasicService {
      * @param endRowKey endRowKey.
      * */
     public void deleteList(RowKey startRowKey, RowKey endRowKey);
+    
+    
+    
+    
+    /**
+     * author: zlf
+     * date: 2017-07-11 
+     * Dynamic query to find POJO and row key list with range in
+     * [startRowKey,endRowKey).
+     * 
+     * @param startRowKey startRowKey.
+     * @param endRowKey endRowKey.
+     * @param type POJO type.
+     * @param filter.
+     * @param queryExtInfo queryExtInfo.
+     * 
+     * @return POJO and key list.
+     * */
+    public <T> List<SimpleHbaseDOWithKeyResult<T>> findObjectAndKeyList(
+            RowKey startRowKey, RowKey endRowKey, Class<? extends T> type,
+            Filter filter,QueryExtInfo queryExtInfo);
+    /**
+     * 求行数。求表中指定范围数据的行数。
+     * 
+     * <pre>
+     * 注意:必须在创建表的时指定coprocessor:org.apache.hadoop.hbase.coprocessor.AggregateImplementation
+     * ,否则无法运行
+     * 
+     * @param startRow
+     * @param endRow
+     * @param filter
+     * @return
+     * @throws SimpleHBaseException
+     */
+    public long count(RowKey startRowKey, RowKey endRowKey,Filter filter) throws SimpleHBaseException;
 }

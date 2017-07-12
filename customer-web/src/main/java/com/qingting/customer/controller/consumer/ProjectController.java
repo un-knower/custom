@@ -36,14 +36,14 @@ public class ProjectController {
 	UserService userService;
 	
 	@ApiOperation("获取当前登陆用户的所有项目")
-	@RequestMapping(value="/list",method = RequestMethod.GET)
+	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<Project>> listProjectOfUser(HttpServletRequest request){
 		System.out.println("~~~~~~~~~~~进入listProject~~~~~~~~~~~~");
 		
 		SessionUser sessionUser = SessionUtils.getSessionUser(request);
 		String account = sessionUser.getAccount();
 		System.out.println("account:"+account);
-		User user = userService.getUserByMobile(account);
+		User user = userService.getUserByMobileAndId(null, account);
 		
 		List<Project> list = projectService.listProjectByUserId(user.getId());
 		System.out.println("结果："+list);
@@ -52,7 +52,7 @@ public class ProjectController {
 		return webResult;
 	}
 	@ApiOperation("获取当前登陆用户的某个项目")
-	@RequestMapping(value="/get",method = RequestMethod.GET)
+	@RequestMapping(value="/get",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<Project> getProjectOfUser(HttpServletRequest request,
 			@ApiParam(value = "项目行健", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String rowKey){
 		System.out.println("~~~~~~~~~~~进入getProject~~~~~~~~~~~~");
@@ -60,7 +60,7 @@ public class ProjectController {
 		SessionUser sessionUser = SessionUtils.getSessionUser(request);
 		String account = sessionUser.getAccount();
 		System.out.println("account:"+account);
-		User user = userService.getUserByMobile(account);
+		User user = userService.getUserByMobileAndId(null, account);
 		
 		Project project = projectService.getProjectByRowkey(rowKey);
 		System.out.println("结果："+project);

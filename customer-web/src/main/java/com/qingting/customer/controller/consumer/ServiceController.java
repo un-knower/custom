@@ -52,7 +52,7 @@ public class ServiceController {
 		return his;
 	}
 	@ApiOperation("获取当前用户的所有历史服务记录")
-	@RequestMapping(value="/listHis",method = RequestMethod.GET)
+	@RequestMapping(value="/listHis",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<HisSerSimpleDTO>> listHis(){
 		List<HisSerSimpleDTO> list=new ArrayList<HisSerSimpleDTO>();
 		for(int i=0;i<8;i++){
@@ -97,7 +97,7 @@ public class ServiceController {
 		return his;
 	}
 	@ApiOperation("获取当前用户的某条历史服务记录")
-	@RequestMapping(value="/getHis",method = RequestMethod.GET)
+	@RequestMapping(value="/getHis",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<HisServiceDTO> getHis(
 			@ApiParam(value = "服务编号", required = true) @RequestParam String serCode
 			){
@@ -135,7 +135,7 @@ public class ServiceController {
 		return p;
 	}
 	@ApiOperation("获取当前设备下次服务方案列表")
-	@RequestMapping(value="/listPlan",method = RequestMethod.GET)
+	@RequestMapping(value="/listPlan",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<PlanSimpleDTO>> listPlan(
 			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode
 			){
@@ -178,7 +178,7 @@ public class ServiceController {
 		return p;
 	}
 	@ApiOperation("获取当前设备下次服务方案详细")
-	@RequestMapping(value="/getPlan",method = RequestMethod.GET)
+	@RequestMapping(value="/getPlan",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<PlanDTO> getPlan(
 			@ApiParam(value = "服务编号", required = true) @RequestParam String serCode
 			){

@@ -38,7 +38,7 @@ public class WarnController {
 		return result;
 	}*/
 	@ApiOperation("查询设备的预警类型")
-	@RequestMapping(value="/getWarnType",method = RequestMethod.GET)
+	@RequestMapping(value="/getWarnType",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> getWarnType(
 			@ApiParam(value = "设备ID", required = false) @RequestParam(value="equipId", required=false) String equipId
 			){
@@ -47,7 +47,7 @@ public class WarnController {
 		return result;
 	}
 	@ApiOperation("查询预警消息")
-	@RequestMapping(value="/listWarn",method = RequestMethod.GET)
+	@RequestMapping(value="/listWarn",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<WarnDTO>> listWarn(
 			){
 		List<WarnDTO> list = new ArrayList<WarnDTO>();
@@ -83,7 +83,7 @@ public class WarnController {
 		return result;
 	}
 	@ApiOperation("查询预警消息")
-	@RequestMapping(value="/getWarn",method = RequestMethod.GET)
+	@RequestMapping(value="/getWarn",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<WarnDTO> getWarn(
 			@ApiParam(value = "预警消息ID", required = true) @RequestParam Integer id
 			){

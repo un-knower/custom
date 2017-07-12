@@ -13,6 +13,7 @@ public class User implements Serializable{
 	
 	private static final long serialVersionUID = 6610579266435676798L;
 	
+	private String rowkey;
 	/**
 	 * id
 	 */
@@ -34,37 +35,29 @@ public class User implements Serializable{
 	 */
 	private Integer age;
 	/**
-	 * 省外键
+	 * 省编码
 	 */
-	private Integer provinceId;
+	private Integer provinceCode;
 	/**
-	 * 市外键
+	 * 市编码
 	 */
-	private Integer cityId;
+	private String cityCode;
 	/**
-	 * 区外键
+	 * 区编码
 	 */
-	private Integer areaId;
+	private String areaCode;
 	/**
 	 * 联系地址
 	 */
 	private String address;
 	/**
-	 * 经度
-	 */
-	private Float lng;
-	/**
-	 * 纬度
-	 */
-	private Float lat;
-	/**
 	 * 用户分类id
 	 */
 	private Integer userSortId;
 	/**
-	 * 头像ID
+	 * 头像URL
 	 */
-	private String portrait;
+	private String portraitUrl;
 	/**
 	 * 账号状态
 	 */
@@ -76,6 +69,13 @@ public class User implements Serializable{
 	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
 	
+	
+	public String getRowkey() {
+		return rowkey;
+	}
+	public void setRowkey(String rowkey) {
+		this.rowkey = rowkey;
+	}
 	public Integer getId() {
 		return id;
 	}
@@ -106,23 +106,29 @@ public class User implements Serializable{
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	public Integer getProvinceId() {
-		return provinceId;
+	public Integer getProvinceCode() {
+		return provinceCode;
 	}
-	public void setProvinceId(Integer provinceId) {
-		this.provinceId = provinceId;
+	public void setProvinceCode(Integer provinceCode) {
+		this.provinceCode = provinceCode;
 	}
-	public Integer getCityId() {
-		return cityId;
+	public String getCityCode() {
+		return cityCode;
 	}
-	public void setCityId(Integer cityId) {
-		this.cityId = cityId;
+	public void setCityCode(String cityCode) {
+		this.cityCode = cityCode;
 	}
-	public Integer getAreaId() {
-		return areaId;
+	public String getAreaCode() {
+		return areaCode;
 	}
-	public void setAreaId(Integer areaId) {
-		this.areaId = areaId;
+	public void setAreaCode(String areaCode) {
+		this.areaCode = areaCode;
+	}
+	public String getPortraitUrl() {
+		return portraitUrl;
+	}
+	public void setPortraitUrl(String portraitUrl) {
+		this.portraitUrl = portraitUrl;
 	}
 	public String getAddress() {
 		return address;
@@ -130,29 +136,11 @@ public class User implements Serializable{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Float getLng() {
-		return lng;
-	}
-	public void setLng(Float lng) {
-		this.lng = lng;
-	}
-	public Float getLat() {
-		return lat;
-	}
-	public void setLat(Float lat) {
-		this.lat = lat;
-	}
 	public Integer getUserSortId() {
 		return userSortId;
 	}
 	public void setUserSortId(Integer userSortId) {
 		this.userSortId = userSortId;
-	}
-	public String getPortrait() {
-		return portrait;
-	}
-	public void setPortrait(String portrait) {
-		this.portrait = portrait;
 	}
 	public String getStatus() {
 		return status;
@@ -166,29 +154,12 @@ public class User implements Serializable{
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	/*public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-		byte[] dest=new byte[4];
-		System.arraycopy(rowkey, 0, dest, 0, 4);//前4个字节id
-		this.id=Bytes.toInt(dest);
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", mobile=" + mobile + ", name=" + name + ", sex=" + sex + ", age=" + age
+				+ ", provinceCode=" + provinceCode + ", cityCode=" + cityCode + ", areaCode=" + areaCode + ", address="
+				+ address + ", userSortId=" + userSortId + ", portraitUrl=" + portraitUrl + ", status=" + status
+				+ ", createTime=" + createTime + "]";
 	}
-	public static String getMaxRowKey(int num){
-		byte[] rowkey=new byte[num];
-		for(int i=0;i<num;i++){
-			rowkey[i]=(byte)0xff;
-		}
-		return new String(rowkey);
-	}*/
+	
 }

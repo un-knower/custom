@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.CityService;
 import com.qingting.customer.common.pojo.hbasedo.City;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.CityDAO;
 @Service("cityService")
 public class CityServiceImpl implements CityService {
@@ -42,10 +43,10 @@ public class CityServiceImpl implements CityService {
 	public void insertCityList(List<City> cityList) {
 		cityDAO.insertCityList(cityList);
 	}
-
+	
 	@Override
-	public List<City> listCity(String proCode) {
-		return cityDAO.listCity(proCode);
+	public Pagination<City> listCity(String proCode,String code,Integer pageNo,Integer pageSize){
+		return cityDAO.listCity(proCode,code,pageNo,pageSize);
 	}
 
 }

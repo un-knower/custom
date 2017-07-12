@@ -29,6 +29,7 @@ import com.alipay.simplehbase.client.SimpleHbaseClientImpl;
 import com.alipay.simplehbase.config.HBaseDataSource;
 import com.alipay.simplehbase.config.HBaseTableConfig;
 import com.alipay.simplehbase.util.AdminUtil;
+import com.alipay.simplehbase.util.ConfigUtil;
 import com.alipay.simplehbase.util.StringUtil;
 import com.alipay.simplehbase.util.TableNameUtil;
 
@@ -39,9 +40,23 @@ public class SHCUtil{
     final private static Logger log = LoggerFactory.getLogger(SHCUtil.class);
     
 	public static String classpath=null;
+	static{
+		String system=System.getProperty("os.name");
+		if(system.indexOf("Windows")!=-1){//window系统
+			String str=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+			System.out.println("str="+str);
+			System.out.println("index="+str.indexOf("/"));
+			if(str.indexOf("/")==0){
+				System.out.println("str.substring(1)="+str.substring(1));
+				classpath=str.substring(1);
+			}else{
+				classpath=str;
+			}
+		}else{
+			classpath=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		}
+	}
 
-	public static String HbaseSiteFile;
-	public static String ZkConfigFile;
 
 	/*final public static List<String> xmlFile=
 			new ArrayList<>(Arrays.asList(
@@ -49,36 +64,127 @@ public class SHCUtil{
 					"user","message"
 					));;*/
 	
-	static String[][] project={
+	/*static String[][] project={
 		{"projectFamily"},{}
+	};*/
+	private static final Map<String,Object> project=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"projectFamily"});
+		}
 	};
-	static String[][] equip={
+	/*static String[][] equip={
 		{"equipFamily"},{}
+	};*/
+	private static final Map<String,Object> equip=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"equipFamily"});
+		}
 	};
-	static String[][] monitor={
-		{"monitorFamily"},{ "10|", "20|", "30|", "40|", "50|",    
-			"60|", "70|", "80|", "90|" }
+	/*static String[][] monitor={
+		{"monitorFamily"},
+			new String[]{
+				new String(new byte[]{48,48,48,48,48,48,48,48,48}),
+				new String(new byte[]{49,48,48,48,48,48,48,48,48}), 
+				new String(new byte[]{50,48,48,48,48,48,48,48,48}), 
+				new String(new byte[]{51,48,48,48,48,48,48,48,48}), 
+				new String(new byte[]{52,48,48,48,48,48,48,48,48}),    
+				new String(new byte[]{(byte)53,48,48,48,48,48,48,48,48}), 
+				new String(new byte[]{(byte)54,48,48,48,48,48,48,48,48}), 
+				new String(new byte[]{(byte)55,48,48,48,48,48,48,48,48}), 
+				new String(new byte[]{(byte)56,48,48,48,48,48,48,48,48}) 
+			}
+	};*/
+	private static final Map<String,Object> monitor=new HashMap<String,Object>(){
+	
+		private static final long serialVersionUID = 9112245605102867437L;
+		{
+			put("family",new String[]{"monitorFamily"});
+			put("split",
+				new byte[][]{
+     		   		{25,0,0,0,0,0,0,0,0},
+    				{50,0,0,0,0,0,0,0,0}, 
+    				{75,0,0,0,0,0,0,0,0}, 
+    				{100,0,0,0,0,0,0,0,0}, 
+    				{125,0,0,0,0,0,0,0,0},    
+    				{(byte)150,0,0,0,0,0,0,0,0}, 
+    				{(byte)175,0,0,0,0,0,0,0,0}, 
+    				{(byte)200,0,0,0,0,0,0,0,0}, 
+    				{(byte)225,0,0,0,0,0,0,0,0} 
+     		   	}
+			);
+		}
 	};
-	static String[][] user={
+	/*static String[][] user={
 		{"userFamily"},{}
+	};*/
+	private static final Map<String,Object> user=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"userFamily"});
+		}
 	};
-	static String[][] message={
+	/*static String[][] message={
 		{"messageFamily"},{}
+	};*/
+	private static final Map<String,Object> message=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"messageFamily"});
+		}
 	};
-	static String[][] province={
+	/*static String[][] province={
 		{"provinceFamily"},{}
+	};*/
+	private static final Map<String,Object> province=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"provinceFamily"});
+		}
 	};
-	static String[][] city={
+	/*static String[][] city={
 		{"cityFamily"},{}
+	};*/
+	private static final Map<String,Object> city=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"cityFamily"});
+			put("split",
+				new byte[][]{
+     		   		{49,0,0,0,0,0,0,0,0,0,0,0},
+    				{50,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{51,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{52,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{53,0,0,0,0,0,0,0,0,0,0,0},    
+    				{54,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{55,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{56,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{57,0,0,0,0,0,0,0,0,0,0,0} 
+     		   	}
+			);
+		}
 	};
-	static String[][] area={
+	/*static String[][] area={
 		{"areaFamily"},{}
+	};*/
+	private static final Map<String,Object> area=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"areaFamily"});
+			put("split",
+				new byte[][]{
+     		   		{49,0,0,0,0,0,0,0,0,0,0,0},
+    				{50,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{51,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{52,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{53,0,0,0,0,0,0,0,0,0,0,0},    
+    				{54,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{55,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{56,0,0,0,0,0,0,0,0,0,0,0}, 
+    				{57,0,0,0,0,0,0,0,0,0,0,0} 
+     		   	}
+			);
+		}
 	};
 	/**
 	 * key:表名 
 	 * value:列族+预分区
 	 */
-	private static final Map<String,String[][]> map=new HashMap<String,String[][]>(){
+	private static final Map<String,Map<String,Object>> map=new HashMap<String,Map<String,Object>>(){
 		private static final long serialVersionUID = 9112245605102867437L;
 		{
 			put("project", project);
@@ -110,30 +216,8 @@ public class SHCUtil{
 		simpleHbaseAdminClient.deleteTable(tableName);
 	}
 	static{
-		String system=System.getProperty("os.name");
-		if(system.indexOf("Windows")!=-1){//window系统
-			String str=Thread.currentThread().getContextClassLoader().getResource("").getPath();
-			System.out.println("str="+str);
-			System.out.println("index="+str.indexOf("/"));
-			if(str.indexOf("/")==0){
-				System.out.println("str.substring(1)="+str.substring(1));
-				classpath=str.substring(1);
-			}else{
-				classpath=str;
-			}
-		}else{
-			classpath=Thread.currentThread().getContextClassLoader().getResource("").getPath();
-		}
-		HbaseSiteFile = classpath+"hbase_site";
-		ZkConfigFile = classpath+"zk_conf";
-		HBaseDataSource hbaseDataSource = new HBaseDataSource();
-		List<Resource> hbaseConfigResources = new ArrayList<Resource>();
-		hbaseConfigResources.add(new CachedFileSystemResource(
-				SHCUtil.HbaseSiteFile));
-		hbaseConfigResources.add(new CachedFileSystemResource(
-				SHCUtil.ZkConfigFile));
-		hbaseDataSource.setHbaseConfigResources(hbaseConfigResources);
-		hbaseDataSource.init();
+		
+		HBaseDataSource hbaseDataSource=ConfigUtil.getHbaseDataSource();
 		//获得hbase客户端管理对象，建表用
 		simpleHbaseAdminClient = SimpleHbaseClientFactory.getWrapper(
 				SimpleHbaseAdminClient.class, new SimpleHbaseAdminClientImpl());
@@ -164,7 +248,7 @@ public class SHCUtil{
 					//tableDescriptor.addFamily(new HColumnDescriptor(str+"Family").setMaxVersions(1));
 					//simpleHbaseAdminClient.createTable(tableDescriptor);
 					
-					createTableBySplitKeys(str,map.get(str)[0],map.get(str)[1]);
+					createTableBySplitKeys(str,(String[])map.get(str).get("family"),(byte[][])map.get(str).get("split"));
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
@@ -249,7 +333,7 @@ public class SHCUtil{
     * @param columnFamily 列簇   
     * @return   
     */    
-   public static boolean createTableBySplitKeys(String tableName, String[] columnFamily,String[] keys) {    
+   public static boolean createTableBySplitKeys(String tableName, String[] columnFamily,byte[][] keys) {    
        try {    
            if (StringUtil.isEmptyString(tableName) || columnFamily == null    
                    || columnFamily.length < 0) {    
@@ -264,9 +348,21 @@ public class SHCUtil{
                for (String cf : columnFamily) {    
                    tableDescriptor.addFamily(new HColumnDescriptor(cf));    
                }    
-               if(keys.length!=0){//预分区
-            	   byte[][] splitKeys = getSplitKeys(keys);
-            	   admin.createTable(tableDescriptor,splitKeys);//指定splitkeys    
+               if(keys!=null && keys.length!=0){//预分区
+            	   //byte[][] splitKeys = getSplitKeys(keys);
+            	   /*byte[][] splitKeys=new byte[][]{
+            		   {25,0,0,0,0,0,0,0,0},
+	       				{50,0,0,0,0,0,0,0,0}, 
+	       				{75,0,0,0,0,0,0,0,0}, 
+	       				{100,0,0,0,0,0,0,0,0}, 
+	       				{125,0,0,0,0,0,0,0,0},    
+	       				{(byte)150,0,0,0,0,0,0,0,0}, 
+	       				{(byte)175,0,0,0,0,0,0,0,0}, 
+	       				{(byte)200,0,0,0,0,0,0,0,0}, 
+	       				{(byte)225,0,0,0,0,0,0,0,0} 
+            		   
+            		   };*/
+            	   admin.createTable(tableDescriptor,keys);//指定splitkeys    
                }else{//没有预分区
             	   admin.createTable(tableDescriptor);
                }

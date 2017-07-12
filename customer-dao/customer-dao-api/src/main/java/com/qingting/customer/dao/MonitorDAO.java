@@ -13,6 +13,7 @@ import java.util.Calendar;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 /**
  * 
@@ -92,9 +93,12 @@ public interface MonitorDAO {
 	 * 
 	 * @Title: listMonitor
 	 * @Description: 查询所有监测值
+	 * @param equipCode
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<Monitor>
+	 * @return Pagination<Monitor>
 	 * @throws
 	 */
-	List<Monitor> listMonitor();
+	Pagination<Monitor> listMonitor(String equipCode,Integer pageNo,Integer pageSize);
 }

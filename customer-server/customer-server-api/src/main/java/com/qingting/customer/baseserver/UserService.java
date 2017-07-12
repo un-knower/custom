@@ -3,6 +3,7 @@ package com.qingting.customer.baseserver;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 public interface UserService {
 	/**
@@ -17,48 +18,43 @@ public interface UserService {
 	/**
 	 * 
 	 * @Title: deleteUserByRowKey
-	 * @Description: 删除一个用户通过rowKey
-	 * @param rowKey 
+	 * @Description: 删除一个用户通过rowkey
+	 * @param rowkey 
 	 * @return void
 	 * @throws
 	 */
-	void deleteUserByRowKey(String rowKey);
+	void deleteUserByRowKey(String rowkey);
 	/**
 	 * 
 	 * @Title: updateUserByRowKey
-	 * @Description: 修改一个用户通过rowKey
+	 * @Description: 修改一个用户通过rowkey
 	 * @param user 
 	 * @return void
 	 * @throws
 	 */
 	void updateUserByRowKey(User user);
+	
+	
 	/**
 	 * 
-	 * @Title: getUserByRowKey
-	 * @Description: 查询一个用户通过rowKey
-	 * @param rowKey
-	 * @return 
-	 * @return User
-	 * @throws
-	 */
-	User getUserByRowKey(String rowKey);
-	/**
-	 * 
-	 * @Title: getUserByMobile
-	 * @Description: 查询一个用户通过mobile
+	 * @Title: getUserByMobileAndId
+	 * @Description: 查询用户
+	 * @param id
 	 * @param mobile
 	 * @return 
 	 * @return User
 	 * @throws
 	 */
-	User getUserByMobile(String mobile);
+	User getUserByMobileAndId(Integer id,String mobile);
 	/**
 	 * 
 	 * @Title: listUser
-	 * @Description: 查询所有用户
+	 * @Description: 查询用户
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<User>
+	 * @return Pagination<User>
 	 * @throws
 	 */
-	List<User> listUser();
+	Pagination<User> listUser(Integer pageNo,Integer pageSize);
 }

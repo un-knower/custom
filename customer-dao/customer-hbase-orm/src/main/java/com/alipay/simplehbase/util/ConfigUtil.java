@@ -4,11 +4,16 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.LineNumberReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.springframework.core.io.Resource;
 
+import com.alipay.simplehbase.cache.CachedFileSystemResource;
+import com.alipay.simplehbase.config.HBaseDataSource;
 import com.alipay.simplehbase.core.Nullable;
 
 /**
@@ -81,4 +86,48 @@ public class ConfigUtil {
 
     private ConfigUtil() {
     }
+    
+    /**
+     * 数据源配置文件解析
+     */
+    private static String classpath=null;
+	private static String hbaseSiteFile;
+	private static String zkConfigFile;
+	public static HBaseDataSource hbaseDataSource;
+	
+    static{
+    	String system=System.getProperty("os.name");
+		if(system.indexOf("Windows")!=-1){//window系统
+			String str=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+			System.out.println("str="+str);
+			System.out.println("index="+str.indexOf("/"));
+			if(str.indexOf("/")==0){
+				System.out.println("str.substring(1)="+str.substring(1));
+				classpath=str.substring(1);
+			}else{
+				classpath=str;
+			}
+		}else{
+			classpath=Thread.currentThread().getContextClassLoader().getResource("").getPath();
+		}
+		hbaseSiteFile = classpath+"hbase_site";
+		zkConfigFile = classpath+"zk_conf";
+		hbaseDataSource = new HBaseDataSource();
+		List<Resource> hbaseConfigResources = new ArrayList<Resource>();
+		hbaseConfigResources.add(new CachedFileSystemResource(
+				hbaseSiteFile));
+		hbaseConfigResources.add(new CachedFileSystemResource(
+				zkConfigFile));
+		hbaseDataSource.setHbaseConfigResources(hbaseConfigResources);
+		hbaseDataSource.init();
+    }
+
+	public static HBaseDataSource getHbaseDataSource() {
+		return hbaseDataSource;
+	}
+
+	public static void setHbaseDataSource(HBaseDataSource hbaseDataSource) {
+		ConfigUtil.hbaseDataSource = hbaseDataSource;
+	}
+    
 }

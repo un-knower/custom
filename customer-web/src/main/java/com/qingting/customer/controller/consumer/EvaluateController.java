@@ -25,7 +25,7 @@ import io.swagger.annotations.ApiParam;
 @RequestMapping("/consumer/evaluate")
 public class EvaluateController {
 	@ApiOperation("提交评价")
-	@RequestMapping(value="/set",method = RequestMethod.POST,consumes = "application/json; charset=utf-8")
+	@RequestMapping(value="/set",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<String> setEvaluate(
 			//@ApiParam(value = "等级", required = true) @RequestParam Integer rank,
 			//@ApiParam(value = "标签集合数组", required = true) @RequestParam List<Integer> tags,
@@ -39,7 +39,7 @@ public class EvaluateController {
 		return result;
 	}
 	@ApiOperation("获得评价标签根据等级")
-	@RequestMapping(value="/listTag",method = RequestMethod.GET)
+	@RequestMapping(value="/listTag",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<Tag>> listTag(
 			@ApiParam(value = "等级", required = true) @RequestParam Integer rank
 			){
@@ -124,7 +124,7 @@ public class EvaluateController {
 		return arr;
 	}
 	@ApiOperation("获得评价标签")
-	@RequestMapping(value="/listAllTag",method = RequestMethod.GET)
+	@RequestMapping(value="/listAllTag",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<TagDTO> listAllTag(
 			){
 		WebResult<TagDTO> result=new WebResult<TagDTO>(ResultCode.SUCCESS);

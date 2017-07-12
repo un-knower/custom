@@ -9,10 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qingting.customer.baseserver.UserService;
+import com.qingting.customer.common.pojo.dto.MyDTO;
 import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
@@ -63,14 +66,47 @@ public class UserController {
 	    @ApiImplicitParam(name = "projectName", value = "项目名称", required = true, paramType = "query"),
 	    @ApiImplicitParam(name = "userId", value = "用户ID", required = true, paramType = "query")
 	    })*/
-	public @ResponseBody WebResult<List<User>> list(
+	public @ResponseBody WebResult<Pagination<User>> list(
 			HttpServletRequest request,
-			@ApiParam(value = "开始页码", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
-			@ApiParam(value = "显示条数", required = true) @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
+			@ApiParam(value = "开始页码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
+			@ApiParam(value = "显示条数", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
 			){
-		List<User> data=userService.listUser();
-		WebResult<List<User>> result=new WebResult<List<User>>(ResultCode.SUCCESS);
+		Pagination<User> data = userService.listUser(pageNo,pageSize);
+		WebResult<Pagination<User>> result=new WebResult<Pagination<User>>(ResultCode.SUCCESS);
 		result.setData(data);
+		return result;
+	}
+	@ApiOperation("获取当前登陆用户的信息")
+	@RequestMapping(value="/get",method = RequestMethod.GET)
+	public @ResponseBody WebResult<User> getUserMsg(HttpServletRequest request,
+			@ApiParam(value = "用户ID", required = false) @RequestParam Integer id,
+			@ApiParam(value = "用户电话", required = false) @RequestParam String mobile
+			){
+		/*SessionUser sessionUser = SessionUtils.getSessionUser(request);
+		String account = sessionUser.getAccount();
+		System.out.println("account:"+account);
+		User user = userService.getUserByAccount(account);
+		WebResult<User> result=new WebResult<User>(ResultCode.SUCCESS);
+		result.setData(user);*/
+		/*WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
+		MyDTO myDTO=new MyDTO();
+		myDTO.setPhone("17701879780");
+		myDTO.setAttentEquip(2);
+		myDTO.setMineEquip(2);
+		myDTO.setName("最可爱的人");
+		myDTO.setPath("/resource/images/customer/head/zlf.png");
+		result.setData(myDTO);
+		result.setMessage("获取成功");*/
+		WebResult<User> result=new WebResult<User>(ResultCode.SUCCESS);
+		User user = userService.getUserByMobileAndId(id, mobile);
+		
+		/*WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
+		MyDTO myDTO=new MyDTO();
+		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
+		User user=(User)sessionUserMsg.getProfile();
+		myDTO.setPhone(sessionUserMsg.getMobile());
+		myDTO.setName(user.getName());*/
+		result.setData(user);
 		return result;
 	}
 }

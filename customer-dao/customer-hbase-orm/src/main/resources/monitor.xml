@@ -13,6 +13,7 @@
 		<HBaseColumnSchema qualifier="powerRelay" typeName="boolean"/>
 		<HBaseColumnSchema qualifier="equipCode" typeName="string"/>
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+		<HBaseColumnSchema qualifier="collectTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 		
 	</HBaseTableSchema>
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="monitorFamily">
@@ -28,6 +29,8 @@
 		<field name="powerRelay"/>
 		<field name="equipCode"/>
 		<field name="createTime"/>
+		<field name="collectTime"/>
+		
 	</MappingType>
 </SimpleHbase>   
 

@@ -7,11 +7,11 @@ import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
-import com.alipay.simplehbase.util.SHCUtil;
 import com.qingting.customer.common.pojo.hbasedo.Formula;
 import com.qingting.customer.common.pojo.util.DateUtil;
 import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.FormulaDAO;
+import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
 @Repository("formulaDAO")
