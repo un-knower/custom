@@ -84,15 +84,12 @@ public class UserDAOImpl implements UserDAO {
 		list=setContentOfRowKey(
 				tClient.findObjectAndKeyList(RowKeyUtil.getIntLongMinRowKey(),RowKeyUtil.getIntLongMaxRowKey(), User.class,queryExtInfo)
 				);
+		page.setRowCount(tClient.count(RowKeyUtil.getIntLongMinRowKey(), RowKeyUtil.getIntLongMaxRowKey(), null));
 		
-		if(list!=null){
-			page.setList(list);
-			page.setPageNo(pageNo);
-			page.setPageSize(pageSize);
-			return page;
-		}else{
-			return null;
-		}
+		page.setList(list);
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		return page;
 	}
 	@Override
 	public User getUserByMobileAndId(Integer id,String mobile) {

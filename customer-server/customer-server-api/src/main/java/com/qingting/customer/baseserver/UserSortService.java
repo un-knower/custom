@@ -3,6 +3,7 @@ package com.qingting.customer.baseserver;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.UserSort;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 public interface UserSortService {
 	/**
@@ -17,7 +18,7 @@ public interface UserSortService {
 	/**
 	 * 
 	 * @Title: deleteUserSortByRowKey
-	 * @Description: 删除用户分类通过rowKey
+	 * @Description: 删除用户分类
 	 * @param rowKey 
 	 * @return void
 	 * @throws
@@ -26,7 +27,7 @@ public interface UserSortService {
 	/**
 	 * 
 	 * @Title: updateUserSortByRowKey
-	 * @Description: 修改用户分类通过rowKey
+	 * @Description: 修改用户分类
 	 * @param userSort 
 	 * @return void
 	 * @throws
@@ -35,7 +36,7 @@ public interface UserSortService {
 	/**
 	 * 
 	 * @Title: getUserSortByRowKey
-	 * @Description: 查询用户分类通过rowKey
+	 * @Description: 查询用户分类
 	 * @param rowKey
 	 * @return 
 	 * @return UserSort
@@ -46,9 +47,11 @@ public interface UserSortService {
 	 * 
 	 * @Title: listUserSort
 	 * @Description: 查询所有用户分类
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<UserSort>
+	 * @return Pagination<UserSort>
 	 * @throws
 	 */
-	List<UserSort> listUserSort();
+	Pagination<UserSort> listUserSort(Integer pageNo,Integer pageSize);
 }

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.EquipService;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.EquipDAO;
 
 @Service("equipService")
@@ -31,13 +32,9 @@ public class EquipServiceImpl implements EquipService {
 	}
 
 	@Override
-	public List<Equip> listEquipByProjectId(Integer projectId) {
-		return equipDAO.listEquipByProjectId(projectId);
-	}
-
-	@Override
-	public List<Equip> listEquipByUserId(Integer userId) {
-		return null;
+	public Pagination<Equip> listEquipByEquipCodeAndUserId(String equipCode, Integer userId, Integer pageNo,
+			Integer pageSize) {
+		return equipDAO.listEquipByEquipCodeAndUserId(equipCode, userId, pageNo, pageSize);
 	}
 	
 

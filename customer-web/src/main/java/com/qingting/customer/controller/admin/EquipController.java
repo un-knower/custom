@@ -1,8 +1,6 @@
 package com.qingting.customer.controller.admin;
 
 
-import java.util.List;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
@@ -57,10 +55,16 @@ public class EquipController {
 	}
 	@ApiOperation("查询所有设备")
 	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
-	public @ResponseBody WebResult<Pagination<EquipDTO>> listEquip(
+	public @ResponseBody WebResult<Pagination<Equip>> listEquip(
 			HttpServletRequest request,
-			@ApiParam(value = "设备类型,mine(我的)或attent(关注的)", required = true) @RequestParam String type,
-			@ApiParam(value = "项目ID", required = false) @RequestParam(value="projectId", required=false)Integer projectId){
-		return null;
+			@ApiParam(value = "设备编号") @RequestParam String equipCode,
+			@ApiParam(value = "用户Id") @RequestParam Integer userId,
+			@ApiParam(value = "开始页码") @RequestParam Integer pageNo,
+			@ApiParam(value = "显示条数") @RequestParam Integer pageSize,
+			@ApiParam(value = "设备类型,mine(我的)或attent(关注的)", required = true) @RequestParam String type
+			){
+		WebResult<Pagination<Equip>> result=new WebResult<Pagination<Equip>>(ResultCode.SUCCESS);
+		result.setData(equipService.listEquipByEquipCodeAndUserId(equipCode, userId, pageNo, pageSize));
+		return result;
 	}
 }

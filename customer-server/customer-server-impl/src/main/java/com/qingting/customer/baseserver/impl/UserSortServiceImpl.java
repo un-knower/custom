@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.UserSortService;
 import com.qingting.customer.common.pojo.hbasedo.UserSort;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.UserSortDAO;
 @Service("userSortService")
 public class UserSortServiceImpl implements UserSortService {
 	@Resource
 	UserSortDAO userSortDAO;
+
 	@Override
 	public void insertUserSort(UserSort userSort) {
 		userSortDAO.insertUserSort(userSort);
@@ -34,8 +36,11 @@ public class UserSortServiceImpl implements UserSortService {
 	}
 
 	@Override
-	public List<UserSort> listUserSort() {
-		return userSortDAO.listUserSort();
+	public Pagination<UserSort> listUserSort(Integer pageNo, Integer pageSize) {
+		return userSortDAO.listUserSort(pageNo, pageSize);
 	}
 
+	
+
+	
 }

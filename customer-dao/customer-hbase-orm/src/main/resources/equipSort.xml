@@ -1,0 +1,19 @@
+<SimpleHbase>
+	<HBaseTableSchema tableName="equipSort" defaultFamily="equipSortFamily">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="sortName" typeName="string" />
+		<HBaseColumnSchema qualifier="imageUrl" typeName="string" />
+		<HBaseColumnSchema qualifier="userId" typeName="int" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.EquipSort" defaultFamily="equipSortFamily">
+		<field name="id"/>
+		<field name="sortName" />
+		<field name="imageUrl" />
+		<field name="userId" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

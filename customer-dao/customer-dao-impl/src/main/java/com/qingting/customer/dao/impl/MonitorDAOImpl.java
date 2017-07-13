@@ -2,9 +2,13 @@ package com.qingting.customer.dao.impl;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 
+import org.apache.hadoop.hbase.util.Bytes;
+import org.apache.hadoop.hbase.util.MD5Hash;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.SimpleHbaseClient;
@@ -32,10 +36,21 @@ public class MonitorDAOImpl implements MonitorDAO {
 	 * RowKey=(设备编号32字节+时间戳)
 	 */
 	private static RowKey createRowKey(String equipCode,Long millis){
-		byte[] bytes=new byte[1];
+		/*byte[] bytes=new byte[1];
 		Random random = new Random();
-		random.nextBytes(bytes);
-		return RowKeyUtil.getRowKey(equipCode,bytes,millis);
+		random.nextBytes(bytes);*/
+		byte[] bytes = Bytes.toBytes(millis);
+		byte[] temp=new byte[8];
+		for(int i=0;i<8;i++){
+			
+		}
+		temp[0]=bytes[bytes.length-1];
+		temp[1]=bytes[bytes.length-2];
+		return RowKeyUtil.getRowKey(temp,
+				equipCode);
+	}
+	public static byte[] longReverse(Long millis){
+		return null;
 	}
 	private static List<Monitor> setContentOfRowKey(List<SimpleHbaseDOWithKeyResult<Monitor>> listHbase){
 		List<Monitor> list=new ArrayList<Monitor>();
@@ -51,6 +66,16 @@ public class MonitorDAOImpl implements MonitorDAO {
 			monitor.setCollectTime(time);//后8字节字节是时间
 			list.add(monitor);
 		}
+		Collections.sort(list,new Comparator<Monitor>() {
+			@Override
+			public int compare(Monitor o1, Monitor o2) {
+				int i = (int)(o1.getCreateTime().getTimeInMillis() - o2.getCreateTime().getTimeInMillis());  
+                if(i == 0){  
+                    return (int)(o1.getCreateTime().getTimeInMillis() - o2.getCreateTime().getTimeInMillis());  
+                }  
+                return i; 
+			}
+		});
 		return list;
 	}
 	

@@ -1,8 +1,8 @@
 package com.qingting.customer.dao;
 
 
-import java.util.List;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 /**
  * 
@@ -42,11 +42,13 @@ public interface EquipDAO {
 	void updateEquipByRowKey(Equip equip);
 	/**
 	 * 
-	 * @Title: listEquipByProjectId
-	 * @Description: 查询项目的所有设备数据
-	 * @param projectId
-	 * @return List<Equip>
+	 * @Title: listEquipByEquipCodeAndUserId
+	 * @Description: 查询设备
+	 * @param equipCode
+	 * @param userId
+	 * @return 
+	 * @return Pagination<Equip>
 	 * @throws
 	 */
-	List<Equip> listEquipByProjectId(Integer projectId);
+	Pagination<Equip> listEquipByEquipCodeAndUserId(String equipCode,Integer userId,Integer pageNo,Integer pageSize);
 }

@@ -1,20 +1,32 @@
 <SimpleHbase>
 
 	<HBaseTableSchema tableName="equip" defaultFamily="equipFamily">
-		<HBaseColumnSchema qualifier="equipName" typeName="string" />
-		<HBaseColumnSchema qualifier="address" typeName="string" />
-		<HBaseColumnSchema qualifier="open" typeName="boolean" />
-		<HBaseColumnSchema qualifier="equipSortId" typeName="int" />
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="equipCode" typeName="string" />
+		<HBaseColumnSchema qualifier="equipMark" typeName="string" />
+		<HBaseColumnSchema qualifier="provinceCode" typeName="string" />
+		<HBaseColumnSchema qualifier="cityCode" typeName="string" />
+		<HBaseColumnSchema qualifier="areaCode" typeName="string"/>
+		<HBaseColumnSchema qualifier="address" typeName="string"/>
+		<HBaseColumnSchema qualifier="open" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="equipSortId" typeName="int"/>
 		<HBaseColumnSchema qualifier="projectId" typeName="int"/>
-		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+		<HBaseColumnSchema qualifier="userId" typeName="int"/>
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Equip" defaultFamily="equipFamily">
-		<field name="equipName"/>
-		<field name="address" />
-		<field name="open" />
-		<field name="equipSortId" />
+		<field name="id"/>
+		<field name="equipCode" />
+		<field name="equipMark" />
+		<field name="provinceCode" />
+		<field name="cityCode"/>
+		<field name="areaCode"/>
+		<field name="address"/>
+		<field name="open"/>
+		<field name="equipSortId"/>
 		<field name="projectId"/>
-		<field name="version" isVersioned="true"/>
+		<field name="userId"/>
+		<field name="createTime"/>
 	</MappingType>
 </SimpleHbase>   
 

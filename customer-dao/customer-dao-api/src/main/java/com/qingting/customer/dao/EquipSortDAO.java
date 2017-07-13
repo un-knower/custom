@@ -3,6 +3,7 @@ package com.qingting.customer.dao;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.EquipSort;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 public interface EquipSortDAO {
 	/**
@@ -46,9 +47,11 @@ public interface EquipSortDAO {
 	 * 
 	 * @Title: listEquipSort
 	 * @Description: 获得所有设备分类信息
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<EquipSort>
+	 * @return Pagination<EquipSort>
 	 * @throws
 	 */
-	List<EquipSort> listEquipSort();
+	Pagination<EquipSort> listEquipSort(Integer pageNo,Integer pageSize);
 }

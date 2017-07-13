@@ -2,11 +2,8 @@ package com.qingting.customer.dao.util;
 
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Map;
 import java.util.TreeSet;
 
@@ -18,7 +15,6 @@ import org.apache.hadoop.hbase.client.Admin;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
 
 import com.alipay.simplehbase.cache.CachedFileSystemResource;
 import com.alipay.simplehbase.client.SimpleHbaseAdminClient;
@@ -80,6 +76,11 @@ public class SHCUtil{
 			put("family",new String[]{"equipFamily"});
 		}
 	};
+	private static final Map<String,Object> equipSort=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"equipSortFamily"});
+		}
+	};
 	/*static String[][] monitor={
 		{"monitorFamily"},
 			new String[]{
@@ -120,6 +121,11 @@ public class SHCUtil{
 	private static final Map<String,Object> user=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"userFamily"});
+		}
+	};
+	private static final Map<String,Object> userSort=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"userSortFamily"});
 		}
 	};
 	/*static String[][] message={
@@ -189,8 +195,10 @@ public class SHCUtil{
 		{
 			put("project", project);
 			put("equip", equip);
+			put("equipSort", equipSort);
 			put("monitor", monitor);
 			put("user", user);
+			put("userSort",userSort);
 			put("message", message);
 			put("province",province);
 			put("city",city);

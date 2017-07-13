@@ -1,15 +1,13 @@
 package com.qingting.customer.common.pojo.hbasedo;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
-import org.apache.hadoop.hbase.util.Bytes;
-
 import com.alibaba.fastjson.annotation.JSONField;
+import com.qingting.customer.common.pojo.common.PersistentObject;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class User implements Serializable{
+public class User extends PersistentObject{
 	
 	private static final long serialVersionUID = 6610579266435676798L;
 	
