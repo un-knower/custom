@@ -100,18 +100,7 @@ public class SHCUtil{
 		private static final long serialVersionUID = 9112245605102867437L;
 		{
 			put("family",new String[]{"monitorFamily"});
-			put("split",
-				new byte[][]{
-     		   		{25,0,0,0,0,0,0,0,0},
-    				{50,0,0,0,0,0,0,0,0}, 
-    				{75,0,0,0,0,0,0,0,0}, 
-    				{100,0,0,0,0,0,0,0,0}, 
-    				{125,0,0,0,0,0,0,0,0},    
-    				{(byte)150,0,0,0,0,0,0,0,0}, 
-    				{(byte)175,0,0,0,0,0,0,0,0}, 
-    				{(byte)200,0,0,0,0,0,0,0,0}, 
-    				{(byte)225,0,0,0,0,0,0,0,0} 
-     		   	}
+			put("split",getMonitorBytes(10,20)
 			);
 		}
 	};
@@ -205,6 +194,18 @@ public class SHCUtil{
 			put("area",area);
 		}
 	};
+	
+	
+	private static byte[][] getMonitorBytes(int row,int cloumn){
+		byte[][] bytes=new byte[row][cloumn];
+		for(int i=0;i<row;i++){
+			bytes[i][0]=(byte)( (256/row)*i ) ;
+			for(int j=1;j<cloumn;j++){
+				bytes[i][j]=(byte)0x00;
+			}
+		}
+		return bytes;
+	}
 	
 	//private static volatile SimpleHbaseClient simpleHbaseClient;
 	private static volatile SimpleHbaseAdminClient simpleHbaseAdminClient;

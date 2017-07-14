@@ -133,6 +133,11 @@ public class RowKeyUtil {
     			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
     			);
     }
+    public static RowKey getRowKey(Long value1,String value2){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
+    			);
+    }
     public static RowKey getRowKey(String str,Integer value){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(str),Bytes.toBytes(value))
@@ -320,6 +325,20 @@ public class RowKeyUtil {
     		bytes[i+length]=(byte)0;
     	}
     	return new BytesRowKey(bytes); 
+    }
+    public static RowKey getLongStringMaxRowKey(int strLength){
+    	byte[] bytes=new byte[strLength+8];
+    	for (int i=0;i<strLength+8;i++) {
+			bytes[i]=(byte)0xFF;
+		}
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getLongStringMinRowKey(int strLength){
+    	byte[] bytes=new byte[strLength+8];
+    	for (int i=0;i<strLength+8;i++) {
+			bytes[i]=(byte)0;
+		}
+    	return new BytesRowKey(bytes);
     }
     /**
      * 

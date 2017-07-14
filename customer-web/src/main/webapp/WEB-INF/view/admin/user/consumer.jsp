@@ -47,28 +47,22 @@
 		</div>
 	</div>
 </div>
+
+
 <div class="table-dialog"></div>
 
 <script type="text/javascript">
 	scripts.push(
 			"${_staticPath}/custom/zTree/js/jquery.ztree.core-3.5.min.js?v=" + Math.random(),
 			"${_staticPath}/custom/zTree/js/jquery.ztree.excheck-3.5.min.js?v=" + Math.random());
-			
+	
+	var myScripts = [
+		// 验证
+		"${_staticPath}/custom/jquery.validate-2.0.min.js?v=" + Math.random(),
+		"${_staticPath}/custom/jquery.validate-2.0.custom.min.js?v=" + Math.random()
+	];	
 	$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
 		jQuery(function($) {
-			function savePortrait(id){
-				//alert("~~~~");
-				//setForm(treeNode,'add');
-				$("#my-modal-a").click();
-				//$("#_name").focus();
-				//$("#_editForm")[0].reset();
-				
-				$("#_name").val($table.settings.list);
-				for ( var i = 0, len = $table.settings.list.length; i < len; i++) {
-					data = $table.settings.list[i];
-					
-				}
-			};
 			
 			// 列表
     		var $table = $("#_table").table({
@@ -76,7 +70,17 @@
     			formId : "_form",
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
-						$.aceRedirect("${_path}/admin/user/edit");
+						$table.dialog(null,null,"用户添加",{
+							url:'${_path}/admin/user/save',
+							callback:function(d){
+								$.gritter.add({
+									text: d.message,
+									sticky: false,
+									time: '1000'
+								});
+							}
+						});
+						$('.page-content-area').ace_ajax('loadScripts', myScripts, function() {});
 					}},
 					{text : '禁用', clazz : 'btn-warning', icon : 'fa fa-lock orange', permission : '/admin/user/enable', handler : function(){
 						$table.ajaxEnable({url : "${_path}/admin/user/enable"}, false);
@@ -113,22 +117,21 @@
 					}}*/
 				],
 				columns : [
+					{field:'rowkey',hide:true},
 			        {field:'id', hide : true},
 			        
 			        {field:'mobile', title:'电话(登陆账号)', align:'left', validate:true, format:'17701879780'},
 			        {field:'name', title:'姓名', mobileHide : true,validate:true},
 			        {field:'sex', title:'性别', mobileHide : true,validate:true},
 			        {field:'age', title:'年龄', mobileHide : true},
-			        {field:'provinceId', title:'省ID', mobileHide : true},
-			        {field:'cityId', title:'市ID', mobileHide : true},
-			        {field:'areaId', title:'区ID', mobileHide : true},
+			        {field:'provinceCode', title:'省编码', mobileHide : true},
+			        {field:'cityCode', title:'市编码', mobileHide : true},
+			        {field:'areaCode', title:'区编码', mobileHide : true},
 			        {field:'address', title:'地址', mobileHide : true},
-			        {field:'lng', title:'经度', mobileHide : true},
-			        {field:'lat', title:'纬度', mobileHide : true},
 			        {field:'userSortId', title:'用户分类', mobileHide : true},
-			        {field:'portrait', title:'头像', replace : function (d){
+			        {field:'portraitUrl', title:'头像', replace : function (d){
 			        	return	'<a id="updatePortrait_'+d.id+'" data-toggle="dropdown" href="www.baidu.com" class="dropdown-toggle">'+
-									'<img class="nav-user-photo" src="${_staticPath}'+d.portrait+'" alt="Jasons\' Photo" />'+
+									'<img class="nav-user-photo" src="${_staticPath}'+d.portraitUrl+'" alt="Jasons\' Photo" />'+
 								'</a>';
 			        }},//href="javascript:void(0);" onclick="savePortrait('+d.id+')" //href="JavaScript:savePortrait('+d.id+');"
 			        
@@ -142,12 +145,6 @@
 				],
 				operate : [
 					{text : '修改', clazz : 'blue', icon : 'fa fa-pencil', permission : '/admin/user/edit', handler : function(d, i){
-						//$.aceRedirect("${_path}/admin/user/edit?id=" + d.id);
-						//savePortrait(d.id);
-						//alert("handler~~");
-						
-						//$table.add_edit(d,i,"用户编辑");
-						//$('#_editForm').validate();
 						$table.dialog(d,i,"用户编辑").validate();
 					}},
 					{text : '禁用', clazz : 'orange', icon : 'fa fa-lock', permission : '/admin/user/enable', 
@@ -194,6 +191,20 @@
 					
 				}
 			});
+			/* $table.dialog(null,null,"用户添加");
+			$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
+				//弹出层初始化
+		        $('.modal.aside').ace_aside();
+			
+				$(document).one('ajaxloadstart.page', function(e) {
+					//in ajax mode, remove before leaving page
+					$('.modal.aside').remove();
+					$(window).off('.aside');
+				});
+				
+				$("#table-dialog-modal-a").click();
+				$("#_name").focus();
+			}); */
 			
 			/*console.log("d:"+$table.options.data);
 			var data=$table.options.data;
@@ -245,7 +256,7 @@
 				//in ajax mode, remove before leaving page
 				$('.modal.aside').remove();
 				$(window).off('.aside');
-			});
+			}); 
 			
 			//搜索
 			$(".search-data").keyup(function () { 
@@ -259,6 +270,8 @@
 			$("#_cancel").click(function(){
 				$table.search();
 			});
+			
+			//$("#my-modal-a").click();
 		});
 	});
 </script>

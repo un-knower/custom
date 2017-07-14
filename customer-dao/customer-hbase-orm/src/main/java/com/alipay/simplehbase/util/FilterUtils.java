@@ -18,6 +18,9 @@ public class FilterUtils {
 	 * @return Filter
 	 * @throws
 	 */
+	/*
+	 * 以str结尾的行键.
+	 */
 	public static Filter getSuffixFilter(String str){
 		return new RowFilter(CompareOp.EQUAL,new RegexStringComparator(".*"+str+"$"));
 	}

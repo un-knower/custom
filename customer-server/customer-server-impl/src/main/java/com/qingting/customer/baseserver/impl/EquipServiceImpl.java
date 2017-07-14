@@ -1,6 +1,5 @@
 package com.qingting.customer.baseserver.impl;
 
-import java.util.List;
 
 import javax.annotation.Resource;
 

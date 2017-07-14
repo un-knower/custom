@@ -158,7 +158,21 @@ public class BytesUtil {
                 (b[1] & 0xFF) << 16 |  
                 (b[0] & 0xFF) << 24;  
     }  
-    
+    public static byte[] longReverseToBytes(Long millis){
+		byte[] bytes = Bytes.toBytes(millis);
+		byte[] temp=new byte[8];
+		for(int i=0;i<8;i++){
+			temp[i]=bytes[7-i];
+		}
+		return temp;
+	}
+	public static long bytesReverseToLong(byte[] bytes,int offset,int length){
+		byte[] temp=new byte[8];
+		for(int i=0;i<8;i++){
+			temp[i]=bytes[offset+length-1-i];
+		}
+		return Bytes.toLong(temp);
+	}
     private BytesUtil() {
     }
 }

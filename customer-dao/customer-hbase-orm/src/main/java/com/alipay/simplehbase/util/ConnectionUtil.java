@@ -11,7 +11,12 @@ public class ConnectionUtil {
 	private static Configuration cfg = null;
 	private static Connection conn = null;
 	static {
-		cfg=ConfigUtil.getHbaseDataSource().getHbaseConfiguration();
+		//cfg=ConfigUtil.getHbaseDataSource().getHbaseConfiguration();
+		
+		cfg = HBaseConfiguration.create();
+		cfg.set("hbase.zookeeper.quorum", "39.108.52.201");
+		cfg.set("hbase.zookeeper.property.clientPort", "2181"); 
+		 
 		try {
 			conn = ConnectionFactory.createConnection(cfg);
 		} catch (IOException e) {
