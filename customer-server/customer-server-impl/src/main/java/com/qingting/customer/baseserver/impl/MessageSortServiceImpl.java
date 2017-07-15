@@ -8,11 +8,13 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.MessageSortService;
 import com.qingting.customer.common.pojo.hbasedo.MessageSort;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.MessageSortDAO;
 @Service("messageSortService")
 public class MessageSortServiceImpl implements MessageSortService {
 	@Resource
 	MessageSortDAO messageSortDAO;
+
 	@Override
 	public void insertMessageSort(MessageSort messageSort) {
 		messageSortDAO.insertMessageSort(messageSort);
@@ -34,8 +36,8 @@ public class MessageSortServiceImpl implements MessageSortService {
 	}
 
 	@Override
-	public List<MessageSort> listMessageSort() {
-		return messageSortDAO.listMessageSort();
+	public Pagination<MessageSort> listMessageSort(Integer pageNo, Integer pageSize) {
+		return messageSortDAO.listMessageSort(pageNo, pageSize);
 	}
-
+	
 }

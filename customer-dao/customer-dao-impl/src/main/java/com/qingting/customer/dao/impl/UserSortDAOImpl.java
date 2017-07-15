@@ -40,8 +40,10 @@ public class UserSortDAOImpl implements UserSortDAO {
 	@Override
 	public void insertUserSort(UserSort userSort) {
 		int num=RedisSerialNum.getSerialNum(redisTemplate, SEQUENCE);
+		System.out.println("用户分类当前序列号:"+num);
 		userSort.setId(num);
-		tClient.insertObject(RowKeyUtil.getRowKey(num), userSort);
+		System.out.println(userSort);
+		tClient.putObject(RowKeyUtil.getRowKey(num), userSort);
 	}
 
 	@Override

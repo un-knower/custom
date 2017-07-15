@@ -143,6 +143,13 @@ public class Equip extends PersistentObject{
 	public Byte getVersion() {
 		return version;
 	}
+	@Override
+	public String toString() {
+		return "Equip [rowKey=" + rowKey + ", id=" + id + ", equipCode=" + equipCode + ", equipMark=" + equipMark
+				+ ", provinceCode=" + provinceCode + ", cityCode=" + cityCode + ", areaCode=" + areaCode + ", address="
+				+ address + ", open=" + open + ", equipSortId=" + equipSortId + ", projectId=" + projectId + ", userId="
+				+ userId + ", createTime=" + createTime + ", version=" + version + "]";
+	}
 	
 	
 }

@@ -173,7 +173,11 @@ public class RowKeyUtil {
     			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
     			);
     }
-    
+    public static RowKey getRowKey(String value1,String value2,String value3){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
+    			);
+    }
     
     
     /*public static RowKey getMaxRowKey(String longText,Integer longTextLength,Integer value){

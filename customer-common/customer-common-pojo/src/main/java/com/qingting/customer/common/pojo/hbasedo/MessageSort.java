@@ -2,7 +2,12 @@ package com.qingting.customer.common.pojo.hbasedo;
 
 import java.util.Calendar;
 
-public class MessageSort {
+import com.qingting.customer.common.pojo.common.PersistentObject;
+
+public class MessageSort extends PersistentObject{
+
+	private static final long serialVersionUID = -8786472582769247777L;
+	
 	private String rowKey;
 	/**
 	 * ID
@@ -23,11 +28,8 @@ public class MessageSort {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
+	private Calendar createTime;
+	
 	public String getRowKey() {
 		return rowKey;
 	}
@@ -58,27 +60,12 @@ public class MessageSort {
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
-	public Byte getVersion() {
-		return version;
-	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-	}
+
+	
 }

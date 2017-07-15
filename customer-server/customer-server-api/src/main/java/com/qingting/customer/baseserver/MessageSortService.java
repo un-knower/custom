@@ -1,8 +1,8 @@
 package com.qingting.customer.baseserver;
 
-import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.MessageSort;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 
 
@@ -47,10 +47,12 @@ public interface MessageSortService {
 	/**
 	 * 
 	 * @Title: listMessageSort
-	 * @Description: 获得全部信息分类
+	 * @Description: 查信息分类
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<MessageSort>
+	 * @return Pagination<MessageSort>
 	 * @throws
 	 */
-	List<MessageSort> listMessageSort();
+	Pagination<MessageSort> listMessageSort(Integer pageNo,Integer pageSize);
 }

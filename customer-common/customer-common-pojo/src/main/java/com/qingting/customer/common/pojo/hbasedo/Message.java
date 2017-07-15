@@ -1,39 +1,64 @@
 package com.qingting.customer.common.pojo.hbasedo;
 
-import java.io.Serializable;
 import java.util.Calendar;
 
-import org.apache.hadoop.hbase.util.Bytes;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.qingting.customer.common.pojo.common.PersistentObject;
 
-public class Message implements Serializable{
+import io.swagger.annotations.ApiModelProperty;
+
+public class Message extends PersistentObject{
 
 	private static final long serialVersionUID = 3792614722479457227L;
+	
 	private String rowKey;
+	
 	/**
 	 * id
 	 */
 	private Long id;
+	
 	/**
-	 * 手机号
+	 * 用户账号(手机号)
 	 */
-	private String phone;
+	private String userMobile;
+	
 	/**
-	 * IP地址
+	 * 标题
 	 */
-	private String ipAddr;
+	private String title;
+	
 	/**
-	 * 分类id
+	 * 消息内容
 	 */
-	private Integer messageSortId;
+	private String content;
+	
+	/**
+	 * 消息显示的图片路径
+	 */
+	private String imageUrl;
+	
+	/**
+	 * 分类编号
+	 */
+	private String sortCode;
+	
+	/**
+	 * 已读标志
+	 */
+	private Boolean readFlag;
+	
+	/**
+	 * 状态
+	 */
+	private String status;
+	
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
-
-	/**
-	 * 数据的版本，更新时用，监测数据只需要一个版本
-	 */
-	private final Byte version = 0;
+	@JSONField(format="yyyy-MM-dd HH:mm:ss")
+	@ApiModelProperty(value="时间",example="2017-01-01 12:00",dataType="String")
+	private Calendar createTime;
 
 	public String getRowKey() {
 		return rowKey;
@@ -51,75 +76,69 @@ public class Message implements Serializable{
 		this.id = id;
 	}
 
-	public String getPhone() {
-		return phone;
+	public String getUserMobile() {
+		return userMobile;
 	}
 
-	public void setPhone(String phone) {
-		this.phone = phone;
+	public void setUserMobile(String userMobile) {
+		this.userMobile = userMobile;
 	}
 
-	public String getIpAddr() {
-		return ipAddr;
+	public String getTitle() {
+		return title;
 	}
 
-	public void setIpAddr(String ipAddr) {
-		this.ipAddr = ipAddr;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
-	public Integer getMessageSortId() {
-		return messageSortId;
+	public String getContent() {
+		return content;
 	}
 
-	public void setMessageSortId(Integer messageSortId) {
-		this.messageSortId = messageSortId;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
-	public Calendar getCalendar() {
-		return calendar;
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
-	public Byte getVersion() {
-		return version;
+	public String getSortCode() {
+		return sortCode;
 	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-		byte[] dest1=new byte[8];
-		System.arraycopy(rowkey, 0, dest1, 0, 8);//前8个字节,phone
-		this.phone=new String(dest1);
-		byte[] dest2=new byte[4];
-		System.arraycopy(rowkey, 8, dest2, 0, 4);//4个字节,ip
-		this.ipAddr=new String(dest2);
-		//byte[] dest3=new byte[8];
-		//System.arraycopy(rowkey, 12, dest3, 0, 8);//4个字节,sort
-		//this.messageSortId=Bytes.toInt(dest3);
-		byte[] dest4=new byte[4];
-		System.arraycopy(rowkey, 20, dest4, 0, 4);//4个字节,sort
-		this.messageSortId=Bytes.toInt(dest4);
+
+	public void setSortCode(String sortCode) {
+		this.sortCode = sortCode;
 	}
-	public String convertIp(byte[] ip){
-		StringBuilder buf=null;
-		for(int i=0;i<ip.length;i++){
-			buf = new StringBuilder();
-			buf.append(String.valueOf(ip[i]));
-			if(i<ip.length)
-				buf.append(".");
-		}
-		return buf.toString();
+
+	public Boolean getReadFlag() {
+		return readFlag;
 	}
+
+	public void setReadFlag(Boolean readFlag) {
+		this.readFlag = readFlag;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Calendar getCreateTime() {
+		return createTime;
+	}
+
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
+	}
+
+	
 }

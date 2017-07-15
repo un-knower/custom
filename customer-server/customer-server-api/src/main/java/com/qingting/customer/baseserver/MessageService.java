@@ -3,6 +3,7 @@ package com.qingting.customer.baseserver;
 import java.util.List;
 
 import com.qingting.customer.common.pojo.hbasedo.Message;
+import com.qingting.customer.common.pojo.model.Pagination;
 
 public interface MessageService {
 	/**
@@ -45,31 +46,14 @@ public interface MessageService {
 	/**
 	 * 
 	 * @Title: listMessage
-	 * @Description: 获得发送给某个号码的多条信息
-	 * @param phone
+	 * @Description: 查消息
+	 * @param sortCode
+	 * @param mobile
+	 * @param pageNo
+	 * @param pageSize
 	 * @return 
-	 * @return List<Message>
+	 * @return Pagination<Message>
 	 * @throws
 	 */
-	List<Message> listMessage(String phone);
-	/**
-	 * 
-	 * @Title: countMessageOfTodayByPhone
-	 * @Description: 计数今天(凌晨00:00:00到现在)发送给某个号码的信息条数
-	 * @param phone
-	 * @return 
-	 * @return Integer
-	 * @throws
-	 */
-	Integer countMessageOfTodayByPhone(String phone);
-	/**
-	 * 
-	 * @Title: countMessageOfTodayByIp
-	 * @Description: 计数今天(凌晨00:00:00到现在)某个IP请求发送的信息条数
-	 * @param ip
-	 * @return 
-	 * @return Integer
-	 * @throws
-	 */
-	Integer countMessageOfTodayByIp(String ip);
+	Pagination<Message> listMessage(String sortCode,String mobile,Integer pageNo,Integer pageSize);
 }

@@ -25,10 +25,7 @@ public class UserSort extends PersistentObject{
 	 * 创建时间
 	 */
 	private Calendar createTime;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
+	
 	
 	public String getRowKey() {
 		return rowKey;
@@ -60,8 +57,11 @@ public class UserSort extends PersistentObject{
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	public Byte getVersion() {
-		return version;
+	@Override
+	public String toString() {
+		return "UserSort [rowKey=" + rowKey + ", id=" + id + ", sortName=" + sortName + ", userId=" + userId
+				+ ", createTime=" + createTime + "]";
 	}
+	
 	
 }

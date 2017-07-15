@@ -1,20 +1,14 @@
 package com.qingting.customer.common.pojo.hbasedo;
 
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-import org.apache.commons.lang3.builder.EqualsBuilder;
-import org.apache.commons.lang3.builder.HashCodeBuilder;
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.hadoop.hbase.util.Bytes;
-
 import com.alibaba.fastjson.annotation.JSONField;
+import com.qingting.customer.common.pojo.common.PersistentObject;
 
 import io.swagger.annotations.ApiModelProperty;
 
 
-public class Monitor implements Serializable{
+public class Monitor extends PersistentObject{
 
 	private static final long serialVersionUID = -3476260854075534540L;
 	
@@ -77,11 +71,7 @@ public class Monitor implements Serializable{
 	 * w值
 	 */
 	private Float w;
-	
-	/**
-	 * 设备Id
-	 */
-	private Integer equipId;
+
 	/**
 	 * 设备编号
 	 */
@@ -98,198 +88,110 @@ public class Monitor implements Serializable{
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
-
 	public String getRowKey() {
 		return rowKey;
 	}
-
 	public void setRowKey(String rowKey) {
 		this.rowKey = rowKey;
 	}
-
 	public Long getId() {
 		return id;
 	}
-
 	public void setId(Long id) {
 		this.id = id;
 	}
-
 	public Float getRawTds() {
 		return rawTds;
 	}
-
 	public void setRawTds(Float rawTds) {
 		this.rawTds = rawTds;
 	}
-
 	public Float getPurTds() {
 		return purTds;
 	}
-
 	public void setPurTds(Float purTds) {
 		this.purTds = purTds;
 	}
-
 	public Byte getTemp() {
 		return temp;
 	}
-
 	public void setTemp(Byte temp) {
 		this.temp = temp;
 	}
-
 	public Byte getHumidity() {
 		return humidity;
 	}
-
 	public void setHumidity(Byte humidity) {
 		this.humidity = humidity;
 	}
-
 	public Long getFlow() {
 		return flow;
 	}
-
 	public void setFlow(Long flow) {
 		this.flow = flow;
 	}
-
 	public Boolean getLeak() {
 		return leak;
 	}
-
 	public void setLeak(Boolean leak) {
 		this.leak = leak;
 	}
-
 	public Boolean getMagnetic() {
 		return magnetic;
 	}
-
 	public void setMagnetic(Boolean magnetic) {
 		this.magnetic = magnetic;
 	}
-
 	public Boolean getOutRelay() {
 		return outRelay;
 	}
-
 	public void setOutRelay(Boolean outRelay) {
 		this.outRelay = outRelay;
 	}
-
 	public Boolean getPowerRelay() {
 		return powerRelay;
 	}
-
 	public void setPowerRelay(Boolean powerRelay) {
 		this.powerRelay = powerRelay;
 	}
-
 	public Float getD() {
 		return d;
 	}
-
 	public void setD(Float d) {
 		this.d = d;
 	}
-
 	public Float getW() {
 		return w;
 	}
-
 	public void setW(Float w) {
 		this.w = w;
 	}
-
-	public Integer getEquipId() {
-		return equipId;
-	}
-
-	public void setEquipId(Integer equipId) {
-		this.equipId = equipId;
-	}
-
 	public String getEquipCode() {
 		return equipCode;
 	}
-
 	public void setEquipCode(String equipCode) {
 		this.equipCode = equipCode;
 	}
-
-	public Calendar getCreateTime() {
-		return createTime;
-	}
-
-	public void setCreateTime(Calendar createTime) {
-		this.createTime = createTime;
-	}
-
 	public Calendar getCollectTime() {
 		return collectTime;
 	}
-
 	public void setCollectTime(Calendar collectTime) {
 		this.collectTime = collectTime;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
+	public Calendar getCreateTime() {
+		return createTime;
 	}
-
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
-
-	/*@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}*/
-	
-	
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-		byte[] dest=new byte[4];
-		System.arraycopy(rowkey, 0, dest, 0, 4);//前4个字节,所属设备id
-		this.equipId=Bytes.toInt(dest);
-		//System.arraycopy(rowkey, rowkey.length-4, dest, 0, 4);//最后4个字节,设备id
-		//this.id=Bytes.toInt(dest);
-	}
-
 	@Override
 	public String toString() {
-		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
 		return "Monitor [rowKey=" + rowKey + ", id=" + id + ", rawTds=" + rawTds + ", purTds=" + purTds + ", temp="
 				+ temp + ", humidity=" + humidity + ", flow=" + flow + ", leak=" + leak + ", magnetic=" + magnetic
-				+ ", outRelay=" + outRelay + ", powerRelay=" + powerRelay + ", d=" + d + ", w=" + w + ", equipId="
-				+ equipId + ", equipCode=" + equipCode + ", createTime=" + format.format(createTime.getTime()) + "]";
+				+ ", outRelay=" + outRelay + ", powerRelay=" + powerRelay + ", d=" + d + ", w=" + w + ", equipCode="
+				+ equipCode + ", collectTime=" + collectTime + ", createTime=" + createTime + "]";
 	}
 
-	/*@Override
-	public String toString() {
-		SimpleDateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS");
-		
-		return "Monitor [rowKey=" + rowKey + ", id=" + id + ", data=" + data + ", date=" + date + ", rawTds=" + rawTds
-				+ ", purTds=" + purTds + ", temp=" + temp + ", humidity=" + humidity + ", flow=" + flow + ", leak="
-				+ leak + ", magnetic=" + magnetic + ", outRelay=" + outRelay + ", powerRelay=" + powerRelay + ", d=" + d
-				+ ", w=" + w + ", equipId=" + equipId + ", equipCode=" + equipCode + ", createTime=" + format.format(createTime.getTime())
-				+ ", version=" + version + "]";
-	}*/
 	
 	
 }

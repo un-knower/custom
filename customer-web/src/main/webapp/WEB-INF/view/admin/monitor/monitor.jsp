@@ -62,8 +62,9 @@
 					}}
 				],
 				columns : [
+			        {field:'rowkey',hide:true},
+			        {field:'id', hide : true},
 			        
-			        {field:'equipCode', title:'设备编号', align:'left', validate:true, format:'17701879780'},
 			        {field:'rawTds', title:'原水TDS', mobileHide : true,validate:true},
 			        {field:'purTds', title:'净水TDS', mobileHide : true,validate:true},
 			        {field:'temp', title:'温度', mobileHide : true},
@@ -73,6 +74,10 @@
 			        {field:'magnetic', title:'电磁阀输出状态(true:电磁阀供电 false:电池阀不供电)', mobileHide : true},
 			        {field:'outRelay', title:'输出继电器(true:闭合 false:断开)', mobileHide : true},
 			        {field:'powerRelay', title:'电源继电器 (true:有输出 false:无输出)', mobileHide : true},
+			        {field:'d', title:'d', mobileHide : true},
+			        {field:'w', title:'w', mobileHide : true},
+			        
+			        {field:'equipCode', title:'设备编号', align:'left'},
 			        {field:'collectTime', title:'采集时间', mobileHide : true},
 			        {field:'createTime', title:'创建时间', mobileHide : true}
 				],
@@ -84,7 +89,7 @@
 						
 						//$table.add_edit(d,i,"用户编辑");
 						//$('#_editForm').validate();
-						$table.dialog(d,i,"用户编辑").validate();
+						$table.dialog(d,i,"监测值编辑").validate();
 					}},
 					{text : '删除', clazz : 'red', icon : 'fa fa-trash-o', permission : '/admin/user/delete', handler : function(d, i){
 						$table.ajaxDelete({

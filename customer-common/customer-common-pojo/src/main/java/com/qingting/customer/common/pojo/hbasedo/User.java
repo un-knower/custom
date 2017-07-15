@@ -17,9 +17,13 @@ public class User extends PersistentObject{
 	 */
 	private Integer id;
 	/**
-	 *  登录账号
+	 * 登录账号
 	 */
 	private String mobile;
+	/**
+	 * 密码
+	 */
+	private String password;
 	/**
 	 * 姓名
 	 */
@@ -35,7 +39,7 @@ public class User extends PersistentObject{
 	/**
 	 * 省编码
 	 */
-	private Integer provinceCode;
+	private String provinceCode;
 	/**
 	 * 市编码
 	 */
@@ -86,6 +90,12 @@ public class User extends PersistentObject{
 	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getName() {
 		return name;
 	}
@@ -104,10 +114,10 @@ public class User extends PersistentObject{
 	public void setAge(Integer age) {
 		this.age = age;
 	}
-	public Integer getProvinceCode() {
+	public String getProvinceCode() {
 		return provinceCode;
 	}
-	public void setProvinceCode(Integer provinceCode) {
+	public void setProvinceCode(String provinceCode) {
 		this.provinceCode = provinceCode;
 	}
 	public String getCityCode() {

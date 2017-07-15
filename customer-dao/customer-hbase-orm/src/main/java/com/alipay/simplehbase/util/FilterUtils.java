@@ -24,6 +24,9 @@ public class FilterUtils {
 	public static Filter getSuffixFilter(String str){
 		return new RowFilter(CompareOp.EQUAL,new RegexStringComparator(".*"+str+"$"));
 	}
+	public static Filter getSuffixFilter(Integer value){
+		return new RowFilter(CompareOp.EQUAL,new RegexStringComparator(".*"+new String(Bytes.toBytes(value))+"$"));
+	}
 	/**
 	 * 
 	 * @Title: getContainFilter
@@ -51,5 +54,7 @@ public class FilterUtils {
 	public static Filter getPrefixFilter(String str){
 		return new RowFilter(CompareOp.EQUAL,new BinaryPrefixComparator(str.getBytes()));
 	}
-	
+	public static Filter getPrefixFilter(Integer value){
+		return new RowFilter(CompareOp.EQUAL,new BinaryPrefixComparator(Bytes.toBytes(value)));
+	}
 }

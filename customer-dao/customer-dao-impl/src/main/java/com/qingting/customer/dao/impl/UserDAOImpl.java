@@ -118,7 +118,7 @@ public class UserDAOImpl implements UserDAO {
 			
 		}else if(!StringUtils.isZeroOrNull(id) && StringUtils.isBlank(mobile)){//id不为空，mobile空
 			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id), User.class,FilterUtils.getContainFilter(id),null)
+					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id), User.class,FilterUtils.getSuffixFilter(id),null)
 					);
 		}else if(StringUtils.isZeroOrNull(id) && !StringUtils.isBlank(mobile)){//id为空，mobile不为空
 			list=setContentOfRowKey(
@@ -126,7 +126,7 @@ public class UserDAOImpl implements UserDAO {
 					);
 		}else{//都不为空
 			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,mobile,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,mobile,id), User.class)
+					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,mobile,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,mobile,id), User.class,FilterUtils.getSuffixFilter(id),null)
 					);
 		}
 		if(list==null){

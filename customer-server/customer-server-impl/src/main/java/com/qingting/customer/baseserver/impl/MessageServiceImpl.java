@@ -8,12 +8,14 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.MessageService;
 import com.qingting.customer.common.pojo.hbasedo.Message;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.MessageDAO;
 
 @Service("messageService")
 public class MessageServiceImpl implements MessageService {
 	@Resource
 	MessageDAO messageDAO;
+
 	@Override
 	public void insertMessage(Message message) {
 		messageDAO.insertMessage(message);
@@ -35,18 +37,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public List<Message> listMessage(String phone) {
-		return messageDAO.listMessage(phone);
+	public Pagination<Message> listMessage(String sortCode, String mobile, Integer pageNo, Integer pageSize) {
+		return messageDAO.listMessage(sortCode, mobile, pageNo, pageSize);
 	}
-
-	@Override
-	public Integer countMessageOfTodayByPhone(String phone) {
-		return messageDAO.countMessageOfTodayByPhone(phone);
-	}
-
-	@Override
-	public Integer countMessageOfTodayByIp(String ip) {
-		return messageDAO.countMessageOfTodayByIp(ip);
-	}
-
+	
 }

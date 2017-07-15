@@ -6,7 +6,7 @@
 
 <div class="page-header">
 	<h1>
-		用户列表
+		设备列表
 	</h1>
 </div>
 
@@ -23,7 +23,7 @@
 						<div class="widget-main">
 							<form id="_form" class="form-inline">
 								<label>
-									<label class="control-label" for="form-field-1"> 手机号： </label>
+									<label class="control-label" for="form-field-1"> 设备编号： </label>
 									<input name="name" type="text" class="form-data input-medium search-data">
 								</label>
 								<!-- 
@@ -66,12 +66,12 @@
 			
 			// 列表
     		var $table = $("#_table").table({
-    			url : "${_path}/admin/user/list",
+    			url : "${_path}/admin/equip/list?type=mine",
     			formId : "_form",
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
 						$table.dialog(null,null,"用户添加",{
-							url:'${_path}/admin/user/save',
+							url:'${_path}/admin/equip/insert',
 							type:'post',
 							callback:function(d){
 								$.gritter.add({
@@ -121,29 +121,18 @@
 					{field:'rowkey',hide:true},
 			        {field:'id', hide : true},
 			        
-			        {field:'mobile', title:'电话(登陆账号)', align:'left', dialog_validate:true, dialog_format:'17701879780'},
-			        {field:'password', title:'密码', align:'center', dialog_validate:true, dialog_format:'***'},
-			        {field:'name', title:'姓名', mobileHide : true,dialog_validate:true},
-			        {field:'sex', title:'性别', mobileHide : true,dialog_type:"radio",dialog_radio1Text:"男",dialog_radio1Value:"true",dialog_radio2Text:"女",dialog_radio2Value:"false"},
-			        {field:'age', title:'年龄', mobileHide : true},
+			        {field:'equipCode', title:'设备编号', mobileHide : true},
+			        {field:'equipMark', title:'备注', mobileHide : true},
 			        {field:'provinceCode', title:'省编码', mobileHide : true},
 			        {field:'cityCode', title:'市编码', mobileHide : true},
 			        {field:'areaCode', title:'区编码', mobileHide : true},
 			        {field:'address', title:'地址', mobileHide : true},
-			        {field:'userSortId', title:'用户分类', mobileHide : true},
-			        {field:'portraitUrl', title:'头像', replace : function (d){
-			        	return	'<a id="updatePortrait_'+d.id+'" data-toggle="dropdown" href="www.baidu.com" class="dropdown-toggle">'+
-									'<img class="nav-user-photo" src="${_staticPath}'+d.portraitUrl+'" alt="Jasons\' Photo" />'+
-								'</a>';
-			        }},//href="javascript:void(0);" onclick="savePortrait('+d.id+')" //href="JavaScript:savePortrait('+d.id+');"
+			        {field:'open', title:'是否开放', mobileHide : true},
+			        {field:'equipSortId', title:'分类ID', mobileHide : true},
+			        {field:'projectId', title:'项目ID', mobileHide : true},
+			        {field:'userId', title:'用户ID', mobileHide : true},
+			        {field:'createTime', title:'创建时间', mobileHide : true},
 			        
-			        {field:'status', title:'是否启用',dialog_type:"radio",dialog_radio1Text:"是",dialog_radio1Value:"是",dialog_radio2Text:"否",dialog_radio2Value:"否",replace : function (d){
-				        if(d.status)
-				        	return "<span class='label label-sm label-success'>" + d.status + 	"</span>";
-			        	else
-			        		return "<span class='label label-sm label-warning'>" + d.status + "</span>";
-			        }},
-			        {field:'createTime', title:'创建时间', mobileHide : true}
 				],
 				operate : [
 					{text : '修改', clazz : 'blue', icon : 'fa fa-pencil', permission : '/admin/user/edit', handler : function(d, i){

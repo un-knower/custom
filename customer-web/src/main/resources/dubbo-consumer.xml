@@ -19,8 +19,10 @@
 	<dubbo:reference interface="com.qingting.customer.baseserver.MonitorService" id="monitorService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.ProjectService" id="projectService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.EquipService" id="equipService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.EquipSortService" id="equipSortService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.MessageService" id="messageService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.UserService" id="userService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.UserSortService" id="userSortService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.external.TxMessageService" id="txMessageService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.WarnService" id="warnService" />
 	

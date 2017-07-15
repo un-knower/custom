@@ -1,5 +1,6 @@
 package com.qingting.customer.controller.admin;
 
+import java.util.Calendar;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -20,6 +21,7 @@ import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
+import com.smart.sso.client.RegisterUtils;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -53,11 +55,34 @@ public class UserController {
 			HttpServletRequest request,
 			@ApiParam @RequestBody User user
 			){
+		user.setCreateTime(Calendar.getInstance());
 		System.out.println("user:"+user);
 		
-		userService.insertUser(user);
+		WebResult<Object> result=null;
+		result=RegisterUtils.findByAccount(user.getMobile());
+		if(result.getCode()==ResultCode.FAILURE){//单点服务端用户不存在
+			if(userService.getUserByMobileAndId(null, user.getMobile())==null){//本地用户不存在
+				System.out.println("准备开始存用户...");
+				result = RegisterUtils.register(user.getMobile(), user.getPassword());//单点服务端注册用户
+				System.out.println("单点注册结果result："+result);
+				
+				//User temp=new User();
+				//temp.setMobile(mobile);
+				//user.setPassword(password);
+				userService.insertUser(user);//本地注册用户
+				
+				result.setMessage("注册成功");
+				return result;
+			}
+		}
+		result.setMessage("用户已存在"); 
+		return result;
 		
-		return new WebResult<Object>(ResultCode.SUCCESS);
+		
+		
+		//userService.insertUser(user);
+		
+		//return new WebResult<Object>(ResultCode.SUCCESS);
 	}
 	@ApiOperation("后台查询所有用户")
 	@RequestMapping(value="/list",method = RequestMethod.GET)
