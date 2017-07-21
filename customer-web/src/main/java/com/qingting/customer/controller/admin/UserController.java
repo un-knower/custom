@@ -21,6 +21,7 @@ import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
+import com.smart.sso.client.Config;
 import com.smart.sso.client.RegisterUtils;
 
 import io.swagger.annotations.Api;
@@ -63,7 +64,7 @@ public class UserController {
 		if(result.getCode()==ResultCode.FAILURE){//单点服务端用户不存在
 			if(userService.getUserByMobileAndId(null, user.getMobile())==null){//本地用户不存在
 				System.out.println("准备开始存用户...");
-				result = RegisterUtils.register(user.getMobile(), user.getPassword());//单点服务端注册用户
+				result = RegisterUtils.register(Config.getSsoAppCode(),user.getMobile(), user.getPassword());//单点服务端注册用户
 				System.out.println("单点注册结果result："+result);
 				
 				//User temp=new User();

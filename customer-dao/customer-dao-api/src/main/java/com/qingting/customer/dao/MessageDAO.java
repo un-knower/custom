@@ -15,44 +15,48 @@ public interface MessageDAO {
 	void insertMessage(Message message);
 	/**
 	 * 
-	 * @Title: deleteMessageByRowKey
+	 * @Title: deleteMessage
 	 * @Description: 删除一条信息
-	 * @param rowKey 
+	 * @param userId
+	 * @param sortCode
+	 * @param millis 
 	 * @return void
 	 * @throws
 	 */
-	void deleteMessageByRowKey(String rowKey);
+	void deleteMessage(Integer userId,String sortCode,Long millis);
 	/**
 	 * 
-	 * @Title: updateMessageByRowKey
+	 * @Title: updateMessage
 	 * @Description: 更新一条信息
 	 * @param message 
 	 * @return void
 	 * @throws
 	 */
-	void updateMessageByRowKey(Message message);
+	void updateMessage(Message message);
 	/**
 	 * 
-	 * @Title: getMessageByRowKey
+	 * @Title: getMessage
 	 * @Description: 获得一条信息
-	 * @param rowKey
+	 * @param userId
+	 * @param sortCode
+	 * @param millis
 	 * @return 
 	 * @return Message
 	 * @throws
 	 */
-	Message getMessageByRowKey(String rowKey);
+	Message getMessage(Integer userId,String sortCode,Long millis);
 	/**
 	 * 
 	 * @Title: listMessage
 	 * @Description: 查消息
+	 * @param userId
 	 * @param sortCode
-	 * @param mobile
 	 * @param pageNo
 	 * @param pageSize
 	 * @return 
 	 * @return Pagination<Message>
 	 * @throws
 	 */
-	Pagination<Message> listMessage(String sortCode,String mobile,Integer pageNo,Integer pageSize);
+	Pagination<Message> listMessage(Integer userId,String sortCode,Integer pageNo,Integer pageSize);
 	
 }

@@ -33,9 +33,6 @@ public class CoprocessorTest {
 			put("family",new String[]{"projectFamily"});
 		}
 	};
-	/*static String[][] equip={
-		{"equipFamily"},{}
-	};*/
 	private static final Map<String,Object> equip=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"equipFamily"});
@@ -46,20 +43,6 @@ public class CoprocessorTest {
 			put("family",new String[]{"equipSortFamily"});
 		}
 	};
-	/*static String[][] monitor={
-		{"monitorFamily"},
-			new String[]{
-				new String(new byte[]{48,48,48,48,48,48,48,48,48}),
-				new String(new byte[]{49,48,48,48,48,48,48,48,48}), 
-				new String(new byte[]{50,48,48,48,48,48,48,48,48}), 
-				new String(new byte[]{51,48,48,48,48,48,48,48,48}), 
-				new String(new byte[]{52,48,48,48,48,48,48,48,48}),    
-				new String(new byte[]{(byte)53,48,48,48,48,48,48,48,48}), 
-				new String(new byte[]{(byte)54,48,48,48,48,48,48,48,48}), 
-				new String(new byte[]{(byte)55,48,48,48,48,48,48,48,48}), 
-				new String(new byte[]{(byte)56,48,48,48,48,48,48,48,48}) 
-			}
-	};*/
 	private static final Map<String,Object> monitor=new HashMap<String,Object>(){
 	
 		private static final long serialVersionUID = 9112245605102867437L;
@@ -69,9 +52,6 @@ public class CoprocessorTest {
 			);
 		}
 	};
-	/*static String[][] user={
-		{"userFamily"},{}
-	};*/
 	private static final Map<String,Object> user=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"userFamily"});
@@ -82,25 +62,26 @@ public class CoprocessorTest {
 			put("family",new String[]{"userSortFamily"});
 		}
 	};
-	/*static String[][] message={
-		{"messageFamily"},{}
-	};*/
 	private static final Map<String,Object> message=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"messageFamily"});
 		}
 	};
-	/*static String[][] province={
-		{"provinceFamily"},{}
-	};*/
+	private static final Map<String,Object> messageIndex=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"messageIndexFamily"});
+		}
+	};
+	private static final Map<String,Object> messageSort=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"messageSortFamily"});
+		}
+	};
 	private static final Map<String,Object> province=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"provinceFamily"});
 		}
 	};
-	/*static String[][] city={
-		{"cityFamily"},{}
-	};*/
 	private static final Map<String,Object> city=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"cityFamily"});
@@ -119,9 +100,6 @@ public class CoprocessorTest {
 			);
 		}
 	};
-	/*static String[][] area={
-		{"areaFamily"},{}
-	};*/
 	private static final Map<String,Object> area=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"areaFamily"});
@@ -154,6 +132,8 @@ public class CoprocessorTest {
 			put("user", user);
 			put("userSort",userSort);
 			put("message", message);
+			put("messageIndex", messageIndex);
+			put("messageSort", messageSort);
 			put("province",province);
 			put("city",city);
 			put("area",area);
@@ -184,6 +164,13 @@ public class CoprocessorTest {
 		        admin.enableTable(TableNameUtil.getTableName(tablename));
 			} catch (IOException e) {
 				e.printStackTrace();
+			}finally{
+				try {
+					if(admin.isTableDisabled(TableNameUtil.getTableName(tablename)))
+						admin.enableTable(TableNameUtil.getTableName(tablename));
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
        }
    }

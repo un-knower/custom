@@ -15,10 +15,16 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
+		<link rel="stylesheet" type="text/css" href="${_path}/css/base.css" />
 	</head>
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
+	<style>
+		.spanLine{width: 1.5px;margin-top: 10px; color: #2E8DFB;} 
+		.dotPosition{top:8px;left:inherit;}
+		.pr{position: relative;}   
+	</style>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
 			<div class="weui-flex xy-header">
@@ -28,214 +34,462 @@
 				<div class="weui-flex__item"><div class="xy-h1-title">消息</div></div>
 				<div class="xy-width-45"></div>
 			</div><!--/header-->
-			<div class="page__bd xy-container xy-container-t45b10 xy-scrollY">
-				<div class="xy-pad-lr10 xy-pad-t10 xy-border-box xy-list-top-bar">
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG xy-pore">
-										<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" />
-										<i class="xy-poab icon-new-message icon-new-message-other">&nbsp;</i>
-									</p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">上午10:31</span>
-											<dt class=" xy-fs16">服务提醒</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>您有个设备正在服务中</dt>
-										</ol>
+			<div class="page__bd xy-container xy-white-bg">
+				<div class="weui-tab xy-border-box xy-pad-tb10">
+					<div class="weui-tabbar xy-tabbar bg-white">
+						<a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+							<p class="weui-tabbar__label">服务提醒</p>
+						</a>
+						<a href="javascript:;" class="weui-tabbar__item">
+							<p class="weui-tabbar__label">评价</p>
+						</a>
+						<a href="javascript:;" class="weui-tabbar__item">
+							<p class="weui-tabbar__label">好友申请</p>
+						</a>
+						<a href="javascript:;" class="weui-tabbar__item">
+							<p class="weui-tabbar__label pr">续费提醒<i class="xy-poab icon-new-message dotPosition">&nbsp;</i></p>
+						</a>
+					</div><!--/tab 导航-->
+					<div class="weui-tab__panel xy-tab__panel xy-scrollH" >
+						<div class="xy-tab-list xy-tab-list_on">
+							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">	
+								<div class="htmleaf-container height100">
+									<div class="container height100 scrolly">
+										<div id="timeline">
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" background: #71affa;
+			   				box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待服务</span>
+																			<dt class=" xy-fs16"><b>胡先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>建议更换五级滤芯</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style="">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待服务</span>
+																			<dt class=" xy-fs16"><b>胡先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>建议更换五级滤芯</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style="">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待服务</span>
+																			<dt class=" xy-fs16"><b>胡先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>建议更换五级滤芯</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style="">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待服务</span>
+																			<dt class=" xy-fs16"><b>胡先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>建议更换五级滤芯</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->			
+										</div>
 									</div>
-								</a>
+								</div>																	
 							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
-						</div>
-					</div><!--消息列表-->
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">昨天</span>
-											<dt class=" xy-fs16">服务评价</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>您有一个服务未评价</dt>
-										</ol>
+						</div>	
+						<div class="xy-tab-list">
+							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">	
+								<div class="htmleaf-container height100">
+									<div class="container height100 scrolly">
+										<div id="timeline">
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" background: #71affa;
+			   				box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待评价</span>
+																			<dt class=" xy-fs16"><b>张三</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>更换第5级滤芯，日常维护</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" ">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待评价</span>
+																			<dt class=" xy-fs16"><b>张三</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>更换第5级滤芯，日常维护</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" ">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待评价</span>
+																			<dt class=" xy-fs16"><b>张三</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>更换第5级滤芯，日常维护</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->			
+										</div>
 									</div>
-								</a>
+								</div>																	
 							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
 						</div>
-					</div><!--消息列表-->
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-remind-list.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">5:36</span>
-											<dt class=" xy-fs16">预警消息</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>您有5个设备正在预警中</dt>
-										</ol>
+						<div class="xy-tab-list">
+							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">	
+								<div class="htmleaf-container height100">
+									<div class="container height100 scrolly">
+										<div id="timeline">
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" background: #71affa;
+			   				box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待处理</span>
+																			<dt class=" xy-fs16"><b>小飞流</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>我申请关注你家设备</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style="">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待处理</span>
+																			<dt class=" xy-fs16"><b>小飞流</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>我申请关注你家设备</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" ">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待处理</span>
+																			<dt class=" xy-fs16"><b>小飞流</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>我申请关注你家设备</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" ">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">待处理</span>
+																			<dt class=" xy-fs16"><b>小飞流</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>我申请关注你家设备</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->			
+										</div>
 									</div>
-								</a>
+								</div>																	
 							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
 						</div>
-					</div><!--消息列表-->
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-follow.html" class="xy-border-box xy-pad-10 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">昨天</span>
-											<dt class=" xy-fs16">小飞流</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>申请关注您的饮水安全状态</dt>
-										</ol>
+						<div class="xy-tab-list">
+							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">	
+								<div class="htmleaf-container height100">
+									<div class="container height100 scrolly">
+										<div id="timeline">
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" background: #71affa;
+			   				box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">去续费</span>
+																			<dt class=" xy-fs16"><b>周先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>剩余服务时长：07天5小时</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style=" ">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">去续费</span>
+																			<dt class=" xy-fs16"><b>周先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>剩余服务时长：07天5小时</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style="">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">去续费</span>
+																			<dt class=" xy-fs16"><b>周先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>剩余服务时长：07天5小时</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->
+											<div class="timeline-item">
+												<div class="timeline-icon" style="">
+												</div>
+												<div class="timeline-content">
+													<h3>2017.7.13 8:26</h3>
+													<div class="line-wrapper">
+														<div class="xy-border-box line-scroll-wrapper xy-clearfix">
+															<div class="xy-fll line-normal-wrapper">
+																<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
+																	<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
+																	<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">
+																		<ol class="xy-pad-t3">
+																			<span class="xy-flr xy-fs13 xy-pad-t2">去续费</span>
+																			<dt class=" xy-fs16"><b>周先生家的设备</b></dt>
+																		</ol>
+																		<ol class="xy-pad-t3 xy-fs13">
+																			<dt>剩余服务时长：07天5小时</dt>
+																		</ol>
+																	</div>
+																</a>
+															</div>
+														</div>
+													</div>
+												</div>
+											</div><!-- timeline-item结束	 -->			
+										</div>
 									</div>
-								</a>
+								</div>																	
 							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
 						</div>
-					</div><!--消息列表-->
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-follow.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">三天前</span>
-											<dt class=" xy-fs16">萧景琰</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>申请关注您的饮水安全状态</dt>
-										</ol>
-									</div>
-								</a>
-							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
-						</div>
-					</div><!--消息列表-->
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-follow.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">四天前</span>
-											<dt class=" xy-fs16">霓凰</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>申请关注您的饮水安全状态</dt>
-										</ol>
-									</div>
-								</a>
-							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
-						</div>
-					</div><!--消息列表-->
-					<div class="xy-layout-bar xy-mar-b10 line-wrapper">
-						<div class="xy-border-box line-scroll-wrapper xy-clearfix">
-							<div class="xy-fll line-normal-wrapper">
-								<a href="page-follow.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">
-									<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-									<div class="xy-pad-l10 line-normal-msg">
-										<ol class="xy-pad-t3">
-											<span class="xy-flr xy-fs13 xy-pad-t2">一个月前</span>
-											<dt class=" xy-fs16">萧景桓</dt>
-										</ol>
-										<ol class="xy-pad-t3 xy-fs13">
-											<dt>申请关注您的饮水安全状态</dt>
-										</ol>
-									</div>
-								</a>
-							</div>
-							<div class="line-btn-delete"><button>删除</button></div>
-						</div>
-					</div><!--消息列表-->
-				</div>
-			</div>
-			<!--/ container -->
+					</div><!--weui-tab__panel 内容-->
+				</div><!--weui-tab 内容-->
+			</div><!--/ container -->	
 		</div>
 		<!--/page End--><!--删除确认 弹窗-->
-			<div id="dialogs">
-				<!--确认删除？弹窗-->
-				<div class="js_dialog" id="iosDialog1" style="display: none;">
-					<div class="weui-mask"></div>
-					<div class="weui-dialog bg-blue-01">
-						<div class="weui-dialog__bd">
-							<p class="icon-dialog-bar"><img src="${_staticPath}/resource/weuiWeb/img/icon-question-mark.png" /></p>
-							<p class="xy-fs16 xy-fc-white xy-pad-t3">确认删除这个消息？</p>
-						</div>
-						<div class="xy-waveBox xy-line-h0">
-							<div class="xy-wave" id="wave4"></div>
-							<div class="xy-wave" id="wave5"></div>
-							<div class="xy-wave" id="wave6"></div>
-						</div>
-						<div class="weui-dialog__ft">
-							<div class="xy-pad-lr10 xy-pad-b10 bg-blue-opacity xy-border-box width100" flex="dir:left">
-								<a href="javascript:;" class="weui-btn weui-dialog__btn weui-dialog__btn_default bg-light-blue dialog-btn-cancel" flex-blox="1">取消</a>
-								<a href="javascript:;" class="weui-btn weui-dialog__btn weui-dialog__btn_primary bg-blue dialog-btn-primary" flex-blox="1">确认</a>
-							</div>
-						</div>
-					</div>
-				</div>
 				
-				<!--操作成功弹窗-->
-				<div class="js_dialog" id="iosDialog2" style="display: none;">
-					<div class="weui-mask"></div>
-					<div class="weui-dialog bg-blue-01">
-						<div class="weui-dialog__bd">
-							<p class="icon-dialog-bar"><img src="${_staticPath}/resource/weuiWeb/img/icon-ok.png" /></p>
-							<p class="xy-fs16 xy-fc-white xy-pad-t3">操作成功</p>
-						</div>
-						<div class="xy-waveBox xy-line-h0">
-							<div class="xy-wave" id="wave4"></div>
-							<div class="xy-wave" id="wave5"></div>
-							<div class="xy-wave" id="wave6"></div>
-						</div>
-					</div>
-				</div>
-				 
-			</div>
-			<!--/弹窗 End-->
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/leftDelete.js"></script>
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
-			}						
-			var $iosDialog1 = $('#iosDialog1');
-			var $iosDialog2 = $('#iosDialog2');
-			var deleteDom;
-			$('#dialogs').on('click', '.weui-dialog__btn', function(){
-				if($(this).is('.dialog-btn-primary')){
-					$iosDialog2.show().delay(2000).hide(300); 
-					setTimeout(function(){
-						deleteDom.parents('.line-wrapper').remove();
-					},2500);
-				}
-				$(this).parents('.js_dialog').hide();
-			});
-			
-			$('body').on('click','.line-btn-delete',function(){//删除按钮事件
-				deleteDom = $(this);
-				$iosDialog1.show();
-			});
+			}
+			$('.weui-tabbar__item').on('click', function () {
+				$(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+				var thisNum = $(this).index();
+				console.log(thisNum);
+				$('.xy-tab-list').eq(thisNum).addClass('xy-tab-list_on').siblings('.xy-tab-list_on').removeClass('xy-tab-list_on');
+			});							
+
 			 $('body').on('click','.line-scroll-wrapper',function(){//列表点击事件跳转
 			 	//$(this).find('i').remove();			 					
 				if($(this).find('i').length > 0){//如果有小红点，调消息已读接口
@@ -283,60 +537,44 @@ window.location.href =_path+"/consumer/follow.jsp?followTime="+followTime+'&name
 				});
 				function drawMessageList(data){
 					var messageDiv = '';
-					for (var i in data){
-						//处理消息显示的时间
-						var dateNew = new Date().getTime() - new Date(data[i].createTime).getTime(),timeContent;   //时间差的毫秒数   
-						 //计算出相差天数  
-					    var days=Math.floor(dateNew/(24*3600*1000))  					  
-					    //计算相差小时数  					  
-					    var leave1=dateNew%(24*3600*1000)    //计算天数后剩余的毫秒数  
-					    var hours=Math.floor(leave1/(3600*1000))  
-					    //计算相差分钟数  
-					    var leave2=leave1%(3600*1000)        //计算小时数后剩余的毫秒数  
-					    var minutes=Math.floor(leave2/(60*1000))   
-					     if(days >= 1){
-					     	 timeContent = days+'天前';
-					     }else if(days < 1&&hours >= 1){
-					     	 timeContent = hours+'小时前';
-					     }else if(hours < 1){
-					     	 timeContent = minutes+'分钟前';
-					     }else{
-					     	timeContent = '刚刚';
-					     }        
-					 	messageDiv += '<div class="xy-layout-bar xy-mar-b10 line-wrapper" sortCode="'+data[i].sortCode+'">'+
-//if(data[i].sortCode == 1||data[i].sortCode == 2){
-										 '<div class="xy-border-box line-scroll-wrapper xy-clearfix" detailId="'+data[i].detailId+'">'+
-							//}else{
-							//messageDiv +='<div class="xy-border-box line-scroll-wrapper xy-clearfix">';
-							//}
-											'<div class="xy-fll line-normal-wrapper">'+
-												'<a href="#" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">'+
-													'<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG" style="position:absolute"><img src="${_staticPath}'+data[i].path+'" />';
-													  //此处需要根据消息未读标志来判断显不显示小圆点
-							  if(data[i].readFlag == false)
-									   messageDiv +='<i class="xy-poab icon-new-message " style="left: 44px;">&nbsp;</i>';
-									   messageDiv +='</p>'+
-													'<div class="xy-pad-l10 line-normal-msg">'+
-														'<ol class="xy-pad-t3">'+
-															//'<span class="xy-flr xy-fs13 xy-pad-t2" id="followTime">'+data[i].createTime.slice(11,16)+'</span>'+
-															'<span class="xy-flr xy-fs13 xy-pad-t2" id="followTime">'+timeContent+'</span>'+
-															'<dt class=" xy-fs16" id="name">'+data[i].sortName+'</dt>'+
-														'</ol>'+
-														'<ol class="xy-pad-t3 xy-fs13">'+
-															'<dt id="content" style="text-overflow:ellipsis;overflow:hidden;white-space:nowrap;">'+data[i].content+'</dt>'+
-														'</ol>'+
-													'</div>'+
-												'</a>'+
+					for (var i in data){       
+					 	messageDiv += '<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">'+	
+										'<div class="htmleaf-container height100">'+
+											'<div class="container height100 scrolly">'+
+												'<div id="timeline">'+
+													'<div class="timeline-item">'+
+														'<div class="timeline-icon">'+
+														'</div>'+
+														'<div class="timeline-content">'+
+															'<h3>2017.7.13 8:26</h3>'+
+															'<div class="line-wrapper">'+
+																'<div class="xy-border-box line-scroll-wrapper xy-clearfix">'+
+																	'<div class="xy-fll line-normal-wrapper">'+
+																		'<a href="page-services-details.html" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">'+
+																			'<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>'+
+																			'<div class="line-normal-msg" style="padding: 0.5em 0 0 1em;">'+
+																				'<ol class="xy-pad-t3">'+
+																					'<span class="xy-flr xy-fs13 xy-pad-t2">待服务</span>'+
+																					'<dt class=" xy-fs16"><b>胡先生家的设备</b></dt>'+
+																				'</ol>'+
+																				'<ol class="xy-pad-t3 xy-fs13">'+
+																					'<dt>建议更换五级滤芯</dt>'+
+																				'</ol>'+
+																			'</div>'+
+																		'</a>'+
+																	'</div>'+
+																'</div>'+
+															'</div>'+
+														'</div>'+
+													'</div><!-- timeline-item结束	 -->'+			
+												'</div>'+
 											'</div>'+
-											'<div class="line-btn-delete"><button>删除</button></div>'+
-										'</div>'+
+										'</div>	'+																
 									'</div>';
-					}
-					$('.xy-list-top-bar').html(messageDiv);
-					leftDelete();
+
 				}
-				
-			})
+			}
+		});
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

@@ -76,7 +76,7 @@
 						<!--------------------- 列表 --------------------------->
 						<li class="xy-layout-bar xy-border-box">
 							<div class="weui-cells xy-mar-t0 xy-fs16 link-icon-listview">
-								<a class="weui-cell weui-cell_access" href="#" id="message">
+								<%-- <a class="weui-cell weui-cell_access" href="#" id="message">
 									<div class="weui-cell__hd xy-pore">
 										<img src="${_staticPath}/resource/weuiWeb/img/icon-list-message.png">
 									</div>
@@ -84,7 +84,7 @@
 										<p>消息</p>
 									</div>
 									<div class="weui-cell__ft"></div>
-								</a>
+								</a> --%>
 								<a class="weui-cell weui-cell_access" href="#" id="attent">
 									<div class="weui-cell__hd"><img src="${_staticPath}/resource/weuiWeb/img/icon-list-device.png"></div>
 									<div class="weui-cell__bd">

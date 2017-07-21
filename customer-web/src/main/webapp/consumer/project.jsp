@@ -403,6 +403,7 @@
 							     if(data[i].remainTime < 10000000){deviceDiv += '<p class="xy-fs12 xy-fc-red xy-line-h20 xy-pad-t2 xy-pad-lr10 xy-line-clamp2">'+		
 																					'净水设备快到维护期了，建议及时更换第五级滤芯'+
 																				'</p>';
+																	$('.sub-title').css('background','#fcb12a');//改变头部颜色
 																  }
 													deviceDiv +='</div>'+
 															'</div>'+

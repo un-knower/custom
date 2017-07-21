@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qingting.customer.baseserver.EquipSortService;
+import com.qingting.customer.baseserver.MessageSortService;
 import com.qingting.customer.baseserver.UserSortService;
 import com.qingting.customer.common.pojo.hbasedo.EquipSort;
+import com.qingting.customer.common.pojo.hbasedo.MessageSort;
 import com.qingting.customer.common.pojo.hbasedo.UserSort;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.smart.mvc.model.ResultCode;
@@ -33,6 +35,8 @@ public class SortController {
 	UserSortService userSortService;
 	@Resource
 	EquipSortService equipSortService;
+	@Resource
+	MessageSortService messageSortService;
 	@ApiOperation("用户分类-页面跳转")
 	@RequestMapping(value="/userSort",method = RequestMethod.GET)
 	public String userSort(){
@@ -42,6 +46,11 @@ public class SortController {
 	@RequestMapping(value="/equipSort",method = RequestMethod.GET)
 	public String equipSort(){
 		return "/admin/sort/equipSort";
+	}
+	@ApiOperation("消息分类-页面跳转")
+	@RequestMapping(value="/messageSort",method = RequestMethod.GET)
+	public String messageSort(){
+		return "/admin/sort/messageSort";
 	}
 	@ApiOperation("获取用户分类信息")
 	@RequestMapping(value="/listUserSort",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
@@ -83,6 +92,28 @@ public class SortController {
 		System.out.println(equipSort);
 		equipSort.setCreateTime(Calendar.getInstance());
 		equipSortService.insertEquipSort(equipSort);
+		WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
+		result.setData("成功");
+		return result;
+	}
+	@ApiOperation("获取信息分类信息")
+	@RequestMapping(value="/listMessageSort",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Pagination<MessageSort>> listMessageSort(
+			@ApiParam(value = "开始页码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageNo,
+			@ApiParam(value = "显示条数", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK }) Integer pageSize
+			){
+		WebResult<Pagination<MessageSort>> result=new WebResult<Pagination<MessageSort>>(ResultCode.SUCCESS);
+		result.setData(messageSortService.listMessageSort(pageNo, pageSize));
+		return result;
+	}
+	@ApiOperation("保存用户分类信息")
+	@RequestMapping(value="/saveMessageSort",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Object> saveMessageSort(
+			@ApiParam @RequestBody MessageSort messageSort
+			){
+		System.out.println(messageSort);
+		messageSort.setCreateTime(Calendar.getInstance());
+		messageSortService.insertMessageSort(messageSort);
 		WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
 		result.setData("成功");
 		return result;

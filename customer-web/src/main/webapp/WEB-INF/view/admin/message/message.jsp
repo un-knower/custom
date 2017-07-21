@@ -6,7 +6,7 @@
 
 <div class="page-header">
 	<h1>
-		用户分类列表
+		消息列表
 	</h1>
 </div>
 
@@ -23,7 +23,7 @@
 						<div class="widget-main">
 							<form id="_form" class="form-inline">
 								<label>
-									<label class="control-label" for="form-field-1"> 分类名称： </label>
+									<label class="control-label" for="form-field-1"> ： </label>
 									<input name="name" type="text" class="form-data input-medium search-data">
 								</label>
 								<!-- 
@@ -66,12 +66,12 @@
 			
 			// 列表
     		var $table = $("#_table").table({
-    			url : "${_path}/admin/sort/listUserSort",
+    			url : "${_path}/admin/message/list",
     			formId : "_form",
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
-						$table.dialog(null,null,"用户添加",{
-							url:'${_path}/admin/sort/saveUserSort',
+						$table.dialog(null,null,"消息添加",{
+							url:'${_path}/admin/message/insert',
 							type:'post',
 							callback:function(d){
 								$.gritter.add({
@@ -94,9 +94,21 @@
 					{field:'rowkey',hide:true},
 			        {field:'id', hide : true},
 			        
-			        {field:'sortName', title:'分类名称', mobileHide : true},
-			        {field:'userId', title:'创建者ID', mobileHide : true},
-			        {field:'createTime', title:'创建时间', mobileHide : true}
+			        {field:'userId', title:'用户ID', mobileHide : true},
+			        {field:'title', title:'标题', mobileHide : true},
+			        {field:'content', title:'内容', mobileHide : true},
+			        {field:'imageUrl', title:'图片url', mobileHide : true,replace : function (d){
+			        	return	'<div class="col-xs-3">'+
+			        				//'<a id="updatePortrait_'+d.id+'" data-toggle="dropdown" href="www.baidu.com" class="dropdown-toggle">'+
+										'<img class="img-circle img-responsive center-block nav-user-photo" src="${_staticPath}'+d.imageUrl+'" alt="Jasons\' Photo" />'+
+									//'</a>'+
+								'</div>';
+					}},
+			        {field:'sortCode', title:'分类编码', mobileHide : true},
+			        {field:'readFlag', title:'读标志', mobileHide : true},
+			        {field:'status', title:'处理状态', mobileHide : true},
+			        {field:'createTime', title:'创建时间', mobileHide : true},
+			        
 				],
 				operate : [
 					{text : '修改', clazz : 'blue', icon : 'fa fa-pencil', permission : '/admin/user/edit', handler : function(d, i){

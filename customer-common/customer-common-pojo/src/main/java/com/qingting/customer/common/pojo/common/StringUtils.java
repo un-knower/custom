@@ -48,4 +48,24 @@ public class StringUtils {
 			return true;
 		return false;
 	}
+	/**
+	 * 验证可能为0或null的整形数据
+	 * 
+	 * <pre>
+	 *   StringUtils.isZeroOrNull(null)      = true
+	 *   StringUtils.isZeroOrNull(0)        = true
+	 *   StringUtils.isBlank(1)       = false
+	 * </pre>
+	 * 
+	 * @param value
+	 *            可能为0或者null的Integer数据
+	 * @return
+	 */
+	public static boolean isZeroOrNull(Long value){
+		if(value==null)
+			return true;
+		if(value == 0)
+			return true;
+		return false;
+	}
 }

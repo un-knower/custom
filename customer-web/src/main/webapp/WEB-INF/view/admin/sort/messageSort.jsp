@@ -6,7 +6,7 @@
 
 <div class="page-header">
 	<h1>
-		用户分类列表
+		消息分类列表
 	</h1>
 </div>
 
@@ -66,12 +66,12 @@
 			
 			// 列表
     		var $table = $("#_table").table({
-    			url : "${_path}/admin/sort/listUserSort",
+    			url : "${_path}/admin/sort/listMessageSort",
     			formId : "_form",
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
-						$table.dialog(null,null,"用户添加",{
-							url:'${_path}/admin/sort/saveUserSort',
+						$table.dialog(null,null,"消息分类添加",{
+							url:'${_path}/admin/sort/saveMessageSort',
 							type:'post',
 							callback:function(d){
 								$.gritter.add({
@@ -94,6 +94,7 @@
 					{field:'rowkey',hide:true},
 			        {field:'id', hide : true},
 			        
+			        {field:'sortCode', title:'分类编号', mobileHide : true},
 			        {field:'sortName', title:'分类名称', mobileHide : true},
 			        {field:'userId', title:'创建者ID', mobileHide : true},
 			        {field:'createTime', title:'创建时间', mobileHide : true}
@@ -115,6 +116,8 @@
 					
 				}
 			});
+			
+			$(".panel-body img").addClass("img-responsive center-block");
 			/* $table.dialog(null,null,"用户添加");
 			$('.page-content-area').ace_ajax('loadScripts', scripts, function() {
 				//弹出层初始化

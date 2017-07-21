@@ -126,6 +126,10 @@ var SuspendedBall = {
 			sessionStorage.setItem('iffuwu',1);//跳转页面，公用一个列表页，设假数据为1，若1 ==》 跳转页面标题改成"历史服务记录列表";
 			window.location.href=_path+"/consumer/services-list.jsp";
 		}else if(clickBox.is(".nav_href_5")){
+			//消息
+			window.location.href =_path+"/consumer/news.jsp";
+		}
+		else if(clickBox.is(".nav_href_6")){
 			//我的
 			window.location.href =_path+"/consumer/me.jsp";
 		}else if(clickBox.is("#xy-lyBtn")){
@@ -322,29 +326,32 @@ $(function () {
 	}*/
 	//悬浮框ui
 	var supendeBallDom = ''+
-		'<div class="xy-nav-bar xy-pad-lr10 xy-pore">'+
-		'	<a class="xy-voice-bar xy-top-corner xy-tac xy-pad-t20 xy-poab">'+
-		'		<div class="xy-db xy-voice-seat"><span class="xy-voice-img xy-qt-img xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/icon-corner-qt.png" /></span></div>'+
-		'	</a>'+
-		'	<div class="weui-navbar xy-navbar xy-navbar-seat xy-layout-bar bg-white reset-poab reset-top">'+
+		'<div class="xy-nav-bar xy-pore">'+
+		'	<div class="weui-navbar xy-navbar xy-navbar-seat bg-white reset-poab reset-top">'+
 		'		<a class="weui-navbar__item nav_href_1" href="javascript:;"><!--判断 nav_href_1 连接首页-->'+
-		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/nav-home.png" /></p>'+	
+		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/home.png" /></p>'+	
 		'			<p class="xy-pad-t2">首页</p>'+
 		'		</a>'+
 		'		<a class="weui-navbar__item nav_href_2" href="javascript:;"><!--判断 nav_href_2 连接设备列表-->'+
-		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/nav-warning.png" /></p>'+
+		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/device.png" /></p>'+
 		'			<p class="xy-pad-t2">设备</p>'+
 		'		</a>'+
 		'		<a class="weui-navbar__item nav_href_3" href="javascript:;"><!--判断 nav_href_3 连接关注列表-->'+
-		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/nav-follow.png" /></p>'+
+		'			<i class="xy-poab icon-new-message " style="left: 44px;top:5px;">&nbsp;</i>'+
+		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/follow.png" /></p>'+
 		'			<p class="xy-pad-t2">关注</p>'+
 		'		</a>'+
-		'		<a class="weui-navbar__item nav_href_4" href="javascript:;"><!--判断 nav_href_4 连接服务列表-->'+
-		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/nav-heart-shaped.png" /></p>'+
+		'		<a class="weui-navbar__item nav_href_4" href="javascript:;"><!--判断 nav_href_4 连接服务列表-->'+		
+		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/ser.png" /></p>'+
 		'			<p class="xy-pad-t2">服务</p>'+
 		'		</a>'+
-		'		<a class="weui-navbar__item nav_href_5" href="javascript:;"><!--判断 nav_href_5 连接我的个人中心-->'+
-		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/nav-me.png" /></p>'+
+		'		<a class="weui-navbar__item nav_href_5" href="javascript:;"><!--判断 nav_href_5 连接消息列表-->'+
+		'			<span class="weui-badge" style="position: absolute;top: -2px;right: 8px;">8</span>'+
+		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/message.png" /></p>'+
+		'			<p class="xy-pad-t2">消息</p>'+
+		'		</a>'+
+		'		<a class="weui-navbar__item nav_href_6" href="javascript:;"><!--判断 nav_href_6 连接我的个人中心-->'+
+		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/me.png" /></p>'+
 		'			<p class="xy-pad-t2">我的</p>'+
 		'		</a>'+
 		'	</div>'+
@@ -359,5 +366,27 @@ $(function () {
 	SuspendedBall.Add(position);
 	SuspendedBall.BoxHtml(supendeBallDom);
 	SuspendedBall.Move();
+	//当前按钮变为实心
+	/*alert(window.location);
+	console.log(_path);
+    if(window.location == _path+"/consumer/project.jsp"){
+    	alert('122');
+    	$('.nav_href_1 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/home_b.png');
+    }*/  
+    var str = window.location.href;
+    //console.log(str);
+    if(str.indexOf("home") >= 0 ) { 
+    	$('.nav_href_1 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/home_b.png');
+    }else if(str.indexOf("project") >= 0){
+    	$('.nav_href_2 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/device_b.png');
+    }else if(str.indexOf("follow") >= 0){
+    	$('.nav_href_3 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/follow_b.png');
+    }else if(str.indexOf("services") >= 0){
+    	$('.nav_href_4 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/ser_b.png');
+    }else if(str.indexOf("news") >= 0){
+    	$('.nav_href_5 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/message_b.png');
+    }else if(str.indexOf("me") >= 0){
+    	$('.nav_href_6 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/me_b.png');
+    }   
 	
 })

@@ -19,9 +19,9 @@ public class Message extends PersistentObject{
 	private Long id;
 	
 	/**
-	 * 用户账号(手机号)
+	 * 用户Id
 	 */
-	private String userMobile;
+	private Integer userId;
 	
 	/**
 	 * 标题
@@ -49,7 +49,7 @@ public class Message extends PersistentObject{
 	private Boolean readFlag;
 	
 	/**
-	 * 状态
+	 * 状态(已完成、已同意等)
 	 */
 	private String status;
 	
@@ -75,13 +75,13 @@ public class Message extends PersistentObject{
 	public void setId(Long id) {
 		this.id = id;
 	}
-
-	public String getUserMobile() {
-		return userMobile;
+	
+	public Integer getUserId() {
+		return userId;
 	}
 
-	public void setUserMobile(String userMobile) {
-		this.userMobile = userMobile;
+	public void setUserId(Integer userId) {
+		this.userId = userId;
 	}
 
 	public String getTitle() {

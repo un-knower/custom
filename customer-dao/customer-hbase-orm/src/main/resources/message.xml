@@ -1,12 +1,26 @@
 <SimpleHbase>
 
 	<HBaseTableSchema tableName="message" defaultFamily="messageFamily">
-		<HBaseColumnSchema qualifier="phone" typeName="string" />
-		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+		<HBaseColumnSchema qualifier="id" typeName="long" />
+		<HBaseColumnSchema qualifier="userId" typeName="int" />
+		<HBaseColumnSchema qualifier="title" typeName="string" />
+		<HBaseColumnSchema qualifier="content" typeName="string" />
+		<HBaseColumnSchema qualifier="imageUrl" typeName="string" />
+		<HBaseColumnSchema qualifier="sortCode" typeName="string" />
+		<HBaseColumnSchema qualifier="readFlag" typeName="boolean" />
+		<HBaseColumnSchema qualifier="status" typeName="string" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Message" defaultFamily="messageFamily">
-		<field name="phone"/>
-		<field name="version" isVersioned="true"/>
+		<field name="id"/>
+		<field name="userId"/>
+		<field name="title"/>
+		<field name="content"/>
+		<field name="imageUrl"/>
+		<field name="sortCode"/>
+		<field name="readFlag"/>
+		<field name="status"/>
+		<field name="createTime"/>
 	</MappingType>
 </SimpleHbase>   
 

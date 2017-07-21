@@ -24,6 +24,7 @@
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.EquipService" ref="equipService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.EquipSortService" ref="equipSortService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MessageService" ref="messageService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MessageSortService" ref="messageSortService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.UserService" ref="userService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.UserSortService" ref="userSortService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.external.TxMessageService" ref="txMessageService" />

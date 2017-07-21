@@ -22,23 +22,24 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public void deleteMessageByRowKey(String rowKey) {
-		messageDAO.deleteMessageByRowKey(rowKey);
+	public void deleteMessage(Integer userId, String sortCode, Long millis) {
+		messageDAO.deleteMessage(userId, sortCode, millis);
 	}
 
 	@Override
-	public void updateMessageByRowKey(Message message) {
-		messageDAO.updateMessageByRowKey(message);
+	public void updateMessage(Message message) {
+		messageDAO.updateMessage(message);
 	}
 
 	@Override
-	public Message getMessageByRowKey(String rowKey) {
-		return messageDAO.getMessageByRowKey(rowKey);
+	public Message getMessage(Integer userId, String sortCode, Long millis) {
+		return messageDAO.getMessage(userId, sortCode, millis);
 	}
 
 	@Override
-	public Pagination<Message> listMessage(String sortCode, String mobile, Integer pageNo, Integer pageSize) {
-		return messageDAO.listMessage(sortCode, mobile, pageNo, pageSize);
+	public Pagination<Message> listMessage(Integer userId, String sortCode, Integer pageNo, Integer pageSize) {
+		return messageDAO.listMessage(userId, sortCode, pageNo, pageSize);
 	}
+
 	
 }

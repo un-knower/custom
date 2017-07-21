@@ -94,28 +94,7 @@
 							confirm : "删除管理员会影响关联的应用、角色、权限，确认要删除?",
 							url : "${_path}/admin/user/delete"
 						});
-					}},
-					{text : '重置密码', clazz : 'btn-default', icon : 'fa fa-key grey', permission : '/admin/user/resetPassword', handler : function(){
-						$table.ajax({
-							url : "${_path}/admin/user/resetPassword",
-							confirm : "确认重置密码?",
-							after : function(){
-								$table.reload();
-							}
-						});
-					}}/*,
-					{text : '分配应用', clazz : 'btn-default', icon : 'fa fa-cog grey', permission : '/admin/userApp/allocate', handler : function(){
-						if(!$table.validateSelected(true)){
-							return;						
-						}
-						$.aceRedirect("${_path}/admin/userApp/allocate?userId=" + $table.getSelectedItemKeys("id"));
-					}},
-					{text : '分配角色', clazz : 'btn-default', icon : 'fa fa-cog grey', permission : '/admin/userApp/allocate', handler : function(){
-						if(!$table.validateSelected(true)){
-							return;						
-						}
-						$.aceRedirect("${_path}/admin/userRole/allocate?userId=" + $table.getSelectedItemKeys("id"));
-					}}*/
+					}}
 				],
 				columns : [
 					{field:'rowkey',hide:true},
@@ -135,8 +114,7 @@
 			        	return	'<a id="updatePortrait_'+d.id+'" data-toggle="dropdown" href="www.baidu.com" class="dropdown-toggle">'+
 									'<img class="nav-user-photo" src="${_staticPath}'+d.portraitUrl+'" alt="Jasons\' Photo" />'+
 								'</a>';
-			        }},//href="javascript:void(0);" onclick="savePortrait('+d.id+')" //href="JavaScript:savePortrait('+d.id+');"
-			        
+			        }},
 			        {field:'status', title:'是否启用',dialog_type:"radio",dialog_radio1Text:"是",dialog_radio1Value:"是",dialog_radio2Text:"否",dialog_radio2Value:"否",replace : function (d){
 				        if(d.status)
 				        	return "<span class='label label-sm label-success'>" + d.status + 	"</span>";

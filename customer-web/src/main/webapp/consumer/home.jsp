@@ -13,165 +13,164 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/weui.min.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/swiper.min.css">
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
-		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
+		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />		
+		<link rel="stylesheet" href="example.css">
+		<script src="${_staticPath}/resource/weuiWeb/js/echarts.min.js"></script>
+		<style>
+			.marginleft{
+				margin-left: 2em;
+			}
+			.ceshi{
+				    background-color: #fff;
+				    width: 88%;
+				    margin: 0 6%;
+				    border-top: 2px solid #e6e6e6;
+			}
+			.flex,.flex2{display:flex;width:100%;margin:0;padding:0;list-style:none;padding: 2% 0;}
+			.flex :nth-child(1){flex:1 1 25%;}
+			.flex :nth-child(2){flex:2 2 60%;margin-top: 2%;}
+			.flex :nth-child(3){flex:3 3 10%;}
+			.flex2 :nth-child(1){flex:1 1 15%;}
+			.flex2 :nth-child(2){flex:2 2 35%;}
+			.flex2 :nth-child(3){flex:3 3 40%;}
+			.flex2 :nth-child(4){flex:4 4 10%;}
+			.progress{
+				width:50%;height:6px;border-radius: 10px;			
+			}
+			.jianbian{background-image:linear-gradient(to top,#fff,#CBE3FE);}
+			.jianbian2{background-image:linear-gradient(to top,#fff 60%,#3792FB 40%);}
+		</style>
 	</head>
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
-	<body ontouchstart>
-		<div class="page flex js_show height100 page-navbar">
-			<div class="page__bd xy-container xy-container-other">
-				<div class="swiper-container ve-swiper-container height100">
+<body ontouchstart>		
+	<div class="page tabbar js_show">
+	    <div class="page__bd" style="height: 100%;">
+	        <div class="weui-tab">
+	        	<!-- <div class="swiper-container ve-swiper-container height100">
 					<div class="swiper-wrapper">
-						<!--------------------swiper slide---------------------->
-						<div class="swiper-slide"> 
-							<div class="xy-pad-10 xy-border-box height100">
-								<div class="xy-layout xy-layout-bar bg-blue-01" flex="dir:top">
-									<div class="full-layout-box" flex-box="1" flex="main:center cross:center">
-										<div id="msg-state" value="1">
-											<!--<div class="my-msg weui-flex xy-pad-lr10 xy-mar-t20" flex="main:center cross:center">
-												<div class="xy-fc-white xy-fs14">
-													<p>您好！主人。</p>
-													<p>清亭小管家监测数据提示</p>
-													<p>您的饮水安全质量<span class="xy-fs15 xy-fwb xy-dibVat">棒棒哒！</span></p>
-												</div>
-											</div>
-										
-											<div flex="main:center cross:center">
-												<div class="my-lovely xy-tac xy-pad-lr10" id="xy-qt-MaxImg">
-													<img src="img/pic-lovely-01.png" />
-												</div>
-											</div>-->
-										</div>
-										<!--提示状态-->
-									</div>
-									<div class="">
-										<div class="xy-waveBox xy-line-h0">
-											<div class="xy-wave" id="wave1"></div>
-											<div class="xy-wave" id="wave2"></div>
-											<div class="xy-wave" id="wave3"></div>
-										</div><!--/波纹-->
-										
-										<!--导航-->
-										<div class="bg-blue-opacity" style="height:62px;">
-											<div class="xy-nav-bar xy-pad-lr10 xy-pore xy-dn">
-												<div class="xy-voice-bar xy-top-corner xy-tac xy-pad-t20 xy-poab">
-													<div class="xy-db xy-voice-seat"><span class="xy-voice-img xy-qt-img xy-line-h0"><img src="${_staticPath}/resource/weuiWeb/img/icon-corner-qt.png" /></span></div>
-												</div>
-												<div class="xy-wave-img xy-poab xy-tac xy-dn"><img src="${_staticPath}/resource/weuiWeb/img/icon-wave.png" /></div>	
-												<div class="weui-navbar xy-navbar xy-navbar-seat xy-layout-bar bg-white reset-poab reset-top">
-													<a class="weui-navbar__item weui-bar__item_on" href="#" id="home">
-														<p class="xy-navbar-icon xy-line-h0"><img src="${_staticPath}/resource/weuiWeb/img/nav-home.png" /></p>			
-														<p class="xy-pad-t2">首页</p>									
-													</a>
-													<a class="weui-navbar__item" href="#" id="device">
-														<p class="xy-navbar-icon xy-line-h0"><img src="${_staticPath}/resource/weuiWeb/img/nav-warning.png" /></p>	
-														<p class="xy-pad-t2">设备</p>
-													</a>
-													<a class="weui-navbar__item" href="#" id="attention">
-														<p class="xy-navbar-icon xy-line-h0"><img src="${_staticPath}/resource/weuiWeb/img/nav-follow.png" /></p>	
-														<p class="xy-pad-t2">关注</p>
-													</a>
-													<a class="weui-navbar__item btn-services-list" href="javascript:;" id="sevice"><!--判断 btn-services-list 连接服务列表-->
-														<p class="xy-navbar-icon xy-line-h0"><img src="${_staticPath}/resource/weuiWeb/img/nav-heart-shaped.png" /></p>	
-														<p class="xy-pad-t2">服务</p>
-													</a>
-													<a class="weui-navbar__item" href="#" id="me">
-														<p class="xy-navbar-icon xy-line-h0"><img src="${_staticPath}/resource/weuiWeb/img/nav-me.png" /></p>	
-														<p class="xy-pad-t2">我的</p>
-													</a>
-												</div>
-											</div>
-										</div>
-										<!--/导航-->
-										<div class="xy-tac xy-pad-lr10 bg-blue-opacity xy-clearfix xy-fc-blue xy-fs16">
-											<ol class="xy-fll xy-pad-tb10">
-												<dt class="xy-dibVat">监测次数</dt>
-												<dd class="dt xy-dibVat" id="moitorCount">200172</dd>
-											</ol>
-											<ol class="xy-flr  xy-pad-tb10">
-												<dt class="xy-dibVat">服务次数</dt>
-												<dd class="dt xy-dibVat" id="serviceCount">230</dd>
-											</ol>
-										</div>
-									</div><!--/bottom-->
-								</div><!--内容-->
-							</div>
-						</div>
-						<!--列表-->
-						
-						<!--------------------swiper slide---------------------->
-						<div class="swiper-slide">
-							<div class="xy-pad-10 xy-border-box height100">
-								<div class="xy-layout xy-layout-bar bg-blue-01" flex="dir:top">
-									<div class="full-layout-box xy-dataListBox xy-mar-t20" flex-box="1" flex="dir:top">
-										<div class="xy-dataList">
-											<div class="xy-dataItem">
-												<div class="xy-dataItemName">原水TDS值</div>
-												<div class="xy-dataItemValue" id="rawTds">59</div>
-											</div>
-										</div>
-										<div class="xy-dataList">
-											<div class="xy-dataItem">
-												<div class="xy-dataItemName">净水TDS值</div>
-												<div class="xy-dataItemValue" id="purTds">9</div>
-											</div>
-										</div>
-										<div class="xy-dataList">
-											<div class="xy-dataItem">
-												<div class="xy-dataItemName">流量</div>
-												<div class="xy-dataItemValue" id="flow">23</div>
-											</div>
-										</div>
-										<div class="xy-dataList">
-											<div class="xy-dataItem">
-												<div class="xy-dataItemName">湿度</div>
-												<div class="xy-dataItemValue" id="humidity">12</div>
-											</div>
-										</div>
-										<div class="xy-dataList">
-											<div class="xy-dataItem">
-												<div class="xy-dataItemName">电磁阀开关</div>
-												<div class="xy-dataItemValue" id="leak">8</div>
-											</div>
-										</div>
-										<div class="xy-dataList">
-											<div class="xy-dataItem">
-												<div class="xy-dataItemName">温度</div>
-												<div class="xy-dataItemValue" id="temp">26</div>
-											</div>
-										</div>
-									</div>
+						------------------swiper slide--------------------
+						<div class="swiper-slide"> -->
+				            <div class="weui-tab__panel jianbian2" style="background-color: #3792FB;">		            	
+				            	<ol class="weui-cell weui-cell_access" style="padding:4em 3.5em 0 3.5em; color:#fff;">
+									<dt class="">
+										<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG">
+											<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" />
+										</p>
+									</dt>
+									<dd class="">
+										<h3 style="line-height: 2em;" class="marginleft"></h3>
+										<p class="marginleft">当前设备运行良好，有1个净水设备正在持续关注中…………</p>
+									</dd>
+								</ol>
+								<div class="xy-waveBox xy-line-h0">
+									<div class="xy-wave" id="wave1"></div>
+									<div class="xy-wave" id="wave2"></div>
+									<div class="xy-wave" id="wave3"></div>
+								</div><!--/波纹-->
+								<div class="weui-cell_access jianbian" style="height:35%;width:100%;"><!--/饼图-->
+									<div id="myChart" style="width:100%;height:80%"></div>
+									<div style="height:20%;padding:0 2em;">
+										<ol class="xy-fll xy-pad-tb10">
+											<dt class="xy-dibVat">监测次数</dt>
+											<dd class="dt xy-dibVat" id="moitorCount">200172</dd>
+										</ol>
+										<ol class="xy-flr  xy-pad-tb10">
+											<dt class="xy-dibVat">服务次数</dt>
+											<dd class="dt xy-dibVat" id="serviceCount">230</dd>
+										</ol>
+									</div>							
+								</div><!--/饼图-->
 								
-									<div class="">
-										<div class="xy-waveBox xy-line-h0">
-											<div class="xy-wave" id="wave4"></div>
-											<div class="xy-wave" id="wave5"></div>
-											<div class="xy-wave" id="wave6"></div>
-										</div><!--/波纹-->
-										<div class="xy-tac xy-pad-tb10 bg-blue-opacity xy-clearfix xy-fc-blue">
-											<div class="xy-clearfix xy-dataListBtn">
-												<a href="#" class="weui-btn weui-btn_primary bg-light-blue xy-btn-next" id="monitorDetail">查看监测详情</a>
-												<div class="xy-dataListBtnImg"></div>
-											</div>
-										</div>
-									</div><!--/bottom-->
-								</div><!--内容-->
-							</div>
-						</div>
-						<!--列表-->
-						
-					</div>
-					
-				</div>
-				<div class="swiper-button-prev xy-bottom_btnPrve"></div>
-				<div class="swiper-button-next xy-bottom_btnNext"></div>
-			</div>
-			<!--/ container -->
-			
-		</div>
-		<!--/page End-->
-		
+								<div style="background-color: #fff;" class="ceshi">
+									<ul class="flex xy-tac">
+									    <li>原水TDS值</li>
+									    <li>
+									    	<div class="progress" style="background-color:#FBB55F;"></div>
+									    </li>
+									    <li id="rawTds"></li>
+									</ul>
+									<ul class="flex xy-tac">
+									    <li>净水TDS值</li>
+									    <li>
+									    	<div class="progress" style="background-color:#85E037;"></div>
+									    </li>
+									    <li id="purTds"></li>
+									</ul>
+									<ul class="flex2 xy-tac">
+									    <li>温度</li>
+									    <li id="temp"></li>
+									    <li class="xy-tac">流量</li>
+									    <li id="flow"></li>
+									</ul>
+									<ul class="flex2 xy-tac">
+									    <li>湿度</li>
+									    <li id="humidity"></li>
+									    <li class="xy-tac">是否漏水</li>
+									    <li id="leak"></li>
+									</ul>
+									<!-- <ul class="flex xy-tac">
+									    <li>流量</li>
+									    <li>
+									    	<div class="progress" style="background-color:#85E037;"></div>
+									    </li>
+									    <li id="flow"></li>
+									</ul>
+									<ul class="flex xy-tac">
+									    <li>是否漏水</li>
+									    <li>
+									    	<div class="progress" style="background-color:#52cdd5;"></div>
+									    </li>
+									    <li ></li>
+									</ul> -->
+								</div>
+				            </div>
+		            	<!-- </div> -->
+		            	<!-- <div class="swiper-slide">
+							<div class="xy-pad-10 xy-border-box height100">此处为设备</div>
+						</div> -->
+		           <!--  </div>
+	            </div> -->
+	            <div class="weui-tabbar">
+	                <a href="${_path}/consumer/home" class="weui-tabbar__item weui-bar__item_on" id="home">
+	                    <span style="display: inline-block;position: relative;">
+	                        <img src="${_staticPath}/resource/weuiWeb/img/home.png" alt="" class="weui-tabbar__icon">
+	                        <!-- <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span> -->
+	                    </span>
+	                    <p class="weui-tabbar__label" style="color:#3792FB">首页</p>
+	                </a>
+	                <a href="${_path}/consumer/project.jsp" class="weui-tabbar__item" id="device">
+	                    <img src="${_staticPath}/resource/weuiWeb/img/device.png" alt="" class="weui-tabbar__icon">
+	                    <p class="weui-tabbar__label" style="color:#3792FB">设备</p>
+	                </a>
+	                <a href="${_path}/consumer/device-follow.jsp" class="weui-tabbar__item" id="attention">
+	                    <span style="display: inline-block;position: relative;">
+	                        <img src="${_staticPath}/resource/weuiWeb/img/follow.png" alt="" class="weui-tabbar__icon">
+	                        <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+	                    </span>
+	                    <p class="weui-tabbar__label" style="color:#3792FB">关注</p>
+	                </a>
+	                <a href="${_path}/consumer/services-list.jsp" class="weui-tabbar__item" id="sevice">
+	                    <img src="${_staticPath}/resource/weuiWeb/img/ser.png" alt="" class="weui-tabbar__icon">
+	                    <p class="weui-tabbar__label" style="color:#3792FB">服务</p>
+	                </a>
+	                	                
+	                <a href="${_path}/consumer/news.jsp" class="weui-tabbar__item" id="message">
+	                    <span style="display: inline-block;position: relative;">
+	                        <img src="${_staticPath}/resource/weuiWeb/img/message.png" alt="" class="weui-tabbar__icon">
+	                        <span class="weui-badge" style="position: absolute;top: -2px;right: -13px;">8</span>
+	                    </span>
+	                    <p class="weui-tabbar__label" style="color:#3792FB">消息</p>
+	                </a>
+	                <a href="${_path}/consumer/me.jsp" class="weui-tabbar__item" id="me">
+	                    <img src="${_staticPath}/resource/weuiWeb/img/me.png" alt="" class="weui-tabbar__icon">
+	                    <p class="weui-tabbar__label" style="color:#3792FB">我</p>
+	                </a>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/jquery-1.12.4.min.js"></script>
 		<script src="${_staticPath}/resource/weuiWeb/js/swiper.min.js"></script>
 		<script src="${_staticPath}/resource/weuiWeb/js/xy-swiper-vertical.js"></script>
@@ -180,13 +179,18 @@
 				
 			}
 			$(function(){
+				var str = window.location.href;
+			    //console.log(str);
+			    if(str.indexOf("home") >= 0 ) { 
+			    	$('.weui-tabbar img:eq(0)').attr('src',''+_staticPath+'/resource/weuiWeb/img/home_b.png');
+			    }
 				//ajax获取后台数据，填充页面  ,  包括
 				 $.ajax({
 					type:'get',
 					url:_path+'/consumer/home/listStickMonitor',
 					//data:{account:account},
 					success : function(msg){
-						//console.log(msg);
+						console.log(msg);
 						if(msg.data)	{
 							$('#flow').html(msg.data.flow);
 							$('#humidity').html(msg.data.humidity);
@@ -197,61 +201,149 @@
 							$('#serviceCount').html(msg.data.serviceCount);
 							$('#temp').html(msg.data.temp);
 							msg.data.leak == 'false' ?$('#leak').html('否'):$('#leak').html('是');
-						}
-						knowStatue(msg.code);						
+							progressWidth();
+							drawEchart();//数据待拉取							
+						}					
 					}
 				}); 
-				
-				//蜻蜓点击显示隐藏导航
-				$("body").on("click","#xy-qt-MaxImg",function(){
-					$(".xy-nav-bar").toggle();
-				})
-				
-				//msg 状态
-				function knowStatue(msgState){
-					if(msgState==1){
-						var txt = "换芯说明";
-						var img ="msg-01";
-					}else if(msgState==2){
-						var txt = "申请关注";
-						var img ="msg-02";
-					}else if(msgState==3){
-						var txt = "有未评价";
-						var img ="msg-03";
-					}else if(msgState==4){
-						var txt = "预警提醒";
-						var img ="msg-04";
-					}else if(msgState==5){
-						var txt = "预警正常情况";
-						var img ="msg-05";
-					}
-					var params = "<div class='my-msg weui-flex xy-pad-lr10 xy-mar-t20' flex='main:center cross:center'><div class='xy-fc-white xy-fs14'><p>"+txt+"</p></div></div><div flex='main:center cross:center'><div class='my-lovely xy-tac xy-pad-lr10' id='xy-qt-MaxImg'><img src='${_staticPath}/resource/weuiWeb/img/"+img+".gif' /></div></div>";
-					$('#msg-state').html(params);
-				}								
-				//服务 列表需要判断，点击事件   单独写
-				$('.btn-services-list').click(function(){
-					sessionStorage.setItem('iffuwu',1);//跳转页面，公用一个列表页，设假数据为1，若1 ==》 跳转页面标题改成"历史服务记录列表";
+				fillDate();																
+				bindEvent();															
+			})
+			function fillDate(){
+				var now = new Date(),hour = now.getHours(),h3Text; 
+				//console.log(date);
+				if(hour < 12){
+				 	h3Text = '主人，上午好!'
+				}else if(hour < 19){
+					h3Text = '主人，下午好!'
+				}else{
+					h3Text = '主人，晚上好!'
+				}
+				$('h3').html(h3Text); 
+			}
+			function progressWidth(){
+				$(".progress").each(function () {
+					var a = parseInt($(this).parent().next().html());
+			        $(this).css("width",a > 200?'100%':a/2+'%');
+			    });
+			}
+			function bindEvent(){
+				/* $('#sevice').click(function(){//服务
 					window.location.href =_path+"/consumer/services-list.jsp";
 				})
-				bindEvent();
-			})
-			function bindEvent(){
-				$('#home').click(function(){
+				$('#home').click(function(){//首页
 					window.location.href =_path+"/consumer/home";
 				});
-				$('#device').click(function(){
+				$('#device').click(function(){//设备
 					window.location.href =_path+"/consumer/project.jsp";
 				});
-				$('#attention').click(function(){
+				$('#attention').click(function(){//关注
 					window.location.href =_path+"/consumer/device-follow.jsp";
 				});
-				$('#me').click(function(){
+				$('#me').click(function(){//我的
 					window.location.href =_path+"/consumer/me.jsp";
 				});
-				$('#monitorDetail').click(function(){
+				$('#message').click(function(){//消息
+					window.location.href =_path+"/consumer/news.jsp";
+				}); */
+				$('.weui-tabbar__item').on('click', function () {
+		            $(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
+		        });
+				$('.ceshi').click(function(){//跳转至监测详情
 					window.location.href =_path+"/consumer/device-details.jsp";
 				});
 			}
+			function drawEchart(){
+				var myChart = echarts.init(document.getElementById('myChart'));
+				//自适应分辨率
+				$(window).resize(function(){
+					//console.log('我变了');
+					myChart.resize();
+				});
+				var data = 10;
+				option = {
+				    title : {
+				        text: '设备总数:'+data,
+				        //subtext: '设备总数',
+				        //x:'left',
+				        left:28,
+				        top:20,
+				        textStyle: {
+							color: '#616264',
+							fontStyle: 'normal',
+							fontWeight: 'bold',
+							fontFamily: 'sans-serif',
+							fontSize: 14,
+							},
+				    },
+				     tooltip : {
+				        trigger: 'item',
+				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				    }, 
+				    legend: {
+				        //x : 'left',
+				        left:28,
+				        //top:70,
+				        y : 'center',
+				        orient: 'vertical',
+				        data:['正常运行中的设备数','持续关注中的设备数']
+				    },
+				    calculable : true,				    
+				    series : [
+				        {
+				            name:'半径模式',
+				            type:'pie',
+				            radius : 80,
+				            center : ['70%', '50%'],
+				            //roseType : 'area',
+				            data:[
+				                {value:7, name:'正常运行中的设备数'},
+				                //{value:2, name:'正在服务中的设备数'},
+				                {value:3, name:'持续关注中的设备数'},
+				            ],
+				            labelLine :{show:false},
+				            /* labelLine: {
+					            normal: {
+					                show: true,
+					                length:0,
+					                length2:0,
+					            }
+					        } */
+							label:{
+								normal:{
+									show:true,
+									position: 'inside',
+									formatter:'{c} ({d}%)',	
+									textStyle:{
+										color:'#fff',
+										fontSize:14
+									}						
+								}
+							},
+							itemStyle: {
+					            normal: {
+					                borderWidth: 2,
+					                borderColor: '#ffffff',
+					            },
+					            emphasis: {
+					                borderWidth: 0,
+					                shadowBlur: 10,
+					                shadowOffsetX: 0,
+					                shadowColor: 'rgba(0, 0, 0, 0.5)'
+					            }
+					        }
+				        }
+				    ],
+				    color: [
+				        '#00acee',
+				        '#52cdd5',
+				        '#FBB55F',
+				        '#a7e7ff',
+				        '#c8efff'
+				    ]
+				};
+				myChart.setOption(option);
+			}			 
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

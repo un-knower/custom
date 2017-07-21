@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.qingting.customer.baseserver.MonitorService;
 import com.qingting.customer.common.pojo.dto.MonitorDTO;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
+import com.smart.mvc.config.ConfigUtils;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
@@ -59,7 +60,7 @@ public class MonitorController {
 			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode
 			){
 		System.out.println("输入参数:"+equipCode);
-		
+		//List<Monitor> list = monitorService.listMonitorOfNew(equipCode, Long.valueOf(ConfigUtils.getProperty("customer.new-monitor.time")));
 		
 		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);
 		result.setData(getMonitorDTO(Calendar.getInstance()));

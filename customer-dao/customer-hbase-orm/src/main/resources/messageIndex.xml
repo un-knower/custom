@@ -1,0 +1,12 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="messageIndex" defaultFamily="messageIndexFamily">
+		<HBaseColumnSchema qualifier="value" typeName="string" />
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.index.MessageIndex" defaultFamily="messageIndexFamily">
+		<field name="value"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

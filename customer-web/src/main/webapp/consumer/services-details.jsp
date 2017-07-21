@@ -19,6 +19,12 @@
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
+	<style>
+		.jianbian{background-image:linear-gradient(to top,#fff 30%,#3792fb 60%);} 
+		.marginb03{ margin-bottom: 0.3em;} 
+		.paddingt{padding: 1em 1em 0 2em;}
+		.colorfff{color:#fff;}
+	</style>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
 			<div class="weui-flex xy-header">
@@ -33,73 +39,71 @@
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">
-								<div class="xy-layout-bar xy-query xy-query-other" flex="dir:top">
-									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-02" flex="dir:left">
+								<div class="xy-layout-bar" flex="dir:top">
+									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-02 marginb03" flex="dir:left">
 										<p class="xy-fs14"  flex-box="1" id="serHead">过程净化服务</p>
 										<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
 									</div>
-									<div class="xy-pad-tb10 xy-border-box" flex-box="1" flex="dir:top">
-										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left">
-											<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><%-- <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /> --%></p>
+									<div class="xy-pad-tb10 xy-border-box jianbian" flex-box="1" flex="dir:top">
+										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview paddingt colorfff" flex-box="1" flex="dir:left">
+											<p class="mini-lovely xy-full-widthIMG" style="width:120px"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif"/></p>
 											<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
-												<ol class="xy-pad-t3 xy-fs16" flex="dir:left">
-													<dt>项目：</dt>
-													<dd flex-box="1" id="equipName">净化系统</dd>
+												<h3 id="empName"></h3>
+												<ol class="xy-pad-t3 xy-fs16" flex="dir:left" id="rank">
+													<dt class="xy-dibVat">综合评分:</dt>
+													<dd class="xy-dibVat">
+														<div class="xy-star-bar xy-mini-star xy-pad-t2 xy-dibVat">
+															<div class="xy-emptys"></div>
+															<i class="icon-star xy-dibVat on"></i>
+															<i class="icon-star xy-dibVat on"></i>
+															<i class="icon-star xy-dibVat on"></i>
+															<i class="icon-star xy-dibVat on"></i>
+															<i class="icon-star xy-dibVat"></i>
+														</div><!--/星星-->
+													</dd>					
 												</ol>
 												<ol class="xy-pad-t3 xy-fs13" flex="dir:left">
-													<dt>工号：</dt>
-													<dd flex-box="1" id="empCode">QT20170212</dd>
+													<dt class="xy-dibVat">工号：</dt>
+													<dd class="xy-dibVat" id="empCode"></dd>													
 												</ol>
-												<ol class="xy-fc-light-gray xy-fs13" flex="dir:left">
-													<dt>服务时间：</dt>
-													<dd flex-box="1" id="time">2017-05-30</dd>
-												</ol>
+												<ol class="xy-pad-t3 xy-fs13" flex="dir:left">
+													<dt class="xy-dibVat" style="width:150%" id="tag">专业、高效</dt>
+													<dd class="xy-dibVat xy-tar" id="recordBtn"><img src="${_staticPath}/resource/weuiWeb/img/pen.png" style="width:10%"><a id="goRecord" style="color: #fff;text-decoration: none;">待评价</a></dd>
+												</ol>	
 											</div>
 											<div class="weui-cell__ft">
 											</div>
 										</div>
-										<div class="xy-fwb-title xy-border-box xy-pad-10 xy-pad-b5">
-											<ol class="xy-fc-light-gray xy-line-h22" flex="dir:left">
-												<dt>综合评分：</dt>
-												<dd flex-box="1">
-													<div class="xy-star-bar xy-mini-star xy-pad-t2 xy-dibVat">
-														<div class="xy-emptys"></div>
-														<i class="icon-star xy-dibVat on"></i>
-														<i class="icon-star xy-dibVat on"></i>
-														<i class="icon-star xy-dibVat on"></i>
-														<i class="icon-star xy-dibVat on"></i>
-														<i class="icon-star xy-dibVat"></i>
-													</div><!--/星星-->
-													<P class="xy-dibVat xy-pad-l5 xy-fs15" id="cord">4.8</P>
-													<P class="xy-dibVat xy-pad-l5" id="tag">专业、高效</P>
-												</dd>
-											</ol>
+										<div class="xy-waveBox xy-line-h0 bg-blue-01">
+											<div class="xy-wave" id="wave1"></div>
+											<div class="xy-wave" id="wave2"></div>
+											<div class="xy-wave" id="wave3"></div>
 										</div>
-										<div class="main-img-address xy-pad-lr10 xy-pad-t7">
-											<a href="#" class="" flex="dir:left">
-												<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
-												<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1" id="adress">
-													成都市高兴西区天泉路200号 众创办公室茶水间 	
-												</div>
-											</a>
-										</div>
+										<div style="background-image:linear-gradient(to top,#fff,#CBE2FE);">
+											<div class=" xy-pad-lr10 xy-corner-0 xy-head-title" flex="dir:left" style="border:none;box-shadow:none;color:#666666;font-weight: 800;">
+												<p class="xy-fs14"  flex-box="1" id="">服务方案</p>
+												<p class="xy-fs12" id="time"></p>
+											</div>											
+											<div class="eva-con xy-pad-lr10  xy-fc-gray" flex-box="1">
+												<p id="serContent">
+													一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。<br>
+													二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
+													三、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
+		
+												</p>
+											</div>
+											
+											<div class="main-img-address xy-pad-lr10 xy-pad-t7">
+												<a href="#" class="" flex="dir:left">
+													<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
+													<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
+														成都市高兴西区天泉路200号 众创办公室茶水间 	
+													</div>
+												</a>
+											</div>
+										</div>	
 									</div>
-								</div><!--用户信息-->
-								
-								<div class="xy-layout-bar xy-mar-t10 xy-query-bottom" flex-box="1" flex="dir:top">
-									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01" flex="dir:left">
-										<p class="xy-fs14"  flex-box="1">服务方案</p>
-										<p class="xy-fs12" id="status">待服务</p>
-									</div>
-									
-									<div class="eva-con xy-pad-lr10 xy-pad-t10 xy-pad-b20 xy-fc-gray xy-height-1p xy-scrollY swiper-no-swiping" flex-box="1">
-										<p id="serContent">
-											补充评价：一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。
-二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。
-
-										</p>
-									</div>
-								</div><!--信息-->
+								</div><!--用户信息-->																					
 							</div>
 						</div>
 						<!--列表-->
@@ -183,13 +187,16 @@
 					//未评价，隐藏右边按钮
 					$('.xy-poab-menuBottom').show();
 					$('.weui-cell__ft').hide();
-					$('.xy-fwb-title').hide();
+					$('#rank').hide();
+					$('#tag').hide();
+					$('.weui-cell__ft').hide();
 				}else if(ifel==2){
 					//评价了，显示右边按钮，跳转评价详情
 					$('.xy-linlk-listview').click(function(){
 						window.location.href =_path+"/consumer/evaluate-query.jsp?serveId="+GetQueryString('serveId');
 					});
 					$('.xy-poab-menuBottom').hide();
+					$('#recordBtn').hide();
 				}
 				fillContent(GetQueryString('serveId'))
 				bindEvent(GetQueryString('serveId'));
@@ -203,12 +210,13 @@
 						console.log(msg);
 						if(msg.data){
 							$('.xy-h1-title').html(msg.data.equipName+'家的服务详情');
+							$('#empName').html(msg.data.empName);
 							$('#adress').html(msg.data.adress);
 							$('#empCode').html(msg.data.empCode);
 							$('#serHead').html(msg.data.serHead);
 							$('#equipName').html(msg.data.equipName);
 							$('#status').html(msg.data.status);
-							$('#time').html(msg.data.time.slice(0,10));
+							$('#time').html('服务时间：'+msg.data.time.slice(0,10));
 							$('#notice').html('通知时间：'+msg.data.notice.slice(0,10));
 							$('#serContent').html(msg.data.serContent);
 							$('.xy-full-widthIMG').html('<img src="${_staticPath}'+msg.data.portrait+'" />');

@@ -8,10 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
+import com.qingting.customer.common.pojo.hbasedo.EquipSort;
 import com.qingting.customer.common.pojo.hbasedo.MessageSort;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.MessageSortDAO;
@@ -65,7 +67,20 @@ public class MessageSortDAOImpl implements MessageSortDAO {
 
 	@Override
 	public Pagination<MessageSort> listMessageSort(Integer pageNo,Integer pageSize) {
-		return null;
+		QueryExtInfo queryExtInfo = new QueryExtInfo();
+		queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
+		List<MessageSort> list=null;
+		Pagination<MessageSort> page=new Pagination<MessageSort>();
+		
+		list=setContentOfRowKey(
+				tClient.findObjectAndKeyList(RowKeyUtil.getIntMinRowKey(),RowKeyUtil.getIntMaxRowKey(), MessageSort.class,null,queryExtInfo)
+				);
+		page.setRowCount(tClient.count(RowKeyUtil.getIntMinRowKey(), RowKeyUtil.getIntMaxRowKey(), null));
+		
+		page.setList(list);
+		page.setPageNo(pageNo);
+		page.setPageSize(pageSize);
+		return page;
 	}
 
 }

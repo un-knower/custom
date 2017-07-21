@@ -158,6 +158,11 @@ public class RowKeyUtil {
     			BytesUtil.merge(Bytes.toBytes(value1),bytes, Bytes.toBytes(value3))
     			);
     }
+    public static RowKey getRowKey(Integer value1,String value2,Long value3){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
+    			);
+    }
     public static RowKey getRowKey(String value1,Long value2,Integer value3){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
@@ -178,7 +183,11 @@ public class RowKeyUtil {
     			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
     			);
     }
-    
+    public static RowKey getRowKey(String value1,String value2,Integer value3,Long value4){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3),Bytes.toBytes(value4))
+    			);
+    }
     
     /*public static RowKey getMaxRowKey(String longText,Integer longTextLength,Integer value){
     	
@@ -259,6 +268,12 @@ public class RowKeyUtil {
     }
     public static RowKey getIntMinRowKey(){
     	return new BytesRowKey(INT_MIN_BYTES);
+    }
+    public static RowKey getLongMaxRowKey(){
+    	return new BytesRowKey(LONG_MAX_BYTES);
+    }
+    public static RowKey getLongMinRowKey(){
+    	return new BytesRowKey(LONG_MIN_BYTES);
     }
     public static RowKey getStringMaxRowKey(int strLength){
     	byte[] bytes=new byte[strLength];
@@ -718,4 +733,135 @@ public class RowKeyUtil {
 		}
     	return new BytesRowKey(bytes);
     }
+    /**
+     * 
+     * @Title: getIntStringLongMaxRowKey
+     * @Description: RowKey(int byte 0xFF,string byte 0xFF,long byte 0xFF)
+     * @param strLength
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntStringLongMaxRowKey(int strLength){
+    	byte[] bytes=new byte[4+strLength+8];
+    	for(int i=0;i<4+strLength+8;i++){
+    		bytes[i]=(byte)0xFF;
+    	}
+    	return new BytesRowKey(bytes);
+    }
+    /**
+     * 
+     * @Title: getIntStringLongMaxRowKey
+     * @Description: RowKey(int byte steady,string byte 0xFF,long byte 0xFF)
+     * @param strLength
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntStringLongMaxRowKey(int value,int strLength){
+    	byte[] bytes=new byte[4+strLength+8];
+    	for (int i=0;i<4;i++) {
+			bytes[i]=(byte)( (value>>(8*(3-i))) & 0xFF );
+		}
+    	for(int i=0;i<strLength+8;i++){
+    		bytes[4+i]=(byte)0xFF;
+    	}
+    	return new BytesRowKey(bytes);
+    }
+    /**
+     * 
+     * @Title: getIntStringLongMaxRowKey
+     * @Description: RowKey(int byte steady,string byte steady,long byte 0xFF)
+     * @param strLength
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntStringLongMaxRowKey(int value,String str){
+    	int length=0;
+    	byte[] strs=null;
+    	if(str!=null){
+    		length=str.length();
+    		strs=Bytes.toBytes(str);
+    	}
+    	byte[] bytes=new byte[4+length+8];
+    	for (int i=0;i<4;i++) {
+			bytes[i]=(byte)( (value>>(8*(3-i))) & 0xFF );
+		}
+    	for(int i=0;i<length;i++){
+    		bytes[4+i]=strs[i];
+    	}
+    	for(int i=0;i<8;i++){
+    		bytes[4+length+i]=(byte)0xFF;
+    	}
+    	return new BytesRowKey(bytes);
+    }
+    
+    
+    /**
+     * 
+     * @Title: getIntStringLongMinRowKey
+     * @Description: RowKey(int byte 0x00,string byte 0x00,long byte 0x00)
+     * @param strLength
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntStringLongMinRowKey(int strLength){
+    	byte[] bytes=new byte[4+strLength+8];
+    	for(int i=0;i<4+strLength+8;i++){
+    		bytes[i]=(byte)0x00;
+    	}
+    	return new BytesRowKey(bytes);
+    }
+    /**
+     * 
+     * @Title: getIntStringLongMinRowKey
+     * @Description: RowKey(int byte steady,string byte 0x00,long byte 0x00)
+     * @param strLength
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntStringLongMinRowKey(int value,int strLength){
+    	byte[] bytes=new byte[4+strLength+8];
+    	for (int i=0;i<4;i++) {
+			bytes[i]=(byte)( (value>>(8*(3-i))) & 0xFF );
+		}
+    	for(int i=0;i<strLength+8;i++){
+    		bytes[4+i]=(byte)0x00;
+    	}
+    	return new BytesRowKey(bytes);
+    }
+    /**
+     * 
+     * @Title: getIntStringLongMinRowKey
+     * @Description: RowKey(int byte steady,string byte steady,long byte 0x00)
+     * @param strLength
+     * @return 
+     * @return RowKey
+     * @throws
+     */
+    public static RowKey getIntStringLongMinRowKey(int value,String str){
+    	int length=0;
+    	byte[] strs=null;
+    	if(str!=null){
+    		length=str.length();
+    		strs=Bytes.toBytes(str);
+    	}
+    	byte[] bytes=new byte[4+length+8];
+    	for (int i=0;i<4;i++) {
+			bytes[i]=(byte)( (value>>(8*(3-i))) & 0xFF );
+		}
+    	for(int i=0;i<length;i++){
+    		bytes[4+i]=strs[i];
+    	}
+    	for(int i=0;i<8;i++){
+    		bytes[4+length+i]=(byte)0x00;
+    	}
+    	return new BytesRowKey(bytes);
+    }
+    
+    
+    
 }
