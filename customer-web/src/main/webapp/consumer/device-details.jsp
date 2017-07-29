@@ -45,7 +45,7 @@
 		100%{opacity:1;}
 	}
 	.mycontainer{    box-sizing: border-box;height: 100%;margin-top: 2.5em;}
-	.pl8{padding-left: 8em;}
+	.pl30{padding-left: 30%;}
 	.marginleft{
 				margin-left: 2em;
 	}
@@ -53,7 +53,7 @@
 		    width: 88%;
 		    margin: 0 6%;
 		    border-top: 2px solid #e6e6e6;}
-	.flexMe{display:flex;width:100%;margin:0;padding:0;list-style:none;padding: 2% 0;}
+	.flexMe,.flex2{display:flex;width:100%;margin:0;padding:0;list-style:none;padding: 2% 0;}
 	.flexMe :nth-child(1){flex:1 1 25%;}
 	.flexMe :nth-child(2){flex:2 2 60%;margin-top: 2%;}
 	.flexMe :nth-child(3){flex:3 3 10%;}
@@ -81,13 +81,13 @@
 						<div class="swiper-slide"> 
 							<div class="xy-pad-t10 xy-border-box height100">
 								<div class="xy-layout jianbian2 height100" flex="dir:top">						
-									<ol class="weui-cell weui-cell_access" style="padding:2em 3.5em 0 3.5em; color:#fff;">
+									<ol class="weui-cell weui-cell_access" style="color:#fff;">
 										<dt class="">
 											<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG">
 												<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" />
 											</p>
 										</dt>
-										<dd class="pl8">
+										<dd class="pl30">
 											<h3 style="line-height: 2em;">智慧饮水管家通知</h3>
 											<p id="tips"></p>
 										</dd>
@@ -100,12 +100,13 @@
 											<div class="xy-wave" id="wave3"></div>
 										</div>
 										<!--净水设备过滤结构-->
-										<div class="jianbian xy-tac xy-pad-lr10 structure-chart" style="position: relative;">
+										<div class="jianbian xy-tac xy-pad-lr2 structure-chart" style="position: relative;">
 											 <img src="${_staticPath}/resource/weuiWeb/img/device.gif" />
 											 <div class="warn"></div>
 										</div>
 									</div>
 									<div style="background-color: #fff;" class="ceshi">
+										<h4 class="xy-tac xy-pad-tb7"><span>胡先生</span>家的在线监测值</h4>
 										<ul class="flexMe xy-tac">
 										    <li>原水TDS值</li>
 										    <li>

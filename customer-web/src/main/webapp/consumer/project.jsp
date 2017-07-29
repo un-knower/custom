@@ -16,6 +16,20 @@
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
 	</head>
+	<style>
+		/* @media screen and (min-width:250px) and (max-width:350px){
+		    .main-img-device p, .xy-font-address, .main-img-service p {
+			    font-size: 9px;
+			}
+			.main-img-service .xy-timer {
+			    font-size: 12px;
+			    line-height: 16px;
+			}
+			.main-img-service {
+			    line-height: 16px;
+			}
+		} */
+	</style>
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
@@ -348,6 +362,12 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/xy-swiper.js"></script>
 		<script src="${_path}/js/consumer/SuspendedBall.js"></script>
 		<script type="text/javascript" class="tabbar js_show">
+			/* var h = $(window).height();
+			if(h < 568){
+				$('.main-img-service p').css('font-size','9px');
+				$('.xy-timer').css({'font-size':'9px','line-height': '16px'});
+				$('.main-img-service').css('line-height', '16px');
+			} */
 			function eventCollection(weui){
 			}
 			function showDeviceList(type){
@@ -395,7 +415,7 @@
 																	'<p>'+data[i].serviceCount+'</p>'+
 																'</li>'+
 															'</div>'+
-															'<div class="main-img-service xy-pad-t7 xy-border-t width100" flex-box="1" flex="main:center cross:center">'+
+															'<div class="main-img-service xy-pad-t7 width100" flex-box="1" flex="main:center cross:center">'+
 																'<div>'+
 																	'<p class="xy-tac">剩余服务时长</p>'+
 																//'<p class="xy-timer xy-tac">'+data[i].remainTime+'</p>';
@@ -409,7 +429,7 @@
 															'</div>'+
 														'</div>'+
 													'</div><!--内容-->'+
-													'<div class="main-img-address xy-pad-lr10 xy-pad-tb7 xy-border-t">'+
+													'<div class="main-img-address xy-pad-lr10 xy-pad-tb7">'+
 														'<a href="#" class="" flex="dir:left">'+
 															'<i class="icon-map" flex="main:center cross:center"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>'+
 															'<div class="xy-mar-l10 xy-font-address"  flex-box="1">'+data[i].address+
@@ -452,7 +472,8 @@
 								 	}else{
 								 		mySwiper.removeSlide(realIndex);//删除当前slide
 									 	//mySwiper.getSlide(realIndex).insertAfter(0);
-									 	mySwiper.prependSlide(slide);	//添加当前slide到第一个						 	
+									 	mySwiper.prependSlide(slide);	//添加当前slide到第一个	
+									 	mySwiper.slideTo(0, 1000, false);					 	
 									 	//realIndex = 0;
 										//slideLength%2 == 0?realIndex = slideLength/2:realIndex = (slideLength-1)/2
 										setTimeout(function(){

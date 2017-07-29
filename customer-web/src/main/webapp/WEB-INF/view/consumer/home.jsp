@@ -39,6 +39,7 @@
 			}
 			.jianbian{background-image:linear-gradient(to top,#fff,#CBE3FE);}
 			.jianbian2{background-image:linear-gradient(to top,#fff 60%,#3792FB 40%);}
+			.borderStyle{border: 1px solid #dde8ef; border-radius: 3%;box-shadow: 2px 2px 15px rgba(173, 224, 238, 0.5);}
 		</style>
 	</head>
 	<script type="text/javascript">
@@ -53,7 +54,7 @@
 						------------------swiper slide--------------------
 						<div class="swiper-slide"> -->
 				            <div class="weui-tab__panel jianbian2" style="background-color: #3792FB;">		            	
-				            	<ol class="weui-cell weui-cell_access" style="padding:4em 3.5em 0 3.5em; color:#fff;">
+				            	<ol class="weui-cell weui-cell_access" style="color:#fff;">
 									<dt class="">
 										<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG">
 											<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" />
@@ -84,46 +85,49 @@
 								</div><!--/饼图-->
 								
 								<div style="background-color: #fff;" class="ceshi">
-									<ul class="flex xy-tac">
-									    <li>原水TDS值</li>
-									    <li>
-									    	<div class="progress" style="background-color:#FBB55F;"></div>
-									    </li>
-									    <li id="rawTds"></li>
-									</ul>
-									<ul class="flex xy-tac">
-									    <li>净水TDS值</li>
-									    <li>
-									    	<div class="progress" style="background-color:#85E037;"></div>
-									    </li>
-									    <li id="purTds"></li>
-									</ul>
-									<ul class="flex2 xy-tac">
-									    <li>温度</li>
-									    <li id="temp"></li>
-									    <li class="xy-tac">流量</li>
-									    <li id="flow"></li>
-									</ul>
-									<ul class="flex2 xy-tac">
-									    <li>湿度</li>
-									    <li id="humidity"></li>
-									    <li class="xy-tac">是否漏水</li>
-									    <li id="leak"></li>
-									</ul>
-									<!-- <ul class="flex xy-tac">
-									    <li>流量</li>
-									    <li>
-									    	<div class="progress" style="background-color:#85E037;"></div>
-									    </li>
-									    <li id="flow"></li>
-									</ul>
-									<ul class="flex xy-tac">
-									    <li>是否漏水</li>
-									    <li>
-									    	<div class="progress" style="background-color:#52cdd5;"></div>
-									    </li>
-									    <li ></li>
-									</ul> -->
+									<h4 class="xy-tac xy-pad-tb7"><span>胡先生</span>家的在线监测值</h4>
+									<div class="borderStyle">
+										<ul class="flex xy-tac">
+										    <li>原水TDS值</li>
+										    <li>
+										    	<div class="progress" style="background-color:#FBB55F;"></div>
+										    </li>
+										    <li id="rawTds"></li>
+										</ul>
+										<ul class="flex xy-tac">
+										    <li>净水TDS值</li>
+										    <li>
+										    	<div class="progress" style="background-color:#85E037;"></div>
+										    </li>
+										    <li id="purTds"></li>
+										</ul>
+										<ul class="flex2 xy-tac">
+										    <li>温度</li>
+										    <li id="temp"></li>
+										    <li class="xy-tac">流量</li>
+										    <li id="flow"></li>
+										</ul>
+										<ul class="flex2 xy-tac">
+										    <li>湿度</li>
+										    <li id="humidity"></li>
+										    <li class="xy-tac">是否漏水</li>
+										    <li id="leak"></li>
+										</ul>
+										<!-- <ul class="flex xy-tac">
+										    <li>流量</li>
+										    <li>
+										    	<div class="progress" style="background-color:#85E037;"></div>
+										    </li>
+										    <li id="flow"></li>
+										</ul>
+										<ul class="flex xy-tac">
+										    <li>是否漏水</li>
+										    <li>
+										    	<div class="progress" style="background-color:#52cdd5;"></div>
+										    </li>
+										    <li ></li>
+										</ul> -->
+									</div>
 								</div>
 				            </div>
 		            	<!-- </div> -->
@@ -147,7 +151,7 @@
 	                <a href="${_path}/consumer/device-follow.jsp" class="weui-tabbar__item" id="attention">
 	                    <span style="display: inline-block;position: relative;">
 	                        <img src="${_staticPath}/resource/weuiWeb/img/follow.png" alt="" class="weui-tabbar__icon">
-	                        <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span>
+	                       <!--  <span class="weui-badge weui-badge_dot" style="position: absolute;top: 0;right: -6px;"></span> -->
 	                    </span>
 	                    <p class="weui-tabbar__label" style="color:#3792FB">关注</p>
 	                </a>
@@ -200,7 +204,7 @@
 							$('#rawTds').html(msg.data.rawTds);
 							$('#serviceCount').html(msg.data.serviceCount);
 							$('#temp').html(msg.data.temp);
-							msg.data.leak == 'false' ?$('#leak').html('否'):$('#leak').html('是');
+							msg.data.leak == 'false' ?$('#leak').html('正常'):$('#leak').html('漏水');
 							progressWidth();
 							drawEchart();//数据待拉取							
 						}					
@@ -278,7 +282,7 @@
 				    },
 				     tooltip : {
 				        trigger: 'item',
-				        formatter: "{a} <br/>{b} : {c} ({d}%)"
+				        formatter: "{b} : {c}"
 				    }, 
 				    legend: {
 				        //x : 'left',
@@ -286,15 +290,16 @@
 				        //top:70,
 				        y : 'center',
 				        orient: 'vertical',
-				        data:['正常运行中的设备数','持续关注中的设备数']
+				        data:['正常运行中的设备数','持续关注中的设备数'],
+				        selectedMode:false
 				    },
 				    calculable : true,				    
 				    series : [
 				        {
 				            name:'半径模式',
 				            type:'pie',
-				            radius : 80,
-				            center : ['70%', '50%'],
+				            radius : 55,
+				            center : ['73%', '50%'],
 				            //roseType : 'area',
 				            data:[
 				                {value:7, name:'正常运行中的设备数'},
@@ -313,7 +318,7 @@
 								normal:{
 									show:true,
 									position: 'inside',
-									formatter:'{c} ({d}%)',	
+									formatter:'{c}'/* +"(台)" */,	
 									textStyle:{
 										color:'#fff',
 										fontSize:14

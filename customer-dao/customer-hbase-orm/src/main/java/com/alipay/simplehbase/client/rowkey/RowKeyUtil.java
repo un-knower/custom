@@ -158,6 +158,11 @@ public class RowKeyUtil {
     			BytesUtil.merge(Bytes.toBytes(value1),bytes, Bytes.toBytes(value3))
     			);
     }
+    public static RowKey getRowKey(String value1,int value2,Long value3){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))
+    			);
+    }
     public static RowKey getRowKey(Integer value1,String value2,Long value3){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3))

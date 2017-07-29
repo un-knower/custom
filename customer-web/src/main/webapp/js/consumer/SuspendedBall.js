@@ -337,7 +337,7 @@ $(function () {
 		'			<p class="xy-pad-t2">设备</p>'+
 		'		</a>'+
 		'		<a class="weui-navbar__item nav_href_3" href="javascript:;"><!--判断 nav_href_3 连接关注列表-->'+
-		'			<i class="xy-poab icon-new-message " style="left: 44px;top:5px;">&nbsp;</i>'+
+		//'			<i class="xy-poab icon-new-message " style="left: 65%;top:5px;">&nbsp;</i>'+
 		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/follow.png" /></p>'+
 		'			<p class="xy-pad-t2">关注</p>'+
 		'		</a>'+
@@ -346,7 +346,7 @@ $(function () {
 		'			<p class="xy-pad-t2">服务</p>'+
 		'		</a>'+
 		'		<a class="weui-navbar__item nav_href_5" href="javascript:;"><!--判断 nav_href_5 连接消息列表-->'+
-		'			<span class="weui-badge" style="position: absolute;top: -2px;right: 8px;">8</span>'+
+		'			<span class="weui-badge" style="position: absolute;top: -2px;right: 15%;">8</span>'+
 		'			<p class="xy-navbar-icon xy-line-h0"><img src="'+_staticPath+'/resource/weuiWeb/img/message.png" /></p>'+
 		'			<p class="xy-pad-t2">消息</p>'+
 		'		</a>'+
@@ -385,7 +385,7 @@ $(function () {
     	$('.nav_href_4 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/ser_b.png');
     }else if(str.indexOf("news") >= 0){
     	$('.nav_href_5 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/message_b.png');
-    }else if(str.indexOf("me") >= 0){
+    }else if(str.indexOf("me.jsp") >= 0){
     	$('.nav_href_6 img').attr('src',''+_staticPath+'/resource/weuiWeb/img/me_b.png');
     }   
 	

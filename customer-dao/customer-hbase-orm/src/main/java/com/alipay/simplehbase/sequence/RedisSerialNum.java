@@ -52,12 +52,36 @@ public class RedisSerialNum {
       }
       return num;
    }
-
+   /**
+    * 从编码池获取编码
+    * @return
+    */
+   public static synchronized Long getSerialNumLong(RedisTemplate<String, Long> redisTemplate, String serial_type) {
+      Long num = 1l;
+      ListOperations<String, Long> lop = redisTemplate.opsForList();
+      num = redisTemplate.opsForList().rightPop(serial_type);
+      if (num == null || num == 0) {
+         num = 1l;
+      }
+      long count = getCountLong(lop, serial_type);
+      if (count < WARNING_NUMBER) {//小于安全数量，补充编码
+         setSerialNums(createSerialNums(num + Integer.valueOf(String.valueOf(count))), redisTemplate, serial_type);
+      }
+      return num;
+   }
    /**
     * 获取编码池编码数量
     * @return
     */
    public static long getCount(ListOperations<String, Integer> lop, String serial_type) {
+      long count = lop.size(serial_type);
+      return count;
+   }
+   /**
+    * 获取编码池编码数量
+    * @return
+    */
+   public static long getCountLong(ListOperations<String, Long> lop, String serial_type) {
       long count = lop.size(serial_type);
       return count;
    }
@@ -74,7 +98,18 @@ public class RedisSerialNum {
       }
       return boo;
    }
-
+   /**
+    * 向编码池添加编码
+    * @param nums
+    * @return
+    */
+   public static boolean setSerialNums(long[] nums, RedisTemplate<String, Long> redisTemplate, String serial_type) {
+      boolean boo = true;
+      for (long num : nums) {
+         redisTemplate.opsForList().leftPush(serial_type, num);
+      }
+      return boo;
+   }
    /**
     * 创建新的编码
     * @param num
@@ -87,7 +122,19 @@ public class RedisSerialNum {
       }
       return nums;
    }
-
+   /**
+    * 创建新的编码
+    * @param num
+    * @return
+    */
+   public static long[] createSerialNums(Long num) {
+      long[] nums = new long[NUMBER_QUEUE];
+      for (int i = 0; i < NUMBER_QUEUE; i++) {
+         nums[i] = i + num + 1;
+      }
+      return nums;
+   }
+   
    /**
     * 批量重置编码池
     * @return

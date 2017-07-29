@@ -1,7 +1,10 @@
 package com.qingting.customer.controller.consumer;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Random;
@@ -20,6 +23,7 @@ import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.smart.mvc.config.ConfigUtils;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
+import com.smart.mvc.util.StringUtils;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
 
@@ -33,6 +37,8 @@ import io.swagger.annotations.ApiParam;
 public class MonitorController {
 	@Resource
 	MonitorService monitorService;
+	
+	
 	@ApiOperation("页面跳转-监测页面")
 	@RequestMapping(method = RequestMethod.GET,consumes="text/html")
 	public String execute(){
@@ -40,6 +46,52 @@ public class MonitorController {
 	}
 	
 	@ApiOperation("查询某个时间段的监测值")
+	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<MonitorDTO> listMonitor(
+			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode,
+			@ApiParam(value = "查询的结束时间", required = false,example="2017-01-01 12:00:00") @RequestParam(value="endTime", required=false)String endTime,
+			@ApiParam(value = "查询类型(按天查询时必须)", required = false,example="day代表按天查询") @RequestParam(value="type", required=false)String type
+			
+			){
+		//别忘记验证传参和用户身份是否匹配
+		System.out.println("输入参数:equipCode="+equipCode+".endTime="+endTime+".type="+type);
+		Date d=null;
+		Calendar cal=null;
+		if(!StringUtils.isBlank(endTime)){
+			try {
+				d = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(endTime);
+				cal = Calendar.getInstance();
+				cal.setTime(d);
+			} catch (ParseException e) {
+				e.printStackTrace();
+				WebResult<MonitorDTO> failure=new WebResult<MonitorDTO>(ResultCode.FAILURE);
+				failure.setMessage("日期格式异常");
+				return failure;
+			}
+		}
+		MonitorDTO md=convertToMonitorDTO(monitorService.listMonitorByEndTime("211701000001", type, 20, cal));
+		WebResult<MonitorDTO> result=new WebResult<MonitorDTO>(ResultCode.SUCCESS);
+		result.setData(md);
+		return result;
+	}
+	private MonitorDTO convertToMonitorDTO(List<Monitor> list){
+		MonitorDTO md=new MonitorDTO();
+		md.setUserName("最可爱的人");
+		List<Float> purDatas=new ArrayList<Float>();
+		List<Float> rawDatas=new ArrayList<Float>();
+		List<Calendar> secondDates=new ArrayList<Calendar>();
+		for (Monitor monitor : list) {
+			purDatas.add(monitor.getPurTds());
+			rawDatas.add(monitor.getRawTds());
+			secondDates.add(monitor.getCollectTime());
+		}
+		md.setPurDatas(purDatas);
+		md.setRawDatas(rawDatas);
+		md.setSecondDates(secondDates);
+		
+		return md;
+	}
+	/*@ApiOperation("查询某个时间段的监测值")
 	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<MonitorDTO> listMonitor(
 			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode,
@@ -96,5 +148,5 @@ public class MonitorController {
 		
 		monitorDTO.setSecondDates(secondDates);
 		return monitorDTO;
-	}
+	}*/
 }

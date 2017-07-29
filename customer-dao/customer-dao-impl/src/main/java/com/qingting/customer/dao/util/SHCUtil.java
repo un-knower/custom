@@ -90,6 +90,16 @@ public class SHCUtil{
 	private static final Map<String,Object> message=new HashMap<String,Object>(){
 		{
 			put("family",new String[]{"messageFamily"});
+			put("split",
+					new byte[][]{
+	     		   		{58,0,0,0,0,0,0,0,0,0},
+	    				{75,0,0,0,0,0,0,0,0,0}, 
+	    				{84,0,0,0,0,0,0,0,0,0}, 
+	    				{100,0,0,0,0,0,0,0,0,0}, 
+	    				{110,0,0,0,0,0,0,0,0,0},    
+	    				{122,0,0,0,0,0,0,0,0,0}
+	     		   	}
+				);
 		}
 	};
 	private static final Map<String,Object> messageIndex=new HashMap<String,Object>(){

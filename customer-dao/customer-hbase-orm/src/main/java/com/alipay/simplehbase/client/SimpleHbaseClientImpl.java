@@ -20,6 +20,7 @@ import org.apache.hadoop.hbase.client.Table;
 import org.apache.hadoop.hbase.client.coprocessor.AggregationClient;
 import org.apache.hadoop.hbase.client.coprocessor.LongColumnInterpreter;
 import org.apache.hadoop.hbase.filter.Filter;
+import org.apache.hadoop.hbase.util.Bytes;
 
 import com.alipay.simplehbase.antlr.auto.StatementsParser.Constant2Context;
 import com.alipay.simplehbase.antlr.auto.StatementsParser.DeletehqlcContext;
@@ -234,7 +235,6 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 		Util.checkRowKey(endRowKey);
 		Util.checkNull(type);
 
-		Scan scan = constructScan(startRowKey, endRowKey, filter, queryExtInfo);
 
 		// only query 1 version.
 		if (queryExtInfo != null) {
@@ -244,7 +244,15 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 		long startIndex = 0L;
 		long length = Long.MAX_VALUE;
 
+		Scan scan = null;
+		
 		if (queryExtInfo != null) {
+			if(queryExtInfo.isReversed()){//倒序
+				scan = constructScan(endRowKey, startRowKey, filter, queryExtInfo);
+				scan.setReversed(true);
+			}else{
+				scan = constructScan(startRowKey, endRowKey, filter, queryExtInfo);
+			}
 			if (queryExtInfo.isMaxVersionSet()) {
 				scan.setMaxVersions(queryExtInfo.getMaxVersions());
 			}
@@ -261,6 +269,8 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 				startIndex = queryExtInfo.getStartIndex();
 				length = queryExtInfo.getLength();
 			}
+		}else{
+			scan = constructScan(startRowKey, endRowKey, filter, queryExtInfo);
 		}
 
 		applyRequestFamilyAndQualifier(type, scan);
@@ -763,7 +773,22 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 			Util.close(table);
 		}
 	}
-
+	/**
+	 * 这里是为了方便索引按字节存放
+	 */
+	@Override
+	public void put(RowKey rowKey,String columnFamily,String columnName,byte[] value){
+		Put put = new Put(rowKey.toBytes());
+		put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(columnName), value);
+		Table table = table();
+		try {
+			table.put(put);
+		} catch (IOException e) {
+			throw new SimpleHBaseException("update error.", e);
+		} finally {
+			Util.close(table);
+		}
+	}
 	@Override
 	public List<List<SimpleHbaseCellResult>> select(String hql) {
 		Util.checkEmptyString(hql);

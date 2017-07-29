@@ -68,6 +68,7 @@
     		var $table = $("#_table").table({
     			url : "${_path}/admin/message/list",
     			formId : "_form",
+    			reload : "post",
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
 						$table.dialog(null,null,"消息添加",{
@@ -80,19 +81,23 @@
 									time: '1000'
 								});
 							}
-						},null);
+						});
+						//必须重新加载jquery validate js，否则无法校验
 						$('.page-content-area').ace_ajax('loadScripts', myScripts, function() {});
 					}},
 					{text : '删除', clazz : 'btn-danger', icon : 'fa fa-trash-o red', permission : '/admin/user/delete', handler : function(){
 						$table.ajaxDelete({
-							confirm : "删除管理员会影响关联的应用、角色、权限，确认要删除?",
-							url : "${_path}/admin/user/delete"
+							confirm : "确认要删除?",
+							url : "${_path}/admin/message/delete",
+							data:JSON.stringify({entitys:$table.getSelectedItemKeyArray("userId","sortCode","id")}),
+							contentType: "application/json; charset=utf-8"
 						});
 					}}
 				],
 				columns : [
-					{field:'rowkey',hide:true},
-			        {field:'id', hide : true},
+					{field:'rowKey',hide:true},
+			        {field:'id'},
+			        //{field:'id', hide : true},
 			        
 			        {field:'userId', title:'用户ID', mobileHide : true},
 			        {field:'title', title:'标题', mobileHide : true},
@@ -112,12 +117,24 @@
 				],
 				operate : [
 					{text : '修改', clazz : 'blue', icon : 'fa fa-pencil', permission : '/admin/user/edit', handler : function(d, i){
-						$table.dialog(d,i,"用户编辑").validate();
+						$table.dialog(d,i,"修改消息",{
+							url:'${_path}/admin/message/update',
+							type:'post',
+							callback:function(d){
+								$.gritter.add({
+									text: d.message,
+									sticky: false,
+									time: '1000'
+								});
+							}
+						}).validate();
 					}},
 					{text : '删除', clazz : 'red', icon : 'fa fa-trash-o', permission : '/admin/user/delete', handler : function(d, i){
 						$table.ajaxDelete({
-							confirm : "删除管理员会影响关联的应用、角色、权限，确认要删除?",
-							url : "${_path}/admin/user/delete"
+							confirm : "确认要删除?",
+							url : "${_path}/admin/message/delete",
+							data:JSON.stringify({entitys:$table.getSelectedItemKeyArray("userId","sortCode","id")}),
+							contentType: "application/json; charset=utf-8"
 						});
 					}}
 				],
@@ -159,6 +176,7 @@
 			//点击保存按钮
 			$("#_submit").click(function(){
 				if($('#_editForm').validate()){
+					alert("正在保存.");
 					/* var btn = $(this);
 					btn.button('loading');
 					$.post("${_path}/admin/permission/save", $.formJson('_editForm'),function(d) {

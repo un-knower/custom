@@ -1,6 +1,5 @@
 package com.qingting.customer.common.pojo.index;
 
-import com.qingting.customer.hbase.rowkey.RowKey;
 
 public class MessageIndex {
 	

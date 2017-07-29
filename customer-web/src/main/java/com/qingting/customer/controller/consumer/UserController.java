@@ -53,7 +53,7 @@ public class UserController {
 		User user = userService.getUserByAccount(account);
 		WebResult<User> result=new WebResult<User>(ResultCode.SUCCESS);
 		result.setData(user);*/
-		WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
+		/*WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
 		MyDTO myDTO=new MyDTO();
 		myDTO.setPhone("17701879780");
 		myDTO.setAttentEquip(2);
@@ -61,7 +61,22 @@ public class UserController {
 		myDTO.setName("最可爱的人");
 		myDTO.setPath("/resource/images/customer/head/zlf.png");
 		result.setData(myDTO);
+		result.setMessage("获取成功");*/
+		
+		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
+		WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
+		MyDTO myDTO=new MyDTO();
+		myDTO.setPhone(sessionUserMsg.getMobile());
+		
+		User user = (User)sessionUserMsg.getProfile();
+		
+		myDTO.setAttentEquip(2);
+		myDTO.setMineEquip(2);
+		myDTO.setName(user.getName());
+		myDTO.setPath(user.getPortraitUrl());
+		result.setData(myDTO);
 		result.setMessage("获取成功");
+		
 		/*WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
 		MyDTO myDTO=new MyDTO();
 		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);

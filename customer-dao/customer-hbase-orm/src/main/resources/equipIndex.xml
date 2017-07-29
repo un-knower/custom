@@ -1,0 +1,12 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="equipIndex" defaultFamily="equipIndexFamily">
+		<HBaseColumnSchema qualifier="value" typeName="java.lang.Byte" handler="com.alipay.simplehbase.type.handler.ByteArrayHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.index.EquipIndex" defaultFamily="equipIndexFamily">
+		<field name="value"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

@@ -29,6 +29,10 @@
 		.margint02 img{width: 13px;}
 		.scrolly{ overflow: hidden; overflow-y: scroll;}
 		.border1{border: 1px solid #fafafa;}
+		 @media screen and (max-height:526px){
+		/*  .xy-waveBox{height:71px;} */
+		}
+		.pj{position: absolute;left: 75%;top: 0;}
 		#timeline .timeline-item .blueDot{background: #71affa;box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);}
 	</style>
 	<body ontouchstart>
@@ -50,7 +54,7 @@
 							<p class="weui-tabbar__label">实时服务方案</p>
 						</a>
 						<a href="javascript:;" class="weui-tabbar__item">
-							<p class="weui-tabbar__label">历史服务方案</p>
+							<p class="weui-tabbar__label">历史服务记录</p>
 						</a>
 					</div><!--/tab 导航-->
 					<div class="weui-tab__panel xy-tab__panel xy-scrollH" >
@@ -59,25 +63,25 @@
 								<div class="swiper-wrapper">
 									<div class="swiper-slide">
 										<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">
-											<div class="xy-layout-bar" flex="dir:top" style="height: 90%;">
-												<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01 " flex="dir:left">
-													<p class="xy-fs14"  flex-box="1" id="serHead">过程净化服务</p>
-													<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
+											<div class="xy-layout-bar xy-query xy-query-other" flex="dir:top">
+												<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01" flex="dir:left">
+													<p class="xy-fs18"  flex-box="1">过程净化服务</p>
+													<p class="xy-fs12">通知时间：2017-05-09</p>
 												</div>
-												<div class="border1"></div>
-												<div class="xy-pad-tb10 xy-border-box jianbian" flex-box="1" flex="dir:top">
-													<div class="xy-border-box xy-pad-lr10 bg-blue-01" flex-box="1" flex="dir:left" style="padding-top: 1em;line-height: 24px;">
-														<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG" style="width: 110px;"> <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" /></p>
-														<div class="" flex-box="1" style="padding-left: 1.5em;color:#fff;">
-															<ol class="xy-pad-t3 xy-fs16" flex="dir:left">
-																<dt>预警内容</dt>					
+												<div class="xy-pad-tb10 xy-border-box bg-blue-01" flex-box="1" flex="dir:top" style="background-image:linear-gradient(to top,#fff 10%,#3792fb 30%);color:#fff;">
+													<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left">
+														<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="img/pic-lovely.gif" /></p>
+														<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
+															<ol class="xy-pad-t3 xy-fs18" flex="dir:left">
+																<dt>预警内容</dt>
+																<dd flex-box="1"></dd>
 															</ol>
 															<ol class="xy-pad-t3 xy-fs13" flex="dir:left">
-																<dt id="warnContent">我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。</dt>													
+																<dd flex-box="1" id="warnContent">QT20170212</dd>
 															</ol>
-															<ol class="xy-fs13" flex="dir:left">
+															<ol class=" xy-fs13" flex="dir:left">
 																<dt>备注：</dt>
-																<dd flex-box="1" id="remark">制造、能源、医疗、通信</dd>
+																<dd flex-box="1">2017-05-30</dd>
 															</ol>
 														</div>
 													</div>
@@ -88,30 +92,23 @@
 													</div>
 													<div style="background-image:linear-gradient(to top,#fff,#CBE2FE);">
 														<div class=" xy-pad-lr10 xy-corner-0 xy-head-title" flex="dir:left" style="border:none;box-shadow:none;color:#666666;font-weight: 800;">
-															<p class="xy-fs14"  flex-box="1" id="">服务方案</p>
-															<p class="xy-fs12" id="status">待服务</p>
+															<p class="xy-fs18"  flex-box="1" id="">服务方案</p>
+															<p class="xy-fs12" id="time">服务时间：2017.5.5</p>
 														</div>											
-														<div class="eva-con xy-pad-lr10  xy-fc-gray" flex-box="1" style="padding-top: 1em;">
-															<p id="serContent">
-																一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。<br>
-																二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
-																三、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
-																一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。<br>
-																二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
-																三、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
-															</p>
+														<div class="eva-con xy-pad-lr10  xy-fc-gray" flex-box="1" style="padding-top: 1em;line-height:1.8em;">
+															 <p id="serContent"></p> 
+															<!-- <p id="">复选框用input写即可,复选框用input写即可。															
+															</p> -->
 														</div>
-														
-														<div class="main-img-address xy-pad-lr10 xy-pad-t7" style="    margin-top: 7em;
-    border-top: 2px solid #f9f4f4;">
-															<a href="#" class="" flex="dir:left">
-																<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
-																<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
-																	成都市高兴西区天泉路200号 众创办公室茶水间 	
-																</div>
-															</a>
-														</div>
-													</div>	
+													</div>
+													<div class="main-img-address xy-pad-lr10 xy-pad-t7" style="background:#fff">
+														<a href="#" class="" flex="dir:left">
+															<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
+															<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
+																成都市高兴西区天泉路200号 众创办公室茶水间 	
+															</div>
+														</a>
+													</div>
 												</div>
 											</div><!--用户信息-->																					
 										</div>
@@ -152,8 +149,8 @@
 									</div>
 								</div>	<!-- swiper-wrapper -->
 							</div><!-- swiper-container -->
-							<div class="swiper-button-prev xy-bottom_btnPrve" style="top:100%"></div>
-							<div class="swiper-button-next xy-bottom_btnNext" style="top:100%"></div>
+							<div class="swiper-button-prev xy-bottom_btnPrve" style="top: 103%;"></div>
+							<div class="swiper-button-next xy-bottom_btnNext" style="top: 103%;"></div>
 						</div>
 						<div class="xy-tab-list">
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">	
@@ -277,7 +274,38 @@
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
 			}
-			getPlanList();//画实时服务列表			
+			getPlanList();//画实时服务列表
+			function getPlanList(){
+				//var equipCode='';
+				//获取地址栏参数				
+				/* function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				} */
+				//GetQueryString('equipCode')?equipCode=GetQueryString('equipCode'):equipCode='';
+				var serveId = 0;//此处需要后台定义，为空时拉置顶设备方案？？？
+				$.ajax({
+					type:'get',
+					url:_path+'/consumer/service/getPlan?serCode='+serveId,
+					success : function(msg){
+						console.log(msg);
+						if(msg.data){
+							$('#serHead').html(msg.data.serHead);
+							//$('#equipCode').html(msg.data.equipCode);
+							$('#notice').html('通知时间：'+msg.data.notice.slice(0,11));
+							$('#remark').html(msg.data.remark.slice(0,12)+'……');
+							//$('#equipName').html(msg.data.equipName);
+							$('#warnContent').html(msg.data.warnContent);
+							$('.xy-mar-l5').html(msg.data.adress);
+							$('#status').html(msg.data.status);
+							$('#serContent').html(msg.data.serContent.slice(0,20)+'……');
+							$('.xy-full-widthIMG').html('<img src="${_staticPath}'+msg.data.image+'" />');
+							drawImg(msg.data.images);
+							}						
+						}
+				});
+			}			
 			$(function(){													
 								
 				$('.weui-tabbar__item').on('click', function () {
@@ -362,7 +390,7 @@
 														listDiv+='</div><!--/星星-->'+
 															'</dd>';
 												}else{
-													 listDiv += '<img src="${_staticPath}/resource/weuiWeb/img/pen.png" style="width:10%"><a id="goRecord" style="color: #2a85ca;text-decoration: underline;">待评价</a>';
+													 listDiv += '<span class="pj"><img src="${_staticPath}/resource/weuiWeb/img/pen.png" style="width:31%"><a id="goRecord" style="color: #2a85ca;text-decoration: none;">待评价</a></span>';
 												}
 											listDiv +='</ol>'+
 													'</div>'+
@@ -396,38 +424,7 @@
 				 	 	$('.timeline-icon:eq(0)').addClass('blueDot');
 				 	 }
 				});
-			});
-			function getPlanList(){
-				//var equipCode='';
-				//获取地址栏参数				
-				/* function GetQueryString(name){
-				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
-				     var r = window.location.search.substr(1).match(reg);
-				     if(r!=null)return  decodeURI(r[2]); return null;
-				} */
-				//GetQueryString('equipCode')?equipCode=GetQueryString('equipCode'):equipCode='';
-				var serveId = 0;//此处需要后台定义，为空时拉置顶设备方案？？？
-				$.ajax({
-					type:'get',
-					url:_path+'/consumer/service/getPlan?serCode='+serveId,
-					success : function(msg){
-						console.log(msg);
-						if(msg.data){
-							$('#serHead').html(msg.data.serHead);
-							//$('#equipCode').html(msg.data.equipCode);
-							$('#notice').html('通知时间：'+msg.data.notice.slice(0,11));
-							$('#remark').html(msg.data.remark.slice(0,12)+'……');
-							//$('#equipName').html(msg.data.equipName);
-							$('#warnContent').html(msg.data.warnContent);
-							$('.xy-mar-l5').html(msg.data.adress);
-							$('#status').html(msg.data.status);
-							$('#serContent').html(msg.data.serContent);
-							$('.xy-full-widthIMG').html('<img src="${_staticPath}'+msg.data.image+'" />');
-							drawImg(msg.data.images);
-							}						
-						}
-				});
-			}
+			});			
 			function drawImg(imgData){
 				//console.log(imgData);
 				var imgDiv='';

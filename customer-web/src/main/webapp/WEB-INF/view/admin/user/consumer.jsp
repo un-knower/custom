@@ -92,7 +92,8 @@
 					{text : '删除', clazz : 'btn-danger', icon : 'fa fa-trash-o red', permission : '/admin/user/delete', handler : function(){
 						$table.ajaxDelete({
 							confirm : "删除管理员会影响关联的应用、角色、权限，确认要删除?",
-							url : "${_path}/admin/user/delete"
+							url : "${_path}/admin/user/delete",
+							data:{rowkeys : $table.getSelectedItemKeys("rowkey")}
 						});
 					}}
 				],

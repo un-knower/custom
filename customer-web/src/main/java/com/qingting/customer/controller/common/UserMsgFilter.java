@@ -58,10 +58,11 @@ public class UserMsgFilter extends ClientFilter {
 			System.out.println("sessionUser:"+sessionUser);
 			if(sessionUser!=null){
 				System.out.println("userService1:"+userService);
-				User user=new User();//userService.getUserByMobile(sessionUser.getAccount());
-				user.setMobile(sessionUser.getAccount());
-				user.setName("zlf");
-				user.setPortraitUrl("/resource/images/customer/portrait/zlf.png");;
+				//User user=new User();
+				User user=userService.getUserByMobileAndId(null,sessionUser.getAccount());
+				//user.setMobile(sessionUser.getAccount());
+				//user.setName("zlf");
+				//user.setPortraitUrl("/resource/images/customer/portrait/zlf.png");;
 				System.out.println("user:"+user);
 				if(user!=null){
 					sessionUserMsg=new SessionUserMsg();

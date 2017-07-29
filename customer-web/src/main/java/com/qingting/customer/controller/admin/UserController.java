@@ -17,6 +17,7 @@ import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.dto.MyDTO;
 import com.qingting.customer.common.pojo.hbasedo.User;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.smart.mvc.controller.BaseController;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
@@ -31,7 +32,7 @@ import io.swagger.annotations.ApiParam;
 @Api(tags = "用户相关")
 @Controller("adminUserController")
 @RequestMapping("/admin/user")
-public class UserController {
+public class UserController extends BaseController {
 	@Resource
 	UserService userService;
 	
@@ -84,6 +85,19 @@ public class UserController {
 		//userService.insertUser(user);
 		
 		//return new WebResult<Object>(ResultCode.SUCCESS);
+	}
+	@ApiOperation("后台删除用户")
+	@RequestMapping(value="/delete",method = RequestMethod.POST)
+	public @ResponseBody WebResult<Object> delete(
+			@ApiParam(value = "rowkeys", required = true) @ValidateParam({ Validator.NOT_BLANK })String rowkeys,
+			@ApiParam(value = "ids", required = true) @ValidateParam({ Validator.NOT_BLANK })String ids
+			){
+		System.out.println("删除的用户rowkey:"+rowkeys);
+		RegisterUtils.deleteById(getAjaxIds(ids));
+		userService.deleteUserByRowKey(getAjaxIdsString(rowkeys));
+		WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
+		result.setMessage("删除成功");
+		return result;
 	}
 	@ApiOperation("后台查询所有用户")
 	@RequestMapping(value="/list",method = RequestMethod.GET)

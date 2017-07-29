@@ -61,7 +61,7 @@ function drawEchart(chart,thisNum,data){
 		title : {
 			x: 'center',
 			y: 'bottom',
-			padding: [5,5,15,5],
+			padding: [5,5,45,5],
 			text: '向右滑动监测曲线图查看历史监测数据',
 			textStyle: {
 				fontSize: 14,
@@ -70,6 +70,20 @@ function drawEchart(chart,thisNum,data){
 				
 			}
 		},
+		/*legend: {
+			x: 'center',
+			y: 'bottom',
+			top:'87%',
+	        data:[{
+	        	name:'——：预警线      ——：超标线',
+	        	icon:'image://'+_staticPath+'/resource/weuiWeb/img/logo-text.png',
+	        	textStyle:{
+	        		color:'red'
+	        		}
+	        	}
+              ],
+	        formatter: '{name}'
+	    },*/
 		tooltip : {
 			trigger: 'item',
 			triggerOn: 'click',
@@ -83,15 +97,6 @@ function drawEchart(chart,thisNum,data){
 				return res;  
 			}  
 		},
-		/*legend: {
-			x: 'left',
-			y:'top',
-			padding: [5,5,50,5],
-			data:['原水数据'],
-			textStyle:{
-				color:'#000'
-			}
-		},*/
 		calculable : true,
 		xAxis : [
 			{
@@ -121,7 +126,7 @@ function drawEchart(chart,thisNum,data){
 			end:100
 		},
 		series :{
-			//name:'原水数据',
+			name:'原水数据',
 			type:'line',
 			smooth:true,
 			lineStyle: {
@@ -166,6 +171,12 @@ function drawEchart(chart,thisNum,data){
 								width: 3,
 							}
 						}
+					},
+					label :{
+						normal:{
+							position: 'middle',
+							formatter: '{b}: {c}%'
+						}
 					}
 				}, { 
 					name: '超标线', 
@@ -178,12 +189,19 @@ function drawEchart(chart,thisNum,data){
 								width: 3,
 							}
 						}
+					},
+					label :{
+						normal:{
+							position: 'middle',
+							formatter: '{b}: {c}%'
+						}
 					}
 				}] 
 			}
-		} ,
-	};      
-	// 使用刚指定的配置项和数据显示图表。
+		},
+	};
+	//option.legend.data[0].name.slice(11).color='yellow';
+	// 使用刚指定的配置项和数据显示图表。	
 	chart.setOption(option,true);
 	chart.on('click',function(params){
 		console.log(params);

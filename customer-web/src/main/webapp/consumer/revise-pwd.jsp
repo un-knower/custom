@@ -50,7 +50,7 @@
 								<div class="weui-cell xy-login-ImgLine xy-mar-lr10 xy-mar-t8">
 									<div class="weui-cell__hd"><label class="weui-label xy-pad-r5"><img src="${_staticPath}/resource/weuiWeb/img/form-pwd.png" /></label></div>
 									<div class="weui-cell__bd">
-										<input class="weui-input xy-input-pwd" type="password" placeholder="请设置大于6位数密码">
+										<input class="weui-input xy-input-pwd" type="password" placeholder="请设置等于或大于6位数的密码">
 									</div>
 								</div>
 								<div class="xy-mar-tb10 xy-mar-lr10">
@@ -74,16 +74,68 @@
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
 				$("#reviseBtn").click(function(){
-					var loading = weui.default.loading();
-					setTimeout(function(){
-						loading.hide();
-						weui.default.toast("修改密码成功",2000);
-						setTimeout(function(){
-							history.go(-1);
-						},2000)
-					},1000)
+					var param={};
+						param.mobile = $('.xy-input-tel').attr("value");
+						param.password = $('.xy-input-pwd').val();
+						param.validateCode = $('.xy-input-code').val();
+					if(param.password&&param.password.length >= 6){
+						$.ajax({
+							type:'post',
+							url:_path+'/forget/update',
+							data:param,
+							success : function(msg){
+								var loading = weui.default.loading();
+								setTimeout(function(){
+									loading.hide();
+									weui.default.toast("修改密码成功",2000);
+									setTimeout(function(){
+										history.go(-1);
+									},2000)
+								},1000)								
+							}
+						}); 
+					}else {
+						$('.xy-input-pwd').parents('.weui-cell').css('border','1px solid red');
+					}
+					
+					
 				})
 			}
+			$(function(){
+				function GetQueryString(name){
+				     var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+				     var r = window.location.search.substr(1).match(reg);
+				     if(r!=null)return  decodeURI(r[2]); return null;
+				}
+				$('.xy-input-tel').attr('value',GetQueryString('mobile'));				
+				$('.weui-vcode-btn').click(function(){
+					
+					var a = $('.xy-input-tel').attr("value"),time=60;
+						settime($(this));
+						$.ajax({
+							type:'get',
+							url:_path+'/validate/getValidateCode'+'?'+'mobile='+a,
+							success : function(msg){
+								//if(msg) alert('验证码已成功发送至您手机！')								
+							}
+						}); 	            	
+					function settime(obj){			
+						if(time == 0){
+							obj.attr('disabled',false);
+							obj.html("获取验证码");
+							time = 60;
+							return
+						}else{
+							obj.attr('disabled',true);
+							obj.html('重新发送'+time);
+							time--;
+						}
+						setTimeout(function(){					
+							settime(obj);},1000)
+						
+					}
+				}); 
+			})
 		</script>
 		
 		<script type="text/javascript" src="${_staticPath}/resource/weuiWeb/js/xy-common.js"></script>

@@ -23,7 +23,12 @@
 	<style>
 		.spanLine{width: 1.5px;margin-top: 10px; color: #2E8DFB;} 
 		.dotPosition{top:8px;left:inherit;}
-		.pr{position: relative;}   
+		.scrolly{ overflow: hidden; overflow-y: scroll;}
+		.pr{position: relative;} 
+		.xy-tabbar .lineStyle{    height: 25px;
+		    border-right: 2px solid #227ce4;
+		    margin-top: 0.5em;
+		    line-height: 25px;}  
 	</style>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -34,20 +39,20 @@
 				<div class="weui-flex__item"><div class="xy-h1-title">消息</div></div>
 				<div class="xy-width-45"></div>
 			</div><!--/header-->
-			<div class="page__bd xy-container xy-white-bg">
+			<div class="page__bd xy-container xy-white-bg" style="padding-bottom: 0.5em;">
 				<div class="weui-tab xy-border-box xy-pad-tb10">
 					<div class="weui-tabbar xy-tabbar bg-white">
 						<a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
-							<p class="weui-tabbar__label">服务提醒</p>
+							<p class="weui-tabbar__label ">服务提醒</p>
 						</a>
 						<a href="javascript:;" class="weui-tabbar__item">
-							<p class="weui-tabbar__label">评价</p>
+							<p class="weui-tabbar__label ">评价</p>
 						</a>
 						<a href="javascript:;" class="weui-tabbar__item">
-							<p class="weui-tabbar__label">好友申请</p>
+							<p class="weui-tabbar__label ">好友申请</p>
 						</a>
 						<a href="javascript:;" class="weui-tabbar__item">
-							<p class="weui-tabbar__label pr">续费提醒<i class="xy-poab icon-new-message dotPosition">&nbsp;</i></p>
+							<p class="weui-tabbar__label  pr">续费提醒<i class="xy-poab icon-new-message dotPosition">&nbsp;</i></p>
 						</a>
 					</div><!--/tab 导航-->
 					<div class="weui-tab__panel xy-tab__panel xy-scrollH" >
@@ -483,6 +488,7 @@
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
 			}
+			leftDelete();			
 			$('.weui-tabbar__item').on('click', function () {
 				$(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
 				var thisNum = $(this).index();
@@ -522,7 +528,8 @@ window.location.href =_path+"/consumer/follow.jsp?followTime="+followTime+'&name
 				}
 			}); 
 			
-			$(function(){				
+			$(function(){
+								
 				//获取消息列表
 				$.ajax({
 					type:'get',

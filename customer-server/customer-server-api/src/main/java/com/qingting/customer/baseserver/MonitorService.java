@@ -51,28 +51,18 @@ public interface MonitorService {
 
 	/**
 	 * 
-	 * @Title: listMonitorByStartTimeAndEndTime
-	 * @Description: 查询一段时间的监测数据
+	 * @Title: listMonitorByEndTime
+	 * @Description: 前端用-查询监测值
 	 * @param equipCode
-	 * @param startTime
+	 * @param type
+	 * @param pageSize
 	 * @param endTime
 	 * @return 
 	 * @return List<Monitor>
 	 * @throws
 	 */
-	List<Monitor> listMonitorByStartTimeAndEndTime(String equipCode, Calendar startTime,
+	List<Monitor> listMonitorByEndTime(String equipCode, String type, int pageSize,
 			Calendar endTime);
-	/**
-	 * 
-	 * @Title: listMonitorOfNew
-	 * @Description: 查询设备最新一段时间的监测数据
-	 * @param equipCode
-	 * @param wide
-	 * @return 
-	 * @return List<Monitor>
-	 * @throws
-	 */
-	List<Monitor> listMonitorOfNew(String equipCode,Long wide);
 	/**
 	 * 
 	 * @Title: listMonitor

@@ -37,19 +37,15 @@ public class MonitorServiceImpl implements MonitorService{
 	public Monitor getMonitorByRowKey(String rowKey) {
 		return monitorDAO.getMonitorByRowKey(rowKey);
 	}
-
-	@Override
-	public List<Monitor> listMonitorByStartTimeAndEndTime(String equipCode, Calendar startTime, Calendar endTime) {
-		return monitorDAO.listMonitorByStartTimeAndEndTime(equipCode, startTime, endTime);
-	}
-
-	@Override
-	public List<Monitor> listMonitorOfNew(String equipCode, Long wide) {
-		return monitorDAO.listMonitorOfNew(equipCode, wide);
-	}
-
+	
 	@Override
 	public Pagination<Monitor> listMonitor(String equipCode,Integer pageNo,Integer pageSize){
 		return monitorDAO.listMonitor(equipCode,pageNo, pageSize);
+	}
+
+	@Override
+	public List<Monitor> listMonitorByEndTime(String equipCode, String type, int pageSize, Calendar endTime) {
+		
+		return monitorDAO.listMonitorByEndTime(equipCode, type, pageSize, endTime);
 	}
 }

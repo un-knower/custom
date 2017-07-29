@@ -33,7 +33,9 @@ public class QueryExtInfo {
     private boolean isLimitSet;
     private long    startIndex;
     private long    length;
-
+    
+    private boolean isReversed;
+    
     public QueryExtInfo() {
     }
 
@@ -117,8 +119,18 @@ public class QueryExtInfo {
     public long getMaxStamp() {
         return maxStamp;
     }
+    
+    
 
-    @Override
+    public boolean isReversed() {
+		return isReversed;
+	}
+
+	public void setReversed(boolean isReversed) {
+		this.isReversed = isReversed;
+	}
+
+	@Override
     public boolean equals(Object obj) {
         return EqualsBuilder.reflectionEquals(this, obj);
     }

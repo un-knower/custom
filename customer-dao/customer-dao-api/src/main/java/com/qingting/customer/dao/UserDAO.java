@@ -1,5 +1,7 @@
 package com.qingting.customer.dao;
 
+import java.util.List;
+
 import com.qingting.customer.common.pojo.hbasedo.User;
 import com.qingting.customer.common.pojo.model.Pagination;
 
@@ -16,12 +18,12 @@ public interface UserDAO {
 	/**
 	 * 
 	 * @Title: deleteUserByRowKey
-	 * @Description: 删除一个用户通过rowkey
+	 * @Description: 删除用户
 	 * @param rowkey 
 	 * @return void
 	 * @throws
 	 */
-	void deleteUserByRowKey(String rowkey);
+	void deleteUserByRowKey(List<String> rowkey);
 	/**
 	 * 
 	 * @Title: updateUserByRowKey

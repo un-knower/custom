@@ -18,6 +18,20 @@
 			var _path="${_path}",_staticPath="${_staticPath}";
 		</script>
 	</head>
+	<style>
+	@media screen and (max-height:600px){
+		.my-msg {
+		    height: 80px;
+		    padding-bottom: 23px;
+		    background-size: 62% 100%;
+			 }
+		 .xy-mar-t10 {
+    		margin-top: .7em;}
+   		.my-lovely img {
+		    width: 55%;
+		}
+   		}
+	</style>
 	<body ontouchstart  translate="no">
 		<div class="page flex js_show height100">
 			<div class="weui-flex xy-header">

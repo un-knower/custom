@@ -358,4 +358,16 @@ public interface BasicService {
      * @throws SimpleHBaseException
      */
     public long count(RowKey startRowKey, RowKey endRowKey,Filter filter) throws SimpleHBaseException;
+    /**
+     * 
+     * @Title: update
+     * @Description: 更新一个cell
+     * @param rowKey
+     * @param columnFamily
+     * @param columnName
+     * @param value 
+     * @return void
+     * @throws
+     */
+    public void put(RowKey rowKey,String columnFamily,String columnName,byte[] value);
 }

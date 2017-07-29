@@ -143,9 +143,11 @@
 					window.location.href =_path+"/consumer/device-follow.jsp";
 				});
 				$('#setNewPassword').click(function(){
-					window.location.href =_path+"/consumer/forget.jsp";
+					var mymobile = $('#mobile').html();
+					window.location.href =_path+"/consumer/revise-pwd.jsp?mobile="+mymobile;
 				});
 				$('#deviceUl li:eq(1)').click(function(){
+					
 					window.location.href =_path+"/consumer/project.jsp";
 				});
 				$('#deviceUl li:eq(2)').click(function(){//跳转到我关注的设备
@@ -186,7 +188,7 @@
 			function showRedDot(){
 				var message = true;
 				if(message = true){
-					$('.xy-pore').append('<i class="xy-poab icon-new-message">&nbsp;</i>');
+					//$('.xy-pore').append('<i class="xy-poab icon-new-message">&nbsp;</i>');
 				}				
 			}
 		</script>

@@ -57,7 +57,7 @@ public class Message extends PersistentObject{
 	 * 创建时间
 	 */
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
-	@ApiModelProperty(value="时间",example="2017-01-01 12:00",dataType="String")
+	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
 
 	public String getRowKey() {
@@ -140,5 +140,12 @@ public class Message extends PersistentObject{
 		this.createTime = createTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Message [rowKey=" + rowKey + ", id=" + id + ", userId=" + userId + ", title=" + title + ", content="
+				+ content + ", imageUrl=" + imageUrl + ", sortCode=" + sortCode + ", readFlag=" + readFlag + ", status="
+				+ status + ", createTime=" + createTime + "]";
+	}
+	
 	
 }

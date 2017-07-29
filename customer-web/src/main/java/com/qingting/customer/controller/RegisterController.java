@@ -68,7 +68,8 @@ public class RegisterController {
 					
 					User user=new User();
 					user.setMobile(mobile);
-					//user.setPassword(password);
+					user.setPortraitUrl("/resource/images/customer/portrait/portrait.png");
+					user.setName("最可爱的人");
 					userService.insertUser(user);//本地注册用户
 					
 					result.setMessage("注册成功");

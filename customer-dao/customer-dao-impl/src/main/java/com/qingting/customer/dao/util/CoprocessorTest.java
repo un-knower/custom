@@ -28,96 +28,6 @@ import com.alipay.simplehbase.util.TableNameUtil;
 import com.google.common.collect.Lists;
 
 public class CoprocessorTest {
-	private static final Map<String,Object> project=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"projectFamily"});
-		}
-	};
-	private static final Map<String,Object> equip=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"equipFamily"});
-		}
-	};
-	private static final Map<String,Object> equipSort=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"equipSortFamily"});
-		}
-	};
-	private static final Map<String,Object> monitor=new HashMap<String,Object>(){
-	
-		private static final long serialVersionUID = 9112245605102867437L;
-		{
-			put("family",new String[]{"monitorFamily"});
-			put("split",getMonitorBytes(10,20)
-			);
-		}
-	};
-	private static final Map<String,Object> user=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"userFamily"});
-		}
-	};
-	private static final Map<String,Object> userSort=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"userSortFamily"});
-		}
-	};
-	private static final Map<String,Object> message=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"messageFamily"});
-		}
-	};
-	private static final Map<String,Object> messageIndex=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"messageIndexFamily"});
-		}
-	};
-	private static final Map<String,Object> messageSort=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"messageSortFamily"});
-		}
-	};
-	private static final Map<String,Object> province=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"provinceFamily"});
-		}
-	};
-	private static final Map<String,Object> city=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"cityFamily"});
-			put("split",
-				new byte[][]{
-     		   		{49,0,0,0,0,0,0,0,0,0,0,0},
-    				{50,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{51,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{52,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{53,0,0,0,0,0,0,0,0,0,0,0},    
-    				{54,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{55,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{56,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{57,0,0,0,0,0,0,0,0,0,0,0} 
-     		   	}
-			);
-		}
-	};
-	private static final Map<String,Object> area=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"areaFamily"});
-			put("split",
-				new byte[][]{
-     		   		{49,0,0,0,0,0,0,0,0,0,0,0},
-    				{50,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{51,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{52,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{53,0,0,0,0,0,0,0,0,0,0,0},    
-    				{54,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{55,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{56,0,0,0,0,0,0,0,0,0,0,0}, 
-    				{57,0,0,0,0,0,0,0,0,0,0,0} 
-     		   	}
-			);
-		}
-	};
 	/**
 	 * key:表名 
 	 * value:列族+预分区
@@ -125,23 +35,28 @@ public class CoprocessorTest {
 	private static final Map<String,Map<String,Object>> map=new HashMap<String,Map<String,Object>>(){
 		private static final long serialVersionUID = 9112245605102867437L;
 		{
-			put("project", project);
-			put("equip", equip);
-			put("equipSort", equipSort);
-			put("monitor", monitor);
-			put("user", user);
-			put("userSort",userSort);
-			put("message", message);
-			put("messageIndex", messageIndex);
-			put("messageSort", messageSort);
-			put("province",province);
-			put("city",city);
-			put("area",area);
+			put("project", new HashMap<String,Object>());
+			put("equip", new HashMap<String,Object>());
+			put("equipSort", new HashMap<String,Object>());
+			put("monitor", new HashMap<String,Object>());
+			put("user", new HashMap<String,Object>());
+			put("userSort",new HashMap<String,Object>());
+			put("message", new HashMap<String,Object>());
+			put("messageSort", new HashMap<String,Object>());
+			put("province",new HashMap<String,Object>());
+			put("city",new HashMap<String,Object>());
+			put("area",new HashMap<String,Object>());
+			
+			
+			put("messageIndex", new HashMap<String,Object>());
+			put("monitorIndex", new HashMap<String,Object>());
+			put("monitorIndexDay", new HashMap<String,Object>());
+			
 		}
 	};
 	
 	
-	private static byte[][] getMonitorBytes(int row,int cloumn){
+	/*private static byte[][] getMonitorBytes(int row,int cloumn){
 		byte[][] bytes=new byte[row][cloumn];
 		for(int i=0;i<row;i++){
 			bytes[i][0]=(byte)( (256/row)*i ) ;
@@ -150,7 +65,7 @@ public class CoprocessorTest {
 			}
 		}
 		return bytes;
-	}
+	}*/
 	public static void main(String[] args){//增加协处理器
    		String coprocessClassName = "org.apache.hadoop.hbase.coprocessor.AggregateImplementation";
        Admin admin=AdminUtil.getAdmin();

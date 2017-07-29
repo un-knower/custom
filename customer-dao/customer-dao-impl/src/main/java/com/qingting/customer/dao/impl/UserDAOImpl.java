@@ -44,7 +44,7 @@ public class UserDAOImpl implements UserDAO {
 			User user = result.getT();
 			byte[] rowkey=result.getRowKey().toBytes();
 			
-			user.setRowkey(result.getRowKey().toString());
+			user.setRowkey(new String(rowkey));
 			byte[] mobile=new byte[11];
 			System.arraycopy(rowkey, RANDOM_LENGTH, mobile, 0, MOBILE_LENGTH);//中间mobile
 			user.setMobile(new String(mobile));
@@ -65,8 +65,12 @@ public class UserDAOImpl implements UserDAO {
 	}
 
 	@Override
-	public void deleteUserByRowKey(String rowkey) {
-		tClient.delete(RowKeyUtil.getRowKey(rowkey));
+	public void deleteUserByRowKey(List<String> rowkeys) {
+		List<RowKey> rowKeylist = new ArrayList<RowKey>();
+		for (String string : rowkeys) {
+			rowKeylist.add(RowKeyUtil.getRowKey(string));
+		}
+		tClient.deleteList(rowKeylist);
 	}
 
 	@Override
@@ -113,6 +117,9 @@ public class UserDAOImpl implements UserDAO {
 		}else{
 			return null;
 		}*/
+		
+		System.out.println("id:"+id+"mobile:"+mobile);
+		
 		List<User> list=null;
 		if(StringUtils.isZeroOrNull(id) && StringUtils.isBlank(mobile)){//都为空
 			
@@ -121,6 +128,7 @@ public class UserDAOImpl implements UserDAO {
 					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id), User.class,FilterUtils.getSuffixFilter(id),null)
 					);
 		}else if(StringUtils.isZeroOrNull(id) && !StringUtils.isBlank(mobile)){//id为空，mobile不为空
+			System.out.println("id空，mobile不为空,mobile="+mobile+".");
 			list=setContentOfRowKey(
 					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,mobile),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,mobile), User.class,FilterUtils.getContainFilter(mobile),null)
 					);
@@ -129,6 +137,10 @@ public class UserDAOImpl implements UserDAO {
 					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,mobile,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,mobile,id), User.class,FilterUtils.getSuffixFilter(id),null)
 					);
 		}
+		if(list!=null)
+			for (User user : list) {
+				System.out.println(user);
+			}
 		if(list==null){
 			return null;
 		}else if(list.size()>1){

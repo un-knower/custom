@@ -22,8 +22,15 @@
 	<style>
 		.jianbian{background-image:linear-gradient(to top,#fff 30%,#3792fb 60%);} 
 		.marginb03{ margin-bottom: 0.3em;} 
-		.paddingt{padding: 1em 1em 0 2em;}
+		.xy-linlk-listview.paddingt{padding: 0 1em 0 2em;}
 		.colorfff{color:#fff;}
+		.border1{border: 1px solid #fafafa;}
+		/* @media screen and (max-width: 340px) {
+		 .xy-waveBox{height:80px;}
+		}
+		@media screen and (min-width: 375px) {
+		 .xy-waveBox{height:60px;}
+		} */
 	</style>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -39,14 +46,14 @@
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">
-								<div class="xy-layout-bar" flex="dir:top">
-									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-02 marginb03" flex="dir:left">
-										<p class="xy-fs14"  flex-box="1" id="serHead">过程净化服务</p>
-										<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
+								<div class="xy-layout-bar xy-query xy-query-other" flex="dir:top">
+									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01" flex="dir:left">
+										<p class="xy-fs18"  flex-box="1">过程净化服务</p>
+										<p class="xy-fs12">通知时间：2017-05-09</p>
 									</div>
 									<div class="xy-pad-tb10 xy-border-box jianbian" flex-box="1" flex="dir:top">
 										<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview paddingt colorfff" flex-box="1" flex="dir:left">
-											<p class="mini-lovely xy-full-widthIMG" style="width:120px"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif"/></p>
+											<p class="mini-lovely xy-full-widthIMG xy-tac" style="width:25%"><img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif"/></p>
 											<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
 												<h3 id="empName"></h3>
 												<ol class="xy-pad-t3 xy-fs16" flex="dir:left" id="rank">
@@ -68,7 +75,7 @@
 												</ol>
 												<ol class="xy-pad-t3 xy-fs13" flex="dir:left">
 													<dt class="xy-dibVat" style="width:150%" id="tag">专业、高效</dt>
-													<dd class="xy-dibVat xy-tar" id="recordBtn"><img src="${_staticPath}/resource/weuiWeb/img/pen.png" style="width:10%"><a id="goRecord" style="color: #fff;text-decoration: none;">待评价</a></dd>
+													<dd class="xy-dibVat xy-tar" id="recordBtn"><img src="${_staticPath}/resource/weuiWeb/img/pen.jpg" style="width:30%;vertical-align: middle;"><a id="goRecord" style="color: #fff;text-decoration: none;">待评价</a></dd>
 												</ol>	
 											</div>
 											<div class="weui-cell__ft">
@@ -81,26 +88,25 @@
 										</div>
 										<div style="background-image:linear-gradient(to top,#fff,#CBE2FE);">
 											<div class=" xy-pad-lr10 xy-corner-0 xy-head-title" flex="dir:left" style="border:none;box-shadow:none;color:#666666;font-weight: 800;">
-												<p class="xy-fs14"  flex-box="1" id="">服务方案</p>
+												<p class="xy-fs18"  flex-box="1" id="">服务方案</p>
 												<p class="xy-fs12" id="time"></p>
 											</div>											
-											<div class="eva-con xy-pad-lr10  xy-fc-gray" flex-box="1">
+											<div class="eva-con xy-pad-lr10  xy-fc-gray" flex-box="1" style="padding-top: 1em;line-height:1.8em;">
 												<p id="serContent">
 													一、我们拥有一流的软件产品设计、开发团队和一流的电气自动化工程师团队。<br>
 													二、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
 													三、我们将以国际化的运营理念，多年业界的从业经验和技术积累，持之以恒，自强不息，为广大用户提供更加优异的产品和服务。<br>
 		
 												</p>
-											</div>
-											
-											<div class="main-img-address xy-pad-lr10 xy-pad-t7">
-												<a href="#" class="" flex="dir:left">
-													<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
-													<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
-														成都市高兴西区天泉路200号 众创办公室茶水间 	
-													</div>
-												</a>
-											</div>
+											</div>																						
+										</div>
+										<div class="main-img-address xy-pad-lr10 xy-pad-t7" style="">
+											<a href="#" class="" flex="dir:left">
+												<i class="icon-map icon-mini-map"><img src="${_staticPath}/resource/weuiWeb/img/icon-map.png"></i>
+												<div class="xy-mar-l5 xy-line-clamp xy-tal xy-fc-light-gray"  flex-box="1">
+													成都市高兴西区天泉路200号 众创办公室茶水间 	
+												</div>
+											</a>
 										</div>	
 									</div>
 								</div><!--用户信息-->																					
@@ -166,7 +172,7 @@
 			function showStatu(){
 			}
 			function bindEvent(serveId){
-				$('.xy-poab-menuBottom').click(function(){
+				$('#recordBtn').click(function(){
 					window.location.href =_path+"/consumer/evaluate.jsp?serveId="+serveId;
 				});
 				
@@ -185,7 +191,7 @@
 				console.log(ifel);
 				if(ifel==1){
 					//未评价，隐藏右边按钮
-					$('.xy-poab-menuBottom').show();
+					$('.xy-poab-menuBottom').hide();
 					$('.weui-cell__ft').hide();
 					$('#rank').hide();
 					$('#tag').hide();

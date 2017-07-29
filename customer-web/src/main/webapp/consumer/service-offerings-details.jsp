@@ -43,7 +43,7 @@
 											<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><%-- <img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.png" /> --%></p>
 											<div class="xy-pad-l10" flex-box="1">
 												<ol class="xy-pad-t3 xy-fs16" flex="dir:left">
-													<dt>项目：</dt>
+													<dt>设备：</dt>
 													<dd flex-box="1" id="equipName">净化系统</dd>
 												</ol>
 												<ol class="xy-pad-t3 xy-fs13" flex="dir:left">

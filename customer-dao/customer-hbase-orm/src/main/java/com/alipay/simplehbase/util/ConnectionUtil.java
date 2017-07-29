@@ -23,6 +23,20 @@ public class ConnectionUtil {
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	public static Configuration getCfg() {
+		return cfg;
+	}
+
+
+
+	public static void setCfg(Configuration cfg) {
+		ConnectionUtil.cfg = cfg;
+	}
+
+
 
 	public static Connection getConnection() {
 		return conn;

@@ -1,6 +1,7 @@
 package com.qingting.customer.baseserver;
 
 import java.util.List;
+import java.util.Map;
 
 import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.model.Pagination;
@@ -15,17 +16,17 @@ public interface MessageService {
 	 * @throws
 	 */
 	void insertMessage(Message message);
+	
 	/**
 	 * 
 	 * @Title: deleteMessage
-	 * @Description: 删除一条信息
-	 * @param userId
-	 * @param sortCode
-	 * @param millis 
+	 * @Description: 删除消息
+	 * @param messages 
 	 * @return void
 	 * @throws
 	 */
-	void deleteMessage(Integer userId,String sortCode,Long millis);
+	void deleteMessage(List<Message> messages);
+	
 	/**
 	 * 
 	 * @Title: updateMessage
@@ -53,11 +54,34 @@ public interface MessageService {
 	 * @Description: 查消息
 	 * @param userId
 	 * @param sortCode
-	 * @param pageNo
-	 * @param pageSize
+	 * @param page
 	 * @return 
 	 * @return Pagination<Message>
 	 * @throws
 	 */
-	Pagination<Message> listMessage(Integer userId,String sortCode,Integer pageNo,Integer pageSize);
+	Pagination<Message> listMessage(Integer userId,String sortCode,Pagination<Message> page);
+	/**
+	 * 
+	 * @Title: listMessageByEndRowKey
+	 * @Description: 查消息
+	 * @param endId
+	 * @param userId
+	 * @param sortCode
+	 * @param pageSize
+	 * @return 
+	 * @return List<Message>
+	 * @throws
+	 */
+	List<Message> listMessageByEndId(Long endId,Integer userId,String sortCode,Integer pageSize);
+	/**
+	 * 
+	 * @Title: setRead
+	 * @Description: 已读标记
+	 * @param userId
+	 * @param sortCode
+	 * @param id 
+	 * @return void
+	 * @throws
+	 */
+	void setRead(Integer userId,String sortCode,Long id);
 }

@@ -1,22 +1,13 @@
 package com.qingting.customer.baseservice.service;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Random;
+import java.util.UUID;
 
-import javax.annotation.Resource;
 
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.qingting.customer.baseserver.MonitorService;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
-import com.qingting.customer.common.pojo.util.DateUtil;
 
 
 //@RunWith(SpringJUnit4ClassRunner.class)
@@ -70,7 +61,23 @@ public class TestMonitorService {
 		MonitorRowKey monitorRowKey = new MonitorRowKey(1, startCal);
 		monitorDAO.insertMonitor(monitor, monitorRowKey);*/
 	}
-	
+	public String getOrderIdByUUId() {
+        int machineId = 1;//最大支持1-9个集群机器部署
+        int hashCodeV = UUID.randomUUID().toString().hashCode();
+        if(hashCodeV < 0) {//有可能是负数
+            hashCodeV = - hashCodeV;
+        }
+        // 0 代表前面补充0     
+        // 4 代表长度为4     
+        // d 代表参数为正数型
+        //return machineId + String.format("%015d", hashCodeV);
+        return String.format("%015d", hashCodeV);
+    }
+	@Test
+    public void uuid() {
+        //System.out.println(getOrderIdByUUId());
+		System.out.println(UUID.randomUUID());
+    }
 	/*public static String datechange(Date date, String pattern) {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		String demo = sdf.format(date);

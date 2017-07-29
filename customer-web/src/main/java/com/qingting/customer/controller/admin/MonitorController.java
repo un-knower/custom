@@ -42,33 +42,6 @@ public class MonitorController {
 		return "/admin/monitor/monitor";
 	}
 	
-	@ApiOperation("查询某个时间段的监测值")
-	@RequestMapping(value="/listMonitorByTime",method = RequestMethod.POST)
-	public @ResponseBody WebResult<List<Monitor>> listMonitorByTime(
-			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode,
-			@ApiParam(value = "查询的起始时间", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })GregorianCalendar startTime,
-			@ApiParam(value = "查询的结束时间", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })GregorianCalendar endTime
-			){
-		//别忘记验证传参和用户身份是否匹配
-		LOGGER.info("listMonitor equipCode {}.from {} to {}.",equipCode,startTime,endTime);
-		List<Monitor> list = monitorService.listMonitorByStartTimeAndEndTime(equipCode, startTime, endTime);//(equipId, startCalendar, endCalendar);
-		WebResult<List<Monitor>> result=new WebResult<List<Monitor>>(ResultCode.SUCCESS);
-		result.setData(list);
-		return result;
-	}
-	
-	@ApiOperation("查询最新时间段的监测值")
-	@RequestMapping(value="/listNew",method = RequestMethod.POST)
-	public @ResponseBody WebResult<List<Monitor>> listNewMonitor(
-			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode
-			){
-		//别忘记验证传参和用户身份是否匹配
-		LOGGER.info("listNewMonitor equipCode {}",equipCode);
-		List<Monitor> list = monitorService.listMonitorOfNew(equipCode,Long.parseLong(ClientConfig.getSearchTimeWide()));
-		WebResult<List<Monitor>> result=new WebResult<List<Monitor>>(ResultCode.SUCCESS);
-		result.setData(list);
-		return result;
-	}
 	@ApiOperation("查询所有监测值")
 	@RequestMapping(value="/list",method = RequestMethod.GET)
 	public @ResponseBody WebResult<Pagination<Monitor>> listMonitor(

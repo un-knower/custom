@@ -36,7 +36,7 @@
 							
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">
 								<div class="xy-layout-bar xy-query" flex="dir:top">
-									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-02" flex="dir:left">
+									<div class="xy-head-title xy-pad-lr10 xy-corner-0 bg-blue-01" flex="dir:left">
 										<p class="xy-fs14"  flex-box="1" id="serHead">过程净化服务</p>
 										<p class="xy-fs12" id="notice">通知时间：2017-05-09</p>
 									</div>

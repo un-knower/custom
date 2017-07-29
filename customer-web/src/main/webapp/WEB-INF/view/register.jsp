@@ -9,7 +9,7 @@
 		<meta name="apple-mobile-web-app-status-bar-style" content="black"> 
 		<meta name="apple-mobile-web-app-capable" content="yes">
 		<meta name="format-detection" content="telephone=no">
-		<title>净水器-注册</title>
+		<title>智慧饮水管家-注册</title>
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/weui.min.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
@@ -136,8 +136,25 @@
 		              $('#validateCode').parents('.weui-cell').css('border','1px solid red').siblings().removeAttr("style");
 		            }else{
 			            //alert('3434555');
-						$('form[id=register-form]').attr('action',_path+"/register/submit");
-						$('#register-form').submit(); 
+						//$('form[id=register-form]').attr('action',_path+"/register/submit");
+						//$('#register-form').submit();
+						$.ajax({
+							type:'POST',
+							url:_path+"/register/submit",
+							data:{
+								"mobile":mobile,
+								"validateCode":validateCode,
+								"password":password
+							},
+							success : function(result){
+								alert(result.message);
+								if(result.success){//注册成功，跳转登陆
+									window.location.href =_path+"/login/consumer";
+								}else{//注册失败,留在本页
+									
+								}
+							}
+						}); 
 					} 
 				}); 
 				$('#toLogin').click(function(){

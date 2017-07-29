@@ -1,6 +1,7 @@
 package com.qingting.customer.baseserver.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -20,12 +21,7 @@ public class MessageServiceImpl implements MessageService {
 	public void insertMessage(Message message) {
 		messageDAO.insertMessage(message);
 	}
-
-	@Override
-	public void deleteMessage(Integer userId, String sortCode, Long millis) {
-		messageDAO.deleteMessage(userId, sortCode, millis);
-	}
-
+	
 	@Override
 	public void updateMessage(Message message) {
 		messageDAO.updateMessage(message);
@@ -35,11 +31,26 @@ public class MessageServiceImpl implements MessageService {
 	public Message getMessage(Integer userId, String sortCode, Long millis) {
 		return messageDAO.getMessage(userId, sortCode, millis);
 	}
-
+	
 	@Override
-	public Pagination<Message> listMessage(Integer userId, String sortCode, Integer pageNo, Integer pageSize) {
-		return messageDAO.listMessage(userId, sortCode, pageNo, pageSize);
+	public void deleteMessage(List<Message> messages) {
+		System.out.println("service删除消息deleteMessage(List<String> rowkeys).");
+		messageDAO.deleteMessage(messages);
 	}
 
+	@Override
+	public void setRead(Integer userId, String sortCode, Long id) {
+		messageDAO.setRead(userId, sortCode, id);
+	}
+
+	@Override
+	public Pagination<Message> listMessage(Integer userId, String sortCode, Pagination<Message> page) {
+		return messageDAO.listMessage(userId, sortCode, page);
+	}
+
+	@Override
+	public List<Message> listMessageByEndId(Long endId, Integer userId, String sortCode, Integer pageSize) {
+		return messageDAO.listMessageByEndId(endId, userId, sortCode, pageSize);
+	}
 	
 }

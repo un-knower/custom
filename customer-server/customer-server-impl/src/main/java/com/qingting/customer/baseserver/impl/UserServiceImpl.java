@@ -1,6 +1,8 @@
 package com.qingting.customer.baseserver.impl;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -21,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public void deleteUserByRowKey(String rowkey) {
+	public void deleteUserByRowKey(List<String> rowkey) {
 		userDAO.deleteUserByRowKey(rowkey);
 	}
 

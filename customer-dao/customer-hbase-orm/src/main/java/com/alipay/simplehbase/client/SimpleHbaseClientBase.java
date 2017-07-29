@@ -134,7 +134,7 @@ abstract public class SimpleHbaseClientBase implements SimpleHbaseClient {
 				}
 			}
 		}
-
+		
 		scan.setCaching(cachingSize);
 
 		scan.setFilter(filter);
