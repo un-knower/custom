@@ -14,7 +14,7 @@ import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
 import com.smart.sso.client.Config;
-import com.smart.sso.client.RegisterUtils;
+import com.smart.sso.client.AuthRpcUtils;
 import com.smart.sso.client.SessionUtils;
 
 import io.swagger.annotations.Api;
@@ -46,10 +46,10 @@ public class ForgetController {
 		System.out.println("saveValidateCode:"+saveValidateCode);
 		WebResult<Object> result=null;
 		if(saveValidateCode.equals(validateCode)){
-			result=RegisterUtils.findByAccount(mobile);
+			result=AuthRpcUtils.findByAccount(mobile);
 			if(result.getCode()==ResultCode.SUCCESS){
-				result = RegisterUtils.updatePassword(mobile, password);
-				WebResult<Object> loginResult = RegisterUtils.login(Config.getSsoAppCode(), mobile, password, request, response);
+				result = AuthRpcUtils.updatePassword(mobile, password);
+				WebResult<Object> loginResult = AuthRpcUtils.login(Config.getSsoAppCode(), mobile, password, request, response);
 				if(result.getCode()==ResultCode.SUCCESS&&loginResult.getCode()==ResultCode.SUCCESS){
 					result.setMessage("修改成功");
 					return result;

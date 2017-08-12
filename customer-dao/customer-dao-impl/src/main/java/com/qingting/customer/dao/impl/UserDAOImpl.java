@@ -75,7 +75,8 @@ public class UserDAOImpl implements UserDAO {
 
 	@Override
 	public void updateUserByRowKey(User user) {
-		tClient.updateObjectWithVersion(RowKeyUtil.getRowKey(user.getRowkey()), user, dataVersion);
+		//tClient.updateObjectWithVersion(RowKeyUtil.getRowKey(user.getRowkey()), user, dataVersion);
+		tClient.putObject(RowKeyUtil.getRowKey(user.getRowkey()), user);
 	}
 
 	@Override

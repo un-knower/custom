@@ -32,8 +32,8 @@
 		 @media screen and (max-height:526px){
 		/*  .xy-waveBox{height:71px;} */
 		}
-		.pj{position: absolute;left: 75%;top: 0;}
-		#timeline .timeline-item .blueDot{background: #71affa;box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);}
+		.pj{position: absolute;left: 75%;top: 0;}.pj2{left: 83%;}
+		.timeline .timeline-item .blueDot{background: #71affa;box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);}
 	</style>
 	<body ontouchstart>
 		<div class="page tabbar flex js_show height100">
@@ -70,7 +70,7 @@
 												</div>
 												<div class="xy-pad-tb10 xy-border-box bg-blue-01" flex-box="1" flex="dir:top" style="background-image:linear-gradient(to top,#fff 10%,#3792fb 30%);color:#fff;">
 													<div class="xy-border-box xy-pad-lr10 weui-cell weui-cell_access xy-linlk-listview" flex-box="1" flex="dir:left">
-														<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="img/pic-lovely.gif" /></p>
+														<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG"><img src="" /></p>
 														<div class="xy-pad-l10 xy-pad-t3" flex-box="1">
 															<ol class="xy-pad-t3 xy-fs18" flex="dir:left">
 																<dt>预警内容</dt>
@@ -156,7 +156,7 @@
 							<div class="height100 xy-pad-lr10 xy-pad-t10 xy-border-box" flex="dir:top">	
 								<div class="htmleaf-container height100">
 									<div class="container height100 scrolly">
-										<div id="timeline">
+										<div class="timeline">
 											<div class="timeline-item">
 												<div class="timeline-icon">
 												</div>
@@ -388,7 +388,8 @@
 																		listDiv+='<i class="icon-star xy-dibVat"></i>';
 																} 
 														listDiv+='</div><!--/星星-->'+
-															'</dd>';
+															'</dd>'+
+															'<span class="pj pj2"><a style="color: #ccc;text-decoration: none;">已评价</a></span>';
 												}else{
 													 listDiv += '<span class="pj"><img src="${_staticPath}/resource/weuiWeb/img/pen.png" style="width:31%"><a id="goRecord" style="color: #2a85ca;text-decoration: none;">待评价</a></span>';
 												}
@@ -408,7 +409,7 @@
 									'</div>'+
 								'</div><!-- timeline-item结束	 -->';
 				}
-				$('#timeline').html(listDiv);
+				$('.timeline').html(listDiv);
 				$('.timeline-icon:eq(0)').addClass('blueDot');
 			}
 			$('.scrolly').scroll(function(){

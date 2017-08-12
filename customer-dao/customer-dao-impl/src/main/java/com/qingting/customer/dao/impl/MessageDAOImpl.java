@@ -1,6 +1,5 @@
 package com.qingting.customer.dao.impl;
 
-import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
@@ -21,7 +20,6 @@ import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.FilterUtils;
 import com.alipay.simplehbase.util.HbaseOriginService;
 import com.qingting.customer.common.pojo.common.StringUtils;
-import com.qingting.customer.common.pojo.hbasedo.Equip;
 import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.index.MessageIndex;
 import com.qingting.customer.common.pojo.model.Pagination;
@@ -37,13 +35,11 @@ public class MessageDAOImpl implements MessageDAO{
 	public RedisTemplate<String, Long> redisTemplate;
 	
 	private static SimpleHbaseClient tClient=SHCUtil.getSHC("message");
-	private static SimpleHbaseClient indexClient=SHCUtil.getSHC("messageIndex");
+	//private static SimpleHbaseClient indexClient=SHCUtil.getSHC("messageIndex");
 	//new byte[][]{}
-	private static HbaseOriginService index=new HbaseOriginService("messageIndex",new String[]{"messageIndexFamily"},null);
+	private static HbaseOriginService index=new HbaseOriginService("messageIndex",new String[]{"mif"},null);
 	
 	private final static String SEQUENCE="messageIndex_id_seq";
-	
-	private final static byte dataVersion=0;
 	
 	private final static int RANDOM_LENGTH=2;
 	//private final static int MILLIS_LENGTH=8;
@@ -97,7 +93,7 @@ public class MessageDAOImpl implements MessageDAO{
 		cal.setTimeInMillis(time);
 		message.setCreateTime(cal);
 		
-		message.setRowKey(new String(rowkey,Charset.forName("UTF-8")));
+		//message.setRowKey(new String(rowkey,Charset.forName("UTF-8")));
 		
 		return message;
 	}
@@ -110,13 +106,16 @@ public class MessageDAOImpl implements MessageDAO{
 		//MessageIndex messageIndex=new MessageIndex();
 		long num=RedisSerialNum.getSerialNumLong(redisTemplate, SEQUENCE);
 		message.setId(num);
+		message.setCreateTime(Calendar.getInstance());
+		
+		
 		RowKey indexRowKey=createIndexRowKey(message.getUserId(),message.getSortCode(),num);
 		RowKey value=createRowKey(message.getCreateTime().getTimeInMillis());
 		//String string = new String(value.toBytes(),Charset.forName("UTF-8"));
 		//messageIndex.setValue(string);
 		
 		//indexClient.putObject(indexRowKey, messageIndex);//索引表
-		index.put(indexRowKey, "messageIndexFamily", "value", value.toBytes());
+		index.put(indexRowKey, "mif", "value", value.toBytes());
 		tClient.putObject(value, message);//消息表
 	}
 	/**
@@ -130,10 +129,13 @@ public class MessageDAOImpl implements MessageDAO{
 			System.out.println("userId:"+message.getUserId()+".sortCode:"+message.getSortCode()+".id:"+message.getId());
 			rowKeyIndexList.add(createIndexRowKey(message.getUserId(), message.getSortCode(), message.getId()));
 		}
-		List<RowKey> rowKeylist=setIndexOfRowKey(
+		/*List<RowKey> rowKeylist=setIndexOfRowKey(
 			indexClient.findObjectAndKeyBatch(rowKeyIndexList,MessageIndex.class)
-		);
-		indexClient.deleteList(rowKeyIndexList);//删除索引
+		);*/
+		//获得信息表对应的行键
+		List<RowKey> rowKeylist=index.indexBatchGet(rowKeyIndexList, "mif", "value");
+		//删除索引表数据
+		index.deleteIndex(rowKeyIndexList);//删除索引
 		for (RowKey rowKey : rowKeylist) {
 			System.out.println("deleteMessage行健:");
 			for (byte b : rowKey.toBytes()) {
@@ -155,134 +157,146 @@ public class MessageDAOImpl implements MessageDAO{
 	@Override
 	public void updateMessage(Message message) {
 		//tClient.updateObject(getMessageRowKey(message.getUserId(),message.getSortCode(),message.getId()), message,dataVersion);
-		tClient.putObject(getMessageRowKey(message.getUserId(),message.getSortCode(),message.getId()), message);
+		tClient.putObject(index.indexGet(createIndexRowKey(message.getUserId(),message.getSortCode(),message.getId()), null, null, "value"), message);
 	}
 	
-	public RowKey getMessageRowKey(Integer userId,String sortCode,Long id){
+	/*public RowKey getMessageRowKey(Integer userId,String sortCode,Long id){
 		SimpleHbaseDOWithKeyResult<MessageIndex> result = indexClient.findObjectAndKey(createIndexRowKey(userId, sortCode, id), MessageIndex.class);
 		MessageIndex obj=result.getT();
 		return new StringRowKey(obj.getValue());
-	}
+	}*/
 	@Override
 	public Message getMessage(Integer userId,String sortCode,Long id) {
-		return getMessageFromResult(
-				tClient.findObjectAndKey(getMessageRowKey(userId,sortCode,id), Message.class)
-				);
+		return tClient.findObject(index.indexGet(createIndexRowKey(userId,sortCode,id), null, null, "value"), Message.class);
 	}
 	
 	/**
 	 * 后台管理查询消息
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
-	public Pagination<Message> listMessage(Integer userId,String sortCode,Pagination<Message> page) {
+	public Pagination<Message> listMessage(Pagination<Message> page) {
 		QueryExtInfo queryExtInfo = new QueryExtInfo();
 		//queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
 		//queryExtInfo.setLimit((page.getPageNo()-1)*page.getPageSize(), page.getPageSize());
 		
 		List<RowKey> listRowKey=null;
 		List<Message> list=null;
+		Map<String, Object> map=null;
 		
-		Map<String,Object> map=null;
+		Long endId=null;
+		Integer userId=null;
+		String sortCode=null;
 		
-		//Pagination<Message> page=new Pagination<Message>();
-		System.out.println("查询的endRowKey:");
-		if(page.getEndRowKey()!=null)
-			for(int i=0;i<page.convertFromEndRowKey().length;i++){
-				System.out.print(page.convertFromEndRowKey()[i]+" ");
-			}
-		System.out.println(".");
-	
-		if(StringUtils.isZeroOrNull(userId) && StringUtils.isBlank(sortCode) ){//全空
-			if(page.getPageNo()==1){//首页
-				System.out.println("首页.");
-				queryExtInfo.setLimit(0, page.getPageSize());
-				/*listRowKey = setIndexOfRowKey(
-						indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),MessageIndex.class,null,queryExtInfo)
-						);*/
-				map=index.indexScanOfMap(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),null,queryExtInfo, "value");
-			}else if(page.getPageNo()==page.getLastPageNo()+1){//下一页
-				System.out.println("下一页.");
-				queryExtInfo.setLimit(0, page.getPageSize());
-				/*listRowKey = setIndexOfRowKey(
-						indexClient.findObjectAndKeyList(RowKeyUtil.getRowKey(page.getEndRowKey()),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),MessageIndex.class,null,queryExtInfo)
-						);*/
-				map=index.indexScanOfMap(RowKeyUtil.getRowKey(page.convertFromEndRowKey()),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),null,queryExtInfo, "value");
-			}else if(page.getPageNo()==page.getLastPageNo()-1){//上一页
-				System.out.println("上一页.");
-				queryExtInfo.setLimit(page.getRealityCount(), page.getPageSize());
-				queryExtInfo.setReversed(true);
-				/*listRowKey = setIndexOfRowKey(
-						indexClient.findObjectAndKeyList(RowKeyUtil.getRowKey(page.getEndRowKey()),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),MessageIndex.class,null,queryExtInfo)
-						);*/
-				map=index.indexScanOfMap(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getRowKey(page.convertFromEndRowKey()),null,queryExtInfo, "value");
-			}else if(page.getPageNo()==page.getPageCount()){//尾页
-				System.out.println("尾页.");
-				queryExtInfo.setLimit(0,page.getRowCount()-(page.getPageCount()-1)*page.getPageSize());
-				queryExtInfo.setReversed(true);
-				/*listRowKey = setIndexOfRowKey(
-						indexClient.findObjectAndKeyList(RowKeyUtil.getRowKey(page.getEndRowKey()),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),MessageIndex.class,null,queryExtInfo)
-						);*/
-				map=index.indexScanOfMap(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),null,queryExtInfo,"value");
-			}else{//跳页查询
-				System.out.println("跳页查询.");
-				queryExtInfo.setLimit((page.getPageNo()-1)*page.getPageSize(), page.getPageSize());
-				/*listRowKey = setIndexOfRowKey(
-						indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),MessageIndex.class,null,queryExtInfo)
-						);*/
-				map=index.indexScanOfMap(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),null,queryExtInfo,"value");
-			}
-			/*list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),Message.class,queryExtInfo)
-					);*/
-			page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH), null));
-		}else if(!StringUtils.isZeroOrNull(userId) && StringUtils.isBlank(sortCode) ){//用户ID非空，分类编号空
-			listRowKey = setIndexOfRowKey(
-					indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(userId,SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(userId,SORTCODE_LENGTH),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
-					);
-			page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(userId,SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(userId,SORTCODE_LENGTH), FilterUtils.getPrefixFilter(userId)));
-		}else if(!StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode) ){//
-			listRowKey = setIndexOfRowKey(
-					indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
-					);
-			page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode), FilterUtils.getPrefixFilter(userId)));
+		Integer lastPageNo=null;
+		Integer realityCount=null;
+		if(page.getMap()!=null){
+			map=page.getMap();
+			if(map.get("endId")!=null)
+				endId=(Long)map.get("endId");
+			if(map.get("userId")!=null)
+				userId=(Integer)map.get("userId");
+			if(map.get("sortCode")!=null)
+				sortCode=(String)map.get("sortCode");
+			if(map.get("lastPageNo")!=null)
+				lastPageNo=(Integer)map.get("lastPageNo");
+			if(map.get("realityCount")!=null)
+				realityCount=(Integer)map.get("realityCount");
+		}else{
+			map=new HashMap<String,Object>();
 		}
 		
-		if(map.get("rowkeyList")!=null){
+		RowKey startRowKey=null;
+		RowKey endRowKey=null;
+		
+		
+		if(page.getPageNo()==1){//首页
+			System.out.println("首页.");
+			queryExtInfo.setLimit(0, page.getPageSize());
+			
+			startRowKey=RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH);
+			endRowKey=RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH);
+			//listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo, "value");
+		}else if(page.getPageNo()==lastPageNo+1){//下一页
+			System.out.println("下一页.");
+			if(!StringUtils.isZeroOrNull(endId) && !StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode)){
+				startRowKey=createIndexRowKey(userId, sortCode, endId);
+				queryExtInfo.setLimit(0, page.getPageSize());
+			}else{
+				startRowKey=RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH);
+				queryExtInfo.setLimit((page.getPageNo()-1)*page.getPageSize(), page.getPageSize());
+			}
+			endRowKey=RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH);
+			
+			//listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo, "value");
+		}else if(page.getPageNo()==lastPageNo-1){//上一页
+			System.out.println("上一页.");
+			
+			startRowKey=RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH);
+			if(!StringUtils.isZeroOrNull(endId) && !StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode)){
+				endRowKey=createIndexRowKey(userId, sortCode, endId);
+				queryExtInfo.setLimit(realityCount, page.getPageSize());
+				queryExtInfo.setReversed(true);
+			}else{
+				endRowKey=RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH);
+				queryExtInfo.setLimit((page.getPageNo()-1)*page.getPageSize(), page.getPageSize());
+			}
+			//listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo, "value");
+		}else if(page.getPageNo()==page.getPageCount()){//尾页
+			System.out.println("尾页.");
+			queryExtInfo.setLimit(0,page.getPageSize());
+			queryExtInfo.setReversed(true);
+			
+			startRowKey=RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH);
+			endRowKey=RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH);
+			//listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo,"value");
+		}else{//跳页查询
+			System.out.println("跳页查询.");
+			queryExtInfo.setLimit((page.getPageNo()-1)*page.getPageSize(), page.getPageSize());
+			
+			startRowKey=RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH);
+			endRowKey=RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH);
+			//listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo,"value");
+		}
+		
+		listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo,"value");
+		page.setRowCount(index.count(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH), null));
+		
+		list=setContentOfRowKey(
+				tClient.findObjectAndKeyBatch(listRowKey,Message.class)
+				);
+		
+		/*if(map.get("rowKeyList")!=null){
 			System.out.println("行键查询结束.");
-			for (RowKey rowKey : (List<RowKey>)map.get("rowkeyList")) {
+			for (RowKey rowKey : (List<RowKey>)map.get("rowKeyList")) {
 				System.out.println("查询到的行键:");
 				for (byte b : rowKey.toBytes()) {
 					System.out.print(b+" ");
 				}
 				System.out.println(".");
 			}
-			listRowKey = (List<RowKey>)map.get("rowkeyList");
+			listRowKey = (List<RowKey>)map.get("rowKeyList");
 			list=setContentOfRowKey(
 					tClient.findObjectAndKeyBatch(listRowKey,Message.class)
 					);
-			page.setRealityCount(listRowKey.size());//返回的实际数据条数
-		}
-		page.setLastPageNo(page.getPageNo());//更新上一次的页码为本次请求页码
+			
+		}*/
 		
-		if(map.get("endRowkey")!=null){
-			page.convertToEndRowKey((byte[])map.get("endRowkey"));//结束数据的行键
-		}
-		
+		map.put("realityCount", listRowKey.size());//返回的实际数据条数
+		map.put("lastPageNo", page.getPageNo());//更新上一次的页码为本次请求页码
+		page.setMap(map);
 		page.setList(list);
 		return page;
 	}
 	/**
 	 * 前端页面查询对应用户的消息
 	 */
-	@SuppressWarnings("unchecked")
 	@Override
 	public List<Message> listMessageByEndId(Long endId,Integer userId,String sortCode,Integer pageSize){
 		QueryExtInfo queryExtInfo = new QueryExtInfo();
 		queryExtInfo.setLimit(0, pageSize);
 		List<RowKey> listRowKey=null;
 		List<Message> list=null;
-		
+		System.out.println("endId:"+endId+".userId:"+userId+".sortCode:"+sortCode+".pageSize:"+pageSize+".");
 		//Map<String,Object> result=new HashMap<String,Object>();
 		if(StringUtils.isZeroOrNull(userId) && StringUtils.isBlank(sortCode) ){//全空
 			list=setContentOfRowKey(
@@ -290,7 +304,7 @@ public class MessageDAOImpl implements MessageDAO{
 					);
 			
 			//page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH), null));
-		}else if(!StringUtils.isZeroOrNull(userId) && StringUtils.isBlank(sortCode) ){
+		}/*else if(!StringUtils.isZeroOrNull(userId) && StringUtils.isBlank(sortCode) ){
 			listRowKey = setIndexOfRowKey(
 					indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(userId,SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(userId,SORTCODE_LENGTH),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
 					);
@@ -298,18 +312,29 @@ public class MessageDAOImpl implements MessageDAO{
 					tClient.findObjectAndKeyBatch(listRowKey,Message.class)
 					);
 			//page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(userId,SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(userId,SORTCODE_LENGTH), FilterUtils.getPrefixFilter(userId)));
-		}else if(!StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode) ){
-			Map<String,Object> map=null;
-			if(endId!=null)
+		}*/else if(!StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode) ){
+			
+			if(endId!=null){
 				/*listRowKey = setIndexOfRowKey(
 						indexClient.findObjectAndKeyList(RowKeyUtil.getRowKey(endRowKey),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
 						);*/
 				listRowKey=index.indexScan(RowKeyUtil.getRowKey(userId,sortCode,endId),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),FilterUtils.getPrefixFilter(userId),queryExtInfo, "value");
-			else
+			}else{
 				/*listRowKey = setIndexOfRowKey(
 						indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
 						);*/
-				listRowKey=index.indexScan(RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),FilterUtils.getPrefixFilter(userId),queryExtInfo, "value");
+				RowKey start=RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode);
+				RowKey end=RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode);
+				System.out.println("start:");
+				for (byte b : start.toBytes()) {
+					System.out.print((int)(b&0xFF)+" ");
+				}
+				System.out.println("end:");
+				for (byte b : end.toBytes()) {
+					System.out.print((int)(b&0xFF)+" ");
+				}
+				System.out.println(".");
+				listRowKey=index.indexScan(start,end,FilterUtils.getPrefixFilter(userId),queryExtInfo, "value");
 			/*if(map.get("rowKeyList")!=null){
 				listRowKey = (List<RowKey>)map.get("rowKeyList");
 				list=setContentOfRowKey(
@@ -320,6 +345,11 @@ public class MessageDAOImpl implements MessageDAO{
 				}
 				result.put("list", list);
 			}*/
+			}
+			System.out.println("listMessageByEndId中rowKey:");
+			for (RowKey rowKey : listRowKey) {
+				System.out.println(new String(rowKey.toBytes()));
+			}
 			list=setContentOfRowKey(
 					tClient.findObjectAndKeyBatch(listRowKey,Message.class)
 					);
@@ -334,15 +364,13 @@ public class MessageDAOImpl implements MessageDAO{
 	}
 	@Override
 	public void setRead(Integer userId, String sortCode, Long id) {
-		List<RowKey> listRowKey = index.indexScan(RowKeyUtil.getRowKey(userId,sortCode,id),RowKeyUtil.getRowKey(userId,sortCode,id+1),FilterUtils.getPrefixFilter(userId),null ,"value");
-		tClient.put(listRowKey.get(0), "messageFamily", "readFlag", new byte[]{(byte)0xFF});
-		//tClient.put("insert into message(rowkey,readFlag) values("+obj.getValue()+","+true+") ");//where rowkey equal "+obj.getValue()
+		//List<RowKey> listRowKey = index.indexScan(RowKeyUtil.getRowKey(userId,sortCode,id),RowKeyUtil.getRowKey(userId,sortCode,id+1),FilterUtils.getPrefixFilter(userId),null ,"value");
+		RowKey rowKey = index.indexGet(RowKeyUtil.getRowKey(userId,sortCode,id), FilterUtils.getPrefixFilter(userId), null, "value");
+		tClient.put(rowKey/*listRowKey.get(0)*/, "mf", "readFlag", new byte[]{(byte)0xFF});
+		
 	}
-	
-	/*public void setRead(Integer userId, String sortCode, Long id) {
-		SimpleHbaseDOWithKeyResult<MessageIndex> result = indexClient.findObjectAndKey(createIndexRowKey(userId, sortCode, id), MessageIndex.class);
-		MessageIndex obj=result.getT();
-		tClient.put(new StringRowKey(obj.getValue()), "messageFamily", "readFlag", new byte[]{(byte)0xFF});
-		//tClient.put("insert into message(rowkey,readFlag) values("+obj.getValue()+","+true+") ");//where rowkey equal "+obj.getValue()
-	}*/
+	@Override
+	public void setStatus(Integer userId,String sortCode,Long id,String status){
+		tClient.put(index.indexGet(createIndexRowKey(userId,sortCode,id), null, null, "value"),"mf","status",Bytes.toBytes(status));
+	}
 }

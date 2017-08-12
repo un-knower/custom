@@ -1,10 +1,13 @@
 package com.qingting.customer.dao.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import org.apache.hadoop.hbase.util.Bytes;
@@ -95,6 +98,7 @@ public class MonitorDAOImpl implements MonitorDAO {
 	
 	@Override
 	public void insertMonitor(Monitor monitor) {
+		System.out.println("输入的monitor:"+monitor);
 		//按时间索引
 		RowKey indexRowKey=createIndexRowKey(monitor.getEquipCode(),monitor.getCollectTime().getTimeInMillis());
 		//按天索引
@@ -103,11 +107,34 @@ public class MonitorDAOImpl implements MonitorDAO {
 		//实际数据行键
 		RowKey value=createRowKey(monitor.getEquipCode(),Calendar.getInstance().getTimeInMillis());
 		
-		index.put(indexRowKey, "mif", "value", value.toBytes());
-		indexDay.put(indexDayRowKey, "mif", "value", value.toBytes());
-		tClient.putObject(value, monitor);
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String dateString = formatter.format(monitor.getCollectTime().getTimeInMillis());
+		System.out.println("collectTime:"+dateString);
+		System.out.println("indexRowKey:");
+		for (byte b : indexRowKey.toBytes()) {
+			System.out.print((int)(b&0xFF)+" ");
+		}
+		System.out.println();
+		System.out.println("indexRowKey:"+new String(indexRowKey.toBytes()));
+		
+		/*if(index.indexGet(indexRowKey, null, null, "value")==null){*/
+			index.put(indexRowKey, "mif", "value", value.toBytes());
+			indexDay.put(indexDayRowKey, "mif", "value", value.toBytes());
+			tClient.putObject(value, monitor);
+			System.out.println("监测值插入成功:"+monitor);
+		/*}else{
+			System.out.println("===================数据库已存在该值====================");
+		}*/
 	}
-
+	@Override
+	public boolean isExist(String equipCode,Calendar collectTime){
+		RowKey indexRowKey=createIndexRowKey(equipCode,collectTime.getTimeInMillis());
+		if(index.indexGet(indexRowKey, null, null, "value")==null){
+			return false;
+		}else{
+			return true;
+		}
+	}
 	
 	@Override
 	public void deleteMonitorByRowKey(String rowKey) {
@@ -121,9 +148,25 @@ public class MonitorDAOImpl implements MonitorDAO {
 	}
 	@Override
 	public Monitor getMonitorByRowKey(String rowKey) {
-		// TODO Auto-generated method stub
 		return null;
 	}
+	@Override
+	public Monitor getMonitorOfNewByEquipCode(String equipCode){
+		QueryExtInfo queryExtInfo = new QueryExtInfo();
+		queryExtInfo.setLimit(0, 1);
+		queryExtInfo.setReversed(true);//倒叙查询
+		List<RowKey> listRowKey=null;
+		List<Monitor> list=null;
+		listRowKey=index.indexScan(RowKeyUtil.getIntMinRowKey(), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode), queryExtInfo, "value");
+		list=setContentOfRowKey(
+				tClient.findObjectAndKeyBatch(listRowKey,Monitor.class)
+				);
+		return list.get(0);
+	}
+	/*@Override
+	public Monitor getMonitorOfNew(){
+		return null;
+	}*/
 	@Override
 	public List<Monitor> listMonitorByEndTime(String equipCode, String type, int pageSize,
 			Calendar endTime) {
@@ -165,52 +208,89 @@ public class MonitorDAOImpl implements MonitorDAO {
 	}
 	
 	@Override
-	public Pagination<Monitor> listMonitor(String equipCode,Integer pageNo,Integer pageSize) {
+	public Pagination<Monitor> listMonitor(Pagination<Monitor> page) {
 		QueryExtInfo queryExtInfo = new QueryExtInfo();
-		queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
-		queryExtInfo.setReversed(true);
-		List<Monitor> list=null;
-		Pagination<Monitor> page=new Pagination<Monitor>();
 		
+		List<Monitor> list=null;
 		List<RowKey> listRowKey=null;
+		Map<String, Object> map=null;
+		
+		
+		String equipCode=null;
+		
+		Integer lastPageNo=null;
+		Integer realityCount=null;
+		if(page.getMap()!=null){
+			map=page.getMap();
+			if(map.get("equipCode")!=null)
+				equipCode=(String)map.get("equipCode");
+			if(map.get("lastPageNo")!=null)
+				lastPageNo=(Integer)map.get("lastPageNo");
+			if(map.get("realityCount")!=null)
+				realityCount=(Integer)map.get("realityCount");
+		}else{
+			map=new HashMap<String,Object>();
+		}
+		
+		RowKey startRowKey=null;
+		RowKey endRowKey=null;
+		
+		
+		Integer pageNo=page.getPageNo();
+		Integer pageSize=page.getPageSize();
 		
 		System.out.println("equipCode:"+equipCode);
 		if(StringUtils.isBlank(equipCode)){
 			System.out.println("设备编号空...");
-			listRowKey=index.indexScan(RowKeyUtil.getIntMinRowKey(), RowKeyUtil.getIntStringLongMaxRowKey(12), null, queryExtInfo, "value");
+			
+			long count = index.count(RowKeyUtil.getMinRowKey(1), RowKeyUtil.getMaxRowKey(20), null);
+			page.setRowCount(count);
+			
+			if( ((pageNo-1)*pageSize)<(count/2) ){ //查一半以后的数据
+				queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
+				queryExtInfo.setReversed(true);
+				listRowKey=index.indexScan(RowKeyUtil.getMinRowKey(1), RowKeyUtil.getMaxRowKey(20), null, queryExtInfo, "value");
+			}else{//查一半以前的数据
+				queryExtInfo.setLimit(count-pageNo*pageSize, page.getPageCount()==pageNo ? count-(page.getPageCount()-1)*pageSize : pageSize);
+				queryExtInfo.setReversed(false);
+				listRowKey=index.indexScan(RowKeyUtil.getMinRowKey(1), RowKeyUtil.getMaxRowKey(20), null, queryExtInfo, "value");
+				Collections.reverse(listRowKey);
+			}
+			
 			list=setContentOfRowKey(
 					tClient.findObjectAndKeyBatch(listRowKey,Monitor.class)
 					);
-			page.setRowCount(index.count(RowKeyUtil.getIntMinRowKey(), RowKeyUtil.getIntStringLongMaxRowKey(12), null));
-			/*list = setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getLongStringMinRowKey(12),RowKeyUtil.getLongStringMaxRowKey(12), Monitor.class,null,queryExtInfo)
-					//tClient.findObjectAndKeyBatch(getListSecondRowKey(equipCode, now, now), Monitor.class)
-					);
-					setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getStringbytesLongMinRowKey(32,1),RowKeyUtil.getStringbytesLongMaxRowKey(32,1), Monitor.class)
-				);
-			page.setRowCount(tClient.count(RowKeyUtil.getLongStringMinRowKey(12),RowKeyUtil.getLongStringMaxRowKey(12), null));*/
+			
+			
+			
 		}else{//非空
-			/*list = setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getStringbytesLongMinRowKey(equipCode,1),RowKeyUtil.getStringbytesLongMaxRowKey(equipCode,1), Monitor.class)
-					);*/
-			listRowKey=index.indexScan(RowKeyUtil.getIntMinRowKey(), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode), queryExtInfo, "value");
-			/*list = setContentOfRowKey(
-					//tClient.findObjectAndKeyList(RowKeyUtil.getRowKey(equipCode,new byte[]{0},now-wide),RowKeyUtil.getRowKey(equipCode,new byte[]{(byte)0xFF},now), Monitor.class)
-					//tClient.findObjectAndKeyBatch(getListSecondRowKey(equipCode, now, now), Monitor.class)
-					
-					tClient.findObjectAndKeyList(createRowKey(Long.MIN_VALUE,equipCode),createRowKey(Long.MAX_VALUE,equipCode), Monitor.class,FilterUtils.getSuffixFilter(equipCode),queryExtInfo)
-					//getEnoughMonitor(equipCode,pageNo,pageSize)
-					);*/
+			long count = index.count(
+					createIndexRowKey(equipCode,0l), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode)
+					);
+			page.setRowCount(count);
+			
+			if( ((pageNo-1)*pageSize)<(count/2) ){ //查一半以后的数据
+				queryExtInfo.setLimit((pageNo-1)*pageSize, pageSize);
+				queryExtInfo.setReversed(true);
+				listRowKey=index.indexScan(createIndexRowKey(equipCode,0l), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode), queryExtInfo, "value");
+			}else{//查一半以前的数据
+				queryExtInfo.setLimit(count-pageNo*pageSize, page.getPageCount()==pageNo ? count-(page.getPageCount()-1)*pageSize : pageSize);
+				queryExtInfo.setReversed(false);
+				listRowKey=index.indexScan(createIndexRowKey(equipCode,0l), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode), queryExtInfo, "value");
+				Collections.reverse(listRowKey);
+			}
+			
 			list=setContentOfRowKey(
 					tClient.findObjectAndKeyBatch(listRowKey,Monitor.class)
 					);
-			page.setRowCount(index.count(RowKeyUtil.getIntMinRowKey(), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode)));
-			//page.setRowCount(tClient.count(createRowKey(Long.MIN_VALUE,equipCode),createRowKey(Long.MAX_VALUE,equipCode), FilterUtils.getSuffixFilter(equipCode)));
+			
+			/*listRowKey=index.indexScan(RowKeyUtil.getMinRowKey(1), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode), queryExtInfo, "value");
+			list=setContentOfRowKey(
+					tClient.findObjectAndKeyBatch(listRowKey,Monitor.class)
+					);
+			page.setRowCount(index.count(RowKeyUtil.getMinRowKey(1), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode)));*/
 		}
 		page.setList(list);
-		page.setPageNo(pageNo);
-		page.setPageSize(pageSize);
 		return page;
 	}
 	/*private static final long cacheSize=60000;//60秒

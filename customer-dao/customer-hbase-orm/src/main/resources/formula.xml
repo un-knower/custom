@@ -1,0 +1,21 @@
+<SimpleHbase>
+	<HBaseTableSchema tableName="formula" defaultFamily="ff">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="order" typeName="byte" />
+		<HBaseColumnSchema qualifier="formula" typeName="string" />
+		<HBaseColumnSchema qualifier="filterId" typeName="int" />
+		<HBaseColumnSchema qualifier="userId" typeName="int" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Formula" defaultFamily="ff">
+		<field name="id"/>
+		<field name="order" />
+		<field name="formula" />
+		<field name="filterId" />
+		<field name="userId" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

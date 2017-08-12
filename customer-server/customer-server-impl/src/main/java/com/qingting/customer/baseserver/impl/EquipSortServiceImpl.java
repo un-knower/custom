@@ -30,13 +30,13 @@ public class EquipSortServiceImpl implements EquipSortService {
 	}
 
 	@Override
-	public EquipSort getEquipSortByRowKey(String rowKey) {
-		return equipSortDAO.getEquipSortByRowKey(rowKey);
+	public Pagination<EquipSort> listEquipSort(Integer pageNo, Integer pageSize) {
+		return equipSortDAO.listEquipSort(pageNo, pageSize);
 	}
 
 	@Override
-	public Pagination<EquipSort> listEquipSort(Integer pageNo, Integer pageSize) {
-		return equipSortDAO.listEquipSort(pageNo, pageSize);
+	public EquipSort getEquipSortById(Integer id) {
+		return equipSortDAO.getEquipSortById(id);
 	}
 
 

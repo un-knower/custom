@@ -35,14 +35,14 @@ public interface EquipSortDAO {
 	void updateEquipSortByRowKey(EquipSort equipSort);
 	/**
 	 * 
-	 * @Title: getEquipSortByRowKey
-	 * @Description: 获得设备分类信息
-	 * @param rowKey
+	 * @Title: getEquipSortById
+	 * @Description: 获取设备分类
+	 * @param id
 	 * @return 
 	 * @return EquipSort
 	 * @throws
 	 */
-	EquipSort getEquipSortByRowKey(String rowKey);
+	EquipSort getEquipSortById(Integer id);
 	/**
 	 * 
 	 * @Title: listEquipSort

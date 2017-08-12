@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.qingting.customer.baseserver.EquipService;
 import com.qingting.customer.common.pojo.dto.EquipDTO;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
+import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
@@ -42,15 +43,16 @@ public class EquipController {
 	public @ResponseBody WebResult<Object> insertEquip(
 			@ApiParam @RequestBody Equip equip){
 		System.out.println(equip);
-		//equipService.insertEquip(equip);
+		equipService.insertEquip(equip);
 		return new WebResult<Object>(ResultCode.SUCCESS);
 	}
 	@ApiOperation("后台删除设备")
 	@RequestMapping(value="/delete",method = RequestMethod.POST)
 	public @ResponseBody WebResult<Object> deleteEquipByRowKey(
-			@ApiParam(value = "设备行健", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String rowKey
+			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode
 			){
-		equipService.deleteEquipByRowKey(rowKey);
+		System.out.println("设备编号:"+equipCode);
+		equipService.deleteEquipByEquipCode(equipCode);
 		return new WebResult<Object>(ResultCode.SUCCESS);
 	}
 	@ApiOperation("后台更新设备")
@@ -58,21 +60,66 @@ public class EquipController {
 	public @ResponseBody WebResult<Object> updateEquipByRowKey(
 			@ApiParam @RequestBody Equip equip
 			){
-		equipService.updateEquipByRowKey(equip);
+		equipService.updateEquipByEquipCode(equip);
 		return new WebResult<Object>(ResultCode.SUCCESS);
 	}
+	//已测试OK
 	@ApiOperation("查询所有设备")
-	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	@RequestMapping(value="/list",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<Pagination<Equip>> listEquip(
-			HttpServletRequest request,
-			@ApiParam(value = "设备编号", required = false) @RequestParam(value="equipCode", required=false) String equipCode,
-			@ApiParam(value = "用户Id", required = false) @RequestParam(value="userId", required=false) Integer userId,
-			@ApiParam(value = "开始页码", required = true) @RequestParam Integer pageNo,
-			@ApiParam(value = "显示条数", required = true) @RequestParam Integer pageSize,
-			@ApiParam(value = "设备类型,mine(我的)或attent(关注的)", required = true) @RequestParam String type
+			@ApiParam(value = "page", required = true) @RequestBody Pagination<Equip> page
 			){
 		WebResult<Pagination<Equip>> result=new WebResult<Pagination<Equip>>(ResultCode.SUCCESS);
-		result.setData(equipService.listEquipByEquipCodeAndUserId(equipCode, userId, pageNo, pageSize));
+		result.setData(equipService.listEquipByEquipCodeAndUserId(page));
 		return result;
+	}
+	/*//已测试OK
+	@ApiOperation("工程安装-给用户绑定设备")
+	@RequestMapping(value="/bindEquip",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Object> bindEquip(
+			@ApiParam(value = "用户ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer userId,
+			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode){
+		String msg = equipService.updateUserOfNewEquip(userId, equipCode);
+		if(msg==null){//绑定成功
+			WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
+			result.setMessage("绑定成功");
+			return result;
+		}else{
+			WebResult<Object> result=new WebResult<Object>(ResultCode.FAILURE);
+			result.setMessage(msg);
+			return result;
+		}
+			
+	}*/
+	@ApiOperation("后台用-更新设备的绑定用户")
+	@RequestMapping(value="/updateBindEquip",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Object> updateBindEquip(
+			@ApiParam(value = "用户ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer userId,
+			@ApiParam(value = "滤芯组合ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer filterGroupId,
+			@ApiParam(value = "水源（自来水公司）ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer waterAreaId,
+			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode){
+		equipService.updateUserAndRelevanceOfEquip(userId, filterGroupId, waterAreaId, equipCode); 
+		
+		WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
+		result.setMessage("绑定成功");
+		return result;
+	}
+	@ApiOperation("工程安装-给用户绑定设备")
+	@RequestMapping(value="/bindEquip",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Object> bindEquip(
+			@ApiParam(value = "用户ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer userId,
+			@ApiParam(value = "滤芯组合ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer filterGroupId,
+			@ApiParam(value = "水源（自来水公司）ID", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Integer waterAreaId,
+			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode){
+		String msg = equipService.updateUserAndRelevanceOfNewEquip(userId, filterGroupId, waterAreaId, equipCode); 
+		if(msg==null){//绑定成功
+			WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
+			result.setMessage("绑定成功");
+			return result;
+		}else{
+			WebResult<Object> result=new WebResult<Object>(ResultCode.FAILURE);
+			result.setMessage(msg);
+			return result;
+		}
 	}
 }

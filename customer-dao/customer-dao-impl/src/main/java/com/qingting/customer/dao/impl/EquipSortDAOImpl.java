@@ -59,10 +59,8 @@ public class EquipSortDAOImpl implements EquipSortDAO {
 	}
 
 	@Override
-	public EquipSort getEquipSortByRowKey(String rowKey) {
-		return getEquipSortFromResult(
-				tClient.findObjectAndKey(new StringRowKey(rowKey), EquipSort.class)
-				);
+	public EquipSort getEquipSortById(Integer id) {
+		return tClient.findObject(RowKeyUtil.getRowKey(id), EquipSort.class);
 	}
 
 	@Override

@@ -32,7 +32,7 @@
 					<ul>
 						<!--------------------- 列表 --------------------------->
 						<li class="xy-layout-bar bg-blue-01 xy-border-box">
-							<div class="weui-cell weui-cell_access">
+							<div class="weui-cell weui-cell_access" id="goModify">
 								<div class="weui-cell__bd xy-clearfix">
 									<p class="mini-lovely fixed-mini-lovely xy-full-widthIMG xy-fll"><img /></p>
 									<!--<p class="xy-flr xy-code xy-full-widthIMG xy-pad-t5"><img src="img/pic-code.png" /></p>-->
@@ -158,6 +158,10 @@
 					console.log(_path);
 					//退出
 					window.location.href =_path+'/logout';
+				});
+				$('#goModify').click(function(){
+					var src = $('.xy-full-widthIMG img').attr('src'),name=$('#name').html();
+					window.location.href =_path+"/consumer/modifyMe.jsp?src="+src+"&name="+name;
 				});
 			}
 			$(function(){

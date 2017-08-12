@@ -1,0 +1,19 @@
+<SimpleHbase>
+	<HBaseTableSchema tableName="waterQuality" defaultFamily="wqf">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="turbidity" typeName="float" />
+		<HBaseColumnSchema qualifier="chlorine" typeName="float" />
+		<HBaseColumnSchema qualifier="waterAreaId" typeName="int" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.WaterQuality" defaultFamily="wqf">
+		<field name="id"/>
+		<field name="turbidity" />
+		<field name="chlorine" />
+		<field name="waterAreaId" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

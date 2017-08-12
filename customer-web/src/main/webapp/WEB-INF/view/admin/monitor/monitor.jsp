@@ -53,6 +53,11 @@
     		var $table = $("#_table").table({
     			url : "${_path}/admin/monitor/list",
     			formId : "_form",
+    			ajaxData : {//加载表格的请求设置
+    				type : "post",
+    				dataFormat : "json",
+    				contentType : "application/json; charset=utf-8"
+    			},
 				tools : [
 					{text : '删除', clazz : 'btn-danger', icon : 'fa fa-trash-o red', permission : '/admin/user/delete', handler : function(){
 						$table.ajaxDelete({
@@ -74,8 +79,12 @@
 			        {field:'magnetic', title:'电磁阀输出状态(true:电磁阀供电 false:电池阀不供电)', mobileHide : true},
 			        {field:'outRelay', title:'输出继电器(true:闭合 false:断开)', mobileHide : true},
 			        {field:'powerRelay', title:'电源继电器 (true:有输出 false:无输出)', mobileHide : true},
-			        {field:'d', title:'d', mobileHide : true},
-			        {field:'w', title:'w', mobileHide : true},
+			        {field:'oneResult', title:'一级滤芯结果', mobileHide : true},
+			        {field:'twoResult', title:'二级滤芯结果', mobileHide : true},
+			        {field:'threeResult', title:'三级滤芯结果', mobileHide : true},
+			        {field:'fourResult', title:'四级滤芯结果', mobileHide : true},
+			        {field:'fiveResult', title:'五级滤芯结果', mobileHide : true},
+			        {field:'microResult', title:'微生物芯结果', mobileHide : true},
 			        
 			        {field:'equipCode', title:'设备编号', align:'left'},
 			        {field:'collectTime', title:'采集时间', mobileHide : true},
@@ -117,12 +126,9 @@
 			});
 			
 			//搜索
-			$(".search-data").keyup(function () { 
+			$(".search-data").blur(function () { 
 				$table.search();
 			});
-			$("#_appId").change(function () { 
-				$table.search();
-           	});
             
 			// 取消
 			$("#_cancel").click(function(){

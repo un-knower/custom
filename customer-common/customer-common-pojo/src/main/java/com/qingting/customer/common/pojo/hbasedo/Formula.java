@@ -6,20 +6,27 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
-public class Formula {
-	private String rowKey;
+import com.qingting.customer.common.pojo.common.PersistentObject;
+
+public class Formula extends PersistentObject{
+	
+	private static final long serialVersionUID = -6652752765064172937L;
 	/**
 	 * ID
 	 */
 	private Integer id;
 	/**
-	 * d值计算公式
+	 * 第几级
 	 */
-	private String d;
+	private Byte order;
 	/**
-	 * w值计算公司
+	 * 公式
 	 */
-	private String w;
+	private String formula;
+	/**
+	 * 滤芯ID
+	 */
+	private Integer filterId;
 	/**
 	 * 创建者ID
 	 */
@@ -27,91 +34,44 @@ public class Formula {
 	/**
 	 * 创建时间
 	 */
-	private Calendar calendar;
-	/**
-	 * 数据的版本，更新时用，监测数据只需要一个版本
-	 */
-	private final Byte version = 0;
+	private Calendar createTime;
 	
-	
-	public String getRowKey() {
-		return rowKey;
-	}
-
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
-
 	public Integer getId() {
 		return id;
 	}
-
 	public void setId(Integer id) {
 		this.id = id;
 	}
-
-	public String getD() {
-		return d;
+	public Byte getOrder() {
+		return order;
 	}
-
-	public void setD(String d) {
-		this.d = d;
+	public void setOrder(Byte order) {
+		this.order = order;
 	}
-
-	public String getW() {
-		return w;
+	public String getFormula() {
+		return formula;
 	}
-
-	public void setW(String w) {
-		this.w = w;
+	public void setFormula(String formula) {
+		this.formula = formula;
 	}
-
+	public Integer getFilterId() {
+		return filterId;
+	}
+	public void setFilterId(Integer filterId) {
+		this.filterId = filterId;
+	}
 	public Integer getUserId() {
 		return userId;
 	}
-
 	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-
-	public Calendar getCalendar() {
-		return calendar;
+	public Calendar getCreateTime() {
+		return createTime;
 	}
-
-	public void setCalendar(Calendar calendar) {
-		this.calendar = calendar;
+	public void setCreateTime(Calendar createTime) {
+		this.createTime = createTime;
 	}
-
-	public Byte getVersion() {
-		return version;
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		return EqualsBuilder.reflectionEquals(this, obj);
-	}
-
-	@Override
-	public int hashCode() {
-		return HashCodeBuilder.reflectionHashCode(this);
-	}
-
-	@Override
-	public String toString() {
-		return ToStringBuilder.reflectionToString(this);
-	}
-	/**
-	 * 
-	 * @Title: setContentOfRowKey
-	 * @Description: 根据查询的rowkey设置对应rowkey中包含的字段
-	 * @param rowkey
-	 * @return void
-	 * @throws
-	 */
-	public void setContentOfRowKey(byte[] rowkey){
-		this.rowKey=new String(rowkey);
-		if(rowkey.length<8){
-			throw new RuntimeException(this.getClass()+"rowkey长度有误，请检查程序.");
-		}
-	}
+	
+	
 }

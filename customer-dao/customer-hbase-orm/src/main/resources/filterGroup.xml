@@ -1,0 +1,25 @@
+<SimpleHbase>
+	<HBaseTableSchema tableName="filterGroup" defaultFamily="fgf">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="oneFilterId" typeName="int" />
+		<HBaseColumnSchema qualifier="twoFilterId" typeName="int" />
+		<HBaseColumnSchema qualifier="threeFilterId" typeName="int" />
+		<HBaseColumnSchema qualifier="fourFilterId" typeName="int" />
+		<HBaseColumnSchema qualifier="fiveFilterId" typeName="int" />
+		<HBaseColumnSchema qualifier="microId" typeName="int" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.FilterGroup" defaultFamily="fgf">
+		<field name="id"/>
+		<field name="oneFilterId" />
+		<field name="twoFilterId" />
+		<field name="threeFilterId" />
+		<field name="fourFilterId" />
+		<field name="fiveFilterId" />
+		<field name="microId" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

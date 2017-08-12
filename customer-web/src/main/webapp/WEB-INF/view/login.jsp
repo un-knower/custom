@@ -133,6 +133,21 @@
 			            //alert('3434555');
 						$('form[id=loginform]').attr('action',_path+"/login/consumer/login");
 						$('#loginform').submit();
+						/* $.ajax({
+							type:'POST',
+							url:_path+"/login/consumer/login",
+							data:{
+								"mobile":mobile,
+								"password":password
+							},
+							success : function(r){								
+								if(result.success){//跳转到引导页
+									window.location.href =_path+"customer-web/lead.jsp";
+								}else{
+									alert(r.message);
+								}
+							}
+						}); */
 					} 
 				});	
 				

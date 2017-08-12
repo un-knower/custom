@@ -11,13 +11,16 @@ public class Message extends PersistentObject{
 
 	private static final long serialVersionUID = 3792614722479457227L;
 	
-	private String rowKey;
+	
 	
 	/**
 	 * id
 	 */
 	private Long id;
-	
+	/**
+	 * 对应的消息触发对象ID
+	 */
+	private Integer detailId;
 	/**
 	 * 用户Id
 	 */
@@ -60,13 +63,10 @@ public class Message extends PersistentObject{
 	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
 
-	public String getRowKey() {
-		return rowKey;
-	}
-
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
+	/**
+	 * 有的消息需要额外传一些参数
+	 */
+	private String strParam;
 
 	public Long getId() {
 		return id;
@@ -75,7 +75,15 @@ public class Message extends PersistentObject{
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
+
+	public Integer getDetailId() {
+		return detailId;
+	}
+
+	public void setDetailId(Integer detailId) {
+		this.detailId = detailId;
+	}
+
 	public Integer getUserId() {
 		return userId;
 	}
@@ -140,12 +148,21 @@ public class Message extends PersistentObject{
 		this.createTime = createTime;
 	}
 
+	public String getStrParam() {
+		return strParam;
+	}
+
+	public void setStrParam(String strParam) {
+		this.strParam = strParam;
+	}
+
 	@Override
 	public String toString() {
-		return "Message [rowKey=" + rowKey + ", id=" + id + ", userId=" + userId + ", title=" + title + ", content="
+		return "Message [id=" + id + ", detailId=" + detailId + ", userId=" + userId + ", title=" + title + ", content="
 				+ content + ", imageUrl=" + imageUrl + ", sortCode=" + sortCode + ", readFlag=" + readFlag + ", status="
-				+ status + ", createTime=" + createTime + "]";
+				+ status + ", createTime=" + createTime + ", strParam=" + strParam + "]";
 	}
+
 	
 	
 }

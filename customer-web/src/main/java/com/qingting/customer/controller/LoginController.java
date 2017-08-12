@@ -1,16 +1,24 @@
 package com.qingting.customer.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qingting.customer.baseserver.UserService;
+import com.qingting.customer.common.pojo.dto.EquipDTO;
+import com.smart.mvc.model.ResultCode;
+import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
+import com.smart.sso.client.AuthRpcUtils;
 import com.smart.sso.client.Config;
 
 import io.swagger.annotations.Api;
@@ -55,6 +63,15 @@ public class LoginController {
 	    model.addAttribute("backUrl", request.getServletPath()+"/lead");
 	    model.addAttribute("appCode", Config.getSsoAppCode());
 	    return "redirect:" + ssoLoginUrl; */
+	}
+	@ApiOperation(value="客户端Ajax登陆提交")
+	@RequestMapping(value="consumerLoginByAjax",method=RequestMethod.POST)
+	public @ResponseBody WebResult<Object> consumerLoginByAjax(
+			@ApiParam(value = "手机号", required = true) @RequestParam @ValidateParam({ Validator.MOBILE })String mobile,
+			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.PASSWORD })String password,
+			HttpServletRequest request, HttpServletResponse response){
+		//return AuthRpcUtils.login(Config.getSsoAppCode(), mobile, password, request, response);
+		return new WebResult<Object>(ResultCode.SUCCESS);
 	}
 	@ApiOperation(value="后台登陆提交-此处跳转/admin/admin.jsp")
 	@RequestMapping(value="/admin/login",method = RequestMethod.POST,produces="text/html")

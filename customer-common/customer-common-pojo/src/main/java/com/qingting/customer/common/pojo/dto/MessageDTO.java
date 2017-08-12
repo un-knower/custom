@@ -1,7 +1,6 @@
 package com.qingting.customer.common.pojo.dto;
 
 import java.util.Calendar;
-import java.util.List;
 
 import com.alibaba.fastjson.annotation.JSONField;
 
@@ -48,9 +47,10 @@ public class MessageDTO {
 	 */
 	private String status;
 	/**
-	 * 消息rowkey
+	 * 有的消息需要额外传一些参数
 	 */
-	private String rowKey;
+	private String strParam;
+	
 	public Long getId() {
 		return id;
 	}
@@ -105,10 +105,12 @@ public class MessageDTO {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getRowKey() {
-		return rowKey;
+	public String getStrParam() {
+		return strParam;
 	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
+	public void setStrParam(String strParam) {
+		this.strParam = strParam;
 	}
+	
+	
 }

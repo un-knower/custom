@@ -68,6 +68,11 @@
     		var $table = $("#_table").table({
     			url : "${_path}/admin/equip/list?type=mine",
     			formId : "_form",
+				ajaxData : {//加载表格的请求设置
+    				type : "post",
+    				dataFormat : "json",
+    				contentType : "application/json; charset=utf-8"
+    			},
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
 						$table.dialog(null,null,"用户添加",{
@@ -106,10 +111,13 @@
 			        {field:'cityCode', title:'市编码', mobileHide : true},
 			        {field:'areaCode', title:'区编码', mobileHide : true},
 			        {field:'address', title:'地址', mobileHide : true},
-			        {field:'open', title:'是否开放', mobileHide : true},
+			        {field:'isOpen', title:'是否开放', mobileHide : true},
+			        {field:'isTop', title:'是否置顶', mobileHide : true},
 			        {field:'equipSortId', title:'分类ID', mobileHide : true},
 			        {field:'projectId', title:'项目ID', mobileHide : true},
 			        {field:'userId', title:'用户ID', mobileHide : true},
+			        {field:'filterGroupId', title:'滤芯组合ID', mobileHide : true},
+			        {field:'waterAreaId', title:'水源ID', mobileHide : true},
 			        {field:'createTime', title:'创建时间', mobileHide : true},
 			        
 				],

@@ -64,6 +64,7 @@
 	.progress{width:50%;height:6px;border-radius: 10px;}
 	.jianbian{background-image:linear-gradient(to top,#fff,#CBE3FE);}
 	.jianbian2{background-image:linear-gradient(to top,#fff 60%,#3792FB 40%);}
+	.addnav{    width: 90%; margin-left: 5%;text-align: center;display: flex;}
 	</style>
 	<body ontouchstart>
 		<div class="page flex js_show height100">
@@ -75,128 +76,93 @@
 				<div class="xy-width-45"></div>
 			</div><!--/header-->
 			<div class="page__bd mycontainer">
-				<div class="swiper-container ve-swiper-container height100">
-					<div class="swiper-wrapper">
-						<!-- ------------------swiper slide-------------------- -->
-						<div class="swiper-slide"> 
-							<div class="xy-pad-t10 xy-border-box height100">
-								<div class="xy-layout jianbian2 height100" flex="dir:top">						
-									<ol class="weui-cell weui-cell_access" style="color:#fff;">
-										<dt class="">
-											<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG">
-												<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" />
-											</p>
-										</dt>
-										<dd class="pl30">
-											<h3 style="line-height: 2em;">智慧饮水管家通知</h3>
-											<p id="tips"></p>
-										</dd>
-									</ol>
-									<div class="">
-										<!--波纹-->
-										<div class="xy-waveBox xy-line-h0">
-											<div class="xy-wave" id="wave1"></div>
-											<div class="xy-wave" id="wave2"></div>
-											<div class="xy-wave" id="wave3"></div>
-										</div>
-										<!--净水设备过滤结构-->
-										<div class="jianbian xy-tac xy-pad-lr2 structure-chart" style="position: relative;">
-											 <img src="${_staticPath}/resource/weuiWeb/img/device.gif" />
-											 <div class="warn"></div>
-										</div>
-									</div>
-									<div style="background-color: #fff;" class="ceshi">
-										<h4 class="xy-tac xy-pad-tb7"><span>胡先生</span>家的在线监测值</h4>
-										<ul class="flexMe xy-tac">
-										    <li>原水TDS值</li>
-										    <li>
-										    	<div class="progress" style="background-color:#FBB55F;"></div>
-										    </li>
-										    <li id="rawTds"></li>
-										</ul>
-										<ul class="flexMe xy-tac">
-										    <li>净水TDS值</li>
-										    <li>
-										    	<div class="progress" style="background-color:#85E037;"></div>
-										    </li>
-										    <li id="purTds"></li>
-										</ul>
-										<ul class="flex2 xy-tac">
-										    <li>温度</li>
-										    <li id="temp"></li>
-										    <li class="xy-tac">流量</li>
-										    <li id="flow"></li>
-										</ul>
-										<ul class="flex2 xy-tac">
-										    <li>湿度</li>
-										    <li id="humidity"></li>
-										    <li class="xy-tac">是否漏水</li>
-										    <li id="leak"></li>
-										</ul>
-									</div>
-								 
-											<!-- <div class="xy-tac xy-pad-t1 xy-pad-b10 xy-pad-lr10 bg-blue-opacity xy-clearfix xy-fc-blue xy-fs16">
-												<a href="#" class="weui-btn weui-btn_primary bg-light-blue" id="monitorEchart">查看监测曲线图</a>
-											</div> -->
-								</div>
+				<div class="xy-pad-t10 xy-border-box height100">
+					<div class="xy-layout jianbian2 height100" flex="dir:top">						
+						<ol class="weui-cell weui-cell_access" style="color:#fff;">
+							<dt class="">
+								<p class="xy-fll mini-lovely fixed-mini-lovely xy-full-widthIMG">
+									<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely.gif" />
+								</p>
+							</dt>
+							<dd class="pl30">
+								<h3 style="line-height: 2em;">智慧饮水管家通知</h3>
+								<p id="tips"></p>
+							</dd>
+						</ol>
+						<div class="">
+							<!--波纹-->
+							<div class="xy-waveBox xy-line-h0">
+								<div class="xy-wave" id="wave1"></div>
+								<div class="xy-wave" id="wave2"></div>
+								<div class="xy-wave" id="wave3"></div>
 							</div>
-						</div> 
-		            	<div class="swiper-slide"><!-- 此处是监测曲线图 -->
-							<div class="weui-tab xy-border-box xy-pad-tb10 xy-pad-b45p" style="height:90%">
-								<div class="weui-tabbar xy-tabbar bg-white">
-									<a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
-										<p class="weui-tabbar__label">原水净化</p>
-									</a>
-									<a href="javascript:;" class="weui-tabbar__item">
-										<p class="weui-tabbar__label">过程净化</p>
-									</a>
-								</div><!--/tab 导航-->
-								<div class="weui-tab__panel xy-tab__panel">
-									<div class="xy-tab-list xy-tab-list_on">
-										<div class="height100 xy-border-box">
-											<div id="rawCharts" class="height100"></div>
-										</div>
-									</div>
-									<div class="xy-tab-list">
-										<div class="height100 xy-border-box">
-											<div id="purCharts" class="height100"></div>
-										</div>
-									</div>
-								</div><!--/tab 内容-->
-								<div class="weui-footer weui-footer_fixed-bottom xy-footer">
-									<div class="xy-pad-lr10 xy-clearfix">
-										<a href="javascript:;" class="weui-btn weui-btn_primary bg-light-blue xy-btn-next">服务方案</a>
-									</div>
-								</div>
-							</div>							
+							<!--净水设备过滤结构-->
+							<div class="jianbian xy-tac xy-pad-lr2 structure-chart" style="position: relative;">
+								 <img src="${_staticPath}/resource/weuiWeb/img/device.gif" />
+								 <div class="warn"></div>
+							</div>
 						</div>
-						<!--/ container -->
-						
-						<div class="echarts-qt xy-dn" id="echartsQt" flex="main:center cross:center">
-							<div>
-								<div class="my-msg weui-flex xy-pad-lr10 xy-mar-t20" flex="main:center cross:center">
-									<div class="xy-fc-gray xy-pad-lr10 xy-fs12" style="width:220px;">
-										<p>主人，<span id="seriesName"></span>监测数据显示，在<span id="seriesNameX"></span>有服务提醒消息推送。</p>
-										<p>服务内容：更换3级滤芯和相关维护;</p>
-										<p>服务人员：潘小玲;</p>
-										<p>评价：四星。</p>
+						<div style="background-color: #fff;" class="ceshi">
+							<h4 class="xy-tac xy-pad-tb7"><span>胡先生</span>家的在线监测值</h4>
+							<ul class="flexMe xy-tac">
+							    <li>原水TDS值</li>
+							    <li>
+							    	<div class="progress" style="background-color:#FBB55F;"></div>
+							    </li>
+							    <li id="rawTds"></li>
+							</ul>
+							<ul class="flexMe xy-tac">
+							    <li>净水TDS值</li>
+							    <li>
+							    	<div class="progress" style="background-color:#85E037;"></div>
+							    </li>
+							    <li id="purTds"></li>
+							</ul>
+							<ul class="flex2 xy-tac">
+							    <li>温度</li>
+							    <li id="temp"></li>
+							    <li class="xy-tac">流量</li>
+							    <li id="flow"></li>
+							</ul>
+							<ul class="flex2 xy-tac">
+							    <li>湿度</li>
+							    <li id="humidity"></li>
+							    <li class="xy-tac">是否漏水</li>
+							    <li id="leak"></li>
+							</ul>
+						</div>
+						<div class="weui-tab xy-border-box xy-pad-tb10 xy-pad-b45p" style="height:90%">
+							<div class="addnav xy-tabbar bg-white">
+								<a href="javascript:;" class="weui-tabbar__item weui-bar__item_on">
+									<p class="weui-tabbar__label">原水净化</p>
+								</a>
+								<a href="javascript:;" class="weui-tabbar__item">
+									<p class="weui-tabbar__label">过程净化</p>
+								</a>
+							</div><!--/tab 导航-->
+							<div class="weui-tab__panel xy-tab__panel" style="padding-top:0;">
+								<div class="xy-tab-list xy-tab-list_on">
+									<div class="height100 xy-border-box">
+										<div id="rawCharts" class="height100"></div>
 									</div>
-								</div><!--/提示语-->
-							
-								<div flex="main:center cross:center">
-									<div class="my-lovely xy-tac xy-pad-lr10">
-										<img src="${_staticPath}/resource/weuiWeb/img/pic-lovely-01.png">
-									</div><!--/蜻蜓-->
+								</div>
+								<div class="xy-tab-list">
+									<div class="height100 xy-border-box">
+										<div id="purCharts" class="height100"></div>
+									</div>
+								</div>
+							</div><!--/tab 内容-->
+							<div class="weui-footer weui-footer_fixed-bottom ">
+								<div class="xy-pad-lr10 xy-clearfix">
+									<a href="javascript:;" class="weui-btn weui-btn_primary bg-light-blue xy-btn-next">服务方案</a>
 								</div>
 							</div>
-						</div>												
-	             	</div>
-           	 	</div>
-           	 	<div class="swiper-button-prev xy-bottom_btnPrve"></div>
-				<div class="swiper-button-next xy-bottom_btnNext"></div>
+						</div>							
+						<!-- </div> -->
+						<!--/ container -->											
+	             	</div>			
+				</div>
 			</div>
-			<!--/ container -->
-			
 		</div>
 		<!--/page End-->
 		
@@ -207,6 +173,7 @@
 		<script src="${_staticPath}/resource/weuiWeb/js/xy-swiper-vertical.js"></script>
 		<script src="${_staticPath}/resource/weuiWeb/js/echarts.min.js"></script>
 		<script src="${_path}/js/consumer/myEchart.js"></script>
+		<script src="${_path}/js/consumer/touch.min.js"></script>
 		<script type="text/javascript" class="js_show">
 			function eventCollection(weui){
 			}

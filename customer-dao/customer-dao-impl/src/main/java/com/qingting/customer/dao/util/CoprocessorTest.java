@@ -51,6 +51,15 @@ public class CoprocessorTest {
 			put("messageIndex", new HashMap<String,Object>());
 			put("monitorIndex", new HashMap<String,Object>());
 			put("monitorIndexDay", new HashMap<String,Object>());
+			put("equipIndex", new HashMap<String,Object>());
+			put("attention", new HashMap<String,Object>());
+			
+			put("waterArea",new HashMap<String,Object>());
+			put("waterQuality",new HashMap<String,Object>());
+			put("filterGroup",new HashMap<String,Object>());
+			put("filter",new HashMap<String,Object>());
+			put("formula",new HashMap<String,Object>());
+			put("microFormula",new HashMap<String,Object>());
 			
 		}
 	};

@@ -20,6 +20,9 @@
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";
 	</script>
+	<style>
+	 .line-btn-follow button.forbidClick{background: #ccc;}
+	</style>
 	<body ontouchstart>
 		<div class="page tabbar flex js_show height100">
 			<div class="weui-flex xy-header">
@@ -36,11 +39,11 @@
 					<div class="weui-search-bar__form">
 						<div class="weui-search-bar__box">
 							<i class="weui-icon-search"></i>
-							<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="请输入设备号" required/>
+							<input type="search" class="weui-search-bar__input" id="searchInput" placeholder="请输入6位以上的设备号" required/>
 							<a href="javascript:" class="weui-icon-clear" id="searchClear"></a>
 						</div>
 					</div>
-					<a href="javascript:" class="weui-search-bar__cancel-btn" id="searchCancel">取消</a>
+					<a href="javascript:" class="weui-search-bar__cancel-btn" id="search">搜索</a>
 				</div>
 				<!--<div class="weui-tab xy-border-box xy-pad-tb10 xy-pad-b45p xy-scrollY">-->
 					
@@ -111,7 +114,7 @@
 					url:_path+'/consumer/equip/searchEquip?equipCode='+equipCode,
 					success : function(msg){
 						console.log(msg);
-						console.log(msg.data.length);
+						//console.log(msg.data.length);
 						if(msg.data.length>0){
 							//alert('找到啦');
 							$("#followList").show();
@@ -128,9 +131,10 @@
 				var listDiv = '';
 				for(var i in data){
 					listDiv += '<div class="xy-layout-bar xy-mar-b10 line-wrapper line-follow-box">'+
-								'<div class="xy-border-box line-scroll-wrapper xy-clearfix">'+
-									'<div class="line-btn-follow"><button>关注</button></div>'+
-									'<div class="line-normal-wrapper">'+
+								'<div class="xy-border-box line-scroll-wrapper xy-clearfix">';
+if(data[i].isOpen == true)listDiv += '<div class="line-btn-follow"><button>关注</button></div>';						
+			         else listDiv += '<div class="line-btn-follow"><button type="button" disabled="disabled" class="forbidClick">此设备未公开</button></div>';						
+						   listDiv +='<div class="line-normal-wrapper">'+
 										'<a href="#" class="xy-border-box xy-pad-lr10 xy-pad-tb5 xy-dib line-normal-left-wrapper">'+
 											'<div class="xy-pad-l10 line-normal-msg">'+
 												'<ol class="xy-pad-t3">'+
@@ -182,7 +186,7 @@
 				var $searchBar = $('#searchBar'),
 					$searchInput = $('#searchInput'),
 					$searchClear = $('#searchClear'),
-					$searchCancel = $('#searchCancel');
+					$search = $('#search');
 
 				function hideSearchResult(){
 					$searchInput.val('');
@@ -191,7 +195,25 @@
 					hideSearchResult();
 				}
 				$searchInput[0].focus();
-				$searchInput.bind('input propertychange', function() {
+				$search.on('click', function(){
+					//alert($searchInput.val());				
+					if(!$searchInput.val().length ||$searchInput.val().length <= 6){
+						alert('请输入6位以上的编号');
+				   		cancelSearch();
+						$("#followList").hide();
+				   }else{
+				   		drawList($searchInput.val());
+				   }
+				});
+				/*  $searchInput.on('blur', function () {//失去焦点时判断
+					if(!this.value.length || this.value.length <= 4){
+						alert('请输入4位数以上的设备编号');
+						cancelSearch();
+						$("#followList").hide();
+					}
+				}); */
+				//这里是实时搜索，以后再用
+				/* $searchInput.bind('input propertychange', function() {
 				   //alert( $(this).val());
 				   if(!this.value.length){
 				   		cancelSearch();
@@ -200,7 +222,7 @@
 				   		drawList(this.value);
 				   }
 				   
-				});
+				}); */
 				/* $searchInput.on('blur', function () {
 					if(!this.value.length){
 						cancelSearch();
@@ -225,11 +247,11 @@
 					$searchInput[0].focus();
 					$("#followList").hide();
 				});
-				$searchCancel.on('click', function(){
+				/* $searchCancel.on('click', function(){
 					cancelSearch();
 					$searchInput.blur();
 					$("#followList").hide();
-				});
+				}); */
 
 			});
 		</script>

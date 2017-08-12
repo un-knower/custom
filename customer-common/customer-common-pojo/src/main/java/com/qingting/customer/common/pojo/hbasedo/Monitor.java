@@ -12,7 +12,6 @@ public class Monitor extends PersistentObject{
 
 	private static final long serialVersionUID = -3476260854075534540L;
 	
-	private String rowKey;
 	/**
 	 * ID
 	 */
@@ -63,15 +62,29 @@ public class Monitor extends PersistentObject{
 	 */
 	private Boolean powerRelay;
 	/**
-	 * d值
+	 * 一级滤芯计算结果
 	 */
-	private Float d;
-
+	private Float oneResult;
 	/**
-	 * w值
+	 * 二级滤芯计算结果
 	 */
-	private Float w;
-
+	private Float twoResult;
+	/**
+	 * 三级滤芯结算结果
+	 */
+	private Float threeResult;
+	/**
+	 * 四级滤芯计算结果
+	 */
+	private Float fourResult;
+	/**
+	 * 五级滤芯计算结果 
+	 */
+	private Float fiveResult;
+	/**
+	 * 微生物计算结果
+	 */
+	private Float microResult;
 	/**
 	 * 设备编号
 	 */
@@ -88,12 +101,7 @@ public class Monitor extends PersistentObject{
 	@JSONField(format="yyyy-MM-dd HH:mm:ss")
 	@ApiModelProperty(value="时间",example="2017-01-01 12:00:00",dataType="String")
 	private Calendar createTime;
-	public String getRowKey() {
-		return rowKey;
-	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
+	
 	public Long getId() {
 		return id;
 	}
@@ -154,17 +162,41 @@ public class Monitor extends PersistentObject{
 	public void setPowerRelay(Boolean powerRelay) {
 		this.powerRelay = powerRelay;
 	}
-	public Float getD() {
-		return d;
+	public Float getOneResult() {
+		return oneResult;
 	}
-	public void setD(Float d) {
-		this.d = d;
+	public void setOneResult(Float oneResult) {
+		this.oneResult = oneResult;
 	}
-	public Float getW() {
-		return w;
+	public Float getTwoResult() {
+		return twoResult;
 	}
-	public void setW(Float w) {
-		this.w = w;
+	public void setTwoResult(Float twoResult) {
+		this.twoResult = twoResult;
+	}
+	public Float getThreeResult() {
+		return threeResult;
+	}
+	public void setThreeResult(Float threeResult) {
+		this.threeResult = threeResult;
+	}
+	public Float getFourResult() {
+		return fourResult;
+	}
+	public void setFourResult(Float fourResult) {
+		this.fourResult = fourResult;
+	}
+	public Float getFiveResult() {
+		return fiveResult;
+	}
+	public void setFiveResult(Float fiveResult) {
+		this.fiveResult = fiveResult;
+	}
+	public Float getMicroResult() {
+		return microResult;
+	}
+	public void setMicroResult(Float microResult) {
+		this.microResult = microResult;
 	}
 	public String getEquipCode() {
 		return equipCode;
@@ -186,12 +218,13 @@ public class Monitor extends PersistentObject{
 	}
 	@Override
 	public String toString() {
-		return "Monitor [rowKey=" + rowKey + ", id=" + id + ", rawTds=" + rawTds + ", purTds=" + purTds + ", temp="
-				+ temp + ", humidity=" + humidity + ", flow=" + flow + ", leak=" + leak + ", magnetic=" + magnetic
-				+ ", outRelay=" + outRelay + ", powerRelay=" + powerRelay + ", d=" + d + ", w=" + w + ", equipCode="
-				+ equipCode + ", collectTime=" + collectTime + ", createTime=" + createTime + "]";
+		return "Monitor [id=" + id + ", rawTds=" + rawTds + ", purTds=" + purTds + ", temp=" + temp + ", humidity="
+				+ humidity + ", flow=" + flow + ", leak=" + leak + ", magnetic=" + magnetic + ", outRelay=" + outRelay
+				+ ", powerRelay=" + powerRelay + ", oneResult=" + oneResult + ", twoResult=" + twoResult
+				+ ", threeResult=" + threeResult + ", fourResult=" + fourResult + ", fiveResult=" + fiveResult
+				+ ", microResult=" + microResult + ", equipCode=" + equipCode + ", collectTime=" + collectTime
+				+ ", createTime=" + createTime + "]";
 	}
-
 	
 	
 }

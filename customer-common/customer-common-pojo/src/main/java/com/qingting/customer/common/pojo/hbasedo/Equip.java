@@ -8,7 +8,6 @@ public class Equip extends PersistentObject{
 
 	private static final long serialVersionUID = 6288088246557224452L;
 	
-	private String rowKey;
 	/**
 	 * ID
 	 */
@@ -40,34 +39,33 @@ public class Equip extends PersistentObject{
 	/**
 	 * 设备是否开放
 	 */
-	private Boolean open;
+	private Boolean isOpen;
+	/**
+	 * 设备是否置顶
+	 */
+	private Boolean isTop;
 	/**
 	 * 设备分类ID
 	 */
 	private Integer equipSortId;
-	/**
-	 * 项目ID
-	 */
-	private Integer projectId;
+	
 	/**
 	 * 用户ID
 	 */
 	private Integer userId;
 	/**
+	 * 滤芯组合ID
+	 */
+	private Integer filterGroupId;
+	/**
+	 * 自来水公司ID
+	 */
+	private Integer waterAreaId;
+	/**
 	 * 创建时间
 	 */
 	private Calendar createTime;
-	/**
-	 * 数据的版本
-	 */
-	private final Byte version = 0;
 	
-	public String getRowKey() {
-		return rowKey;
-	}
-	public void setRowKey(String rowKey) {
-		this.rowKey = rowKey;
-	}
 	public Integer getId() {
 		return id;
 	}
@@ -110,11 +108,17 @@ public class Equip extends PersistentObject{
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Boolean getOpen() {
-		return open;
+	public Boolean getIsOpen() {
+		return isOpen;
 	}
-	public void setOpen(Boolean open) {
-		this.open = open;
+	public void setIsOpen(Boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+	public Boolean getIsTop() {
+		return isTop;
+	}
+	public void setIsTop(Boolean isTop) {
+		this.isTop = isTop;
 	}
 	public Integer getEquipSortId() {
 		return equipSortId;
@@ -122,17 +126,23 @@ public class Equip extends PersistentObject{
 	public void setEquipSortId(Integer equipSortId) {
 		this.equipSortId = equipSortId;
 	}
-	public Integer getProjectId() {
-		return projectId;
-	}
-	public void setProjectId(Integer projectId) {
-		this.projectId = projectId;
-	}
 	public Integer getUserId() {
 		return userId;
 	}
 	public void setUserId(Integer userId) {
 		this.userId = userId;
+	}
+	public Integer getFilterGroupId() {
+		return filterGroupId;
+	}
+	public void setFilterGroupId(Integer filterGroupId) {
+		this.filterGroupId = filterGroupId;
+	}
+	public Integer getWaterAreaId() {
+		return waterAreaId;
+	}
+	public void setWaterAreaId(Integer waterAreaId) {
+		this.waterAreaId = waterAreaId;
 	}
 	public Calendar getCreateTime() {
 		return createTime;
@@ -140,15 +150,13 @@ public class Equip extends PersistentObject{
 	public void setCreateTime(Calendar createTime) {
 		this.createTime = createTime;
 	}
-	public Byte getVersion() {
-		return version;
-	}
 	@Override
 	public String toString() {
-		return "Equip [rowKey=" + rowKey + ", id=" + id + ", equipCode=" + equipCode + ", equipMark=" + equipMark
-				+ ", provinceCode=" + provinceCode + ", cityCode=" + cityCode + ", areaCode=" + areaCode + ", address="
-				+ address + ", open=" + open + ", equipSortId=" + equipSortId + ", projectId=" + projectId + ", userId="
-				+ userId + ", createTime=" + createTime + ", version=" + version + "]";
+		return "Equip [id=" + id + ", equipCode=" + equipCode + ", equipMark=" + equipMark + ", provinceCode="
+				+ provinceCode + ", cityCode=" + cityCode + ", areaCode=" + areaCode + ", address=" + address
+				+ ", isOpen=" + isOpen + ", isTop=" + isTop + ", equipSortId=" + equipSortId + ", userId=" + userId
+				+ ", filterGroupId=" + filterGroupId + ", waterAreaId=" + waterAreaId + ", createTime=" + createTime
+				+ "]";
 	}
 	
 	

@@ -72,25 +72,27 @@
 				$('.xy-fc-blue').html(GetQueryString("followTime"));
 				$('#name').html(GetQueryString("name"));
 				$('.mini-lovely img').attr('src',GetQueryString("thisSrc"));
-				bindEvent();
+				var equipCode = GetQueryString("equipCode"),userId = GetQueryString("detailId"),
+				id = GetQueryString("id");
+				bindEvent(equipCode,userId,id);
 			})
-			function bindEvent(){
-				var agree='';
+			function bindEvent(equipCode,userId,id){
+				var status='';
 				$('.bg-light-blue').click(function(){
-					agree = 'true'; 
-					attentHandle(agree);
+					status = 1; 
+					attentHandle(status,equipCode,userId,id);
 				});
 				$('.bg-orange').click(function(){
 					//alert('45');
-					agree = 'false';
-					attentHandle(agree);
+					status = 2;
+					attentHandle(status,equipCode,userId,id);
 				});				
 			}
-			function attentHandle(agree){
+			function attentHandle(status,equipCode,userId,id){
 				//关注处理
 				$.ajax({
 					type:'get',
-					url:_path+'/consumer/equip/attentHandle?agree='+agree,
+					url:_path+'/consumer/equip/attentHandle?status='+status+'&equipCode='+equipCode+'&userId='+userId+'&id='+id,
 					success : function(r){
 						console.log(r);
 						if(r){

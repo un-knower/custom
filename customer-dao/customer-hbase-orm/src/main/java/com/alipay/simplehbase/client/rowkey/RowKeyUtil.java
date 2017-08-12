@@ -1,6 +1,7 @@
 package com.alipay.simplehbase.client.rowkey;
 
 import java.nio.ByteBuffer;
+import java.util.Date;
 
 import org.apache.hadoop.hbase.util.Bytes;
 
@@ -123,11 +124,51 @@ public class RowKeyUtil {
     public static RowKey getRowKey(byte[] value){
     	return new BytesRowKey(value);
     }
+    public static RowKey getRowKey(Object...obj){
+    	byte[] bytes=null;
+    	for (Object param : obj) {
+    		if (param instanceof Integer) {
+    			int value = ((Integer) param).intValue();
+    			bytes=BytesUtil.merge(bytes,Bytes.toBytes(value));
+    		} else if (param instanceof Byte) {
+    			Byte b = (Byte) param;
+    			bytes=BytesUtil.merge(bytes,new byte[]{b});
+    		}else if (param instanceof String) {
+    			String s = (String) param;
+    			bytes=BytesUtil.merge(bytes,Bytes.toBytes(s));
+    		} else if (param instanceof Double) {
+    			double d = ((Double) param).doubleValue();
+    			bytes=BytesUtil.merge(bytes,Bytes.toBytes(d));
+    		} else if (param instanceof Float) {
+    			float f = ((Float) param).floatValue();
+    			bytes=BytesUtil.merge(bytes,Bytes.toBytes(f));
+    		} else if (param instanceof Long) {
+    			long l = ((Long) param).longValue();
+    			bytes=BytesUtil.merge(bytes,Bytes.toBytes(l));
+    		} else if (param instanceof Boolean) {
+    			boolean b = ((Boolean) param).booleanValue();
+    			bytes=BytesUtil.merge(bytes,Bytes.toBytes(b));
+    		}else{ 
+    			throw new RuntimeException("无法识别的参数类型,在RowKeyUtil.getRowKey(Object...obj)方法.");
+    		}
+		}
+    	if(bytes!=null)
+    		return new BytesRowKey(bytes);
+    	else
+    		return null;
+    }
+    
     public static RowKey getRowKey(byte[] value1,String value2){
     	return new BytesRowKey(
     			BytesUtil.merge(value1, Bytes.toBytes(value2))
     			);
     }
+    public static RowKey getRowKey(Integer value1,Long value2){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
+    			);
+    }
+    
     public static RowKey getRowKey(Long value1,Integer value2){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
@@ -138,6 +179,11 @@ public class RowKeyUtil {
     			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
     			);
     }
+    /*public static RowKey getRowKey(Integer value,String str){
+    	return new BytesRowKey(
+    			BytesUtil.merge(Bytes.toBytes(value),Bytes.toBytes(str))
+    			);
+    }*/
     public static RowKey getRowKey(String str,Integer value){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(str),Bytes.toBytes(value))
@@ -259,6 +305,17 @@ public class RowKeyUtil {
     			);
     }*/
     //===================================获得最大最小RowKey================================
+    public static RowKey getMinRowKey(Integer num){
+    	byte[] bytes=new byte[num];
+    	return new BytesRowKey(bytes);
+    }
+    public static RowKey getMaxRowKey(Integer num){
+    	byte[] bytes=new byte[num];
+    	for(int i=0;i<num;i++){
+    		bytes[i]=(byte)0xFF;
+    	}
+    	return new BytesRowKey(bytes);
+    }
     /**
      * 
      * @Title: getIntMaxRowKey
@@ -851,12 +908,12 @@ public class RowKeyUtil {
     	int length=0;
     	byte[] strs=null;
     	if(str!=null){
-    		length=str.length();
     		strs=Bytes.toBytes(str);
+    		length=strs.length;
     	}
     	byte[] bytes=new byte[4+length+8];
     	for (int i=0;i<4;i++) {
-			bytes[i]=(byte)( (value>>(8*(3-i))) & 0xFF );
+			bytes[i]=(byte)( (value>>>(8*(3-i))) & 0xFF );
 		}
     	for(int i=0;i<length;i++){
     		bytes[4+i]=strs[i];

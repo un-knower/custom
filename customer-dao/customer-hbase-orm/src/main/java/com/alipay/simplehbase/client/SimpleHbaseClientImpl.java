@@ -40,6 +40,7 @@ import com.alipay.simplehbase.exception.SimpleHBaseException;
 import com.alipay.simplehbase.hql.HBaseQuery;
 import com.alipay.simplehbase.util.ConnectionUtil;
 import com.alipay.simplehbase.util.StringUtil;
+import com.alipay.simplehbase.util.TableUtil;
 import com.alipay.simplehbase.util.Util;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -785,6 +786,32 @@ public class SimpleHbaseClientImpl extends SimpleHbaseClientBase {
 			table.put(put);
 		} catch (IOException e) {
 			throw new SimpleHBaseException("update error.", e);
+		} finally {
+			Util.close(table);
+		}
+	}
+	@Override
+	public void put(RowKey rowKey,String columnFamily,String columnName[],byte[][] value){
+		/*Put put = new Put(rowKey.toBytes());
+		put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(columnName), value);
+		Table table = table();
+		try {
+			table.put(put);
+		} catch (IOException e) {
+			throw new SimpleHBaseException("update error.", e);
+		} finally {
+			Util.close(table);
+		}*/
+		
+		Put put = new Put(rowKey.toBytes());
+		for(int i=0;i<columnName.length;i++){
+			put.addColumn(Bytes.toBytes(columnFamily), Bytes.toBytes(columnName[i]), value[i]);
+		}
+		Table table=table();
+		try {
+			table.put(put);
+		} catch (IOException e) {
+			throw new SimpleHBaseException("put error.", e);
 		} finally {
 			Util.close(table);
 		}

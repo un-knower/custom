@@ -52,14 +52,12 @@ public interface MessageService {
 	 * 
 	 * @Title: listMessage
 	 * @Description: 查消息
-	 * @param userId
-	 * @param sortCode
 	 * @param page
 	 * @return 
 	 * @return Pagination<Message>
 	 * @throws
 	 */
-	Pagination<Message> listMessage(Integer userId,String sortCode,Pagination<Message> page);
+	Pagination<Message> listMessage(Pagination<Message> page);
 	/**
 	 * 
 	 * @Title: listMessageByEndRowKey

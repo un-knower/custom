@@ -68,7 +68,11 @@
     		var $table = $("#_table").table({
     			url : "${_path}/admin/message/list",
     			formId : "_form",
-    			reload : "post",
+    			ajaxData : {//加载表格的请求设置
+    				type : "post",
+    				dataFormat : "json",
+    				contentType : "application/json; charset=utf-8"
+    			},
 				tools : [
 					{text : '新增', clazz : 'btn-info', icon : 'fa fa-plus-circle blue', permission : '/admin/user/edit', handler : function(){
 						$table.dialog(null,null,"消息添加",{

@@ -1,18 +1,12 @@
 package com.qingting.customer.common.pojo.dto;
 
 public class HomeMonitorDTO {
-	/**
-	 * 消息类型 
-	 */
-	private Integer msgType;
-	/**
-	 * 监测次数
-	 */
-	private Integer moitorCount;
+	
 	/**
 	 * 服务次数
 	 */
 	private Integer serviceCount;
+	
 	/**
 	 * 原水TDS值
 	 */
@@ -24,41 +18,25 @@ public class HomeMonitorDTO {
 	private Float purTds;
 
 	/**
-	 * 温度值
-	 */
-	private Float temp;
-
-	/**
-	 * 湿度值
-	 */
-	private Float humidity;
-
-	/**
 	 * 流量值
 	 */
-	private Float flow;
+	private Long flow;
 
 	/**
 	 * 漏水状态开关：true-漏水、false-无漏水
 	 */
 	private Boolean leak;
 	
+	/**
+	 * 我的设备总数
+	 */
+	private Integer mineEquip;
 	
-	public Integer getMsgType() {
-		return msgType;
-	}
+	/**
+	 * 关注的设备总数
+	 */
+	private Integer attentEquip;
 
-	public void setMsgType(Integer msgType) {
-		this.msgType = msgType;
-	}
-
-	public Integer getMoitorCount() {
-		return moitorCount;
-	}
-
-	public void setMoitorCount(Integer moitorCount) {
-		this.moitorCount = moitorCount;
-	}
 
 	public Integer getServiceCount() {
 		return serviceCount;
@@ -84,27 +62,11 @@ public class HomeMonitorDTO {
 		this.purTds = purTds;
 	}
 
-	public Float getTemp() {
-		return temp;
-	}
-
-	public void setTemp(Float temp) {
-		this.temp = temp;
-	}
-
-	public Float getHumidity() {
-		return humidity;
-	}
-
-	public void setHumidity(Float humidity) {
-		this.humidity = humidity;
-	}
-
-	public Float getFlow() {
+	public Long getFlow() {
 		return flow;
 	}
 
-	public void setFlow(Float flow) {
+	public void setFlow(Long flow) {
 		this.flow = flow;
 	}
 
@@ -115,5 +77,24 @@ public class HomeMonitorDTO {
 	public void setLeak(Boolean leak) {
 		this.leak = leak;
 	}
+
+	public Integer getMineEquip() {
+		return mineEquip;
+	}
+
+	public void setMineEquip(Integer mineEquip) {
+		this.mineEquip = mineEquip;
+	}
+
+	public Integer getAttentEquip() {
+		return attentEquip;
+	}
+
+	public void setAttentEquip(Integer attentEquip) {
+		this.attentEquip = attentEquip;
+	}
+
+	
+	
 	
 }

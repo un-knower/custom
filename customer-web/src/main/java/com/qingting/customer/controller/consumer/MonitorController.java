@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Random;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.qingting.customer.baseserver.MonitorService;
 import com.qingting.customer.common.pojo.dto.MonitorDTO;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
+import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.controller.common.SessionUserMsg;
+import com.qingting.customer.controller.common.SessionUserMsgUtils;
 import com.smart.mvc.config.ConfigUtils;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
@@ -44,7 +48,19 @@ public class MonitorController {
 	public String execute(){
 		return "/consumer/monitor";
 	}
-	
+	@ApiOperation("查询用户置顶设备的最新监测数据")
+	@RequestMapping(value="/listTopMonitorOfNew",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<Monitor> listTopMonitorOfNew(
+			HttpServletRequest request
+			){
+		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
+		User user = (User)sessionUserMsg.getProfile();
+		Monitor monitor = monitorService.listTopMonitorOfNew(user.getId());
+		WebResult<Monitor> result=new WebResult<Monitor>(ResultCode.SUCCESS);
+		result.setData(monitor);
+		result.setMessage("查询成功");
+		return result;
+	}
 	@ApiOperation("查询某个时间段的监测值")
 	@RequestMapping(value="/list",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<MonitorDTO> listMonitor(

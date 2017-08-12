@@ -36,6 +36,17 @@ public interface MonitorDAO {
 	void insertMonitor(Monitor monitor);
 	/**
 	 * 
+	 * @Title: isExist
+	 * @Description: 判断数据库是否存在一个监测值
+	 * @param equipCode
+	 * @param collectTime
+	 * @return 
+	 * @return boolean
+	 * @throws
+	 */
+	boolean isExist(String equipCode,Calendar collectTime);
+	/**
+	 * 
 	 * @Title: deleteMonitorByRowKey
 	 * @Description: 删除一条监测值通过rowKey
 	 * @param rowKey 
@@ -66,6 +77,16 @@ public interface MonitorDAO {
 	Monitor getMonitorByRowKey(String rowKey);
 	/**
 	 * 
+	 * @Title: getMonitorOfNewByEquipCode
+	 * @Description: 查询设备的最新一条监测值
+	 * @param equipCode
+	 * @return 
+	 * @return Monitor
+	 * @throws
+	 */
+	Monitor getMonitorOfNewByEquipCode(String equipCode);
+	/**
+	 * 
 	 * @Title: listMonitorByEndTime
 	 * @Description: 前端用-查询监测值
 	 * @param equipCode
@@ -81,13 +102,11 @@ public interface MonitorDAO {
 	/**
 	 * 
 	 * @Title: listMonitor
-	 * @Description: 查询所有监测值
-	 * @param equipCode
-	 * @param pageNo
-	 * @param pageSize
+	 * @Description: 查监测值
+	 * @param page
 	 * @return 
 	 * @return Pagination<Monitor>
 	 * @throws
 	 */
-	Pagination<Monitor> listMonitor(String equipCode,Integer pageNo,Integer pageSize);
+	Pagination<Monitor> listMonitor(Pagination<Monitor> page);
 }

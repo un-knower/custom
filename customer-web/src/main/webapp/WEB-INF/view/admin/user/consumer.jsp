@@ -99,7 +99,8 @@
 				],
 				columns : [
 					{field:'rowkey',hide:true},
-			        {field:'id', hide : true},
+					{field:'id'},
+			        //{field:'id', hide : true},
 			        
 			        {field:'mobile', title:'电话(登陆账号)', align:'left', dialog_validate:true, dialog_format:'17701879780'},
 			        {field:'password', title:'密码', align:'center', dialog_validate:true, dialog_format:'***'},

@@ -1,0 +1,19 @@
+<SimpleHbase>
+	<HBaseTableSchema tableName="filterElement" defaultFamily="fef">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="supply" typeName="string" />
+		<HBaseColumnSchema qualifier="name" typeName="string" />
+		<HBaseColumnSchema qualifier="lifeTime" typeName="float" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.FilterElement" defaultFamily="fef">
+		<field name="id"/>
+		<field name="supply"/>
+		<field name="name" />
+		<field name="lifeTime" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

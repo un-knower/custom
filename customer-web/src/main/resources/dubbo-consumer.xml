@@ -31,6 +31,13 @@
 	<dubbo:reference interface="com.qingting.customer.baseserver.CityService" id="cityService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.AreaService" id="areaService" />
 	
+	<dubbo:reference interface="com.qingting.customer.baseserver.FilterService" id="filterService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.FilterGroupService" id="filterGroupService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.FormulaService" id="formulaService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.MicroFormulaService" id="microFormulaService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.WaterAreaService" id="waterAreaService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.WaterQualityService" id="waterQualityService" />
+	
 	<!-- 单点登录权限服务接口
 	<dubbo:reference interface="com.smart.sso.rpc.AuthenticationRpcService" id="authenticationRpcService" />
 	 -->

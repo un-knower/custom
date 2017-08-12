@@ -1,9 +1,7 @@
 package com.qingting.customer.controller.admin;
 
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -11,19 +9,15 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.qingting.customer.baseserver.MessageService;
 import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.controller.common.RequestEntitys;
-import com.qingting.customer.hbase.rowkey.RowKeyParam;
 import com.smart.mvc.controller.BaseController;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
-import com.smart.mvc.validator.Validator;
-import com.smart.mvc.validator.annotation.ValidateParam;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -85,13 +79,11 @@ public class MessageController extends BaseController{
 	@ApiOperation("查询消息")
 	@RequestMapping(value="/list",method = RequestMethod.POST,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<Pagination<Message>> list(
-			@ApiParam(value = "用户Id", required = false) @RequestParam(value="userId", required=false) Integer userId,
-			@ApiParam(value = "消息分类编号", required = false) @RequestParam(value="sortCode", required=false) String sortCode,
 			@ApiParam(value = "page", required = true) @RequestBody Pagination<Message> page
 			){
-		System.out.println("userId:"+userId+".sortCode:"+sortCode+".page:"+page);
+		System.out.println("page:"+page);
 		WebResult<Pagination<Message>> result=new WebResult<Pagination<Message>>(ResultCode.SUCCESS);
-		result.setData(messageService.listMessage(userId, sortCode, page));
+		result.setData(messageService.listMessage(page));
 		return result;
 	}
 }

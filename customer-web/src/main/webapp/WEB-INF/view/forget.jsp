@@ -141,8 +141,24 @@
 		              $('#validateCode').parents('.weui-cell').css('border','1px solid red').siblings().removeAttr("style");
 		            }else{
 			            //alert('3434555');
-						$('form[id=myform]').attr('action',_path+"/forget/update");
-						$('#myform').submit(); 
+						//$('form[id=myform]').attr('action',_path+"/forget/update");
+						//$('#myform').submit(); 
+						$.ajax({
+							type:'POST',
+							url:_path+"/forget/update",
+							data:{
+								"mobile":mobile,
+								"password":password,
+								"validateCode":validateCode
+							},
+							success : function(r){								
+								if(result.success){//跳转到引导页
+									window.location.href =_path+"customer-web/lead.jsp";
+								}else{
+									alert(r.message);
+								}
+							}
+						});
 					} 
 				}); 
 				$('#register').click(function(){

@@ -37,15 +37,16 @@ public class EquipDTO {
 	/**
 	 * 设备是否开放
 	 */
-	private Boolean open;
+	private Boolean isOpen;
+	/**
+	 * 是否开放
+	 */
+	private Boolean isTop;
 	/**
 	 * 设备编号
 	 */
 	private String equipCode;
-	/**
-	 * 置顶标志
-	 */
-	private boolean stickFlag;
+	
 	
 	public String getPath() {
 		return path;
@@ -95,11 +96,17 @@ public class EquipDTO {
 	public void setAddress(String address) {
 		this.address = address;
 	}
-	public Boolean getOpen() {
-		return open;
+	public Boolean getIsOpen() {
+		return isOpen;
 	}
-	public void setOpen(Boolean open) {
-		this.open = open;
+	public void setIsOpen(Boolean isOpen) {
+		this.isOpen = isOpen;
+	}
+	public Boolean getIsTop() {
+		return isTop;
+	}
+	public void setIsTop(Boolean isTop) {
+		this.isTop = isTop;
 	}
 	public String getEquipCode() {
 		return equipCode;
@@ -107,11 +114,6 @@ public class EquipDTO {
 	public void setEquipCode(String equipCode) {
 		this.equipCode = equipCode;
 	}
-	public boolean isStickFlag() {
-		return stickFlag;
-	}
-	public void setStickFlag(boolean stickFlag) {
-		this.stickFlag = stickFlag;
-	}
+	
 	
 }

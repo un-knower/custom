@@ -29,6 +29,9 @@
 			    line-height: 16px;
 			}
 		} */
+		.marA{margin: 0 auto;}
+		h1.bgTop{background-image:url(${_staticPath}/resource/weuiWeb/img/top.jpg);
+		      background-position: right top;background-size:20% 100%;    background-repeat: no-repeat; }
 	</style>
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";
@@ -378,26 +381,34 @@
 					//data: {equipId:''},
 					success : function(msg){
 						console.log(msg);
-						if(msg){
+						if(msg.success == true){
 							
 							//根据后台数据画列表
 							drawList(msg.data);							
-							}						
+							}else draw404(msg.message);						
 						}
 					});
+				function draw404(r){
+					//alert(r);
+					$('.swiper-wrapper').html("<img class='marA' src='${_staticPath}/resource/weuiWeb/img/404.png'/>");
+					$('.weui-footer_fixed-bottom').hide();
+					$('.swiper-pagination').hide();
+				}
 				function drawList(data){
-					//console.log(data)				 					 	
+					//console.log(data)	
+					//alert('1');			 					 	
 					var deviceDiv = '';
 					for(var i in data){
 						var years =  Math.floor(data[i].remainTime / (1000 * 60 * 60 * 24 * 365)),
 							 months = Math.floor(data[i].remainTime / (1000 * 60 * 60 * 24 * 30) - years * 12),
 							 days = Math.floor(data[i].remainTime / (1000 * 60 * 60 * 24) - months * 30);
-						deviceDiv += '<div class="swiper-slide" data-value="'+data[i].open+'" No="'+data[i].equipCode+'">'+
+						deviceDiv += '<div class="swiper-slide" data-value="'+data[i].isOpen+'" No="'+data[i].equipCode+'">'+
 										'<div class="height100" flex="dir:top">'+
 											'<div class="main-img" flex-box="1">'+
-												'<div class="height100" flex="dir:top main:justify">'+
-													'<h1 class="sub-title">'+data[i].equipMark+'</h1><!--标题-->'+
-													'<div flex-box="1" flex="dir:top main:justify">'+
+												'<div class="height100" flex="dir:top main:justify">';
+			if(data[i].isTop == true)	deviceDiv +='<h1 class="sub-title bgTop">'+data[i].equipMark+'</h1><!--标题-->';
+								else	deviceDiv +='<h1 class="sub-title">'+data[i].equipMark+'</h1><!--标题-->';	
+										deviceDiv +='<div flex-box="1" flex="dir:top main:justify">'+
 														'<div class="main-img-con xy-pad-tb7 width100" flex-box="1" flex="dir:top main:justify">'+
 															'<p class="pic-lovely"><img src="${_staticPath}'+data[i].path+'"></p>'+
 															'<h5 class="sub-title">'+data[i].sortName+'</h5>'+
@@ -443,7 +454,8 @@
 					}
 					//console.log(deviceDiv);
 					$('.swiper-wrapper').html(deviceDiv);
-					
+					$('.weui-footer_fixed-bottom').show();
+					$('.swiper-pagination').show();
 					//展示公有或者私有状态
 					setTimeout(function(){
 							showStatu();
@@ -459,13 +471,13 @@
 					else type='attent';
 					$.ajax({
 					type:'get',
-					url:_path+'/consumer/equip/setStick?equipCode='+equipCode+'&type='+type,
+					url:_path+'/consumer/equip/setTop?equipCode='+equipCode+'&type='+type,
 					success : function(msg){
 						console.log(msg);
 						if(msg){
 							var slideLength = mySwiper.slides.length,
 							realIndex =mySwiper.realIndex,slide = mySwiper.slides[realIndex]//获取当前活动slide;	
-							console.log(slideLength,realIndex) 						
+							//console.log(slideLength,realIndex) 						
 							 if(slideLength>1){
 								 	if(realIndex == 0){
 								 		alert('此设备已置顶');
@@ -477,8 +489,10 @@
 									 	//realIndex = 0;
 										//slideLength%2 == 0?realIndex = slideLength/2:realIndex = (slideLength-1)/2
 										setTimeout(function(){
-												showStatu();
-										},0);	
+												showStatu(slide);
+										},0);
+										$('.swiper-slide h1').removeClass('bgTop');
+										$('.swiper-slide:eq(0) h1').addClass('bgTop');	
 								 	}							 	
 								}else{
 									alert('只有一个设备，无法置顶！')
@@ -512,7 +526,7 @@
 				$('.weui-tabbar__item').on('click', function () {
 					$(this).addClass('weui-bar__item_on').siblings('.weui-bar__item_on').removeClass('weui-bar__item_on');
 					var thisNum = $(this).index();
-					console.log(thisNum);
+					//console.log(thisNum);
 					//$('.xy-tab-list').eq(thisNum).addClass('xy-tab-list_on').siblings('.xy-tab-list_on').removeClass('xy-tab-list_on');
 					if(thisNum == 0) {
 						$("#switchBox").removeClass("xy-dn");
@@ -546,11 +560,15 @@
 					}
 					$.ajax({
 						type:'get',
-						url:_path+'/consumer/equip/setOpen?equipCode='+equipCode+'&open='+open,
+						url:_path+'/consumer/equip/setIsOpen?equipCode='+equipCode+'&isOpen='+open,
 						//data: {equipId:''},
 						success : function(msg){
 							console.log(msg);
 							if(msg){
+									$('.swiper-slide-active').attr('data-value',open);
+									 setTimeout(function(){
+											showStatu();
+									},0); 
 									return
 									//alert('设置成功!!');
 								}						
@@ -598,7 +616,7 @@
 			function switchCP(){
 				$('#switchStyle').remove();
 				var cpLengthAll = $('.xy-switchCp-bar .weui-switch-cp__box').width();
-				console.log(cpLengthAll);
+				//console.log(cpLengthAll);
 				var cpSlideLength = cpLengthAll - 40;
 				$('head').append('<style id="switchStyle">.xy-switchCp-bar .weui-switch-cp__input:checked~.weui-switch-cp__box:after, .xy-switchCp-bar .weui-switch:checked:after {-webkit-transform: translateX('+cpSlideLength+'px); transform: translateX('+cpSlideLength+'px);</style>');
 			}
@@ -607,9 +625,9 @@
 			});						
 			function showStatu(){
 				var realIndex =mySwiper.realIndex,slide = mySwiper.slides[realIndex]//获取当前活动slide;
-				console.log(slide);				
+				//console.log(slide);				
 				var a = $('.swiper-slide-active').attr('data-value');
-				console.log(a)
+				//console.log(a)
 				 if(a  == 'true') {
 					//alert('on');
 					$("#btn").val("on");

@@ -44,13 +44,14 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Pagination<Message> listMessage(Integer userId, String sortCode, Pagination<Message> page) {
-		return messageDAO.listMessage(userId, sortCode, page);
-	}
-
-	@Override
 	public List<Message> listMessageByEndId(Long endId, Integer userId, String sortCode, Integer pageSize) {
 		return messageDAO.listMessageByEndId(endId, userId, sortCode, pageSize);
 	}
+
+	@Override
+	public Pagination<Message> listMessage(Pagination<Message> page) {
+		return messageDAO.listMessage(page);
+	}
+	
 	
 }

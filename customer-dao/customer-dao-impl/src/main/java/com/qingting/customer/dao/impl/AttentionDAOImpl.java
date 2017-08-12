@@ -3,21 +3,39 @@ package com.qingting.customer.dao.impl;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
+
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
+import com.alipay.simplehbase.util.HbaseOriginService;
 import com.qingting.customer.common.pojo.hbasedo.Attention;
 import com.qingting.customer.common.pojo.util.DateUtil;
 import com.qingting.customer.common.pojo.util.RowKeyUtil;
 import com.qingting.customer.dao.AttentionDAO;
+import com.qingting.customer.dao.util.RandomUtil;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
 
 @Repository("attentionDAO")
 public class AttentionDAOImpl implements AttentionDAO{
+	@Resource(name="redisTemplate")
+	public RedisTemplate<String, Integer> redisTemplate;
 	
+	private static SimpleHbaseClient tClient=SHCUtil.getSHC("attention");
+	/*private static HbaseOriginService index=new HbaseOriginService("attentionIndex",
+			new String[]{"aif"},
+			new byte[][]{
+	});*/
+	
+	private static RowKey createRowKey(String equipCode){
+		//return RowKeyUtil.getRowKey(RandomUtil.getRandomCode(RANDOM_LENGTH),equipCode);
+		return null;
+	}
 	@Override
 	public void insertAttention(Attention attention) {
 		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(attention.getUserId(), DateUtil.getMillisOfStart()));
@@ -31,7 +49,7 @@ public class AttentionDAOImpl implements AttentionDAO{
 
 	@Override
 	public void updateAttentionByRowKey(Attention attention) {
-		SHCUtil.getSHC("attention").updateObjectWithVersion(new StringRowKey(attention.getRowKey()), attention, attention.getVersion());
+		//SHCUtil.getSHC("attention").updateObjectWithVersion(new StringRowKey(attention.getRowKey()), attention, attention.getVersion());
 	}
 
 	@Override
@@ -42,7 +60,7 @@ public class AttentionDAOImpl implements AttentionDAO{
 		List<Attention> list=new ArrayList<Attention>();
 		for (SimpleHbaseDOWithKeyResult<Attention> result : listDOWithKey) {
 			Attention attention = result.getT();
-			attention.setContentOfRowKey(result.getRowKey().toBytes());
+			//attention.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(attention);
 		}
 		return list;

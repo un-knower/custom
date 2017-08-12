@@ -1,12 +1,16 @@
 package com.alipay.simplehbase.util;
 
+import org.apache.hadoop.hbase.filter.BinaryComparator;
 import org.apache.hadoop.hbase.filter.BinaryPrefixComparator;
+import org.apache.hadoop.hbase.filter.BitComparator;
 import org.apache.hadoop.hbase.filter.CompareFilter.CompareOp;
 import org.apache.hadoop.hbase.util.Bytes;
 import org.apache.hadoop.hbase.filter.Filter;
 import org.apache.hadoop.hbase.filter.RegexStringComparator;
 import org.apache.hadoop.hbase.filter.RowFilter;
+import org.apache.hadoop.hbase.filter.SingleColumnValueFilter;
 import org.apache.hadoop.hbase.filter.SubstringComparator;
+import org.apache.hadoop.hbase.filter.ValueFilter;
 
 public class FilterUtils {
 	/**
@@ -56,5 +60,20 @@ public class FilterUtils {
 	}
 	public static Filter getPrefixFilter(Integer value){
 		return new RowFilter(CompareOp.EQUAL,new BinaryPrefixComparator(Bytes.toBytes(value)));
+	}
+	
+	public static Filter getValueFilter(String value){
+		return new ValueFilter(CompareOp.EQUAL, new SubstringComparator(value)); // OK 筛选某个（值的条件满足的）特定的单元格  
+	}
+	
+	public static Filter getSingleColumnValueFilter(String family,String qualifier,byte[] value){
+		SingleColumnValueFilter scvf = new SingleColumnValueFilter(  
+		        Bytes.toBytes(family),   
+		        Bytes.toBytes(qualifier),   
+		        CompareOp.EQUAL,   
+		        new BinaryComparator(value));  
+		scvf.setFilterIfMissing(true);//true 如果没有找到该列，则整个行将被跳过。
+		scvf.setLatestVersionOnly(true); 
+		return scvf;
 	}
 }

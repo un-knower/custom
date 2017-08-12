@@ -13,7 +13,8 @@
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/weui.min.css" />
 		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-flex.css" />
 		<link rel="stylesheet" href="${_staticPath}/resource/weuiWeb/css/suspendedBall.css" />
-		<link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" />
+		<%-- <link rel="stylesheet" type="text/css" href="${_staticPath}/resource/weuiWeb/css/xy-css.css" /> --%>
+		<link rel="stylesheet" type="text/css" href="${_path}/css/xy-css.css" />
 	</head>
 	<script type="text/javascript">
 		var _path="${_path}",_staticPath="${_staticPath}";

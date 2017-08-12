@@ -51,14 +51,12 @@ public interface MessageDAO {
 	 * 
 	 * @Title: listMessage
 	 * @Description: 查消息
-	 * @param userId
-	 * @param sortCode
 	 * @param page
 	 * @return 
 	 * @return Pagination<Message>
 	 * @throws
 	 */
-	Pagination<Message> listMessage(Integer userId,String sortCode,Pagination<Message> page);
+	Pagination<Message> listMessage(Pagination<Message> page);
 	/**
 	 * 
 	 * @Title: listMessageByEndRowKey
@@ -83,4 +81,16 @@ public interface MessageDAO {
 	 * @throws
 	 */
 	void setRead(Integer userId,String sortCode,Long id);
+	/**
+	 * 
+	 * @Title: setStatus
+	 * @Description: 改变消息状态
+	 * @param userId
+	 * @param sortCode
+	 * @param id
+	 * @param status 
+	 * @return void
+	 * @throws
+	 */
+	void setStatus(Integer userId,String sortCode,Long id,String status);
 }

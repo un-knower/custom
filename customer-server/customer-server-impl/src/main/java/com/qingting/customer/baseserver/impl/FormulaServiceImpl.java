@@ -1,6 +1,5 @@
 package com.qingting.customer.baseserver.impl;
 
-import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -8,35 +7,42 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.FormulaService;
 import com.qingting.customer.common.pojo.hbasedo.Formula;
+import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.FormulaDAO;
 
 @Service("formulaService")
 public class FormulaServiceImpl implements FormulaService {
 	@Resource
 	FormulaDAO formulaDAO;
+
 	@Override
-	public void insertFormula(Formula formula) {
-		formulaDAO.insertFormula(formula);
+	public void insert(Formula formula) {
+		formulaDAO.insert(formula);
 	}
 
 	@Override
-	public void deleteFormulaByRowKey(String rowKey) {
-		formulaDAO.deleteFormulaByRowKey(rowKey);
+	public void deleteById(Integer id) {
+		formulaDAO.deleteById(id);
 	}
 
 	@Override
-	public void updateFormulaByRowKey(Formula formula) {
-		formulaDAO.updateFormulaByRowKey(formula);
+	public void updateById(Formula formula) {
+		formulaDAO.updateById(formula);
 	}
 
 	@Override
-	public Formula getFormulaByRowKey(String rowKey) {
-		return formulaDAO.getFormulaByRowKey(rowKey);
+	public Formula getById(Integer id) {
+		return formulaDAO.getById(id);
 	}
 
 	@Override
-	public List<Formula> listFormula() {
-		return formulaDAO.listFormula();
+	public Pagination<Formula> list(Pagination<Formula> page) {
+		return formulaDAO.list(page);
 	}
 
+	@Override
+	public Formula getByFilterIdAndOrder(Integer filterId, Byte order) {
+		return formulaDAO.getByFilterIdAndOrder(filterId, order);
+	}
+	
 }

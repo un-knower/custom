@@ -1,5 +1,6 @@
 package com.qingting.customer.controller.consumer;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
@@ -7,8 +8,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.baseserver.EquipService;
+import com.qingting.customer.baseserver.MonitorService;
 import com.qingting.customer.common.pojo.common.MsgType;
 import com.qingting.customer.common.pojo.dto.HomeMonitorDTO;
+import com.qingting.customer.common.pojo.hbasedo.Monitor;
+import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.controller.common.SessionUserMsg;
+import com.qingting.customer.controller.common.SessionUserMsgUtils;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 
@@ -19,6 +26,11 @@ import io.swagger.annotations.ApiOperation;
 @Controller("homeController")
 @RequestMapping("/consumer/home")
 public class HomeController {
+	@Resource
+	MonitorService monitorService;
+	@Resource
+	EquipService equipService;
+	
 	@ApiOperation("页面跳转-用户主页")
 	@RequestMapping(method = RequestMethod.GET,produces="text/html")
 	public String execute(){
@@ -33,18 +45,31 @@ public class HomeController {
 		//String account = sessionUser.getAccount();
 		//这里查询用户的置顶设备监测数据
 		
+		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
+		User user = (User)sessionUserMsg.getProfile();
+		
+		Monitor monitor = monitorService.listTopMonitorOfNew(user.getId());
+		
 		HomeMonitorDTO homeMonitor=new HomeMonitorDTO();
-		homeMonitor.setMoitorCount(1000);
+		
+		homeMonitor.setAttentEquip(equipService.countAttent(user.getId()));
+		homeMonitor.setFlow(monitor.getFlow());
+		homeMonitor.setLeak(monitor.getLeak());
+		homeMonitor.setMineEquip(equipService.countEquip(user.getId()));
+		homeMonitor.setPurTds(monitor.getPurTds());
+		homeMonitor.setRawTds(monitor.getRawTds());
 		homeMonitor.setServiceCount(2);
-		homeMonitor.setFlow(1237.0000f);
-		homeMonitor.setHumidity(25f);
-		homeMonitor.setLeak(false);
-		homeMonitor.setPurTds(20.00f);
-		homeMonitor.setRawTds(100.00f);
-		homeMonitor.setTemp(24.0f);
-		homeMonitor.setMsgType(MsgType.WARN.ordinal());
+		
 		WebResult<HomeMonitorDTO> result=new WebResult<HomeMonitorDTO>(ResultCode.SUCCESS);
 		result.setData(homeMonitor);
 		return result;
+		
+		/*SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
+		User user = (User)sessionUserMsg.getProfile();
+		Monitor monitor = monitorService.listTopMonitorOfNew(user.getId());
+		WebResult<Monitor> result=new WebResult<Monitor>(ResultCode.SUCCESS);
+		result.setData(monitor);
+		result.setMessage("查询成功");
+		return result;*/
 	}
 }

@@ -33,4 +33,11 @@
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.ProvinceService" ref="provinceService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.CityService" ref="cityService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.AreaService" ref="areaService" />
+	
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.FilterService" ref="filterService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.FilterGroupService" ref="filterGroupService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.FormulaService" ref="formulaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MicroFormulaService" ref="microFormulaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WaterAreaService" ref="waterAreaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WaterQualityService" ref="waterQualityService" />
 </beans>  

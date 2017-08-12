@@ -60,7 +60,7 @@ public class SHCUtil{
 	};
 	private static final Map<String,Object> equip=new HashMap<String,Object>(){
 		{
-			put("family",new String[]{"equipFamily"});
+			put("family",new String[]{"ef"});
 		}
 	};
 	private static final Map<String,Object> equipSort=new HashMap<String,Object>(){
@@ -72,7 +72,7 @@ public class SHCUtil{
 	
 		private static final long serialVersionUID = 9112245605102867437L;
 		{
-			put("family",new String[]{"monitorFamily"});
+			put("family",new String[]{"mf"});
 			put("split",getMonitorBytes(10,20)
 			);
 		}
@@ -89,7 +89,7 @@ public class SHCUtil{
 	};
 	private static final Map<String,Object> message=new HashMap<String,Object>(){
 		{
-			put("family",new String[]{"messageFamily"});
+			put("family",new String[]{"mf"});
 			put("split",
 					new byte[][]{
 	     		   		{58,0,0,0,0,0,0,0,0,0},
@@ -100,11 +100,6 @@ public class SHCUtil{
 	    				{122,0,0,0,0,0,0,0,0,0}
 	     		   	}
 				);
-		}
-	};
-	private static final Map<String,Object> messageIndex=new HashMap<String,Object>(){
-		{
-			put("family",new String[]{"messageIndexFamily"});
 		}
 	};
 	private static final Map<String,Object> messageSort=new HashMap<String,Object>(){
@@ -153,6 +148,42 @@ public class SHCUtil{
 			);
 		}
 	};
+	private static final Map<String,Object> attention=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"af"});
+		}
+	};
+	private static final Map<String,Object> waterArea=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"waf"});
+		}
+	};
+	private static final Map<String,Object> waterQuality=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"wqf"});
+		}
+	};
+	
+	private static final Map<String,Object> filterGroup=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"fgf"});
+		}
+	};
+	private static final Map<String,Object> filter=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"ff"});
+		}
+	};
+	private static final Map<String,Object> formula=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"ff"});
+		}
+	};
+	private static final Map<String,Object> microFormula=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"mff"});
+		}
+	};
 	/**
 	 * key:表名 
 	 * value:列族+预分区
@@ -167,11 +198,17 @@ public class SHCUtil{
 			put("user", user);
 			put("userSort",userSort);
 			put("message", message);
-			put("messageIndex", messageIndex);
 			put("messageSort", messageSort);
 			put("province",province);
 			put("city",city);
 			put("area",area);
+			put("attention",attention);
+			put("waterArea",waterArea);
+			put("waterQuality",waterQuality);
+			put("filterGroup",filterGroup);
+			put("filter",filter);
+			put("formula",formula);
+			put("microFormula",microFormula);
 		}
 	};
 	

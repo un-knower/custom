@@ -1,6 +1,6 @@
 <SimpleHbase>
 
-	<HBaseTableSchema tableName="monitor" defaultFamily="monitorFamily">
+	<HBaseTableSchema tableName="monitor" defaultFamily="mf">
 		<HBaseColumnSchema qualifier="id" typeName="long" />
 		<HBaseColumnSchema qualifier="rawTds" typeName="float" />
 		<HBaseColumnSchema qualifier="purTds" typeName="float" />
@@ -11,12 +11,20 @@
 		<HBaseColumnSchema qualifier="magnetic" typeName="boolean"/>
 		<HBaseColumnSchema qualifier="outRelay" typeName="boolean"/>
 		<HBaseColumnSchema qualifier="powerRelay" typeName="boolean"/>
+		
+		<HBaseColumnSchema qualifier="oneResult" typeName="float"/>
+		<HBaseColumnSchema qualifier="twoResult" typeName="float"/>
+		<HBaseColumnSchema qualifier="threeResult" typeName="float"/>
+		<HBaseColumnSchema qualifier="fourResult" typeName="float"/>
+		<HBaseColumnSchema qualifier="fiveResult" typeName="float"/>
+		<HBaseColumnSchema qualifier="microResult" typeName="float"/>
+		
 		<HBaseColumnSchema qualifier="equipCode" typeName="string"/>
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 		<HBaseColumnSchema qualifier="collectTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 		
 	</HBaseTableSchema>
-	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="monitorFamily">
+	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Monitor" defaultFamily="mf">
 		<field name="id"/>
 		<field name="rawTds"/>
 		<field name="purTds" />
@@ -27,6 +35,14 @@
 		<field name="magnetic"/>
 		<field name="outRelay"/>
 		<field name="powerRelay"/>
+		
+		<field name="oneResult"/>
+		<field name="twoResult"/>
+		<field name="threeResult"/>
+		<field name="fourResult"/>
+		<field name="fiveResult"/>
+		<field name="microResult"/>
+		
 		<field name="equipCode"/>
 		<field name="createTime"/>
 		<field name="collectTime"/>

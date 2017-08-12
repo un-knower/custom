@@ -21,7 +21,10 @@ public class RedisSerialNum {
 
    private static final int WARNING_NUMBER = 10;
    private static final int NUMBER_QUEUE = 100;
-
+   
+   /**
+    * 清空编码池用，应该省略此处，让客户端传
+    */
    @Autowired
    public RedisTemplate<String, Integer> redisTemplate;
 

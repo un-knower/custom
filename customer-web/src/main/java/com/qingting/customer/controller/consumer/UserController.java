@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.baseserver.EquipService;
 import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.dto.MyDTO;
 import com.qingting.customer.common.pojo.hbasedo.User;
@@ -28,6 +29,8 @@ import io.swagger.annotations.ApiOperation;
 public class UserController {
 	@Resource
 	UserService userService;
+	@Resource
+	EquipService equipService;
 	@ApiOperation("页面跳转-我的页面")
 	@RequestMapping(method = RequestMethod.GET,consumes="text/html")
 	public String execute(){
@@ -46,7 +49,9 @@ public class UserController {
 	}*/
 	@ApiOperation("获取当前登陆用户的信息")
 	@RequestMapping(value="/get",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
-	public @ResponseBody WebResult<MyDTO> getUserMsg(HttpServletRequest request){
+	public @ResponseBody WebResult<MyDTO> getUserMsg(
+			HttpServletRequest request
+			){
 		/*SessionUser sessionUser = SessionUtils.getSessionUser(request);
 		String account = sessionUser.getAccount();
 		System.out.println("account:"+account);
@@ -70,8 +75,8 @@ public class UserController {
 		
 		User user = (User)sessionUserMsg.getProfile();
 		
-		myDTO.setAttentEquip(2);
-		myDTO.setMineEquip(2);
+		myDTO.setAttentEquip(equipService.countAttent(user.getId()));
+		myDTO.setMineEquip(equipService.countEquip(user.getId()));
 		myDTO.setName(user.getName());
 		myDTO.setPath(user.getPortraitUrl());
 		result.setData(myDTO);
