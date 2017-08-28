@@ -1,4 +1,4 @@
-package com.qingting.customer.dao.util;
+package com.qingting.customer.common.pojo.util;
 
 import java.util.Random;
 

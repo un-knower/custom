@@ -1,6 +1,7 @@
 package com.qingting.customer.baseserver.impl;
 
 
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.List;
 
@@ -8,11 +9,14 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.qingting.customer.baseserver.EquipService;
+import com.qingting.customer.baseserver.common.CacheUtil;
+import com.qingting.customer.baseserver.common.HttpRequestEntityUtils;
 import com.qingting.customer.common.pojo.common.AttentStatus;
 import com.qingting.customer.common.pojo.common.FindEquipType;
 import com.qingting.customer.common.pojo.common.MessageStatus;
-import com.qingting.customer.common.pojo.common.MessageType;
 import com.qingting.customer.common.pojo.hbasedo.Attention;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
 import com.qingting.customer.common.pojo.hbasedo.EquipSort;
@@ -21,9 +25,14 @@ import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.EquipDAO;
 import com.qingting.customer.dao.EquipSortDAO;
 import com.qingting.customer.dao.MessageDAO;
+import com.qingting.operation.enums.MessageType;
+import com.qingting.platform.common.Result;
+import com.smart.mvc.config.ConfigUtils;
+import com.smart.mvc.model.ResultCode;
+import com.smart.mvc.model.WebResult;
 
 @Service("equipService")
-public class EquipServiceImpl implements EquipService {
+public class EquipServiceImpl implements EquipService,com.qingting.operation.server.EquipService{
 	@Resource
 	EquipDAO equipDAO;
 	@Resource
@@ -31,9 +40,30 @@ public class EquipServiceImpl implements EquipService {
 	@Resource
 	EquipSortDAO equipSortDAO; 
 	
+	private static String iotAddress = ConfigUtils.getProperty("iot.server");
+	
 	@Override
-	public void insertEquip(Equip equip) {
-		equipDAO.insertEquip(equip);
+	public WebResult<String> insertEquip(Equip equip,String username,String password) {
+		WebResult<String> result=null;
+		try {
+			String jsonString=HttpRequestEntityUtils.post(
+					iotAddress+"/equip/addEquip","equipCode="+equip.getEquipCode()+"&username="+username+"&password="+password	
+					);
+			JSONObject parseObject = JSON.parseObject(jsonString);
+			
+			result=new WebResult<String>();
+			result.setCode((int)parseObject.get("code"));
+			result.setData((String)parseObject.get("data"));
+			result.setMessage((String)parseObject.get("message"));
+			
+			if( result.getCode()==ResultCode.SUCCESS ){
+				equipDAO.insertEquip(equip);
+			}
+			return result;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return result;
+		}
 	}
 	
 	@Override
@@ -55,7 +85,7 @@ public class EquipServiceImpl implements EquipService {
 		message.setContent("申请关注你的饮水设备,备注:"+equip.getEquipMark());
 		message.setImageUrl(equipSort.getImageUrl());
 		message.setReadFlag(false);
-		message.setSortCode(MessageType.APPLY_ATTENT.getCode());
+		message.setType(MessageType.APPLY_ATTENT.getType());
 		message.setStatus(MessageStatus.SQGZ_WAIT_HANDLE.getStatus());
 		message.setTitle(userName);
 		message.setUserId(equip.getUserId());//这里是接收消息的用户
@@ -137,9 +167,9 @@ public class EquipServiceImpl implements EquipService {
 	public void attentHandle(Long messageId,Integer userId,String equipCode,byte status,Integer userSelfId) {
 		equipDAO.attentHandle(userId, equipCode, status);
 		if(status==AttentStatus.PASS.getValue())
-			messageDAO.setStatus(userSelfId, MessageType.APPLY_ATTENT.getCode(), messageId, MessageStatus.SQGZ_ALREADY_AGREE.getStatus());
+			messageDAO.setStatus(userSelfId, MessageType.APPLY_ATTENT.getType(), messageId, MessageStatus.SQGZ_ALREADY_AGREE.getStatus());
 		else if(status==AttentStatus.REFUSE.getValue())
-			messageDAO.setStatus(userSelfId, MessageType.APPLY_ATTENT.getCode(), messageId, MessageStatus.SQGZ_ALREADY_REFUSE.getStatus());
+			messageDAO.setStatus(userSelfId, MessageType.APPLY_ATTENT.getType(), messageId, MessageStatus.SQGZ_ALREADY_REFUSE.getStatus());
 	}
 
 
@@ -189,13 +219,32 @@ public class EquipServiceImpl implements EquipService {
 	@Override
 	public void updateUserAndRelevanceOfEquip(Integer userId, Integer filterGroupId, Integer waterAreaId,
 			String equipCode) {
+		CacheUtil.clearEquip(equipCode);
 		equipDAO.updateUserAndRelevanceOfEquip(userId, filterGroupId, waterAreaId, equipCode);
 	}
 
 	@Override
 	public String updateUserAndRelevanceOfNewEquip(Integer userId, Integer filterGroupId, Integer waterAreaId,
 			String equipCode) {
+		CacheUtil.clearEquip(equipCode);
 		return equipDAO.updateUserAndRelevanceOfNewEquip(userId, filterGroupId, waterAreaId, equipCode);
 	}
 
+	@Override
+	public String getEquipCodeOfNew() {
+		return equipDAO.getEquipCodeOfNew();
+	}
+	
+	
+	@Override
+	public Result bindEquip(Integer userId, Integer filterGroupId, Integer waterAreaId, String equipCode) {
+		String str = equipDAO.updateUserAndRelevanceOfNewEquip(userId, filterGroupId, waterAreaId, equipCode);
+		if(str==null){
+			return Result.createSuccessResult();
+		}else{
+			Result result = Result.createFailureResult();
+			result.setMessage(str);
+			return result;
+		}
+	}
 }

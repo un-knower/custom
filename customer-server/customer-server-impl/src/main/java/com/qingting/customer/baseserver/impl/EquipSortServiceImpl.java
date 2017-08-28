@@ -1,6 +1,8 @@
 package com.qingting.customer.baseserver.impl;
 
 
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -37,6 +39,11 @@ public class EquipSortServiceImpl implements EquipSortService {
 	@Override
 	public EquipSort getEquipSortById(Integer id) {
 		return equipSortDAO.getEquipSortById(id);
+	}
+
+	@Override
+	public List<EquipSort> listEquipSort() {
+		return equipSortDAO.listEquipSort();
 	}
 
 

@@ -1,6 +1,7 @@
 package com.qingting.customer.baseserver.impl;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -13,7 +14,7 @@ import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.UserDAO;
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService,com.qingting.operation.server.UserService {
 	@Resource
 	UserDAO userDAO;
 
@@ -33,13 +34,31 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public User getUserByMobileAndId(Integer id, String mobile) {
-		return userDAO.getUserByMobileAndId(id, mobile);
+	public Pagination<User> listUser(Integer pageNo, Integer pageSize) {
+		return userDAO.listUser(pageNo, pageSize);
 	}
 
 	@Override
-	public Pagination<User> listUser(Integer pageNo, Integer pageSize) {
-		return userDAO.listUser(pageNo, pageSize);
+	public List<User> searchUserByMobile(String mobile) {
+		return userDAO.searchUserByMobile(mobile);
+	}
+
+	@Override
+	public User getUserByMobile(String mobile) {
+		return userDAO.getUserByMobile(mobile);
+	}
+
+	@Override
+	public List<com.qingting.operation.model.User> searchUser(String mobile) {
+		List<User> list = userDAO.searchUserByMobile(mobile);
+		List<com.qingting.operation.model.User> result = new ArrayList<com.qingting.operation.model.User>();
+		for (User user : list) {
+			com.qingting.operation.model.User u = new com.qingting.operation.model.User();
+			u.setId(user.getId());
+			u.setMobile(user.getMobile());
+			u.setName(user.getName());
+		}
+		return result;
 	}
 	
 }

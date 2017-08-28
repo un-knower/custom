@@ -60,7 +60,7 @@ public class CoprocessorTest {
 			put("filter",new HashMap<String,Object>());
 			put("formula",new HashMap<String,Object>());
 			put("microFormula",new HashMap<String,Object>());
-			
+			put("card",new HashMap<String,Object>());
 		}
 	};
 	

@@ -474,14 +474,14 @@
 					url:_path+'/consumer/equip/setTop?equipCode='+equipCode+'&type='+type,
 					success : function(msg){
 						console.log(msg);
-						if(msg){
+						if(msg.data){
 							var slideLength = mySwiper.slides.length,
 							realIndex =mySwiper.realIndex,slide = mySwiper.slides[realIndex]//获取当前活动slide;	
 							//console.log(slideLength,realIndex) 						
-							 if(slideLength>1){
-								 	if(realIndex == 0){
-								 		alert('此设备已置顶');
-								 	}else{
+							 //if(slideLength>0){
+								 	//if(realIndex == 0){
+								 		//alert('此设备已置顶');
+								 	//}else{
 								 		mySwiper.removeSlide(realIndex);//删除当前slide
 									 	//mySwiper.getSlide(realIndex).insertAfter(0);
 									 	mySwiper.prependSlide(slide);	//添加当前slide到第一个	
@@ -493,10 +493,10 @@
 										},0);
 										$('.swiper-slide h1').removeClass('bgTop');
 										$('.swiper-slide:eq(0) h1').addClass('bgTop');	
-								 	}							 	
-								}else{
+								 	//}							 	
+								/* }else{
 									alert('只有一个设备，无法置顶！')
-								}												
+								} */												
 							}						
 						}
 					});

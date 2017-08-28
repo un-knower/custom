@@ -19,8 +19,6 @@
 	<context:component-scan base-package="com.qingting.customer.dao.impl"/>
 	<context:component-scan base-package="com.qingting.customer.dao.external.impl"/>
 	
-	
-	
 	<!-- Redis缓存工具 -->
 	<bean id="equipRedisCache" class="com.smart.mvc.cache.RedisCache">
 		<property name="redisTemplate" ref="redisTemplate" />

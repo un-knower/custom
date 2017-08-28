@@ -1,6 +1,11 @@
 package com.qingting.customer.dao.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 import javax.annotation.Resource;
 
@@ -15,6 +20,7 @@ import com.qingting.customer.common.pojo.hbasedo.Filter;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.dao.FilterDAO;
 import com.qingting.customer.dao.util.SHCUtil;
+import com.qingting.customer.hbase.rowkey.RowKey;
 @Repository("filterDAO")
 public class FilterDAOImpl implements FilterDAO {
 	@Resource(name="redisTemplate")
@@ -61,5 +67,30 @@ public class FilterDAOImpl implements FilterDAO {
 		
 		return page;
 	}
-
+	@Override
+	public Map<Integer,Filter> listByIds(List<Integer> listIds){
+		List<RowKey> rowKeyList=new ArrayList<RowKey>();
+		for (Integer integer : listIds) {
+			rowKeyList.add(RowKeyUtil.getRowKey(integer));
+		}
+		List<Filter> list =  tClient.findObjectBatch(rowKeyList, Filter.class);
+		Map<Integer,Filter> map=new HashMap<Integer,Filter>();
+		for (Filter filter : list) {
+			map.put(filter.getId(), filter);
+		}
+		return map;
+	}
+	@Override
+	public Map<Integer,Filter> listByIds(Set<Integer> setIds){
+		List<RowKey> rowKeyList=new ArrayList<RowKey>();
+		for (Integer integer : setIds) {
+			rowKeyList.add(RowKeyUtil.getRowKey(integer));
+		}
+		List<Filter> list =  tClient.findObjectBatch(rowKeyList, Filter.class);
+		Map<Integer,Filter> map=new HashMap<Integer,Filter>();
+		for (Filter filter : list) {
+			map.put(filter.getId(), filter);
+		}
+		return map;
+	}
 }

@@ -356,21 +356,22 @@ public class EquipController {
 			result.setMessage("未找到设备");
 		}*/
 		List<Equip> searchEquip = equipService.searchEquip(equipCode);
-		for (Equip equip : searchEquip) {
-			EquipDTO equipDTO=new EquipDTO();
-			equipDTO.setAddress(equip.getAddress());
-			equipDTO.setEquipCode(equip.getEquipCode());
-			equipDTO.setEquipMark(equip.getEquipMark());
-			equipDTO.setIsOpen(equip.getIsOpen());
-			list.add(equipDTO);
-			//equipDTO.setIsTop(equip.getIsTop());
-			//equipDTO.setMonitorCount(12252l);//这里需要查询
-			//equipDTO.setPath("/resource/images/customer/equip/xqt.jpg");//这里需要查询
-			//equipDTO.setPurTds(6.2f);//这里需要？
-			//equipDTO.
-		}
+		
 		WebResult<List<EquipDTO>> result=null;
-		if(searchEquip.size()>0){
+		if(searchEquip!=null && searchEquip.size()>0){
+			for (Equip equip : searchEquip) {
+				EquipDTO equipDTO=new EquipDTO();
+				equipDTO.setAddress(equip.getAddress());
+				equipDTO.setEquipCode(equip.getEquipCode());
+				equipDTO.setEquipMark(equip.getEquipMark());
+				equipDTO.setIsOpen(equip.getIsOpen());
+				list.add(equipDTO);
+				//equipDTO.setIsTop(equip.getIsTop());
+				//equipDTO.setMonitorCount(12252l);//这里需要查询
+				//equipDTO.setPath("/resource/images/customer/equip/xqt.jpg");//这里需要查询
+				//equipDTO.setPurTds(6.2f);//这里需要？
+				//equipDTO.
+			}
 			result=new WebResult<List<EquipDTO>>(ResultCode.SUCCESS);
 			result.setData(list);
 			result.setMessage("找到设备");

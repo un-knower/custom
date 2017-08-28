@@ -223,6 +223,9 @@ public class HbaseOriginService {
 		}
 		return resultRowKey;
 	}
+	/**
+	 * 返回满足条件的行，指定的列
+	 */
 	public List<RowKey> indexScan(@Nullable Filter filter, @Nullable QueryExtInfo queryExtInfo,String qualifier){
 		Scan scan=new Scan();
 		

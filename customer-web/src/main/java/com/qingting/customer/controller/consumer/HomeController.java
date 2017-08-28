@@ -50,18 +50,25 @@ public class HomeController {
 		
 		Monitor monitor = monitorService.listTopMonitorOfNew(user.getId());
 		
-		HomeMonitorDTO homeMonitor=new HomeMonitorDTO();
-		
-		homeMonitor.setAttentEquip(equipService.countAttent(user.getId()));
-		homeMonitor.setFlow(monitor.getFlow());
-		homeMonitor.setLeak(monitor.getLeak());
-		homeMonitor.setMineEquip(equipService.countEquip(user.getId()));
-		homeMonitor.setPurTds(monitor.getPurTds());
-		homeMonitor.setRawTds(monitor.getRawTds());
-		homeMonitor.setServiceCount(2);
-		
-		WebResult<HomeMonitorDTO> result=new WebResult<HomeMonitorDTO>(ResultCode.SUCCESS);
-		result.setData(homeMonitor);
+		WebResult<HomeMonitorDTO> result=null;
+		if(monitor!=null){
+			HomeMonitorDTO homeMonitor=new HomeMonitorDTO();
+			
+			homeMonitor.setAttentEquip(equipService.countAttent(user.getId()));
+			homeMonitor.setFlow(monitor.getFlow());
+			homeMonitor.setLeak(monitor.getLeak());
+			homeMonitor.setMineEquip(equipService.countEquip(user.getId()));
+			homeMonitor.setPurTds(monitor.getPurTds());
+			homeMonitor.setRawTds(monitor.getRawTds());
+			homeMonitor.setServiceCount(2);
+			
+			result=new WebResult<HomeMonitorDTO>(ResultCode.SUCCESS);
+			result.setData(homeMonitor);
+			result.setMessage("查询成功");
+		}else{
+			result=new WebResult<HomeMonitorDTO>(ResultCode.FAILURE);
+			result.setMessage("无置顶设备");
+		}
 		return result;
 		
 		/*SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);

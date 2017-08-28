@@ -26,6 +26,8 @@
 				<value>classpath:jdbc.properties</value>
 				<!--Dubbo参数配置-->
 				<value>classpath:dubbo.properties</value>
+				<!--配置参数-->
+				<value>classpath:config.properties</value>
 			</list>
 		</property>
 	</bean>
@@ -52,4 +54,51 @@
     <import resource="user.xml"/>
     <import resource="zk_conf.xml"/> -->
     
+    
+    <!-- Redis缓存工具 -->
+	<bean id="equipRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="waterAreaRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="waterQualityRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="filterGroupRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="filterRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="formulaRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="microFormulaRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	<bean id="monitorRedisCache" class="com.smart.mvc.cache.RedisCache">
+		<property name="redisTemplate" ref="redisTemplate" />
+	</bean>
+	
+	<bean id="cacheUtil"  class="com.qingting.customer.baseserver.common.CacheUtil">
+	  	<property name="equipRedisCache" ref="equipRedisCache"/>
+	  	<property name="waterAreaRedisCache" ref="waterAreaRedisCache"/>
+	  	<property name="waterQualityRedisCache" ref="waterQualityRedisCache"/>
+	  	<property name="filterGroupRedisCache" ref="filterGroupRedisCache"/>
+	  	<property name="filterRedisCache" ref="filterRedisCache"/>
+	  	<property name="formulaRedisCache" ref="formulaRedisCache"/>
+	  	<property name="microFormulaRedisCache" ref="microFormulaRedisCache"/>
+	  	<property name="monitorRedisCache" ref="monitorRedisCache"/>
+	  	
+	  	<property name="monitorService" ref="monitorService"/>
+	  	<property name="equipService" ref="equipService"/>
+	  	<property name="waterAreaService" ref="waterAreaService"/>
+	  	<property name="waterQualityService" ref="waterQualityService"/>
+	  	<property name="filterGroupService" ref="filterGroupService"/>
+	  	<property name="filterService" ref="filterService"/>
+	  	<property name="formulaService" ref="formulaService"/>
+	  	<property name="microFormulaService" ref="microFormulaService"/>
+	</bean> 
+	
 </beans>

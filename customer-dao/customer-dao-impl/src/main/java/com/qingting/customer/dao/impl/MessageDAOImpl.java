@@ -23,8 +23,8 @@ import com.qingting.customer.common.pojo.common.StringUtils;
 import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.index.MessageIndex;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.common.pojo.util.RandomUtil;
 import com.qingting.customer.dao.MessageDAO;
-import com.qingting.customer.dao.util.RandomUtil;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -48,7 +48,7 @@ public class MessageDAOImpl implements MessageDAO{
 	private static RowKey createRowKey(Long millis){
 		return RowKeyUtil.getRowKey(RandomUtil.getRandomCode(RANDOM_LENGTH),millis);
 	}
-	private static RowKey createIndexRowKey(Integer userId,String sortCode,Long id){
+	private static RowKey createIndexRowKey(Integer userId,byte sortCode,Long id){
 		return RowKeyUtil.getRowKey(userId,sortCode,id);
 	}
 	private static List<Message> setContentOfRowKey(List<SimpleHbaseDOWithKeyResult<Message>> listHbase){
@@ -109,7 +109,7 @@ public class MessageDAOImpl implements MessageDAO{
 		message.setCreateTime(Calendar.getInstance());
 		
 		
-		RowKey indexRowKey=createIndexRowKey(message.getUserId(),message.getSortCode(),num);
+		RowKey indexRowKey=createIndexRowKey(message.getUserId(),message.getType(),num);
 		RowKey value=createRowKey(message.getCreateTime().getTimeInMillis());
 		//String string = new String(value.toBytes(),Charset.forName("UTF-8"));
 		//messageIndex.setValue(string);
@@ -126,8 +126,8 @@ public class MessageDAOImpl implements MessageDAO{
 		System.out.println("DAO删除信息deleteMessage(List<String> rowkeys)..");
 		List<RowKey> rowKeyIndexList = new ArrayList<RowKey>();
 		for (Message message : messages) {
-			System.out.println("userId:"+message.getUserId()+".sortCode:"+message.getSortCode()+".id:"+message.getId());
-			rowKeyIndexList.add(createIndexRowKey(message.getUserId(), message.getSortCode(), message.getId()));
+			System.out.println("userId:"+message.getUserId()+".sortCode:"+message.getType()+".id:"+message.getId());
+			rowKeyIndexList.add(createIndexRowKey(message.getUserId(), message.getType(), message.getId()));
 		}
 		/*List<RowKey> rowKeylist=setIndexOfRowKey(
 			indexClient.findObjectAndKeyBatch(rowKeyIndexList,MessageIndex.class)
@@ -157,7 +157,7 @@ public class MessageDAOImpl implements MessageDAO{
 	@Override
 	public void updateMessage(Message message) {
 		//tClient.updateObject(getMessageRowKey(message.getUserId(),message.getSortCode(),message.getId()), message,dataVersion);
-		tClient.putObject(index.indexGet(createIndexRowKey(message.getUserId(),message.getSortCode(),message.getId()), null, null, "value"), message);
+		tClient.putObject(index.indexGet(createIndexRowKey(message.getUserId(),message.getType(),message.getId()), null, null, "value"), message);
 	}
 	
 	/*public RowKey getMessageRowKey(Integer userId,String sortCode,Long id){
@@ -166,8 +166,8 @@ public class MessageDAOImpl implements MessageDAO{
 		return new StringRowKey(obj.getValue());
 	}*/
 	@Override
-	public Message getMessage(Integer userId,String sortCode,Long id) {
-		return tClient.findObject(index.indexGet(createIndexRowKey(userId,sortCode,id), null, null, "value"), Message.class);
+	public Message getMessage(Integer userId,Byte type,Long id) {
+		return tClient.findObject(index.indexGet(createIndexRowKey(userId,type,id), null, null, "value"), Message.class);
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public class MessageDAOImpl implements MessageDAO{
 		
 		Long endId=null;
 		Integer userId=null;
-		String sortCode=null;
+		Byte sortCode=0;
 		
 		Integer lastPageNo=null;
 		Integer realityCount=null;
@@ -196,7 +196,7 @@ public class MessageDAOImpl implements MessageDAO{
 			if(map.get("userId")!=null)
 				userId=(Integer)map.get("userId");
 			if(map.get("sortCode")!=null)
-				sortCode=(String)map.get("sortCode");
+				sortCode=(Byte)map.get("sortCode");
 			if(map.get("lastPageNo")!=null)
 				lastPageNo=(Integer)map.get("lastPageNo");
 			if(map.get("realityCount")!=null)
@@ -218,7 +218,7 @@ public class MessageDAOImpl implements MessageDAO{
 			//listRowKey=index.indexScan(startRowKey,endRowKey,null,queryExtInfo, "value");
 		}else if(page.getPageNo()==lastPageNo+1){//下一页
 			System.out.println("下一页.");
-			if(!StringUtils.isZeroOrNull(endId) && !StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode)){
+			if(!StringUtils.isZeroOrNull(endId) && !StringUtils.isZeroOrNull(userId) && !StringUtils.isZeroOrNull(sortCode)){
 				startRowKey=createIndexRowKey(userId, sortCode, endId);
 				queryExtInfo.setLimit(0, page.getPageSize());
 			}else{
@@ -232,7 +232,7 @@ public class MessageDAOImpl implements MessageDAO{
 			System.out.println("上一页.");
 			
 			startRowKey=RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH);
-			if(!StringUtils.isZeroOrNull(endId) && !StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode)){
+			if(!StringUtils.isZeroOrNull(endId) && !StringUtils.isZeroOrNull(userId) && !StringUtils.isZeroOrNull(sortCode)){
 				endRowKey=createIndexRowKey(userId, sortCode, endId);
 				queryExtInfo.setLimit(realityCount, page.getPageSize());
 				queryExtInfo.setReversed(true);
@@ -291,14 +291,14 @@ public class MessageDAOImpl implements MessageDAO{
 	 * 前端页面查询对应用户的消息
 	 */
 	@Override
-	public List<Message> listMessageByEndId(Long endId,Integer userId,String sortCode,Integer pageSize){
+	public List<Message> listMessageByEndId(Long endId,Integer userId,Byte type,Integer pageSize){
 		QueryExtInfo queryExtInfo = new QueryExtInfo();
 		queryExtInfo.setLimit(0, pageSize);
 		List<RowKey> listRowKey=null;
 		List<Message> list=null;
-		System.out.println("endId:"+endId+".userId:"+userId+".sortCode:"+sortCode+".pageSize:"+pageSize+".");
+		System.out.println("endId:"+endId+".userId:"+userId+".sortCode:"+type+".pageSize:"+pageSize+".");
 		//Map<String,Object> result=new HashMap<String,Object>();
-		if(StringUtils.isZeroOrNull(userId) && StringUtils.isBlank(sortCode) ){//全空
+		if(StringUtils.isZeroOrNull(userId) && StringUtils.isZeroOrNull(type) ){//全空
 			list=setContentOfRowKey(
 					tClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(SORTCODE_LENGTH),Message.class,queryExtInfo)
 					);
@@ -312,19 +312,19 @@ public class MessageDAOImpl implements MessageDAO{
 					tClient.findObjectAndKeyBatch(listRowKey,Message.class)
 					);
 			//page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(userId,SORTCODE_LENGTH),RowKeyUtil.getIntStringLongMaxRowKey(userId,SORTCODE_LENGTH), FilterUtils.getPrefixFilter(userId)));
-		}*/else if(!StringUtils.isZeroOrNull(userId) && !StringUtils.isBlank(sortCode) ){
+		}*/else if(!StringUtils.isZeroOrNull(userId) && !StringUtils.isZeroOrNull(type) ){
 			
 			if(endId!=null){
 				/*listRowKey = setIndexOfRowKey(
 						indexClient.findObjectAndKeyList(RowKeyUtil.getRowKey(endRowKey),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
 						);*/
-				listRowKey=index.indexScan(RowKeyUtil.getRowKey(userId,sortCode,endId),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),FilterUtils.getPrefixFilter(userId),queryExtInfo, "value");
+				listRowKey=index.indexScan(RowKeyUtil.getRowKey(userId,type,endId),RowKeyUtil.getRowKey(userId,type,Long.MAX_VALUE),FilterUtils.getPrefixFilter(userId),queryExtInfo, "value");
 			}else{
 				/*listRowKey = setIndexOfRowKey(
 						indexClient.findObjectAndKeyList(RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode),MessageIndex.class,FilterUtils.getPrefixFilter(userId),queryExtInfo)
 						);*/
-				RowKey start=RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode);
-				RowKey end=RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode);
+				RowKey start=RowKeyUtil.getRowKey(userId,type,0L);
+				RowKey end=RowKeyUtil.getRowKey(userId,type,Long.MAX_VALUE);
 				System.out.println("start:");
 				for (byte b : start.toBytes()) {
 					System.out.print((int)(b&0xFF)+" ");
@@ -350,10 +350,13 @@ public class MessageDAOImpl implements MessageDAO{
 			for (RowKey rowKey : listRowKey) {
 				System.out.println(new String(rowKey.toBytes()));
 			}
-			list=setContentOfRowKey(
-					tClient.findObjectAndKeyBatch(listRowKey,Message.class)
-					);
-			
+			if(listRowKey!=null && listRowKey.size()>0){
+				list=setContentOfRowKey(
+						tClient.findObjectAndKeyBatch(listRowKey,Message.class)
+						);
+			}else{
+				list=null;
+			}
 			//page.setRowCount(tClient.count(RowKeyUtil.getIntStringLongMinRowKey(userId,sortCode),RowKeyUtil.getIntStringLongMaxRowKey(userId,sortCode), FilterUtils.getPrefixFilter(userId)));
 		}
 		
@@ -363,14 +366,14 @@ public class MessageDAOImpl implements MessageDAO{
 		return list;
 	}
 	@Override
-	public void setRead(Integer userId, String sortCode, Long id) {
+	public void setRead(Integer userId, Byte type, Long id) {
 		//List<RowKey> listRowKey = index.indexScan(RowKeyUtil.getRowKey(userId,sortCode,id),RowKeyUtil.getRowKey(userId,sortCode,id+1),FilterUtils.getPrefixFilter(userId),null ,"value");
-		RowKey rowKey = index.indexGet(RowKeyUtil.getRowKey(userId,sortCode,id), FilterUtils.getPrefixFilter(userId), null, "value");
+		RowKey rowKey = index.indexGet(RowKeyUtil.getRowKey(userId,type,id), FilterUtils.getPrefixFilter(userId), null, "value");
 		tClient.put(rowKey/*listRowKey.get(0)*/, "mf", "readFlag", new byte[]{(byte)0xFF});
 		
 	}
 	@Override
-	public void setStatus(Integer userId,String sortCode,Long id,String status){
-		tClient.put(index.indexGet(createIndexRowKey(userId,sortCode,id), null, null, "value"),"mf","status",Bytes.toBytes(status));
+	public void setStatus(Integer userId,Byte type,Long id,String status){
+		tClient.put(index.indexGet(createIndexRowKey(userId,type,id), null, null, "value"),"mf","status",Bytes.toBytes(status));
 	}
 }

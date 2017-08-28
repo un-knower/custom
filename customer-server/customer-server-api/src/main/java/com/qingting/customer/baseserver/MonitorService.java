@@ -3,6 +3,7 @@ package com.qingting.customer.baseserver;
 import java.util.Calendar;
 import java.util.List;
 
+import com.qingting.customer.common.pojo.dto.EmpMonitorDTO;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.qingting.customer.common.pojo.model.Pagination;
 
@@ -104,4 +105,14 @@ public interface MonitorService {
 	 * @throws
 	 */
 	Monitor getMonitorOfNewByEquipCode(String equipCode);
+	/**
+	 * 
+	 * @Title: getMonitorOfNewOfEmp
+	 * @Description: 工程测试用户测试查询
+	 * @param equipCode
+	 * @return 
+	 * @return EmpMonitorDTO
+	 * @throws
+	 */
+	EmpMonitorDTO getMonitorOfNewOfEmp(String equipCode);
 }

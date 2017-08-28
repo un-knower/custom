@@ -41,13 +41,13 @@ public interface MessageService {
 	 * @Title: getMessage
 	 * @Description: 获得一条信息
 	 * @param userId
-	 * @param sortCode
+	 * @param type
 	 * @param millis
 	 * @return 
 	 * @return Message
 	 * @throws
 	 */
-	Message getMessage(Integer userId,String sortCode,Long millis);
+	Message getMessage(Integer userId, byte type, Long millis);
 	/**
 	 * 
 	 * @Title: listMessage
@@ -64,22 +64,22 @@ public interface MessageService {
 	 * @Description: 查消息
 	 * @param endId
 	 * @param userId
-	 * @param sortCode
+	 * @param byte
 	 * @param pageSize
 	 * @return 
 	 * @return List<Message>
 	 * @throws
 	 */
-	List<Message> listMessageByEndId(Long endId,Integer userId,String sortCode,Integer pageSize);
+	List<Message> listMessageByEndId(Long endId,Integer userId,Byte type,Integer pageSize);
 	/**
 	 * 
 	 * @Title: setRead
 	 * @Description: 已读标记
 	 * @param userId
-	 * @param sortCode
+	 * @param type
 	 * @param id 
 	 * @return void
 	 * @throws
 	 */
-	void setRead(Integer userId,String sortCode,Long id);
+	void setRead(Integer userId,Byte type, Long id);
 }

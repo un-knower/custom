@@ -1,5 +1,8 @@
 package com.qingting.customer.baseserver.impl;
 
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
@@ -37,4 +40,9 @@ public class FilterServiceImpl implements FilterService {
 		return filterDAO.list(page);
 	}
 
+	@Override
+	public Map<Integer, Filter> listByIds(List<Integer> listIds) {
+		return filterDAO.listByIds(listIds);
+	}
+	
 }

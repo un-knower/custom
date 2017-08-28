@@ -29,8 +29,8 @@ import com.qingting.customer.common.pojo.hbasedo.Attention;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
 import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.common.pojo.util.RandomUtil;
 import com.qingting.customer.dao.EquipDAO;
-import com.qingting.customer.dao.util.RandomUtil;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -210,6 +210,7 @@ public class EquipDAOImpl implements EquipDAO {
 			RowKey rowKey = getRowKeyOfUserEquip(equipCode);
 			if(rowKey!=null){//存在则删除
 				//userEquipIndex.delete(rowKey);
+				System.out.println("设备已存在用户，请联系管理员");
 				return "设备已存在用户，请联系管理员";
 			}
 			//创建新索引行键
@@ -240,16 +241,21 @@ public class EquipDAOImpl implements EquipDAO {
 	/**
 	 * 查询用户和设备关联索引中的用户ID(如果存在)，不存在则返回null
 	 */
+	@Override
 	public Integer getUserIdOfUserEquip(String equipCode){
 		//查看该设备是否存在了用户
-		List<RowKey> listRowKey=userEquipIndex.indexScan(createUserEquipIndexRowKey(Integer.MIN_VALUE,equipCode), createUserEquipIndexRowKey(Integer.MAX_VALUE,equipCode), FilterUtils.getSuffixFilter(equipCode), null, "value");
+		//List<RowKey> listRowKey=userEquipIndex.indexScan(createUserEquipIndexRowKey(Integer.MIN_VALUE,equipCode), createUserEquipIndexRowKey(Integer.MAX_VALUE,equipCode), FilterUtils.getSuffixFilter(equipCode), null, "value");
+		List<RowKey> listRowKey=userEquipIndex.indexScanOfRowKey(createUserEquipIndexRowKey(0,equipCode), createUserEquipIndexRowKey(Integer.MAX_VALUE,equipCode), FilterUtils.getSuffixFilter(equipCode), null);
 		if(listRowKey.size()==1){
 			byte[] bytes = listRowKey.get(0).toBytes();
 			byte[] userId=new byte[4];
 			System.arraycopy(bytes, 0, userId, 0, 4);//前4个字节是用户ID
-			return (userId[0]<<24) &
-					(userId[1]<<16) &
-					(userId[2]<<8) &
+			for (byte b : userId) {
+				System.out.println((b&0xFF)+" ");
+			}
+			return (userId[0]<<24) |
+					(userId[1]<<16) |
+					(userId[2]<<8) |
 					userId[3];
 		}else if(listRowKey.size()==0){
 			return null;
@@ -258,12 +264,34 @@ public class EquipDAOImpl implements EquipDAO {
 		}
 			
 	}
+	@Override
+	public String getEquipCodeOfNew(){
+		QueryExtInfo queryExtInfo = new QueryExtInfo();
+		RowKey startRowKey=null;
+		RowKey endRowKey=null;
+		queryExtInfo.setLimit(0,1);
+		queryExtInfo.setReversed(true);
+		startRowKey=RowKeyUtil.getRowKey("000000000000");
+		endRowKey=RowKeyUtil.getRowKey("zzzzzzzzzzzz");
+		List<RowKey> rowKey = index.indexScanOfRowKey(startRowKey, endRowKey, FilterUtils.getNotContainFilter("default"), queryExtInfo);
+		if(rowKey.size()>0){
+			System.out.println("查找到的rowKey.size:"+rowKey.size());
+			System.out.println("get(0):"+Bytes.toString(rowKey.get(0).toBytes()));
+			return Bytes.toString(rowKey.get(0).toBytes());
+		}else{
+			return null;
+		}
+	}
 	/**
-	 * 查询用户和设备关联索引中的RowKey(如果存在)，不存在则返回null
+	 * 查询用户和设备关联索引中的行键(返回的equipIndex的RowKey)(如果存在)，不存在则返回null
 	 */
 	public RowKey getRowKeyOfUserEquip(String equipCode){
+		
 		//查看该设备是否存在了用户
-		List<RowKey> listRowKey=userEquipIndex.indexScan(createUserEquipIndexRowKey(Integer.MIN_VALUE,equipCode), createUserEquipIndexRowKey(Integer.MAX_VALUE,equipCode), FilterUtils.getSuffixFilter(equipCode), null, "value");
+		List<RowKey> listRowKey=userEquipIndex.indexScan(createUserEquipIndexRowKey(0,equipCode), createUserEquipIndexRowKey(Integer.MAX_VALUE,equipCode), FilterUtils.getSuffixFilter(equipCode), null, "value");
+		for (RowKey rowKey : listRowKey) {
+			System.out.println("用户和设备索引行键:"+new String(rowKey.toBytes()));
+		}
 		if(listRowKey.size()==1){
 			return listRowKey.get(0);
 		}else if(listRowKey.size()==0){
@@ -509,7 +537,10 @@ public class EquipDAOImpl implements EquipDAO {
 	public List<Equip> searchEquip(String equipCode){
 		List<RowKey> listIndexRowKey=index.indexScan(FilterUtils.getContainFilter(equipCode), null, "value");
 		//tClient.findObjectMV(rowKey, type, queryExtInfo)
-		return tClient.findObjectBatch(listIndexRowKey, Equip.class);
+		if(listIndexRowKey.size()>0)
+			return tClient.findObjectBatch(listIndexRowKey, Equip.class);
+		else
+			return null;
 	}
 	/**
 	 * 查询设备是否公开

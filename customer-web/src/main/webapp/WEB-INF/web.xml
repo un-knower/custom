@@ -78,8 +78,12 @@
 		<filter-name>ssoFilter</filter-name>
 		<url-pattern>/consumer/*</url-pattern>
 	</filter-mapping>
+	<filter-mapping>
+		<filter-name>ssoFilter</filter-name>
+		<url-pattern>/employee/*</url-pattern>
+	</filter-mapping>
 	<!-- 用户信息 -->
-	<!-- --><filter>
+	<filter>
 		<filter-name>userMsgFilter</filter-name>
 		<filter-class>com.qingting.customer.controller.common.UserMsgFilter</filter-class>
 		<init-param>

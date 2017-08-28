@@ -9,12 +9,14 @@ import org.springframework.stereotype.Service;
 
 import com.qingting.customer.baseserver.MonitorService;
 import com.qingting.customer.baseserver.common.CacheUtil;
+import com.qingting.customer.common.pojo.dto.EmpMonitorDTO;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
 import com.qingting.customer.common.pojo.hbasedo.Filter;
 import com.qingting.customer.common.pojo.hbasedo.FilterGroup;
 import com.qingting.customer.common.pojo.hbasedo.Formula;
 import com.qingting.customer.common.pojo.hbasedo.MicroFormula;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
+import com.qingting.customer.common.pojo.hbasedo.User;
 import com.qingting.customer.common.pojo.hbasedo.WaterArea;
 import com.qingting.customer.common.pojo.hbasedo.WaterQuality;
 import com.qingting.customer.common.pojo.model.Pagination;
@@ -23,6 +25,7 @@ import com.qingting.customer.dao.FilterDAO;
 import com.qingting.customer.dao.FilterGroupDAO;
 import com.qingting.customer.dao.MicroFormulaDAO;
 import com.qingting.customer.dao.MonitorDAO;
+import com.qingting.customer.dao.UserDAO;
 import com.smart.mvc.cache.RedisCache;
 
 @Service(value="monitorService")
@@ -32,6 +35,10 @@ public class MonitorServiceImpl implements MonitorService{
 	MonitorDAO monitorDAO;
 	@Resource
 	EquipDAO equipDAO;
+	
+	@Resource
+	UserDAO userDAO;
+	
 	/*@Resource
 	FilterGroupDAO filterGroupDAO;
 	@Resource
@@ -89,44 +96,6 @@ public class MonitorServiceImpl implements MonitorService{
 		if(monitor.getMicroResult()>microFormulaDAO.getById(filterGroup.getMicroId()).getLimit()){
 			
 		}*/
-		System.out.println("monitor:"+monitor);
-		Equip equip = CacheUtil.getEquip(monitor.getEquipCode());
-		System.out.println("equip:"+equip);
-		FilterGroup filterGroup = CacheUtil.getFilterGroup(equip.getFilterGroupId());
-		System.out.println("filterGroup:"+filterGroup);
-		
-		//第一级滤芯寿命到期
-		Filter oneFilter = CacheUtil.getFilter(filterGroup.getOneFilterId());
-		System.out.println("filter:"+oneFilter);
-		if(monitor.getOneResult()>oneFilter.getLifeTime()){
-			
-		}
-		//第二级滤芯寿命到期
-		Filter twoFilter = CacheUtil.getFilter(filterGroup.getTwoFilterId());
-		if(monitor.getTwoResult()>twoFilter.getId()){
-			
-		}
-		//第三级滤芯寿命到期
-		Filter threeFilter = CacheUtil.getFilter(filterGroup.getThreeFilterId());
-		if(monitor.getThreeResult()>threeFilter.getLifeTime()){
-			
-		}		
-		//第四级滤芯寿命到期
-		Filter fourFilter = CacheUtil.getFilter(filterGroup.getFourFilterId());
-		if(monitor.getFourResult()>fourFilter.getLifeTime()){
-			
-		}
-		//第五级滤芯寿命到期
-		Filter fiveFilter = CacheUtil.getFilter(filterGroup.getFiveFilterId());
-		if(monitor.getFiveResult()>fiveFilter.getLifeTime()){
-			
-		}
-		//微生物超标
-		MicroFormula microFormula = CacheUtil.getMicroFormula(filterGroup.getMicroId());
-		if(monitor.getMicroResult()>microFormula.getLimit()){
-			
-		}
-		
 		
 		monitorDAO.insertMonitor(monitor);
 	}
@@ -172,5 +141,28 @@ public class MonitorServiceImpl implements MonitorService{
 	@Override
 	public boolean isExist(String equipCode, Calendar collectTime) {
 		return monitorDAO.isExist(equipCode, collectTime);
+	}
+	
+	@Override
+	public EmpMonitorDTO getMonitorOfNewOfEmp(String equipCode){
+		Monitor monitor = monitorDAO.getMonitorOfNewByEquipCode(equipCode);
+		
+		EmpMonitorDTO empMonitorDTO=new EmpMonitorDTO();
+		empMonitorDTO.setCollectTime(monitor.getCollectTime());
+		empMonitorDTO.setCreateTime(monitor.getCreateTime());
+		empMonitorDTO.setEquipCode(monitor.getEquipCode());
+		empMonitorDTO.setFlow(monitor.getFlow());
+		empMonitorDTO.setHumidity(monitor.getHumidity());
+		empMonitorDTO.setLeak(monitor.getLeak());
+		empMonitorDTO.setPurTds(monitor.getPurTds());
+		empMonitorDTO.setRawTds(monitor.getRawTds());
+		empMonitorDTO.setTemp(monitor.getTemp());
+		
+		Integer userId = equipDAO.getUserIdOfUserEquip(monitor.getEquipCode());
+		System.out.println("userId:"+userId);
+		User user = userDAO.getUserById(userId);
+		empMonitorDTO.setUserMobile(user.getMobile());
+		empMonitorDTO.setUserName(user.getName());
+		return empMonitorDTO;
 	}
 }

@@ -54,4 +54,13 @@ public interface EquipSortService {
 	 * @throws
 	 */
 	Pagination<EquipSort> listEquipSort(Integer pageNo,Integer pageSize);
+	/**
+	 * 
+	 * @Title: listEquipSort
+	 * @Description: 查询所有设备
+	 * @return 
+	 * @return List<EquipSort>
+	 * @throws
+	 */
+	List<EquipSort> listEquipSort();
 }

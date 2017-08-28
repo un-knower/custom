@@ -3,6 +3,7 @@
 	<HBaseTableSchema tableName="equip" defaultFamily="ef">
 		<HBaseColumnSchema qualifier="id" typeName="int" />
 		<HBaseColumnSchema qualifier="equipCode" typeName="string" />
+		<HBaseColumnSchema qualifier="cardNumber" typeName="string" />
 		<HBaseColumnSchema qualifier="equipMark" typeName="string" />
 		<HBaseColumnSchema qualifier="provinceCode" typeName="string" />
 		<HBaseColumnSchema qualifier="cityCode" typeName="string" />
@@ -19,6 +20,7 @@
 	<MappingType className="com.qingting.customer.common.pojo.hbasedo.Equip" defaultFamily="ef">
 		<field name="id"/>
 		<field name="equipCode" />
+		<field name="cardNumber" />
 		<field name="equipMark" />
 		<field name="provinceCode" />
 		<field name="cityCode"/>

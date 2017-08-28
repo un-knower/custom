@@ -131,7 +131,7 @@
 					  $('#password').parents('.weui-cell').css('border','1px solid red').siblings().removeAttr("style");
 		            }else{
 			            //alert('3434555');
-						$('form[id=loginform]').attr('action',_path+"/login/consumer/login");
+						$('form[id=loginform]').attr('action',_path+"/login/consumer/submit");
 						$('#loginform').submit();
 						/* $.ajax({
 							type:'POST',

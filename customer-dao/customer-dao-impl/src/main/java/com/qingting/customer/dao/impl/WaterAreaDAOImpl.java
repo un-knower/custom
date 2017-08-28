@@ -2,6 +2,7 @@ package com.qingting.customer.dao.impl;
 
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -62,5 +63,9 @@ public class WaterAreaDAOImpl implements WaterAreaDAO {
 				);
 		
 		return page;
+	}
+	@Override
+	public List<WaterArea> list() {
+		return tClient.findObjectList(RowKeyUtil.getRowKey(0),RowKeyUtil.getRowKey(Integer.MAX_VALUE) , WaterArea.class, null);
 	}
 }

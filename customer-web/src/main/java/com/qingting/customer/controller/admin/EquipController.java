@@ -1,24 +1,32 @@
 package com.qingting.customer.controller.admin;
 
 
+import java.io.IOException;
+import java.util.List;
+
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.baseserver.CardService;
 import com.qingting.customer.baseserver.EquipService;
-import com.qingting.customer.common.pojo.dto.EquipDTO;
+import com.qingting.customer.baseserver.EquipSortService;
+import com.qingting.customer.common.pojo.dto.EquipParamDTO;
+import com.qingting.customer.common.pojo.hbasedo.Card;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
-import com.qingting.customer.common.pojo.hbasedo.Message;
+import com.qingting.customer.common.pojo.hbasedo.EquipSort;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.common.pojo.util.RandomUtil;
+import com.qingting.customer.controller.common.QRCodeUtil;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
+import com.smart.mvc.util.StringUtils;
 import com.smart.mvc.validator.Validator;
 import com.smart.mvc.validator.annotation.ValidateParam;
 
@@ -31,20 +39,90 @@ import io.swagger.annotations.ApiParam;
 public class EquipController {
 	@Resource
 	EquipService equipService;
+	@Resource
+	EquipSortService equipSortService; 
+	@Resource
+	CardService cardService;
 	
 	@ApiOperation("页面跳转-设备管理页")
 	@RequestMapping(value="/equip",method = RequestMethod.GET,produces="text/html")
-	public String execute() {
+	public String equip() {
 		return "/admin/equip/equip";
+	}
+	@ApiOperation("页面跳转-设备添加页")
+	@RequestMapping(value="/addEquip",method = RequestMethod.GET,produces="text/html")
+	public String addEquip() {
+		return "/admin/equip/addEquip";
+	}
+	@ApiOperation("页面跳转-物联网卡管理页")
+	@RequestMapping(value="/card",method = RequestMethod.GET,produces="text/html")
+	public String card() {
+		return "/admin/equip/card";
+	}
+	
+	@ApiOperation("添加物联网卡")
+	@RequestMapping(value="/insertCard",method = RequestMethod.POST)
+	public @ResponseBody WebResult<String> insertCard(
+			@ApiParam(value = "物联网卡号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String number,
+			@ApiParam(value = "运营商分类", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })Byte operatorSort
+			){
+		cardService.insert(new Card(operatorSort,number));
+		WebResult<String> result = new WebResult<String>(ResultCode.SUCCESS);
+		result.setMessage("添加成功");
+		return result;
+	}
+	
+	@ApiOperation("查询所有物联网卡")
+	@RequestMapping(value="/listCard",method = RequestMethod.GET)
+	public @ResponseBody WebResult<Pagination<Card>> listCard(
+			@ApiParam(value = "开始页码", required = true) @RequestParam(name="pageNo",required=true) Integer pageNo,
+			@ApiParam(value = "显示条数", required = true) @RequestParam(name="pageSize",required=true) Integer pageSize
+			){
+		Pagination<Card> page = cardService.list(new Pagination<Card>(pageNo,pageSize));
+		WebResult<Pagination<Card>> result = new WebResult<Pagination<Card>>(ResultCode.SUCCESS);
+		result.setData(page);
+		result.setMessage("查询成功");
+		return result;
+	}
+	@ApiOperation("搜索物联网卡")
+	@RequestMapping(value="/searchCard",method = RequestMethod.GET)
+	public @ResponseBody WebResult<List<Card>> searchCard(
+			@ApiParam(value = "物联网卡号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String number
+			){
+		List<Card> list = cardService.search(number);
+		WebResult<List<Card>> result = new WebResult<List<Card>>(ResultCode.SUCCESS);
+		result.setData(list);
+		result.setMessage("查询成功");
+		return result;
+	}
+	
+	@ApiOperation("查询设备分类")
+	@RequestMapping(value="/listEquipSort",method = RequestMethod.GET)
+	public @ResponseBody WebResult<List<EquipSort>> listEquipSort(
+			){
+		List<EquipSort> listEquipSort = equipSortService.listEquipSort();
+		WebResult<List<EquipSort>> result = new WebResult<List<EquipSort>>(ResultCode.SUCCESS);
+		result.setData(listEquipSort);
+		result.setMessage("查询成功");
+		return result;
 	}
 	
 	@ApiOperation("后台插入设备")
 	@RequestMapping(value="/insert",method = RequestMethod.POST)
-	public @ResponseBody WebResult<Object> insertEquip(
-			@ApiParam @RequestBody Equip equip){
-		System.out.println(equip);
-		equipService.insertEquip(equip);
-		return new WebResult<Object>(ResultCode.SUCCESS);
+	public @ResponseBody WebResult<String> insertEquip(
+			@ApiParam(value = "运营商", required = true) @RequestParam @ValidateParam({ Validator.INT })Byte operatorSort,
+			@ApiParam(value = "物联网卡号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String cardNumber,
+			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode,
+			@ApiParam(value = "账号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String username,
+			@ApiParam(value = "密码", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String password
+			){
+		System.out.println("equipCode:"+equipCode+".username:"+username+".password:"+password);
+		cardService.insert(new Card(operatorSort,cardNumber));
+		equipService.insertEquip(new Equip(equipCode,cardNumber),username,password);
+		WebResult<String> result = new WebResult<String>(ResultCode.SUCCESS);
+		result.setData("成功");
+		result.setMessage("入库成功");
+		return result;
 	}
 	@ApiOperation("后台删除设备")
 	@RequestMapping(value="/delete",method = RequestMethod.POST)
@@ -121,5 +199,57 @@ public class EquipController {
 			result.setMessage(msg);
 			return result;
 		}
+	}
+	@ApiOperation("获得设备编号等参数")
+	@RequestMapping(value="/getEquipParam",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public @ResponseBody WebResult<EquipParamDTO> getEquipParam(
+			){
+		EquipParamDTO equipParamDTO=new EquipParamDTO();
+		String equipCode = equipService.getEquipCodeOfNew();
+		if(!StringUtils.isBlank(equipCode)) {//查找到设备
+			System.out.println("查找到最新设备code:"+equipCode);
+			Long code = Long.valueOf(equipCode);
+			equipParamDTO.setEquipCode(String.valueOf(code+1));
+			System.out.println("输出code:"+String.valueOf(code+1));
+		}else{//未查找到设备
+			System.out.println("未查询到库里有设备");
+			equipParamDTO.setEquipCode("211701000001");
+		}
+		equipParamDTO.setUsername(RandomUtil.getRandomCode(10));
+		equipParamDTO.setPassword(RandomUtil.getRandomCode(10));
+		WebResult<EquipParamDTO> result=new WebResult<EquipParamDTO>(ResultCode.SUCCESS);
+		result.setData(equipParamDTO);
+		result.setMessage("成功");
+		return result;
+		
+		/*if(msg==null){//绑定成功
+			WebResult<Object> result=new WebResult<Object>(ResultCode.SUCCESS);
+			result.setMessage("绑定成功");
+			return result;
+		}else{
+			WebResult<Object> result=new WebResult<Object>(ResultCode.FAILURE);
+			result.setMessage(msg);
+			return result;
+		}*/
+	}
+	@ApiOperation("获得二维码图片")
+	@RequestMapping(value="/getCodeImage",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
+	public void getCodeImage(
+			HttpServletResponse response,
+			@ApiParam(value = "设备编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String equipCode,
+			@ApiParam(value = "账户", required = false) @RequestParam(name="username",required=false) String username,
+			@ApiParam(value = "密码", required = false) @RequestParam(name="password",required=false) String password
+			){
+		try {
+			if(StringUtils.isBlank(username) || StringUtils.isBlank(password)){
+				System.out.println("用户名或密码空");
+				QRCodeUtil.zxingCodeAndTextCreateToResponse(equipCode,equipCode, 200,200, "jpg",response.getOutputStream());
+			}else{
+				System.out.println("用户名和密码非空");
+				QRCodeUtil.zxingCodeAndTextCreateToResponse(equipCode+"/"+username+"/"+password,equipCode, 200,200, "jpg",response.getOutputStream());
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		} 
 	}
 }

@@ -40,4 +40,6 @@
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MicroFormulaService" ref="microFormulaService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WaterAreaService" ref="waterAreaService" />
 	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WaterQualityService" ref="waterQualityService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.CardService" ref="cardService" />
+	
 </beans>  

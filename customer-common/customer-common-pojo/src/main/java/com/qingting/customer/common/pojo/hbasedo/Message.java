@@ -44,7 +44,7 @@ public class Message extends PersistentObject{
 	/**
 	 * 分类编号
 	 */
-	private String sortCode;
+	private byte type;
 	
 	/**
 	 * 已读标志
@@ -116,12 +116,12 @@ public class Message extends PersistentObject{
 		this.imageUrl = imageUrl;
 	}
 
-	public String getSortCode() {
-		return sortCode;
+	public byte getType() {
+		return type;
 	}
 
-	public void setSortCode(String sortCode) {
-		this.sortCode = sortCode;
+	public void setType(byte type) {
+		this.type = type;
 	}
 
 	public Boolean getReadFlag() {
@@ -159,7 +159,7 @@ public class Message extends PersistentObject{
 	@Override
 	public String toString() {
 		return "Message [id=" + id + ", detailId=" + detailId + ", userId=" + userId + ", title=" + title + ", content="
-				+ content + ", imageUrl=" + imageUrl + ", sortCode=" + sortCode + ", readFlag=" + readFlag + ", status="
+				+ content + ", imageUrl=" + imageUrl + ", type=" + type + ", readFlag=" + readFlag + ", status="
 				+ status + ", createTime=" + createTime + ", strParam=" + strParam + "]";
 	}
 

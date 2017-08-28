@@ -184,6 +184,11 @@ public class SHCUtil{
 			put("family",new String[]{"mff"});
 		}
 	};
+	private static final Map<String,Object> card=new HashMap<String,Object>(){
+		{
+			put("family",new String[]{"cf"});
+		}
+	};
 	/**
 	 * key:表名 
 	 * value:列族+预分区
@@ -209,6 +214,7 @@ public class SHCUtil{
 			put("filter",filter);
 			put("formula",formula);
 			put("microFormula",microFormula);
+			put("card",card);
 		}
 	};
 	

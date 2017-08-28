@@ -28,8 +28,8 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public Message getMessage(Integer userId, String sortCode, Long millis) {
-		return messageDAO.getMessage(userId, sortCode, millis);
+	public Message getMessage(Integer userId, byte type, Long millis) {
+		return messageDAO.getMessage(userId, type, millis);
 	}
 	
 	@Override
@@ -39,13 +39,13 @@ public class MessageServiceImpl implements MessageService {
 	}
 
 	@Override
-	public void setRead(Integer userId, String sortCode, Long id) {
-		messageDAO.setRead(userId, sortCode, id);
+	public void setRead(Integer userId,Byte type, Long id) {
+		messageDAO.setRead(userId, type, id);
 	}
 
 	@Override
-	public List<Message> listMessageByEndId(Long endId, Integer userId, String sortCode, Integer pageSize) {
-		return messageDAO.listMessageByEndId(endId, userId, sortCode, pageSize);
+	public List<Message> listMessageByEndId(Long endId, Integer userId, Byte type, Integer pageSize) {
+		return messageDAO.listMessageByEndId(endId, userId, type, pageSize);
 	}
 
 	@Override

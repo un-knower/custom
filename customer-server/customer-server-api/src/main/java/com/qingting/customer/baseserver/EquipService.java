@@ -5,17 +5,29 @@ import java.util.List;
 import com.qingting.customer.common.pojo.hbasedo.Attention;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.smart.mvc.model.WebResult;
 
 public interface EquipService {
 	/**
 	 * 
+	 * @Title: getEquipCodeOfNew
+	 * @Description: 获得最新的设备编号
+	 * @return 
+	 * @return String
+	 * @throws
+	 */
+	String getEquipCodeOfNew();
+	/**
+	 * 
 	 * @Title: insertEquip
-	 * @Description: 插入一条设备数据
+	 * @Description: 添加设备
 	 * @param equip
+	 * @param username
+	 * @param password 
 	 * @return void
 	 * @throws
 	 */
-	void insertEquip(Equip equip);
+	WebResult<String> insertEquip(Equip equip,String username,String password);
 	/**
 	 * 
 	 * @Title: updateUserOfEquip

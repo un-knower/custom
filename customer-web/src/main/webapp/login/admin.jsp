@@ -61,6 +61,7 @@
 											</h4>
 											<div class="space-6"></div>
 											<form id="login-form" method="post">
+												<input type="hidden" name="backUrl" value="${backUrl}" />
 												<fieldset>
 													<label class="block clearfix">
 														<span class="block input-icon input-icon-right">
@@ -274,7 +275,7 @@ $(function(){
 		}
 		//正常登录提交		
 		$('#login').click(function(){		
-			$('form[id=login-form]').attr('action',_path+"/login/admin/login");
+			$('form[id=login-form]').attr('action',_path+"/login/admin/submit");
 			$('#login-form').submit();			
 			//window.location.href =_path+"admin/home";
 			/*  var param ={};

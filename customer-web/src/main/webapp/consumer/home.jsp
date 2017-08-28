@@ -28,10 +28,6 @@
 			.flex :nth-child(1){flex:1 1 40%;}
 			.flex :nth-child(2){flex:2 2 50%;margin-top: 2%;}
 			.flex :nth-child(3){flex:3 3 10%;}
-			/* .flex2 :nth-child(1){flex:1 1 15%;}
-			.flex2 :nth-child(2){flex:2 2 35%;}
-			.flex2 :nth-child(3){flex:3 3 40%;}
-			.flex2 :nth-child(4){flex:4 4 10%;} */
 			.progress{
 				width:50%;height:6px;border-radius: 10px;			
 			}
@@ -72,52 +68,52 @@
 						<div id="myChart" style="width:100%;height:100%">							
 						</div>
 						<div class="count">							
-							<p class="xy-fs12">服务总次数：<b id="serviceCount"></b></p>
+							<p class="xy-fs12">服务总次数：<b id="serviceCount">0</b></p>
 						</div>												
 					</div><!--/饼图-->
 					<div style="background-color: #fff;" class="ceshi borderStyle xy-pad-lr2">									
 						<div class="flex width100 xy-tac xy-fc-white"><h4>胡先生家的在线监测值</h4></div>
-						<ul class="flex">
+						<ul class="flex xy-fs13">
 						    <li class="xy-tal">原水TDS值</li>
 						    <li class="">
 						    	<div class="progress" style="background-color:#fe93ba;"></div>
 						    </li>
-						    <li id="rawTds" class="xy-tal"></li>
+						    <li id="rawTds" class="xy-tal">0</li>
 						</ul>
-						<ul class="flex">
+						<ul class="flex xy-fs13">
 						    <li class="xy-tal">净水TDS值</li>
 						    <li class="">
 						    	<div class="progress" style="background-color:#49f951;"></div>
 						    </li>
-						    <li id="purTds" class="xy-tal"></li>
+						    <li id="purTds" class="xy-tal">0</li>
 						</ul>
-						<ul class="flex ">
+						<ul class="flex xy-fs13">
 						    <li class="xy-tal">过程净化服务</li>
 						    <li>
 						    	<div class="progress" style="background-color:#49d2f9;"></div>
 						    </li>
-						    <li id="">60%</li>
+						    <li id="">0%</li>
 						</ul>
-						<ul class="flex ">
+						<ul class="flex xy-fs13">
 						    <li class="xy-tal">原水净化服务</li>
 						    <li>
 						    	<div class="progress" style="background-color:#fce930;"></div>
 						    </li>
-						    <li id="">83%</li>
+						    <li id="">0%</li>
 						</ul>
-						<ul class="flex bt">
+						<ul class="flex bt xy-fs13">
 						    <li class="xy-tal">是否漏水</li>
 						    <li class="xy-tar xy-mar0">
 						    	 <div><span class="dot" id="a"></span>是  </div>  
 						    </li>
 						    <li class="xy-tac"><span class="dot" id="b"> </span>否 </li>
 						</ul>
-						<ul class="flex">
+						<ul class="flex xy-fs13">
 						    <li class="xy-tal">流量</li>
 						    <li>
 						    	<!-- <div class="progress" style="background-color:#fce930;"></div> -->
 						    </li>
-						    <li id="flow"></li>
+						    <li id="flow">0</li>
 						</ul>
 						<!-- <ul class="flex2 xy-tac">
 						    <li>温度</li>
@@ -180,6 +176,7 @@
 				
 			}
 			$(function(){
+				//drawEchart();
 				var str = window.location.href;
 			    //console.log(str);
 			    if(str.indexOf("home") >= 0 ) { 
@@ -203,8 +200,12 @@
 							//$('#temp').html(msg.data.temp+'℃');
 							msg.data.leak == false ?$('#b').addClass('green'):$('#a').addClass('green');
 							progressWidth();
-							drawEchart();//数据待拉取							
-						}else alert('数据拉取失败！');					
+							drawEchart(msg.data.attentEquip,msg.data.mineEquip);						
+						}else {
+							alert('数据拉取失败！');
+							var attentEquip = 0,mineEquip = 0;
+							drawEchart(attentEquip,mineEquip);
+						}					
 					}
 				}); 
 				fillDate();																
@@ -254,20 +255,19 @@
 					window.location.href =_path+"/consumer/device-details.jsp";
 				});
 			}
-			function drawEchart(){
+			function drawEchart(a,b){
 				var myChart = echarts.init(document.getElementById('myChart'));
 				//自适应分辨率
 				$(window).resize(function(){
 					//console.log('我变了');
 					myChart.resize();
 				});
-				var data = 10;
 				option = {
 				    title : {
-				        text: '设备总数:'+data,
+				        text: '设备总数:'+(a+b),
 				        //subtext: '设备总数',
 				        //x:'left',
-				        left:28,
+				        left:40,
 				        top:20,
 				        textStyle: {
 							color: '#666666',
@@ -283,11 +283,11 @@
 				    }, 
 				    legend: {
 				        //x : 'left',
-				        left:28,
+				        left:40,
 				        //top:70,
 				        y : 'center',
 				        orient: 'vertical',
-				        data:['正常运行中的设备数','持续关注中的设备数'],
+				        data:['我关注的设备数','我自己的设备数'],
 				        selectedMode:false
 				    },
 				    calculable : true,				    
@@ -299,33 +299,25 @@
 				            center : ['73%', '50%'],
 				            //roseType : 'area',
 				            data:[
-				                {value:7, name:'正常运行中的设备数'},
-				                //{value:2, name:'正在服务中的设备数'},
-				                {value:3, name:'持续关注中的设备数'},
+				                {value:a, name:'我关注的设备数'},
+				                {value:b, name:'我自己的设备数'},
 				            ],
 				            labelLine :{show:false},
-				            /* labelLine: {
-					            normal: {
-					                show: true,
-					                length:0,
-					                length2:0,
-					            }
-					        } */
 							label:{
 								normal:{
-									show:true,
+									show:false,
 									position: 'inside',
-									formatter:'{c}'/* +"(台)" */,	
+									formatter:"{c}"/* +"(台)" */,	
 									textStyle:{
-										color:'#fff',
-										fontSize:14
+										color:'#333',
+										fontSize:6
 									}						
 								}
 							},
 							itemStyle: {
 					            normal: {
-					                borderWidth: 2,
-					                borderColor: '#ffffff',
+					                //borderWidth: 2,
+					                //borderColor: '#ffffff',
 					            },
 					            emphasis: {
 					                borderWidth: 0,

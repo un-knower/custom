@@ -81,5 +81,8 @@ public class EquipSortDAOImpl implements EquipSortDAO {
 		return page;
 		
 	}
-
+	@Override
+	public List<EquipSort> listEquipSort() {
+		return tClient.findObjectList(RowKeyUtil.getMinRowKey(4),RowKeyUtil.getMaxRowKey(4), EquipSort.class);
+	}
 }

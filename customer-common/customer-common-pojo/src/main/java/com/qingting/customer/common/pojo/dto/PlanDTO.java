@@ -44,6 +44,7 @@ public class PlanDTO {
 	private String equipName;
 	private String remark;  //备注
 	private List<String> images;
+	
 	public String getImage() {
 		return image;
 	}

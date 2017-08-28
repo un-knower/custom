@@ -31,6 +31,7 @@ public class MonitorController {
 	
 	@Resource
 	MonitorService monitorService;
+	
 	@ApiOperation("页面跳转-监测页面")
 	@RequestMapping(value="/monitor",method = RequestMethod.GET)
 	public String execute(){

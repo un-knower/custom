@@ -1,5 +1,7 @@
 package com.qingting.customer.baseserver;
 
+import java.util.List;
+
 import com.qingting.customer.common.pojo.hbasedo.WaterArea;
 import com.qingting.customer.common.pojo.model.Pagination;
 
@@ -9,4 +11,5 @@ public interface WaterAreaService {
 	void updateById(WaterArea waterArea);
 	WaterArea getById(Integer id);
 	Pagination<WaterArea> list(Pagination<WaterArea> page);
+	List<WaterArea> listAll();
 }

@@ -9,12 +9,22 @@
 	<packaging>jar</packaging>
 	<name>${project.artifactId}</name>
 	
+	
+	<properties>
+		<operation.version>0.0.1-SNAPSHOT</operation.version>
+	</properties>
+	
 	<dependencies>
 		<dependency>
 			<groupId>com.qingting.customer</groupId>
 			<artifactId>customer-common-pojo</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
+		<!-- <dependency>
+			<groupId>com.qingting.operation</groupId>
+			<artifactId>operation-server-api</artifactId>
+			<version>${operation.version}</version>
+		</dependency> -->
 		<!-- 基础项目支持 -->
 		<dependency>
 			<groupId>com.smart</groupId>

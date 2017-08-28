@@ -26,8 +26,8 @@ import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.common.pojo.util.DateUtil;
+import com.qingting.customer.common.pojo.util.RandomUtil;
 import com.qingting.customer.dao.MonitorDAO;
-import com.qingting.customer.dao.util.RandomUtil;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -158,10 +158,14 @@ public class MonitorDAOImpl implements MonitorDAO {
 		List<RowKey> listRowKey=null;
 		List<Monitor> list=null;
 		listRowKey=index.indexScan(RowKeyUtil.getIntMinRowKey(), createIndexRowKey(equipCode,Calendar.getInstance().getTimeInMillis()), FilterUtils.getPrefixFilter(equipCode), queryExtInfo, "value");
-		list=setContentOfRowKey(
-				tClient.findObjectAndKeyBatch(listRowKey,Monitor.class)
-				);
-		return list.get(0);
+		if(listRowKey!=null && listRowKey.size()>0){
+			list=setContentOfRowKey(
+					tClient.findObjectAndKeyBatch(listRowKey,Monitor.class)
+					);
+			return list.get(0);
+		}else{
+			return null;
+		}
 	}
 	/*@Override
 	public Monitor getMonitorOfNew(){

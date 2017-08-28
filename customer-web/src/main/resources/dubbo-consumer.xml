@@ -37,6 +37,7 @@
 	<dubbo:reference interface="com.qingting.customer.baseserver.MicroFormulaService" id="microFormulaService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.WaterAreaService" id="waterAreaService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.WaterQualityService" id="waterQualityService" />
+	<dubbo:reference interface="com.qingting.customer.baseserver.CardService" id="cardService" />
 	
 	<!-- 单点登录权限服务接口
 	<dubbo:reference interface="com.smart.sso.rpc.AuthenticationRpcService" id="authenticationRpcService" />

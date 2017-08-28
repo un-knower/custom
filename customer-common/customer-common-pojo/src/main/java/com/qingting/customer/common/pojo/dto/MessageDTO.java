@@ -18,7 +18,7 @@ public class MessageDTO {
 	/**
 	 * 分类编号
 	 */
-	private String sortCode;
+	private byte sortCode;
 	/**
 	 * 消息内容
 	 */
@@ -63,10 +63,10 @@ public class MessageDTO {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getSortCode() {
+	public byte getSortCode() {
 		return sortCode;
 	}
-	public void setSortCode(String sortCode) {
+	public void setSortCode(byte sortCode) {
 		this.sortCode = sortCode;
 	}
 	public String getContent() {

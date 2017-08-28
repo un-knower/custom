@@ -18,6 +18,25 @@ import com.qingting.customer.common.pojo.model.Pagination;
 public interface EquipDAO {
 	/**
 	 * 
+	 * @Title: getEquipCodeOfNew
+	 * @Description: 获得最新的设备编号
+	 * @return 
+	 * @return String
+	 * @throws
+	 */
+	String getEquipCodeOfNew();
+	/**
+	 * 
+	 * @Title: getUserIdOfUserEquip
+	 * @Description: 查询用户和设备关联索引中的用户ID(如果存在)，不存在则返回null
+	 * @param equipCode
+	 * @return 
+	 * @return Integer
+	 * @throws
+	 */
+	Integer getUserIdOfUserEquip(String equipCode);
+	/**
+	 * 
 	 * @Title: insertEquip
 	 * @Description: 插入一条设备数据
 	 * @param equip

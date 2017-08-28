@@ -13,11 +13,12 @@ import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.FilterUtils;
+import com.alipay.simplehbase.util.HbaseOriginService;
 import com.qingting.customer.common.pojo.common.StringUtils;
 import com.qingting.customer.common.pojo.hbasedo.User;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.common.pojo.util.RandomUtil;
 import com.qingting.customer.dao.UserDAO;
-import com.qingting.customer.dao.util.RandomUtil;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
@@ -27,22 +28,30 @@ public class UserDAOImpl implements UserDAO {
 	public RedisTemplate<String, Integer> redisTemplate;
 	
 	private static SimpleHbaseClient tClient=SHCUtil.getSHC("user");
-	private final static String SEQUENCE="user_id_seq";
-	private final static byte dataVersion=0;
 	
+	private static HbaseOriginService idIndex=new HbaseOriginService("userIdIndex",
+			new String[]{"iif"},
+			new byte[][]{
+	});
+	private static HbaseOriginService mobileIndex=new HbaseOriginService("userMobileIndex",
+			new String[]{"mif"},
+			new byte[][]{
+	});
+	
+	private final static String SEQUENCE="user_id_seq";
 	private final static int RANDOM_LENGTH=2;
 	private final static int MOBILE_LENGTH=11;
 	/**
 	 * RowKey=Mobile倒叙+用户ID(12字节)
 	 */
-	private static RowKey createRowKey(String mobile,Integer num){
-		return RowKeyUtil.getRowKey(RandomUtil.getRandomCode(RANDOM_LENGTH),mobile,num);
+	private static RowKey createRowKey(Integer id){
+		return RowKeyUtil.getRowKey(RandomUtil.getRandomCode(RANDOM_LENGTH),id);
 	}
 	private static List<User> setContentOfRowKey(List<SimpleHbaseDOWithKeyResult<User>> listHbase){
 		List<User> list=new ArrayList<User>();
 		for (SimpleHbaseDOWithKeyResult<User> result : listHbase) {
 			User user = result.getT();
-			byte[] rowkey=result.getRowKey().toBytes();
+			/*byte[] rowkey=result.getRowKey().toBytes();
 			
 			user.setRowkey(new String(rowkey));
 			byte[] mobile=new byte[11];
@@ -50,7 +59,7 @@ public class UserDAOImpl implements UserDAO {
 			user.setMobile(new String(mobile));
 			byte[] id=new byte[4];
 			System.arraycopy(rowkey, RANDOM_LENGTH+MOBILE_LENGTH, id, 0, 4);//后4个字节id
-			user.setId(Bytes.toInt(id));
+			user.setId(Bytes.toInt(id));*/
 			
 			list.add(user);
 		}
@@ -61,7 +70,10 @@ public class UserDAOImpl implements UserDAO {
 		System.out.println("插入user");
 		int num=RedisSerialNum.getSerialNum(redisTemplate, SEQUENCE);
 		user.setId(num);
-		tClient.putObject(createRowKey(user.getMobile(),num), user);
+		RowKey value=createRowKey(num);
+		idIndex.put(RowKeyUtil.getRowKey(num), "iif", "value", value.toBytes());
+		mobileIndex.put(RowKeyUtil.getRowKey(user.getMobile()), "mif", "value", value.toBytes());
+		tClient.putObject(value, user);
 	}
 
 	@Override
@@ -86,10 +98,10 @@ public class UserDAOImpl implements UserDAO {
 		List<User> list=null;
 		Pagination<User> page=new Pagination<User>();
 		
-		list=setContentOfRowKey(
-				tClient.findObjectAndKeyList(RowKeyUtil.getIntLongMinRowKey(),RowKeyUtil.getIntLongMaxRowKey(), User.class,queryExtInfo)
-				);
-		page.setRowCount(tClient.count(RowKeyUtil.getIntLongMinRowKey(), RowKeyUtil.getIntLongMaxRowKey(), null));
+		
+		list=tClient.findObjectList(RowKeyUtil.getMinRowKey(13),RowKeyUtil.getMaxRowKey(13), User.class,queryExtInfo);
+				
+		page.setRowCount(tClient.count(RowKeyUtil.getMinRowKey(13),RowKeyUtil.getMaxRowKey(13), null));
 		
 		page.setList(list);
 		page.setPageNo(pageNo);
@@ -97,60 +109,27 @@ public class UserDAOImpl implements UserDAO {
 		return page;
 	}
 	@Override
-	public User getUserByMobileAndId(Integer id,String mobile) {
-		
-		/*System.out.println("mobile:"+mobile);
-		
-		Map<String, Object> para = new HashMap<String, Object>();
-		para.put("mobile", mobile);
-		List<User> list=setContentOfRowKey(
-				tClient.findObjectAndKeyList(createRowKey(mobile,0), createRowKey(mobile,Integer.MAX_VALUE), User.class,"getUserByMobile",para)
-				);
-		System.out.println("list.size:"+list.size());
-		for (User user : list) {
-			System.out.println("user:"+user);
-		}
-		
-		if(list.size()>1)
-			throw new RuntimeException("存在多个相同账户！请检查程序逻辑");
-		else if(list.size()==1){
-			return list.get(0);
-		}else{
+	public User getUserByMobile(String mobile){
+		RowKey rowKey = mobileIndex.indexGet(RowKeyUtil.getRowKey(mobile), null,null, "value");
+		if(rowKey!=null && rowKey.toBytes().length>0)
+			return tClient.findObject(rowKey, User.class);
+		else
 			return null;
-		}*/
-		
-		System.out.println("id:"+id+"mobile:"+mobile);
-		
-		List<User> list=null;
-		if(StringUtils.isZeroOrNull(id) && StringUtils.isBlank(mobile)){//都为空
-			
-		}else if(!StringUtils.isZeroOrNull(id) && StringUtils.isBlank(mobile)){//id不为空，mobile空
-			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,MOBILE_LENGTH,id), User.class,FilterUtils.getSuffixFilter(id),null)
-					);
-		}else if(StringUtils.isZeroOrNull(id) && !StringUtils.isBlank(mobile)){//id为空，mobile不为空
-			System.out.println("id空，mobile不为空,mobile="+mobile+".");
-			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,mobile),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,mobile), User.class,FilterUtils.getContainFilter(mobile),null)
-					);
-		}else{//都不为空
-			list=setContentOfRowKey(
-					tClient.findObjectAndKeyList(RowKeyUtil.getStringStringIntMinRowKey(RANDOM_LENGTH,mobile,id),RowKeyUtil.getStringStringIntMaxRowKey(RANDOM_LENGTH,mobile,id), User.class,FilterUtils.getSuffixFilter(id),null)
-					);
-		}
-		if(list!=null)
-			for (User user : list) {
-				System.out.println(user);
-			}
-		if(list==null){
-			return null;
-		}else if(list.size()>1){
-			throw new RuntimeException("存在多个相同账户！请检查程序逻辑");
-		}else if(list.size()==1){
-			return list.get(0);
-		}else{
-			return null;
-		}
 	}
-
+	@Override
+	public User getUserById(Integer id){
+		RowKey rowKey = idIndex.indexGet(RowKeyUtil.getRowKey(id), null,null, "value");
+		return tClient.findObject(rowKey, User.class);
+	}
+	
+	@Override
+	public List<User> searchUserByMobile(String mobile){
+		List<RowKey> listRowKey = mobileIndex.indexScan(FilterUtils.getContainFilter(mobile), null, "value");
+		System.out.println("搜索到的用户size:"+listRowKey.size());
+		List<User> list=tClient.findObjectBatch(listRowKey, User.class);
+		for (User user : list) {
+			System.out.println(user);
+		}
+		return list;
+	}
 }

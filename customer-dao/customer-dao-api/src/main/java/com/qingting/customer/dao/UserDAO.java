@@ -34,18 +34,16 @@ public interface UserDAO {
 	 */
 	void updateUserByRowKey(User user);
 	
-	
 	/**
 	 * 
-	 * @Title: getUserByMobileAndId
+	 * @Title: getUserByMobile
 	 * @Description: 查询用户
-	 * @param id
 	 * @param mobile
 	 * @return 
 	 * @return User
 	 * @throws
 	 */
-	User getUserByMobileAndId(Integer id,String mobile);
+	User getUserByMobile(String mobile);
 	/**
 	 * 
 	 * @Title: listUser
@@ -57,4 +55,24 @@ public interface UserDAO {
 	 * @throws
 	 */
 	Pagination<User> listUser(Integer pageNo,Integer pageSize);
+	/**
+	 * 
+	 * @Title: searchUserByMobile
+	 * @Description: 搜索用户
+	 * @param mobile
+	 * @return 
+	 * @return List<User>
+	 * @throws
+	 */
+	List<User> searchUserByMobile(String mobile);
+	/**
+	 * 
+	 * @Title: getUserById
+	 * @Description: 通过ID查询用户
+	 * @param id
+	 * @return 
+	 * @return User
+	 * @throws
+	 */
+	User getUserById(Integer id);
 }

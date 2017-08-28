@@ -34,6 +34,9 @@
 		}
 		.pj{position: absolute;left: 75%;top: 0;}.pj2{left: 83%;}
 		.timeline .timeline-item .blueDot{background: #71affa;box-shadow: 0px 0px 5px 3px rgba(132, 210, 249, 0.52);}
+		.dialogContent{padding: 5%; box-shadow: 5px 5px 5px #f0eded;background-color: #fff;
+   		 z-index: 999; border-radius: 0.5em; position: absolute;top: 60%;left: 10%; border: 1px solid #cbe2fe;
+   			 width: 80%;height: auto;display:none;}
 	</style>
 	<body ontouchstart>
 		<div class="page tabbar flex js_show height100">
@@ -262,7 +265,8 @@
 						</div><!-- xy-tab-list -->
 					</div><!--weui-tab__panel 内容-->
 				</div><!--weui-tab 内容-->
-			</div><!--/ container -->								
+			</div><!--/ container -->	
+			<div class="dialogContent"></div>							
 		</div>
 		<!--/page End-->
 		
@@ -302,6 +306,10 @@
 							$('#serContent').html(msg.data.serContent.slice(0,20)+'……');
 							$('.xy-full-widthIMG').html('<img src="${_staticPath}'+msg.data.image+'" />');
 							drawImg(msg.data.images);
+							/* $('#serContent').click(function(){
+								$('.dialogContent').html(msg.data.serContent);
+								$('.dialogContent').show();
+							}); */
 							}						
 						}
 				});
@@ -334,7 +342,7 @@
 				$('body').on('click','#goRecord',function(){					
 					var thisId=$(this).parents('.timeline-item').attr('serveId');
 					window.location.href =_path+"/consumer/evaluate.jsp?serveId="+thisId;
-				});
+				});				
 			})
 			function getHisList(){
 				$.ajax({

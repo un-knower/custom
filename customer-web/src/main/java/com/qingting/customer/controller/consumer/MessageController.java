@@ -37,9 +37,9 @@ public class MessageController {
 	public @ResponseBody WebResult<String> setRead(
 			HttpServletRequest request,
 			@ApiParam(value = "消息ID", required = true) @RequestParam Long id,
-			@ApiParam(value = "分类编号", required = true) @RequestParam String sortCode
+			@ApiParam(value = "分类编号", required = true) @RequestParam Byte sortCode
 			){
-		System.out.println("id="+id+".sortCode="+sortCode+".");
+		System.out.println("id="+id+".type="+sortCode+".");
 		SessionUserMsg sessionUserMsg = SessionUserMsgUtils.getSessionUserMsg(request);
 		User user = (User)sessionUserMsg.getProfile();
 		messageService.setRead(user.getId(), sortCode, id);
@@ -52,7 +52,7 @@ public class MessageController {
 	public @ResponseBody WebResult<List<MessageDTO>> list(
 			HttpServletRequest request,
 			@ApiParam(value = "消息ID", required = false) @RequestParam(value="endId", required=false) Long endId,
-			@ApiParam(value = "分类编号", required = true) @RequestParam String sortCode
+			@ApiParam(value = "分类编号", required = true) @RequestParam Byte sortCode
 			){
 		WebResult<List<MessageDTO>> result=new WebResult<List<MessageDTO>>(ResultCode.SUCCESS);
 		List<MessageDTO> list=new ArrayList<MessageDTO>();
@@ -75,7 +75,7 @@ public class MessageController {
 			messageDTO.setId(message.getId());
 			messageDTO.setPath(message.getImageUrl());
 			messageDTO.setReadFlag(message.getReadFlag());
-			messageDTO.setSortCode(message.getSortCode());
+			messageDTO.setSortCode(message.getType());
 			messageDTO.setTitle(message.getTitle());
 			messageDTO.setStatus(message.getStatus());
 			messageDTO.setStrParam(message.getStrParam());

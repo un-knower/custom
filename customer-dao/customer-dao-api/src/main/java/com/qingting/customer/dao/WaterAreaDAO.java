@@ -1,6 +1,8 @@
 package com.qingting.customer.dao;
 
 
+import java.util.List;
+
 import com.qingting.customer.common.pojo.hbasedo.WaterArea;
 import com.qingting.customer.common.pojo.model.Pagination;
 
@@ -10,4 +12,5 @@ public interface WaterAreaDAO {
 	void updateById(WaterArea waterArea);
 	WaterArea getById(Integer id);
 	Pagination<WaterArea> list(Pagination<WaterArea> page);
+	List<WaterArea> list();
 }

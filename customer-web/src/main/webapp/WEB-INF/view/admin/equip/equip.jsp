@@ -106,6 +106,7 @@
 			        {field:'id', hide : true},
 			        
 			        {field:'equipCode', title:'设备编号', mobileHide : true},
+			        {field:'cardNumber', title:'物联网卡号', mobileHide : true},
 			        {field:'equipMark', title:'备注', mobileHide : true},
 			        {field:'provinceCode', title:'省编码', mobileHide : true},
 			        {field:'cityCode', title:'市编码', mobileHide : true},
@@ -143,8 +144,9 @@
 					},
 					{text : '删除', clazz : 'red', icon : 'fa fa-trash-o', permission : '/admin/user/delete', handler : function(d, i){
 						$table.ajaxDelete({
-							confirm : "删除管理员会影响关联的应用、角色、权限，确认要删除?",
-							url : "${_path}/admin/user/delete"
+							confirm : "删除设备会影响关联的用户和监测数据，确认要删除?",
+							url : "${_path}/admin/equip/delete",
+							data:{equipCode : $table.getSelectedItemKeys("equipCode")}
 						});
 					}}
 				],

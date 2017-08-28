@@ -132,6 +132,9 @@ public class CacheUtil {
 	public static Equip getEquip(String equipCode){
 		System.out.println("equipRedisCache:"+equipRedisCache);
 		System.out.println("equipCode:"+equipCode);
+		
+		clearEquip(equipCode);//临时用，正式需删除
+		
 		Equip equip = equipRedisCache.get("equip/"+equipCode);
 		if(equip==null){
 			equip = equipService.getEquip(equipCode);
@@ -139,8 +142,14 @@ public class CacheUtil {
 		}
 		return equip;
 	}
+	//删除设备
+	public static void clearEquip(String equipCode){
+		System.out.println(equipRedisCache);
+		if(equipRedisCache.isExist("equip/"+equipCode))
+			equipRedisCache.delete("equip/"+equipCode);
+	}
+	//查水区域
 	public static WaterArea getWaterArea(Integer waterAreaId){
-		//查水区域
 		WaterArea waterArea = waterAreaRedisCache.get("waterArea/"+waterAreaId);
 		if(waterArea==null){
 			waterArea = waterAreaService.getById(waterAreaId);
@@ -148,8 +157,8 @@ public class CacheUtil {
 		}
 		return waterArea;
 	}
+	//查水质
 	public static WaterQuality getWaterQuality(Integer waterAreaId){
-		//查水质
 		WaterQuality waterQuality = waterQualityRedisCache.get("waterQuality/"+waterAreaId);
 		if(waterQuality==null){
 			waterQuality = waterQualityService.getNewByWaterAreaId(waterAreaId);
@@ -160,8 +169,8 @@ public class CacheUtil {
 		
 		/*equipParam.setChlorine(waterQuality.getChlorine());
 		equipParam.setTurbidity(waterQuality.getTurbidity());*/
+	//查滤芯组合
 	public static FilterGroup getFilterGroup(Integer filterGroupId){	
-		//查滤芯组合
 		FilterGroup filterGroup = filterGroupRedisCache.get("filterGroup/"+filterGroupId);
 		if(filterGroup==null){
 			filterGroup = filterGroupService.getById(filterGroupId);

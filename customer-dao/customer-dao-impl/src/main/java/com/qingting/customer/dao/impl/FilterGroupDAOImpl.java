@@ -1,6 +1,7 @@
 package com.qingting.customer.dao.impl;
 
 import java.util.Calendar;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -60,6 +61,11 @@ public class FilterGroupDAOImpl implements FilterGroupDAO {
 				);
 		
 		return page;
+	}
+
+	@Override
+	public List<FilterGroup> list() {
+		return tClient.findObjectList(RowKeyUtil.getRowKey(0),RowKeyUtil.getRowKey(Integer.MAX_VALUE) , FilterGroup.class);
 	}
 
 }

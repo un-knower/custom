@@ -41,11 +41,6 @@ public class UserController extends BaseController {
 	public String consumer(){
 		return "/admin/user/consumer";
 	}
-	@ApiOperation("用户管理-企业员工")
-	@RequestMapping(value="/employee",method = RequestMethod.GET)
-	public String employee(){
-		return "/admin/user/employee";
-	}
 	@ApiOperation("后台添加和修改用户")
 	@RequestMapping(value="/save",method = RequestMethod.POST)
 	/*@ApiImplicitParams({
@@ -63,7 +58,7 @@ public class UserController extends BaseController {
 		WebResult<Object> result=null;
 		result=AuthRpcUtils.findByAccount(user.getMobile());
 		if(result.getCode()==ResultCode.FAILURE){//单点服务端用户不存在
-			if(userService.getUserByMobileAndId(null, user.getMobile())==null){//本地用户不存在
+			if(userService.getUserByMobile(user.getMobile())==null){//本地用户不存在
 				System.out.println("准备开始存用户...");
 				result = AuthRpcUtils.register(Config.getSsoAppCode(),user.getMobile(), user.getPassword());//单点服务端注册用户
 				System.out.println("单点注册结果result："+result);
@@ -119,7 +114,6 @@ public class UserController extends BaseController {
 	@ApiOperation("获取当前登陆用户的信息")
 	@RequestMapping(value="/get",method = RequestMethod.GET)
 	public @ResponseBody WebResult<User> getUserMsg(HttpServletRequest request,
-			@ApiParam(value = "用户ID", required = false) @RequestParam Integer id,
 			@ApiParam(value = "用户电话", required = false) @RequestParam String mobile
 			){
 		/*SessionUser sessionUser = SessionUtils.getSessionUser(request);
@@ -138,7 +132,7 @@ public class UserController extends BaseController {
 		result.setData(myDTO);
 		result.setMessage("获取成功");*/
 		WebResult<User> result=new WebResult<User>(ResultCode.SUCCESS);
-		User user = userService.getUserByMobileAndId(id, mobile);
+		User user = userService.getUserByMobile(mobile);
 		
 		/*WebResult<MyDTO> result=new WebResult<MyDTO>(ResultCode.SUCCESS);
 		MyDTO myDTO=new MyDTO();
