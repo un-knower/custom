@@ -14,12 +14,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.common.pojo.dto.EquipParamDTO;
-import com.qingting.customer.common.pojo.hbasedo.Card;
-import com.qingting.customer.common.pojo.hbasedo.Equip;
-import com.qingting.customer.common.pojo.hbasedo.EquipSort;
-import com.qingting.customer.common.pojo.model.Pagination;
-import com.qingting.customer.common.pojo.util.RandomUtil;
+import com.qingting.customer.model.dto.EquipParamDTO;
+import com.qingting.customer.model.hbasedo.Card;
+import com.qingting.customer.model.hbasedo.Equip;
+import com.qingting.customer.model.hbasedo.EquipSort;
+import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.util.RandomUtil;
 import com.qingting.customer.controller.common.QRCodeUtil;
 import com.qingting.customer.server.CardService;
 import com.qingting.customer.server.EquipService;

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.common.pojo.dto.WarnDTO;
+import com.qingting.customer.model.dto.WarnDTO;
 import com.qingting.customer.server.WarnService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;

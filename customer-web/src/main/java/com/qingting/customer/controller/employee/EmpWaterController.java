@@ -10,10 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.common.pojo.hbasedo.Formula;
-import com.qingting.customer.common.pojo.hbasedo.WaterArea;
-import com.qingting.customer.common.pojo.hbasedo.WaterQuality;
-import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.model.hbasedo.Formula;
+import com.qingting.customer.model.hbasedo.WaterArea;
+import com.qingting.customer.model.hbasedo.WaterQuality;
+import com.qingting.customer.model.page.Pagination;
 import com.qingting.customer.server.FormulaService;
 import com.qingting.customer.server.MicroFormulaService;
 import com.qingting.customer.server.WaterAreaService;

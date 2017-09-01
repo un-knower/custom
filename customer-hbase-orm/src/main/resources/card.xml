@@ -1,0 +1,18 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="card" defaultFamily="cf">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="number" typeName="string" />
+		<HBaseColumnSchema qualifier="operatorSort" typeName="byte" />
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.model.hbasedo.Card" defaultFamily="cf">
+		<field name="id"/>
+		<field name="number" />
+		<field name="operatorSort" />
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

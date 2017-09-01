@@ -1,0 +1,22 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="equip" defaultFamily="equipFamily">
+		<HBaseColumnSchema qualifier="equipName" typeName="string" />
+		<HBaseColumnSchema qualifier="equipAddr" typeName="string" />
+		<HBaseColumnSchema qualifier="open" typeName="boolean" />
+		<HBaseColumnSchema qualifier="equipSortId" typeName="int" />
+		<HBaseColumnSchema qualifier="projectId" typeName="int"/>
+		<HBaseColumnSchema qualifier="version" typeName="byte"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.model.hbasedo.Equip" defaultFamily="equipFamily">
+		<field name="equipName"/>
+		<field name="equipAddr" />
+		<field name="open" />
+		<field name="equipSortId" />
+		<field name="projectId"/>
+		<field name="version" isVersioned="true"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

@@ -16,32 +16,32 @@
 
 	<!-- 用户服务接口 -->
 	<!-- <dubbo:reference interface="com.smart.demo.service.DemoService" id="demoService" />  -->
-	<dubbo:reference interface="com.qingting.customer.baseserver.MonitorService" id="monitorService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.ProjectService" id="projectService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.EquipService" id="equipService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.EquipSortService" id="equipSortService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.MessageService" id="messageService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.MessageSortService" id="messageSortService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.UserService" id="userService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.UserSortService" id="userSortService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.external.TxMessageService" id="txMessageService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.WarnService" id="warnService" />
+	<dubbo:reference interface="com.qingting.customer.server.MonitorService" id="monitorService" />
+	<dubbo:reference interface="com.qingting.customer.server.ProjectService" id="projectService" />
+	<dubbo:reference interface="com.qingting.customer.server.EquipService" id="equipService" />
+	<dubbo:reference interface="com.qingting.customer.server.EquipSortService" id="equipSortService" />
+	<dubbo:reference interface="com.qingting.customer.server.MessageService" id="messageService" />
+	<dubbo:reference interface="com.qingting.customer.server.MessageSortService" id="messageSortService" />
+	<dubbo:reference interface="com.qingting.customer.server.UserService" id="userService" />
+	<dubbo:reference interface="com.qingting.customer.server.UserSortService" id="userSortService" />
+	<dubbo:reference interface="com.qingting.customer.server.external.TxMessageService" id="txMessageService" />
+	<dubbo:reference interface="com.qingting.customer.server.WarnService" id="warnService" />
 	
-	<dubbo:reference interface="com.qingting.customer.baseserver.ProvinceService" id="provinceService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.CityService" id="cityService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.AreaService" id="areaService" />
+	<dubbo:reference interface="com.qingting.customer.server.ProvinceService" id="provinceService" />
+	<dubbo:reference interface="com.qingting.customer.server.CityService" id="cityService" />
+	<dubbo:reference interface="com.qingting.customer.server.AreaService" id="areaService" />
 	
-	<dubbo:reference interface="com.qingting.customer.baseserver.FilterService" id="filterService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.FilterGroupService" id="filterGroupService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.FormulaService" id="formulaService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.MicroFormulaService" id="microFormulaService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.WaterAreaService" id="waterAreaService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.WaterQualityService" id="waterQualityService" />
-	<dubbo:reference interface="com.qingting.customer.baseserver.CardService" id="cardService" />
+	<dubbo:reference interface="com.qingting.customer.server.FilterService" id="filterService" />
+	<dubbo:reference interface="com.qingting.customer.server.FilterGroupService" id="filterGroupService" />
+	<dubbo:reference interface="com.qingting.customer.server.FormulaService" id="formulaService" />
+	<dubbo:reference interface="com.qingting.customer.server.MicroFormulaService" id="microFormulaService" />
+	<dubbo:reference interface="com.qingting.customer.server.WaterAreaService" id="waterAreaService" />
+	<dubbo:reference interface="com.qingting.customer.server.WaterQualityService" id="waterQualityService" />
+	<dubbo:reference interface="com.qingting.customer.server.CardService" id="cardService" />
 	
 	<!-- 用户系统需与运营系统交互的接口 -->
 	<!-- <dubbo:reference group="customer" interface="com.qingting.operation.server.EmployeeService" id="employeeService" version="1.0.0"/> -->
-	<dubbo:reference group="customer" interface="com.qingting.customer.baseserver.ServerService" id="customerServerService" version="1.0.0"/>
+	<dubbo:reference group="customer" interface="com.qingting.customer.server.ServerService" id="customerServerService" version="1.0.0"/>
 	
 	<!-- 运营系统服务接口 -->
 	<dubbo:reference group="operation" interface="com.qingting.operation.server.EmployeeService" id="employeeService" version="1.0.0"/>

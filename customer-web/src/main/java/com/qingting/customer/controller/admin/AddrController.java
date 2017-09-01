@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.qingting.customer.common.pojo.hbasedo.Area;
-import com.qingting.customer.common.pojo.hbasedo.City;
-import com.qingting.customer.common.pojo.hbasedo.Province;
-import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.model.hbasedo.Area;
+import com.qingting.customer.model.hbasedo.City;
+import com.qingting.customer.model.hbasedo.Province;
+import com.qingting.customer.model.page.Pagination;
 import com.qingting.customer.server.AreaService;
 import com.qingting.customer.server.CityService;
 import com.qingting.customer.server.ProvinceService;

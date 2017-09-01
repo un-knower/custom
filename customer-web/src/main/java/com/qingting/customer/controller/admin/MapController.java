@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.common.pojo.dto.EquipCountDTO;
-import com.qingting.customer.common.pojo.dto.EquipDetailDTO;
+import com.qingting.customer.model.dto.EquipCountDTO;
+import com.qingting.customer.model.dto.EquipDetailDTO;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;

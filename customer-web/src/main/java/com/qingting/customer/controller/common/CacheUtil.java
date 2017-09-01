@@ -2,14 +2,14 @@ package com.qingting.customer.controller.common;
 
 import javax.annotation.Resource;
 
-import com.qingting.customer.common.pojo.common.FilterOrder;
-import com.qingting.customer.common.pojo.hbasedo.Equip;
-import com.qingting.customer.common.pojo.hbasedo.FilterGroup;
-import com.qingting.customer.common.pojo.hbasedo.Formula;
-import com.qingting.customer.common.pojo.hbasedo.MicroFormula;
-import com.qingting.customer.common.pojo.hbasedo.Monitor;
-import com.qingting.customer.common.pojo.hbasedo.WaterArea;
-import com.qingting.customer.common.pojo.hbasedo.WaterQuality;
+import com.qingting.customer.model.common.FilterOrder;
+import com.qingting.customer.model.hbasedo.Equip;
+import com.qingting.customer.model.hbasedo.FilterGroup;
+import com.qingting.customer.model.hbasedo.Formula;
+import com.qingting.customer.model.hbasedo.MicroFormula;
+import com.qingting.customer.model.hbasedo.Monitor;
+import com.qingting.customer.model.hbasedo.WaterArea;
+import com.qingting.customer.model.hbasedo.WaterQuality;
 import com.qingting.customer.server.EquipService;
 import com.qingting.customer.server.FilterGroupService;
 import com.qingting.customer.server.FilterService;

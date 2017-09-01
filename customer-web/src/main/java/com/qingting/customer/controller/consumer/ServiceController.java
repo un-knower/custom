@@ -12,11 +12,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.common.pojo.dto.EvaDTO;
-import com.qingting.customer.common.pojo.dto.HisSerSimpleDTO;
-import com.qingting.customer.common.pojo.dto.HisServiceDTO;
-import com.qingting.customer.common.pojo.dto.PlanDTO;
-import com.qingting.customer.common.pojo.dto.PlanSimpleDTO;
+import com.qingting.customer.model.dto.EvaDTO;
+import com.qingting.customer.model.dto.HisSerSimpleDTO;
+import com.qingting.customer.model.dto.HisServiceDTO;
+import com.qingting.customer.model.dto.PlanDTO;
+import com.qingting.customer.model.dto.PlanSimpleDTO;
 import com.qingting.customer.model.SummaryServer;
 import com.qingting.customer.server.ServerService;
 import com.smart.mvc.model.ResultCode;

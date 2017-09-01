@@ -1,0 +1,40 @@
+<SimpleHbase>
+
+	<HBaseTableSchema tableName="equip" defaultFamily="ef">
+		<HBaseColumnSchema qualifier="id" typeName="int" />
+		<HBaseColumnSchema qualifier="equipCode" typeName="string" />
+		<HBaseColumnSchema qualifier="cardNumber" typeName="string" />
+		<HBaseColumnSchema qualifier="equipMark" typeName="string" />
+		<HBaseColumnSchema qualifier="provinceCode" typeName="string" />
+		<HBaseColumnSchema qualifier="cityCode" typeName="string" />
+		<HBaseColumnSchema qualifier="areaCode" typeName="string"/>
+		<HBaseColumnSchema qualifier="address" typeName="string"/>
+		<HBaseColumnSchema qualifier="isOpen" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="isTop" typeName="boolean"/>
+		<HBaseColumnSchema qualifier="equipSortId" typeName="int"/>
+		<HBaseColumnSchema qualifier="userId" typeName="int"/>
+		<HBaseColumnSchema qualifier="filterGroupId" typeName="int"/>
+		<HBaseColumnSchema qualifier="waterAreaId" typeName="int"/>
+		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
+	</HBaseTableSchema>	
+	<MappingType className="com.qingting.customer.model.hbasedo.Equip" defaultFamily="ef">
+		<field name="id"/>
+		<field name="equipCode" />
+		<field name="cardNumber" />
+		<field name="equipMark" />
+		<field name="provinceCode" />
+		<field name="cityCode"/>
+		<field name="areaCode"/>
+		<field name="address"/>
+		<field name="isOpen"/>
+		<field name="isTop"/>
+		<field name="equipSortId"/>
+		<field name="userId"/>
+		<field name="filterGroupId"/>
+		<field name="waterAreaId"/>
+		<field name="createTime"/>
+	</MappingType>
+</SimpleHbase>   
+
+
+

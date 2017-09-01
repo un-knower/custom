@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.common.pojo.hbasedo.Monitor;
-import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.model.hbasedo.Monitor;
+import com.qingting.customer.model.page.Pagination;
 import com.qingting.customer.controller.common.ClientConfigInit;
 import com.qingting.customer.server.MonitorService;
 import com.smart.mvc.model.ResultCode;

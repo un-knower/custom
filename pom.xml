@@ -194,10 +194,10 @@
   
 	
 	<modules>
-		<module>customer-server</module>
-		<module>customer-common</module>
-		<module>customer-dao</module>
+		<module>customer-server-api</module>
+		<module>customer-server-impl</module>
 		<module>customer-web</module>
-		<module>opration-customer-web</module>
+		<module>customer-hbase-common</module>
+		<module>customer-hbase-orm</module>
 	</modules>
 </project>
