@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.EquipService;
-import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.dto.MyDTO;
 import com.qingting.customer.common.pojo.hbasedo.User;
 import com.qingting.customer.controller.common.SessionUserMsg;
 import com.qingting.customer.controller.common.SessionUserMsgUtils;
+import com.qingting.customer.server.EquipService;
+import com.qingting.customer.server.UserService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.sso.client.SessionUser;

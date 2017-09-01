@@ -11,8 +11,8 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
-import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.server.UserService;
 import com.smart.mvc.exception.ServiceException;
 import com.smart.mvc.model.ResultCode;
 import com.smart.sso.client.ClientFilter;

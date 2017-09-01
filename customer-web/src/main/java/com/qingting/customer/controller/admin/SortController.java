@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.EquipSortService;
-import com.qingting.customer.baseserver.MessageSortService;
-import com.qingting.customer.baseserver.UserSortService;
 import com.qingting.customer.common.pojo.hbasedo.EquipSort;
 import com.qingting.customer.common.pojo.hbasedo.MessageSort;
 import com.qingting.customer.common.pojo.hbasedo.UserSort;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.server.EquipSortService;
+import com.qingting.customer.server.MessageSortService;
+import com.qingting.customer.server.UserSortService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;

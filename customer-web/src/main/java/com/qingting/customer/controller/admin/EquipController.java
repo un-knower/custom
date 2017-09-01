@@ -14,9 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.CardService;
-import com.qingting.customer.baseserver.EquipService;
-import com.qingting.customer.baseserver.EquipSortService;
 import com.qingting.customer.common.pojo.dto.EquipParamDTO;
 import com.qingting.customer.common.pojo.hbasedo.Card;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
@@ -24,6 +21,9 @@ import com.qingting.customer.common.pojo.hbasedo.EquipSort;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.common.pojo.util.RandomUtil;
 import com.qingting.customer.controller.common.QRCodeUtil;
+import com.qingting.customer.server.CardService;
+import com.qingting.customer.server.EquipService;
+import com.qingting.customer.server.EquipSortService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.util.StringUtils;
@@ -203,17 +203,27 @@ public class EquipController {
 	@ApiOperation("获得设备编号等参数")
 	@RequestMapping(value="/getEquipParam",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<EquipParamDTO> getEquipParam(
+			@ApiParam(value = "包含的编号前缀", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String preCode,
+			@ApiParam(value = "开始编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String startCode
 			){
 		EquipParamDTO equipParamDTO=new EquipParamDTO();
-		String equipCode = equipService.getEquipCodeOfNew();
+		String equipCode = equipService.getEquipCodeOfNew(preCode);
 		if(!StringUtils.isBlank(equipCode)) {//查找到设备
 			System.out.println("查找到最新设备code:"+equipCode);
 			Long code = Long.valueOf(equipCode);
-			equipParamDTO.setEquipCode(String.valueOf(code+1));
-			System.out.println("输出code:"+String.valueOf(code+1));
+			String resultCode=String.valueOf(code+1);
+			if(resultCode.length()==startCode.length()){
+				equipParamDTO.setEquipCode(resultCode);
+			}else{
+				for(int i=0;i<startCode.length()-resultCode.length();i++){
+					resultCode="0"+resultCode;
+				}
+				equipParamDTO.setEquipCode(resultCode);
+			}
+			System.out.println("输出code:"+resultCode);
 		}else{//未查找到设备
 			System.out.println("未查询到库里有设备");
-			equipParamDTO.setEquipCode("211701000001");
+			equipParamDTO.setEquipCode(startCode);
 		}
 		equipParamDTO.setUsername(RandomUtil.getRandomCode(10));
 		equipParamDTO.setPassword(RandomUtil.getRandomCode(10));

@@ -39,6 +39,15 @@
 	<dubbo:reference interface="com.qingting.customer.baseserver.WaterQualityService" id="waterQualityService" />
 	<dubbo:reference interface="com.qingting.customer.baseserver.CardService" id="cardService" />
 	
+	<!-- 用户系统需与运营系统交互的接口 -->
+	<!-- <dubbo:reference group="customer" interface="com.qingting.operation.server.EmployeeService" id="employeeService" version="1.0.0"/> -->
+	<dubbo:reference group="customer" interface="com.qingting.customer.baseserver.ServerService" id="customerServerService" version="1.0.0"/>
+	
+	<!-- 运营系统服务接口 -->
+	<dubbo:reference group="operation" interface="com.qingting.operation.server.EmployeeService" id="employeeService" version="1.0.0"/>
+	<dubbo:reference group="operation" interface="com.qingting.operation.server.EvaluateService" id="evaluateService" version="1.0.0"/>
+	<dubbo:reference group="operation" interface="com.qingting.operation.server.ServerService" id="operationServerService" version="1.0.0"/>
+	
 	<!-- 单点登录权限服务接口
 	<dubbo:reference interface="com.smart.sso.rpc.AuthenticationRpcService" id="authenticationRpcService" />
 	 -->

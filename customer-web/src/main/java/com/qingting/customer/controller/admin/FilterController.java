@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.FilterGroupService;
-import com.qingting.customer.baseserver.FilterService;
 import com.qingting.customer.common.pojo.hbasedo.Filter;
 import com.qingting.customer.common.pojo.hbasedo.FilterGroup;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.server.FilterGroupService;
+import com.qingting.customer.server.FilterService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 

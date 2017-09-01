@@ -2,14 +2,6 @@ package com.qingting.customer.controller.common;
 
 import javax.annotation.Resource;
 
-import com.qingting.customer.baseserver.EquipService;
-import com.qingting.customer.baseserver.FilterGroupService;
-import com.qingting.customer.baseserver.FilterService;
-import com.qingting.customer.baseserver.FormulaService;
-import com.qingting.customer.baseserver.MicroFormulaService;
-import com.qingting.customer.baseserver.MonitorService;
-import com.qingting.customer.baseserver.WaterAreaService;
-import com.qingting.customer.baseserver.WaterQualityService;
 import com.qingting.customer.common.pojo.common.FilterOrder;
 import com.qingting.customer.common.pojo.hbasedo.Equip;
 import com.qingting.customer.common.pojo.hbasedo.FilterGroup;
@@ -18,6 +10,14 @@ import com.qingting.customer.common.pojo.hbasedo.MicroFormula;
 import com.qingting.customer.common.pojo.hbasedo.Monitor;
 import com.qingting.customer.common.pojo.hbasedo.WaterArea;
 import com.qingting.customer.common.pojo.hbasedo.WaterQuality;
+import com.qingting.customer.server.EquipService;
+import com.qingting.customer.server.FilterGroupService;
+import com.qingting.customer.server.FilterService;
+import com.qingting.customer.server.FormulaService;
+import com.qingting.customer.server.MicroFormulaService;
+import com.qingting.customer.server.MonitorService;
+import com.qingting.customer.server.WaterAreaService;
+import com.qingting.customer.server.WaterQualityService;
 import com.smart.mvc.cache.RedisCache;
 
 public class CacheUtil {

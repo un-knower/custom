@@ -18,13 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.qingting.customer.baseserver.AreaService;
-import com.qingting.customer.baseserver.CityService;
-import com.qingting.customer.baseserver.ProvinceService;
 import com.qingting.customer.common.pojo.hbasedo.Area;
 import com.qingting.customer.common.pojo.hbasedo.City;
 import com.qingting.customer.common.pojo.hbasedo.Province;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.server.AreaService;
+import com.qingting.customer.server.CityService;
+import com.qingting.customer.server.ProvinceService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.util.StringUtils;

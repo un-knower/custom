@@ -7,7 +7,7 @@
 	   http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
 	<!-- 提供方应用信息，用于计算依赖关系 -->
-	<dubbo:application name="customer-server-impl"/>
+	<dubbo:application name="customer-server-impl" />
 
 	<!-- 使用zookeeper注册中心暴露服务地址 -->
 	<dubbo:registry protocol="zookeeper" address="${zookeeper.address}" />
@@ -19,27 +19,36 @@
 	<dubbo:provider timeout="100000" threadpool="fixed" threads="100" accepts="1000" />
 
 	<!-- 提供的服务接口 -->
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MonitorService" ref="monitorService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.ProjectService" ref="projectService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.EquipService" ref="equipService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.EquipSortService" ref="equipSortService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MessageService" ref="messageService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MessageSortService" ref="messageSortService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.UserService" ref="userService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.UserSortService" ref="userSortService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.external.TxMessageService" ref="txMessageService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WarnService" ref="warnService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.MonitorService" ref="monitorService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.ProjectService" ref="projectService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.EquipService" ref="equipService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.EquipSortService" ref="equipSortService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.MessageService" ref="messageService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.MessageSortService" ref="messageSortService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.UserService" ref="userService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.UserSortService" ref="userSortService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.external.TxMessageService" ref="txMessageService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.WarnService" ref="warnService" />
 	
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.ProvinceService" ref="provinceService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.CityService" ref="cityService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.AreaService" ref="areaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.ProvinceService" ref="provinceService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.CityService" ref="cityService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.AreaService" ref="areaService" />
 	
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.FilterService" ref="filterService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.FilterGroupService" ref="filterGroupService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.FormulaService" ref="formulaService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.MicroFormulaService" ref="microFormulaService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WaterAreaService" ref="waterAreaService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.WaterQualityService" ref="waterQualityService" />
-	<dubbo:service retries="0" interface="com.qingting.customer.baseserver.CardService" ref="cardService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.FilterService" ref="filterService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.FilterGroupService" ref="filterGroupService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.FormulaService" ref="formulaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.MicroFormulaService" ref="microFormulaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.WaterAreaService" ref="waterAreaService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.WaterQualityService" ref="waterQualityService" />
+	<dubbo:service retries="0" interface="com.qingting.customer.server.CardService" ref="cardService" />
 	
+	<!-- 提供:需与运营系统交互的接口 -->
+	<dubbo:service retries="0" group="customer" interface="com.qingting.customer.server.ServerService" ref="customerServerService" version="1.0.0"/>
+	
+	
+	<!-- 消费的服务接口 -->
+	<!-- 运营系统接口 -->
+	<dubbo:reference group="operation" interface="com.qingting.operation.server.EmployeeService" id="employeeService" version="1.0.0"/>
+	<dubbo:reference group="operation" interface="com.qingting.operation.server.EvaluateService" id="evaluateService" version="1.0.0"/>
+	<dubbo:reference group="operation" interface="com.qingting.operation.server.ServerService" id="operationServerService" version="1.0.0"/>
 </beans>  

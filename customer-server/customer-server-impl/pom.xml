@@ -14,7 +14,7 @@
 	
 	<dependencies>
 		<dependency>
-			<groupId>com.qingting.operation.operation-server-api</groupId>
+			<groupId>com.qingting.operation</groupId>
 			<artifactId>operation-server-api</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
 		</dependency>
@@ -72,7 +72,7 @@
 			<artifactId>customer-server-api</artifactId>
 			<version>${project.parent.version}</version>
 		</dependency>
-		<dependency>
+		<!-- <dependency>
 			<groupId>com.qingting.customer</groupId>
 			<artifactId>customer-dao-api</artifactId>
 			<version>${project.parent.version}</version>
@@ -81,7 +81,7 @@
 			<groupId>com.qingting.customer</groupId>
 			<artifactId>customer-dao-impl</artifactId>
 			<version>${project.parent.version}</version>
-		</dependency>
+		</dependency> -->
 		<!-- <dependency>
 			<groupId>com.google.guava</groupId>
 			<artifactId>guava</artifactId>

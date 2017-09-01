@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.qingting.customer.baseserver.MessageService;
-import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.hbasedo.User;
+import com.qingting.customer.server.MessageService;
+import com.qingting.customer.server.UserService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 import com.smart.mvc.validator.Validator;

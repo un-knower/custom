@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.external.TxMessageService;
+import com.qingting.customer.server.external.TxMessageService;
 import com.smart.mvc.model.Result;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;

@@ -13,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.UserService;
 import com.qingting.customer.common.pojo.dto.MyDTO;
 import com.qingting.customer.common.pojo.hbasedo.User;
 import com.qingting.customer.common.pojo.model.Pagination;
+import com.qingting.customer.server.UserService;
 import com.smart.mvc.controller.BaseController;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;

@@ -15,10 +15,16 @@
 		<jstl.version>1.2</jstl.version>
 		<smart.version>1.0.0</smart.version>
 		<jsp-api.version>2.2</jsp-api.version>
+		<operation.version>0.0.1-SNAPSHOT</operation.version>
 	</properties>
 
 	<dependencies>
-		
+		<!-- 运营系统 -->
+		<dependency>
+			<groupId>com.qingting.operation</groupId>
+			<artifactId>operation-server-api</artifactId>
+			<version>${operation.version}</version>
+		</dependency>
 		<!-- 二维码 -->
 		<dependency>
 			<groupId>QRCode</groupId>

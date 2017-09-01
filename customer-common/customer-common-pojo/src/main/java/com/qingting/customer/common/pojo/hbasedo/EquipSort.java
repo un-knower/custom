@@ -20,7 +20,7 @@ public class EquipSort extends PersistentObject{
 	/**
 	 * 图像路径
 	 */
-	private String imageUrl;
+	private String sortImage;
 	/**
 	 * 创建者ID
 	 */
@@ -48,11 +48,11 @@ public class EquipSort extends PersistentObject{
 	public void setSortName(String sortName) {
 		this.sortName = sortName;
 	}
-	public String getImageUrl() {
-		return imageUrl;
+	public String getSortImage() {
+		return sortImage;
 	}
-	public void setImageUrl(String imageUrl) {
-		this.imageUrl = imageUrl;
+	public void setSortImage(String sortImage) {
+		this.sortImage = sortImage;
 	}
 	public Integer getUserId() {
 		return userId;
@@ -68,8 +68,9 @@ public class EquipSort extends PersistentObject{
 	}
 	@Override
 	public String toString() {
-		return "EquipSort [rowKey=" + rowKey + ", id=" + id + ", sortName=" + sortName + ", imageUrl=" + imageUrl
+		return "EquipSort [rowKey=" + rowKey + ", id=" + id + ", sortName=" + sortName + ", sortImage=" + sortImage
 				+ ", userId=" + userId + ", createTime=" + createTime + "]";
 	}
+	
 	
 }

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.baseserver.MessageService;
 import com.qingting.customer.common.pojo.hbasedo.Message;
 import com.qingting.customer.common.pojo.model.Pagination;
 import com.qingting.customer.controller.common.RequestEntitys;
+import com.qingting.customer.server.MessageService;
 import com.smart.mvc.controller.BaseController;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;

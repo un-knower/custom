@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +17,8 @@ import com.qingting.customer.common.pojo.dto.HisSerSimpleDTO;
 import com.qingting.customer.common.pojo.dto.HisServiceDTO;
 import com.qingting.customer.common.pojo.dto.PlanDTO;
 import com.qingting.customer.common.pojo.dto.PlanSimpleDTO;
+import com.qingting.customer.model.SummaryServer;
+import com.qingting.customer.server.ServerService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 
@@ -26,6 +30,10 @@ import io.swagger.annotations.ApiParam;
 @Controller("consumerServiceController")
 @RequestMapping("/consumer/service")
 public class ServiceController {
+	
+	@Resource
+	ServerService customerServerService;
+	
 	String[][] str={
 			{"不礼貌","说脏话","爱吐槽","没素养","不喜欢","做事不认真","做完事不收拾","看不顺眼","不尊敬他人","故意拖拉"},
 			{"冷嘲热讽","语言刻薄","拒人千里","一幅驴脸","冷若冰霜","面无表情","敷衍了事","草草了事","不冷不热","代答不理","视耳不闻"},
@@ -54,6 +62,9 @@ public class ServiceController {
 	@ApiOperation("获取当前用户的所有历史服务记录")
 	@RequestMapping(value="/listHis",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<HisSerSimpleDTO>> listHis(){
+		
+		List<SummaryServer> summaryServer = customerServerService.listSummaryServerByUserId(1);
+		System.out.println("summaryServer结果:"+summaryServer.size());
 		List<HisSerSimpleDTO> list=new ArrayList<HisSerSimpleDTO>();
 		for(int i=0;i<8;i++){
 			list.add(getSimpleDTO(i%2==1,str1[i],i+1));

@@ -36,11 +36,9 @@
 					</a>
 					
 					<form id="addEquipForm" method="post">
-						<!-- <input id="equipCode_input" type="hidden" name="equipCode"/>
-						<input id="username_input" type="hidden" name="username"/>
-						<input id="password_input" type="hidden" name="password"/> -->
 						
-						<br/>
+						
+						<!-- <br/>
 						<label class="control-label" for="form-field-1"> 运营商： </label>
 						<select id="operatorSort_select" name="operatorSort">
 							<option value="">选择分类</option>
@@ -58,7 +56,35 @@
 						<br/><br/>
 						<label class="control-label" for="form-field-1">  密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码： </label>
 						<input id="password_input" type="text" readonly  unselectable="on" name="password"/>
-						<br/><br/> 
+						<br/><br/>  -->
+						
+						
+						<br/>
+						<label class="control-label" for="form-field-1"> 运营商： </label>
+						<select id="operatorSort_select" name="operatorSort">
+							<option value="">选择分类</option>
+							<option value="1">移动</option>
+							<option value="2">联通</option>
+						</select>
+						<label class="control-label" for="form-field-1"> 物联网卡号： </label>
+						<input id="cardNumber_input" type="text" name="cardNumber"/>
+						<br/><br/>
+						<label class="control-label" for="form-field-1"> 编号前缀： </label>
+						<input id="preCode_input" type="text"  name="preCode" value="010117"/>
+						<br/><br/>
+						<label class="control-label" for="form-field-1"> 开始编号： </label>
+						<input id="startCode_input" type="text"  name="startCode" value="010117001000"/>
+						<br/><br/>
+						<label class="control-label" for="form-field-1"> 设备编号： </label>
+						<input id="equipCode_input" type="text"  name="equipCode"/>
+						<br/><br/>
+						<label class="control-label" for="form-field-1">  账&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号： </label>
+						<input id="username_input" type="text"  name="username"/>
+						<br/><br/>
+						<label class="control-label" for="form-field-1">  密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码： </label>
+						<input id="password_input" type="text"  name="password"/>
+						<br/><br/>
+						
 						
 						<!-- <br/>
 						<label class="control-label" for="form-field-1"> 设备分类： </label>
@@ -130,9 +156,11 @@
 		    }); */
 		    //注册获取更新单击事件
 			$("#getQRcode").click(function(){
+				var preCode=$("#preCode_input").val();
+				var startCode=$("#startCode_input").val();
 				$.ajax({
 					type : "get", 
-		            url : "${_path}/admin/equip/getEquipParam", 
+		            url : "${_path}/admin/equip/getEquipParam?preCode="+preCode+"&startCode="+startCode, 
 		            data : null, 
 		            async : true, 
 		            cache : false,
@@ -204,10 +232,20 @@
 			$("#printCode").click(function(){
 				$("div#printArea").printArea(); 
 			});
+			//改变设备编号刷新二维码
+			$("#equipCode_input").blur(function(){
+				var equipCode=$("#equipCode_input").val();
+				var username=$("#username_input").val();
+				var password=$("#password_input").val();
+				changeProductionImage(equipCode,username,password);
+		        changeEquipImage(equipCode);
+			});
 			function reloadGetNew(){
+				var preCode=$("#preCode_input").val();
+				var startCode=$("#startCode_input").val();
 				$.ajax({
 					type : "get", 
-		            url : "${_path}/admin/equip/getEquipParam", 
+		            url : "${_path}/admin/equip/getEquipParam?preCode="+preCode+"&startCode="+startCode, 
 		            data : null, 
 		            async : true, 
 		            cache : false,
