@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.model.hbasedo.Project;
+import com.qingting.customer.model.Project;
 import com.qingting.customer.server.ProjectService;
 import com.qingting.customer.server.UserService;
 import com.smart.mvc.model.ResultCode;

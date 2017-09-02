@@ -1,7 +1,7 @@
 package com.qingting.customer.dao;
 
-import com.qingting.customer.model.hbasedo.UserSort;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.UserSort;
+import com.smart.mvc.model.Pagination;
 
 public interface UserSortDAO {
 	/**

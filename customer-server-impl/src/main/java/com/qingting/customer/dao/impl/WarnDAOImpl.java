@@ -8,16 +8,16 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.enums.SerialType;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
-import com.qingting.customer.model.hbasedo.Warn;
-import com.qingting.customer.model.util.DateUtil;
-import com.qingting.customer.model.util.RowKeyUtil;
+import com.smart.mvc.util.DateUtil;
 import com.qingting.customer.dao.WarnDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Warn;
 @Repository("warnDAO")
 public class WarnDAOImpl implements WarnDAO {
 	@Autowired
@@ -25,7 +25,7 @@ public class WarnDAOImpl implements WarnDAO {
 	@Override
 	public void insertWarn(Warn warn) {
 		int num=RedisSerialNum.getSerialNum(redisTemplate, SerialType.SERIALNUM.getValue());
-		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(warn.getEquipId(), DateUtil.getMillisOfStart(),num));
+		RowKey rowKey = RowKeyUtil.getRowKey(warn.getEquipId(), DateUtil.getMillisOfStart(),num);
 		SHCUtil.getSHC("warn").insertObject(rowKey, warn);
 	}
 
@@ -44,19 +44,19 @@ public class WarnDAOImpl implements WarnDAO {
 	public Warn getWarnById(String rowKey) {
 		SimpleHbaseDOWithKeyResult<Warn> result = SHCUtil.getSHC("warn").findObjectAndKey(new StringRowKey(rowKey), Warn.class);
 		Warn warn=result.getT();
-		warn.setContentOfRowKey(result.getRowKey().toBytes());
+		//warn.setContentOfRowKey(result.getRowKey().toBytes());
 		return warn;
 	}
 
 	@Override
 	public List<Warn> listWarn(String equipId) {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(DateUtil.getStartOfMillis()));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(DateUtil.getMillisOfStart()));
+		RowKey startRowKey=RowKeyUtil.getRowKey(DateUtil.getStartOfMillis());
+		RowKey endRowKey=RowKeyUtil.getRowKey(DateUtil.getMillisOfStart());
 		List<SimpleHbaseDOWithKeyResult<Warn>> listDOWithKey = SHCUtil.getSHC("warn").findObjectAndKeyList(startRowKey,endRowKey, Warn.class);
 		List<Warn> list=new ArrayList<Warn>();
 		for (SimpleHbaseDOWithKeyResult<Warn> result : listDOWithKey) {
 			Warn warn = result.getT();
-			warn.setContentOfRowKey(result.getRowKey().toBytes());
+			//warn.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(warn);
 		}
 		return list;

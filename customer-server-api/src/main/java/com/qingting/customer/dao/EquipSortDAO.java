@@ -2,8 +2,8 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.EquipSort;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.EquipSort;
+import com.smart.mvc.model.Pagination;
 
 public interface EquipSortDAO {
 	/**

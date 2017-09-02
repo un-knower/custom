@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.qingting.customer.model.hbasedo.User;
+import com.qingting.customer.model.User;
 import com.qingting.customer.server.MessageService;
 import com.qingting.customer.server.UserService;
 import com.smart.mvc.model.ResultCode;

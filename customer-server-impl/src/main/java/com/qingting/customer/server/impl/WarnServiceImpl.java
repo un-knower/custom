@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Warn;
 import com.qingting.customer.dao.WarnDAO;
+import com.qingting.customer.model.Warn;
 import com.qingting.customer.server.WarnService;
 
 @Service("warnService")

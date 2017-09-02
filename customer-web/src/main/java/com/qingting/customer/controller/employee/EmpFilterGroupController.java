@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.model.FilterGroup;
+import com.qingting.customer.model.User;
 import com.qingting.customer.model.dto.FilterGroupDTO;
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.hbasedo.User;
 import com.qingting.customer.server.FilterGroupService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;

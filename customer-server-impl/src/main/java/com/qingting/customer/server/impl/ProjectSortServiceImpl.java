@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.ProjectSort;
 import com.qingting.customer.dao.ProjectSortDAO;
+import com.qingting.customer.model.ProjectSort;
 import com.qingting.customer.server.ProjectSortService;
 
 @Service("projectSortService")

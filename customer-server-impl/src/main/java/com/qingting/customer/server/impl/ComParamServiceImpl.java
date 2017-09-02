@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.ComParam;
 import com.qingting.customer.dao.ComParamDAO;
+import com.qingting.customer.model.ComParam;
 import com.qingting.customer.server.ComParamService;
 
 @Service("comParamService")

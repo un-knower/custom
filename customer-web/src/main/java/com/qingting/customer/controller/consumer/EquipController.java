@@ -13,17 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.model.common.AttentStatus;
-import com.qingting.customer.model.common.FindEquipType;
+import com.qingting.customer.model.Equip;
+import com.qingting.customer.model.User;
 import com.qingting.customer.model.dto.EquipDTO;
-import com.qingting.customer.model.hbasedo.Equip;
-import com.qingting.customer.model.hbasedo.User;
-import com.qingting.customer.model.util.DateUtil;
 import com.qingting.customer.controller.common.SessionUserMsg;
 import com.qingting.customer.controller.common.SessionUserMsgUtils;
+import com.qingting.customer.enums.AttentStatus;
+import com.qingting.customer.enums.FindEquipType;
 import com.qingting.customer.server.EquipService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
+import com.smart.mvc.util.DateUtil;
 import com.smart.sso.client.SessionUtils;
 
 import io.swagger.annotations.Api;

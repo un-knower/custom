@@ -22,18 +22,18 @@ import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.FilterUtils;
 import com.alipay.simplehbase.util.HbaseOriginService;
-import com.qingting.customer.model.common.AttentStatus;
-import com.qingting.customer.model.common.FindEquipType;
-import com.qingting.customer.model.common.StringUtils;
-import com.qingting.customer.model.hbasedo.Attention;
-import com.qingting.customer.model.hbasedo.Equip;
-import com.qingting.customer.model.hbasedo.Message;
-import com.qingting.customer.model.page.Pagination;
-import com.qingting.customer.model.util.RandomUtil;
+import com.smart.mvc.model.Pagination;
+import com.smart.mvc.util.RandomUtil;
+import com.smart.mvc.util.StringUtils;
 import com.qingting.customer.dao.EquipDAO;
 import com.qingting.customer.dao.util.SHCUtil;
+import com.qingting.customer.enums.AttentStatus;
+import com.qingting.customer.enums.FindEquipType;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Attention;
+import com.qingting.customer.model.Equip;
+import com.qingting.customer.model.Message;
 
 @Repository("equipDAO")
 public class EquipDAOImpl implements EquipDAO {

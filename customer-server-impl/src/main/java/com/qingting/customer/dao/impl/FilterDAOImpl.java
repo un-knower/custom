@@ -16,11 +16,11 @@ import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
-import com.qingting.customer.model.hbasedo.Filter;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.FilterDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Filter;
 @Repository("filterDAO")
 public class FilterDAOImpl implements FilterDAO {
 	@Resource(name="redisTemplate")

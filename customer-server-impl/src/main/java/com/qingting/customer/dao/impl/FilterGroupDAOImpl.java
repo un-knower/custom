@@ -12,10 +12,10 @@ import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.FilterGroupDAO;
 import com.qingting.customer.dao.util.SHCUtil;
+import com.qingting.customer.model.FilterGroup;
 @Repository("filterGroupDAO")
 public class FilterGroupDAOImpl implements FilterGroupDAO {
 	@Resource(name="redisTemplate")

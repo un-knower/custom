@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.City;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.CityDAO;
+import com.qingting.customer.model.City;
 import com.qingting.customer.server.CityService;
 @Service("cityService")
 public class CityServiceImpl implements CityService {

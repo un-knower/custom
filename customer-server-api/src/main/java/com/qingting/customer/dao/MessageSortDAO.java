@@ -1,8 +1,8 @@
 package com.qingting.customer.dao;
 
 
-import com.qingting.customer.model.hbasedo.MessageSort;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.MessageSort;
+import com.smart.mvc.model.Pagination;
 
 public interface MessageSortDAO {
 	/**

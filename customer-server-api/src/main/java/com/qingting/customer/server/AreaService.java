@@ -3,8 +3,8 @@ package com.qingting.customer.server;
 import java.util.List;
 
 import com.qingting.customer.Service;
-import com.qingting.customer.model.hbasedo.Area;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.Area;
+import com.smart.mvc.model.Pagination;
 
 public interface AreaService extends Service<Area, Integer> {
 	/**

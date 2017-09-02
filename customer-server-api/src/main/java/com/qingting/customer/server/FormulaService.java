@@ -1,8 +1,8 @@
 package com.qingting.customer.server;
 
 
-import com.qingting.customer.model.hbasedo.Formula;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.Formula;
+import com.smart.mvc.model.Pagination;
 
 public interface FormulaService {
 	void insert(Formula formula);

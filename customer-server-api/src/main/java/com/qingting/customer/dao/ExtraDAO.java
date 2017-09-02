@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Extra;
+import com.qingting.customer.model.Extra;
 
 public interface ExtraDAO{
 	/**

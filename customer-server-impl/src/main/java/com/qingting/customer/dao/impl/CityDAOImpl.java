@@ -11,15 +11,15 @@ import com.alipay.simplehbase.client.QueryExtInfo;
 import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.util.FilterUtils;
-import com.qingting.customer.model.common.StringUtils;
-import com.qingting.customer.model.hbasedo.Area;
-import com.qingting.customer.model.hbasedo.City;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
+import com.smart.mvc.util.StringUtils;
 import com.qingting.customer.dao.CityDAO;
 import com.qingting.customer.dao.util.Common;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Area;
+import com.qingting.customer.model.City;
 
 @Repository("cityDAO")
 public class CityDAOImpl implements CityDAO {

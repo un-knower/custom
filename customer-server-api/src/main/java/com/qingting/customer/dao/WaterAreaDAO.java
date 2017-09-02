@@ -3,8 +3,8 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.WaterArea;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.WaterArea;
+import com.smart.mvc.model.Pagination;
 
 public interface WaterAreaDAO {
 	void insert(WaterArea waterArea);

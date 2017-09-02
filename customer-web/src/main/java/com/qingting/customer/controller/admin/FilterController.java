@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.model.hbasedo.Filter;
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
+import com.qingting.customer.model.Filter;
+import com.qingting.customer.model.FilterGroup;
 import com.qingting.customer.server.FilterGroupService;
 import com.qingting.customer.server.FilterService;
 import com.smart.mvc.model.ResultCode;

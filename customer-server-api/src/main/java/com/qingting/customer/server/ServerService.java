@@ -2,7 +2,7 @@ package com.qingting.customer.server;
 
 import java.util.List;
 
-import com.qingting.customer.model.SummaryServer;
+import com.qingting.customer.model.dto.SummaryServerDTO;
 
 public interface ServerService {
 	/**
@@ -14,5 +14,5 @@ public interface ServerService {
 	 * @return List<SummaryServer>
 	 * @throws
 	 */
-	List<SummaryServer> listSummaryServerByUserId(Integer userId);
+	List<SummaryServerDTO> listSummaryServerByUserId(Integer userId);
 }

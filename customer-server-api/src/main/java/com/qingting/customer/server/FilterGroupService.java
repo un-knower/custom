@@ -2,9 +2,9 @@ package com.qingting.customer.server;
 
 import java.util.List;
 
+import com.qingting.customer.model.FilterGroup;
 import com.qingting.customer.model.dto.FilterGroupDTO;
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 
 public interface FilterGroupService {
 	void insert(FilterGroup filterGroup);

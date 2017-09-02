@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Config;
+import com.qingting.customer.model.Config;
 
 public interface ConfigDAO {
 	/**

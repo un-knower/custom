@@ -2,7 +2,7 @@ package com.qingting.customer.server;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Attention;
+import com.qingting.customer.model.Attention;
 
 public interface AttentionService {
 	/**

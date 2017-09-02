@@ -7,11 +7,11 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Equip;
-import com.qingting.customer.model.hbasedo.EquipSort;
 import com.qingting.customer.dao.EquipDAO;
 import com.qingting.customer.dao.EquipSortDAO;
-import com.qingting.customer.model.SummaryServer;
+import com.qingting.customer.model.Equip;
+import com.qingting.customer.model.EquipSort;
+import com.qingting.customer.model.dto.SummaryServerDTO;
 import com.qingting.customer.server.ServerService;
 import com.qingting.operation.model.ServerDTO;
 
@@ -24,7 +24,7 @@ public class ServerServiceImpl implements ServerService {
 	@Resource
 	EquipSortDAO equipSortDAO;
 	@Override
-	public List<SummaryServer> listSummaryServerByUserId(Integer userId) {
+	public List<SummaryServerDTO> listSummaryServerByUserId(Integer userId) {
 		
 		/*List<ServerDTO> serverDTOs= operationServerService.listServerDTOByUserId(userId);
 		List<SummaryServer> summaryServers=new ArrayList<SummaryServer>();

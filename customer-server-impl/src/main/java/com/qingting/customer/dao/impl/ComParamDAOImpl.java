@@ -6,19 +6,19 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
-import com.qingting.customer.model.hbasedo.ComParam;
-import com.qingting.customer.model.util.DateUtil;
-import com.qingting.customer.model.util.RowKeyUtil;
+import com.smart.mvc.util.DateUtil;
 import com.qingting.customer.dao.ComParamDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.ComParam;
 @Repository("comParamDAO")
 public class ComParamDAOImpl implements ComParamDAO {
 	@Override
 	public void insertComParam(ComParam comParam) {
-		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(DateUtil.getMillisOfStart()));
+		RowKey rowKey = RowKeyUtil.getRowKey(DateUtil.getMillisOfStart());
 		SHCUtil.getSHC("comParam").insertObject(rowKey, comParam);
 	}
 
@@ -34,8 +34,8 @@ public class ComParamDAOImpl implements ComParamDAO {
 
 	@Override
 	public ComParam getComParamOfEnable() {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(true, DateUtil.getStartOfMillis()));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(true, DateUtil.getMillisOfStart()));
+		RowKey startRowKey=RowKeyUtil.getRowKey(true, DateUtil.getStartOfMillis());
+		RowKey endRowKey=RowKeyUtil.getRowKey(true, DateUtil.getMillisOfStart());
 		List<SimpleHbaseDOWithKeyResult<ComParam>> listDOWithKey = SHCUtil.getSHC("comParam").findObjectAndKeyList(startRowKey,endRowKey, ComParam.class);
 		
 		/*if(listDOWithKey.size()>1)
@@ -55,7 +55,7 @@ public class ComParamDAOImpl implements ComParamDAO {
 		for (SimpleHbaseDOWithKeyResult<ComParam> result : listDOWithKey) {
 			ComParam comParam = result.getT();
 			if(comParam.getEnable()){
-				comParam.setContentOfRowKey(result.getRowKey().toBytes());
+				//comParam.setContentOfRowKey(result.getRowKey().toBytes());
 				list.add(comParam);
 			}
 		}
@@ -68,13 +68,13 @@ public class ComParamDAOImpl implements ComParamDAO {
 
 	@Override
 	public List<ComParam> listComParam() {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(false, DateUtil.getStartOfMillis()));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(true, DateUtil.getMillisOfStart()));
+		RowKey startRowKey=RowKeyUtil.getRowKey(false, DateUtil.getStartOfMillis());
+		RowKey endRowKey=RowKeyUtil.getRowKey(true, DateUtil.getMillisOfStart());
 		List<SimpleHbaseDOWithKeyResult<ComParam>> listDOWithKey = SHCUtil.getSHC("comParam").findObjectAndKeyList(startRowKey,endRowKey, ComParam.class);
 		List<ComParam> list=new ArrayList<ComParam>();
 		for (SimpleHbaseDOWithKeyResult<ComParam> result : listDOWithKey) {
 			ComParam comParam = result.getT();
-			comParam.setContentOfRowKey(result.getRowKey().toBytes());
+			//comParam.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(comParam);
 		}
 		return list;

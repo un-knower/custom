@@ -12,8 +12,8 @@ package com.qingting.customer.dao;
 import java.util.Calendar;
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Monitor;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.Monitor;
+import com.smart.mvc.model.Pagination;
 
 /**
  * 

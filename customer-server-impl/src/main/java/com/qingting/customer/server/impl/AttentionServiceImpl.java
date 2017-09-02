@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Attention;
 import com.qingting.customer.dao.AttentionDAO;
+import com.qingting.customer.model.Attention;
 import com.qingting.customer.server.AttentionService;
 @Service("attentionService")
 public class AttentionServiceImpl implements AttentionService {

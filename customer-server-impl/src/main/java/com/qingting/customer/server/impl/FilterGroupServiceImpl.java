@@ -10,15 +10,15 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import com.qingting.customer.model.Filter;
+import com.qingting.customer.model.FilterGroup;
 import com.qingting.customer.model.dto.FilterGroupDTO;
-import com.qingting.customer.model.hbasedo.Filter;
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.FilterDAO;
 import com.qingting.customer.dao.FilterGroupDAO;
 import com.qingting.customer.server.FilterGroupService;
 @Service("filterGroupService")
-public class FilterGroupServiceImpl implements FilterGroupService,com.qingting.operation.server.FilterGroupService {
+public class FilterGroupServiceImpl implements FilterGroupService {
 	@Resource
 	FilterGroupDAO filterGroupDAO;
 	@Resource
@@ -55,7 +55,7 @@ public class FilterGroupServiceImpl implements FilterGroupService,com.qingting.o
 
 	@Override
 	public List<FilterGroupDTO> listDTO() {
-		List<com.qingting.customer.model.hbasedo.FilterGroup> list = filterGroupDAO.list();
+		List<com.qingting.customer.model.FilterGroup> list = filterGroupDAO.list();
 		Set<Integer> ids=new HashSet<Integer>();
 		for (FilterGroup filterGroup : list) {
 			ids.add(filterGroup.getOneFilterId());
@@ -83,33 +83,4 @@ public class FilterGroupServiceImpl implements FilterGroupService,com.qingting.o
 		return filterGroupDAO.list();
 	}*/
 	
-	@Override
-	public List<com.qingting.operation.model.FilterGroup> list() {
-		List<com.qingting.customer.model.hbasedo.FilterGroup> list = filterGroupDAO.list();
-		
-		Set<Integer> ids=new HashSet<Integer>();
-		for (com.qingting.customer.model.hbasedo.FilterGroup filterGroup : list) {
-			ids.add(filterGroup.getOneFilterId());
-			ids.add(filterGroup.getTwoFilterId());
-			ids.add(filterGroup.getThreeFilterId());
-			ids.add(filterGroup.getFourFilterId());
-			ids.add(filterGroup.getFiveFilterId());
-		}
-		Map<Integer, Filter> filterListMap = filterDAO.listByIds(ids);
-		
-		List<com.qingting.operation.model.FilterGroup> result=new ArrayList<com.qingting.operation.model.FilterGroup>();
-		for (com.qingting.customer.model.hbasedo.FilterGroup filterGroup : list) {
-			com.qingting.operation.model.FilterGroup f = new com.qingting.operation.model.FilterGroup();
-			f.setId(filterGroup.getId());
-			f.setName(
-					filterListMap.get(filterGroup.getOneFilterId()).getName()+
-					filterListMap.get(filterGroup.getTwoFilterId()).getName()+
-					filterListMap.get(filterGroup.getThreeFilterId()).getName()+
-					filterListMap.get(filterGroup.getFourFilterId()).getName()+
-					filterListMap.get(filterGroup.getFiveFilterId()).getName()
-					);
-			result.add(f);
-		}
-		return result;
-	}
 }

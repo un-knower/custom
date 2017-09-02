@@ -1,8 +1,8 @@
 package com.qingting.customer.dao;
 
 
-import com.qingting.customer.model.hbasedo.WaterQuality;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.WaterQuality;
+import com.smart.mvc.model.Pagination;
 
 public interface WaterQualityDAO {
 	void insert(WaterQuality waterQuality);

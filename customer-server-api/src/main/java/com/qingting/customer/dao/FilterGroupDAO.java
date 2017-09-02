@@ -3,8 +3,8 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.FilterGroup;
+import com.smart.mvc.model.Pagination;
 
 public interface FilterGroupDAO {
 	void insert(FilterGroup filterGroup);

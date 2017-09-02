@@ -11,11 +11,11 @@ import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
-import com.qingting.customer.model.hbasedo.Combo;
 import com.qingting.customer.dao.ComboDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Combo;
 
 @Repository("comboDAO")
 public class ComboDAOImpl implements ComboDAO {
@@ -42,19 +42,19 @@ public class ComboDAOImpl implements ComboDAO {
 	public Combo getComboByRowKey(String rowKey) {
 		SimpleHbaseDOWithKeyResult<Combo> result = SHCUtil.getSHC("combo").findObjectAndKey(new StringRowKey(rowKey), Combo.class);
 		Combo combo=result.getT();
-		combo.setContentOfRowKey(result.getRowKey().toBytes());
+		//combo.setContentOfRowKey(result.getRowKey().toBytes());
 		return combo;
 	}
 
 	@Override
 	public List<Combo> listCombo() {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(0));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(Integer.MAX_VALUE));
+		RowKey startRowKey=RowKeyUtil.getRowKey(0);
+		RowKey endRowKey=RowKeyUtil.getRowKey(Integer.MAX_VALUE);
 		List<SimpleHbaseDOWithKeyResult<Combo>> listDOWithKey = SHCUtil.getSHC("combo").findObjectAndKeyList(startRowKey,endRowKey, Combo.class);
 		List<Combo> list=new ArrayList<Combo>();
 		for (SimpleHbaseDOWithKeyResult<Combo> result : listDOWithKey) {
 			Combo combo = result.getT();
-			combo.setContentOfRowKey(result.getRowKey().toBytes());
+			//combo.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(combo);
 		}
 		return list;

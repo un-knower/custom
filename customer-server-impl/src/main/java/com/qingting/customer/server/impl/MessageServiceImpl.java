@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Message;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.MessageDAO;
+import com.qingting.customer.model.Message;
 import com.qingting.customer.server.MessageService;
 
 @Service("messageService")

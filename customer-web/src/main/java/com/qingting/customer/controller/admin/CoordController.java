@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.model.hbasedo.Project;
+import com.qingting.customer.model.Project;
 import com.smart.mvc.model.WebResult;
 
 import io.swagger.annotations.Api;

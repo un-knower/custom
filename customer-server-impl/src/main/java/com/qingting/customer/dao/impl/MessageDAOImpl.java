@@ -18,14 +18,14 @@ import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.FilterUtils;
 import com.alipay.simplehbase.util.HbaseOriginService;
-import com.qingting.customer.model.common.StringUtils;
-import com.qingting.customer.model.hbasedo.Message;
-import com.qingting.customer.model.page.Pagination;
-import com.qingting.customer.model.util.RandomUtil;
+import com.smart.mvc.model.Pagination;
+import com.smart.mvc.util.RandomUtil;
+import com.smart.mvc.util.StringUtils;
 import com.qingting.customer.dao.MessageDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Message;
 @Repository("messageDAO")
 public class MessageDAOImpl implements MessageDAO{
 	

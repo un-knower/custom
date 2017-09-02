@@ -6,20 +6,20 @@ import java.util.List;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
-import com.qingting.customer.model.hbasedo.EquipParam;
-import com.qingting.customer.model.util.DateUtil;
-import com.qingting.customer.model.util.RowKeyUtil;
+import com.smart.mvc.util.DateUtil;
 import com.qingting.customer.dao.EquipParamDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.EquipParam;
 
 @Repository("equipParamDAO")
 public class EquipParamDAOImpl implements EquipParamDAO {
 	@Override
 	public void insertEquipParam(EquipParam equipParam) {
-		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(equipParam.getEquipId(), DateUtil.getMillisOfStart()));
+		RowKey rowKey = RowKeyUtil.getRowKey(equipParam.getEquipId(), DateUtil.getMillisOfStart());
 		SHCUtil.getSHC("equipParam").insertObject(rowKey, equipParam);
 	}
 
@@ -35,8 +35,8 @@ public class EquipParamDAOImpl implements EquipParamDAO {
 
 	@Override
 	public EquipParam getEquipParamOfEnableByEquipId(Integer equipId) {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getStartOfMillis()));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart()));
+		RowKey startRowKey=RowKeyUtil.getRowKey(equipId, DateUtil.getStartOfMillis());
+		RowKey endRowKey=RowKeyUtil.getRowKey(equipId, DateUtil.getMillisOfStart());
 		List<SimpleHbaseDOWithKeyResult<EquipParam>> listDOWithKey = SHCUtil.getSHC("equipParam").findObjectAndKeyList(startRowKey,endRowKey, EquipParam.class);
 		
 		/*if(listDOWithKey.size()>1)
@@ -55,7 +55,7 @@ public class EquipParamDAOImpl implements EquipParamDAO {
 		for (SimpleHbaseDOWithKeyResult<EquipParam> result : listDOWithKey) {
 			EquipParam equipParam = result.getT();
 			if(equipParam.getEnable()){
-				equipParam.setContentOfRowKey(result.getRowKey().toBytes());
+				//equipParam.setContentOfRowKey(result.getRowKey().toBytes());
 				list.add(equipParam);
 			}
 		}
@@ -67,13 +67,13 @@ public class EquipParamDAOImpl implements EquipParamDAO {
 
 	@Override
 	public List<EquipParam> listEquipParamByEquipId(Integer equipId) {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getStartOfMillis()));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(equipId, DateUtil.getMillisOfStart()));
+		RowKey startRowKey=RowKeyUtil.getRowKey(equipId, DateUtil.getStartOfMillis());
+		RowKey endRowKey=RowKeyUtil.getRowKey(equipId, DateUtil.getMillisOfStart());
 		List<SimpleHbaseDOWithKeyResult<EquipParam>> listDOWithKey = SHCUtil.getSHC("equipParam").findObjectAndKeyList(startRowKey,endRowKey, EquipParam.class);
 		List<EquipParam> list=new ArrayList<EquipParam>();
 		for (SimpleHbaseDOWithKeyResult<EquipParam> result : listDOWithKey) {
 			EquipParam equipParam = result.getT();
-			equipParam.setContentOfRowKey(result.getRowKey().toBytes());
+			//equipParam.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(equipParam);
 		}
 		return list;

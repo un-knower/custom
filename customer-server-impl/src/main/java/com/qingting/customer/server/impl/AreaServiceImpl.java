@@ -7,10 +7,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Area;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.AreaDAO;
 import com.qingting.customer.dao.ProvinceDAO;
+import com.qingting.customer.model.Area;
 import com.qingting.customer.server.AreaService;
 @Service("areaService")
 public class AreaServiceImpl implements AreaService {

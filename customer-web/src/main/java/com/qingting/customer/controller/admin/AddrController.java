@@ -18,10 +18,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.qingting.customer.model.hbasedo.Area;
-import com.qingting.customer.model.hbasedo.City;
-import com.qingting.customer.model.hbasedo.Province;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
+import com.qingting.customer.model.Area;
+import com.qingting.customer.model.City;
+import com.qingting.customer.model.Province;
 import com.qingting.customer.server.AreaService;
 import com.qingting.customer.server.CityService;
 import com.qingting.customer.server.ProvinceService;
@@ -72,9 +72,9 @@ public class AddrController {
 		List<Province> pros=new ArrayList<Province>();
 		List<City> citys=new ArrayList<City>();
 		List<Area> areas=new ArrayList<Area>();
-		byte proId=1;
-		short cityId=1;
-		short areaId=1;
+		int proId=1;
+		int cityId=1;
+		int areaId=1;
 		try {
 			is = file.getInputStream();
 			isr = new InputStreamReader(is);

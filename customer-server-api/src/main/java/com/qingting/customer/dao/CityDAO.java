@@ -3,8 +3,8 @@ package com.qingting.customer.dao;
 import java.util.List;
 
 import com.qingting.customer.Dao;
-import com.qingting.customer.model.hbasedo.City;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.City;
+import com.smart.mvc.model.Pagination;
 
 public interface CityDAO extends Dao<City, Integer>{
 	/**

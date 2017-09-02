@@ -8,9 +8,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.User;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.UserDAO;
+import com.qingting.customer.model.User;
 import com.qingting.customer.server.UserService;
 
 @Service("userService")

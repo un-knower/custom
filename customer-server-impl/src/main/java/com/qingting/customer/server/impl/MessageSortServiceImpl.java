@@ -6,9 +6,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.MessageSort;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.MessageSortDAO;
+import com.qingting.customer.model.MessageSort;
 import com.qingting.customer.server.MessageSortService;
 @Service("messageSortService")
 public class MessageSortServiceImpl implements MessageSortService {

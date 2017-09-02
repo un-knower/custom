@@ -1,7 +1,7 @@
 package com.qingting.customer.server;
 
-import com.qingting.customer.model.hbasedo.MicroFormula;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.MicroFormula;
+import com.smart.mvc.model.Pagination;
 
 public interface MicroFormulaService {
 	void insert(MicroFormula microFormula);

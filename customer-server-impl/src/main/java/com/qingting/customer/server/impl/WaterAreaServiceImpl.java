@@ -7,12 +7,12 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.WaterArea;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.WaterAreaDAO;
+import com.qingting.customer.model.WaterArea;
 import com.qingting.customer.server.WaterAreaService;
 @Service("waterAreaService")
-public class WaterAreaServiceImpl implements WaterAreaService,com.qingting.operation.server.WaterAreaService {
+public class WaterAreaServiceImpl implements WaterAreaService{
 	@Resource
 	WaterAreaDAO waterAreaDAO;
 	@Override
@@ -40,18 +40,6 @@ public class WaterAreaServiceImpl implements WaterAreaService,com.qingting.opera
 		return waterAreaDAO.list(page);
 	}
 
-	@Override
-	public List<com.qingting.operation.model.WaterArea> list() {
-		 List<WaterArea> list = waterAreaDAO.list();
-		 List<com.qingting.operation.model.WaterArea> result = new ArrayList<com.qingting.operation.model.WaterArea>();
-		 for (WaterArea waterArea : list) {
-			 com.qingting.operation.model.WaterArea w = new com.qingting.operation.model.WaterArea();
-			 w.setId(waterArea.getId());
-			 w.setName(waterArea.getName());
-			 result.add(w);
-		}
-		 return result;
-	}
 
 	@Override
 	public List<WaterArea> listAll() {

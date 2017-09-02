@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.EquipParam;
+import com.qingting.customer.model.EquipParam;
 
 public interface EquipParamDAO {
 	/**

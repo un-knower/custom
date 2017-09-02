@@ -5,8 +5,8 @@
 		http://www.springframework.org/schema/beans/spring-beans.xsd">
 		
 	<!-- 工作的bean -->
-	<bean id="userJob" class="com.qingting.customer.server.job.UserJob" />
-	<bean id="serviceJob" class="com.qingting.customer.server.job.ServiceJob" />
+	<bean id="userJob" class="com.qingting.customer.job.UserJob" />
+	<bean id="serviceJob" class="com.qingting.customer.job.ServiceJob" />
 	
 	<!-- job的配置开始 -->
 	<bean id="userJobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">

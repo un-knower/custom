@@ -7,7 +7,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.qingting.customer.model.hbasedo.Monitor;
+import com.qingting.customer.model.Monitor;
 
 
 //@RunWith(SpringJUnit4ClassRunner.class)

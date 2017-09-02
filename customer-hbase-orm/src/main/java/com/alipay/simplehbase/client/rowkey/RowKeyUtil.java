@@ -111,7 +111,7 @@ public class RowKeyUtil {
      * @return 
      * @return RowKey
      * @throws
-     */
+     *//*
     public static RowKey getRowKey(Integer value){
     	return new IntRowKey(value);
     }
@@ -123,7 +123,7 @@ public class RowKeyUtil {
     }
     public static RowKey getRowKey(byte[] value){
     	return new BytesRowKey(value);
-    }
+    }*/
     public static RowKey getRowKey(Object...obj){
     	byte[] bytes=null;
     	for (Object param : obj) {
@@ -158,7 +158,7 @@ public class RowKeyUtil {
     		return null;
     }
     
-    public static RowKey getRowKey(byte[] value1,String value2){
+    /*public static RowKey getRowKey(byte[] value1,String value2){
     	return new BytesRowKey(
     			BytesUtil.merge(value1, Bytes.toBytes(value2))
     			);
@@ -178,13 +178,13 @@ public class RowKeyUtil {
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value1), Bytes.toBytes(value2))
     			);
-    }
+    }*/
     /*public static RowKey getRowKey(Integer value,String str){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value),Bytes.toBytes(str))
     			);
     }*/
-    public static RowKey getRowKey(String str,Integer value){
+    /*public static RowKey getRowKey(String str,Integer value){
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(str),Bytes.toBytes(value))
     			);
@@ -238,7 +238,7 @@ public class RowKeyUtil {
     	return new BytesRowKey(
     			BytesUtil.merge(Bytes.toBytes(value1),Bytes.toBytes(value2), Bytes.toBytes(value3),Bytes.toBytes(value4))
     			);
-    }
+    }*/
     
     /*public static RowKey getMaxRowKey(String longText,Integer longTextLength,Integer value){
     	

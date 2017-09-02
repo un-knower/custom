@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.EquipParam;
 import com.qingting.customer.dao.EquipParamDAO;
+import com.qingting.customer.model.EquipParam;
 import com.qingting.customer.server.EquipParamService;
 
 @Service("equipParamService")

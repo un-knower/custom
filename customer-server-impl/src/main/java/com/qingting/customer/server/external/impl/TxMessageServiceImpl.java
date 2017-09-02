@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Message;
 import com.qingting.customer.dao.external.TxMessageDAO;
+import com.qingting.customer.model.Message;
 import com.qingting.customer.server.MessageService;
 import com.qingting.customer.server.external.TxMessageService;
 import com.smart.mvc.model.Result;

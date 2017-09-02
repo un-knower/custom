@@ -4,9 +4,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.WaterQuality;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.WaterQualityDAO;
+import com.qingting.customer.model.WaterQuality;
 import com.qingting.customer.server.WaterQualityService;
 @Service("waterQualityService")
 public class WaterQualityServiceImpl implements WaterQualityService {

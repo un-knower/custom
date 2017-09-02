@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.model.Monitor;
+import com.qingting.customer.model.WaterArea;
 import com.qingting.customer.model.dto.EmpMonitorDTO;
-import com.qingting.customer.model.hbasedo.Monitor;
-import com.qingting.customer.model.hbasedo.WaterArea;
 import com.qingting.customer.server.MonitorService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;

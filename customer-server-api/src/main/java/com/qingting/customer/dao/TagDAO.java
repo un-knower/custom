@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Tag;
+import com.qingting.customer.model.Tag;
 
 public interface TagDAO{
 	/**

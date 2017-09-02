@@ -2,8 +2,8 @@ package com.qingting.customer.server;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Card;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.Card;
+import com.smart.mvc.model.Pagination;
 
 public interface CardService {
 	void insert(Card card);

@@ -14,9 +14,9 @@ public class UserServiceImpl implements UserService {
 	UserDAO userDAO;
 	@Override
 	public List<User> searchUser(String mobile) {
-		List<com.qingting.customer.model.hbasedo.User> list = userDAO.searchUserByMobile(mobile);
+		List<com.qingting.customer.model.User> list = userDAO.searchUserByMobile(mobile);
 		List<User> result=new ArrayList<User>();
-		for (com.qingting.customer.model.hbasedo.User user : list) {
+		for (com.qingting.customer.model.User user : list) {
 			User u=new User();
 			u.setId(user.getId());
 			u.setMobile(user.getMobile());

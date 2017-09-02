@@ -17,7 +17,7 @@ import com.qingting.customer.model.dto.HisSerSimpleDTO;
 import com.qingting.customer.model.dto.HisServiceDTO;
 import com.qingting.customer.model.dto.PlanDTO;
 import com.qingting.customer.model.dto.PlanSimpleDTO;
-import com.qingting.customer.model.SummaryServer;
+import com.qingting.customer.model.dto.SummaryServerDTO;
 import com.qingting.customer.server.ServerService;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
@@ -63,7 +63,7 @@ public class ServiceController {
 	@RequestMapping(value="/listHis",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<List<HisSerSimpleDTO>> listHis(){
 		
-		List<SummaryServer> summaryServer = customerServerService.listSummaryServerByUserId(1);
+		List<SummaryServerDTO> summaryServer = customerServerService.listSummaryServerByUserId(1);
 		System.out.println("summaryServer结果:"+summaryServer.size());
 		List<HisSerSimpleDTO> list=new ArrayList<HisSerSimpleDTO>();
 		for(int i=0;i<8;i++){

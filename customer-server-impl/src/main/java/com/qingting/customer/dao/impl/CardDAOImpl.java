@@ -16,13 +16,13 @@ import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
 import com.alipay.simplehbase.util.FilterUtils;
-import com.qingting.customer.model.hbasedo.Card;
-import com.qingting.customer.model.hbasedo.Monitor;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.CardDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Card;
+import com.qingting.customer.model.Monitor;
 @Repository("cardDAO")
 public class CardDAOImpl implements CardDAO {
 	@Resource(name="redisTemplate")

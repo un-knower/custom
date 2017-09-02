@@ -6,8 +6,8 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Project;
 import com.qingting.customer.dao.ProjectDAO;
+import com.qingting.customer.model.Project;
 import com.qingting.customer.server.ProjectService;
 
 @Service("projectService")

@@ -13,12 +13,12 @@ import com.alipay.simplehbase.client.SimpleHbaseClient;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
-import com.qingting.customer.model.hbasedo.EquipSort;
-import com.qingting.customer.model.hbasedo.MessageSort;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.MessageSortDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
+import com.qingting.customer.model.EquipSort;
+import com.qingting.customer.model.MessageSort;
 @Repository("messageSortDAO")
 public class MessageSortDAOImpl implements MessageSortDAO {
 	@Autowired

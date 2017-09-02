@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.qingting.customer.model.common.MsgType;
+import com.qingting.customer.model.Monitor;
+import com.qingting.customer.model.User;
 import com.qingting.customer.model.dto.HomeMonitorDTO;
-import com.qingting.customer.model.hbasedo.Monitor;
-import com.qingting.customer.model.hbasedo.User;
 import com.qingting.customer.controller.common.SessionUserMsg;
 import com.qingting.customer.controller.common.SessionUserMsgUtils;
+import com.qingting.customer.enums.MsgType;
 import com.qingting.customer.server.EquipService;
 import com.qingting.customer.server.MonitorService;
 import com.smart.mvc.model.ResultCode;

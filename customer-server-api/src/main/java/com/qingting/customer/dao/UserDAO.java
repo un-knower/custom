@@ -2,8 +2,8 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.User;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.User;
+import com.smart.mvc.model.Pagination;
 
 public interface UserDAO {
 	/**

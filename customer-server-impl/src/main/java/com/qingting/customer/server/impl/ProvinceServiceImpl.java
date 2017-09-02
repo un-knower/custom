@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Province;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.ProvinceDAO;
+import com.qingting.customer.model.Province;
 import com.qingting.customer.server.ProvinceService;
 @Service("provinceService")
 public class ProvinceServiceImpl implements ProvinceService {

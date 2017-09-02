@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Warn;
+import com.qingting.customer.model.Warn;
 
 public interface WarnDAO {
 	/**

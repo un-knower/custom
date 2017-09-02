@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Image;
+import com.qingting.customer.model.Image;
 
 public interface ImageDAO{
 	/**

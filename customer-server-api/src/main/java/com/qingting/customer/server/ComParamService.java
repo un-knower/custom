@@ -2,7 +2,7 @@ package com.qingting.customer.server;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.ComParam;
+import com.qingting.customer.model.ComParam;
 
 public interface ComParamService {
 	/**

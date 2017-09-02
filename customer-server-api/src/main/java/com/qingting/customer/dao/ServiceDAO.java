@@ -2,7 +2,7 @@ package com.qingting.customer.dao;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Service;
+import com.qingting.customer.model.Service;
 
 public interface ServiceDAO{
 	/**

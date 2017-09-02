@@ -4,9 +4,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.MicroFormula;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.MicroFormulaDAO;
+import com.qingting.customer.model.MicroFormula;
 import com.qingting.customer.server.MicroFormulaService;
 @Service("microFormulaService")
 public class MicroFormulaServiceImpl implements MicroFormulaService {

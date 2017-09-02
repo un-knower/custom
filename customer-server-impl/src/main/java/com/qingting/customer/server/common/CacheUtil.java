@@ -2,14 +2,14 @@ package com.qingting.customer.server.common;
 
 
 
-import com.qingting.customer.model.hbasedo.Equip;
-import com.qingting.customer.model.hbasedo.Filter;
-import com.qingting.customer.model.hbasedo.FilterGroup;
-import com.qingting.customer.model.hbasedo.Formula;
-import com.qingting.customer.model.hbasedo.MicroFormula;
-import com.qingting.customer.model.hbasedo.Monitor;
-import com.qingting.customer.model.hbasedo.WaterArea;
-import com.qingting.customer.model.hbasedo.WaterQuality;
+import com.qingting.customer.model.Equip;
+import com.qingting.customer.model.Filter;
+import com.qingting.customer.model.FilterGroup;
+import com.qingting.customer.model.Formula;
+import com.qingting.customer.model.MicroFormula;
+import com.qingting.customer.model.Monitor;
+import com.qingting.customer.model.WaterArea;
+import com.qingting.customer.model.WaterQuality;
 import com.qingting.customer.server.EquipService;
 import com.qingting.customer.server.FilterGroupService;
 import com.qingting.customer.server.FilterService;

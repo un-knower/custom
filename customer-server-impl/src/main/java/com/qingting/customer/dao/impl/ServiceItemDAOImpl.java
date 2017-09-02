@@ -8,14 +8,14 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.alipay.simplehbase.client.rowkey.BytesRowKey;
+import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.sequence.RedisSerialNum;
-import com.qingting.customer.model.hbasedo.ServiceItem;
-import com.qingting.customer.model.util.RowKeyUtil;
 import com.qingting.customer.dao.ServiceItemDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.ServiceItem;
 @Repository("serviceItemDAO")
 public class ServiceItemDAOImpl implements ServiceItemDAO {
 	@Autowired
@@ -23,7 +23,7 @@ public class ServiceItemDAOImpl implements ServiceItemDAO {
 	@Override
 	public void insertServiceItem(ServiceItem serviceItem) {
 		int num=RedisSerialNum.getSerialNum(redisTemplate, "serviceItem_id_seq");
-		RowKey rowKey = new BytesRowKey(RowKeyUtil.getBytes(num));
+		RowKey rowKey = RowKeyUtil.getRowKey(num);
 		SHCUtil.getSHC("serviceItem").insertObject(rowKey, serviceItem);
 	}
 
@@ -42,19 +42,19 @@ public class ServiceItemDAOImpl implements ServiceItemDAO {
 	public ServiceItem getServiceItemByRowKey(String rowKey) {
 		SimpleHbaseDOWithKeyResult<ServiceItem> result = SHCUtil.getSHC("serviceItem").findObjectAndKey(new StringRowKey(rowKey), ServiceItem.class);
 		ServiceItem serviceItem=result.getT();
-		serviceItem.setContentOfRowKey(result.getRowKey().toBytes());
+		//serviceItem.setContentOfRowKey(result.getRowKey().toBytes());
 		return serviceItem;
 	}
 
 	@Override
 	public List<ServiceItem> listServiceItem() {
-		RowKey startRowKey=new BytesRowKey(RowKeyUtil.getBytes(0));
-		RowKey endRowKey=new BytesRowKey(RowKeyUtil.getBytes(Integer.MAX_VALUE));
+		RowKey startRowKey=RowKeyUtil.getRowKey(0);
+		RowKey endRowKey=RowKeyUtil.getRowKey(Integer.MAX_VALUE);
 		List<SimpleHbaseDOWithKeyResult<ServiceItem>> listDOWithKey = SHCUtil.getSHC("serviceItem").findObjectAndKeyList(startRowKey,endRowKey, ServiceItem.class);
 		List<ServiceItem> list=new ArrayList<ServiceItem>();
 		for (SimpleHbaseDOWithKeyResult<ServiceItem> result : listDOWithKey) {
 			ServiceItem serviceItem = result.getT();
-			serviceItem.setContentOfRowKey(result.getRowKey().toBytes());
+			//serviceItem.setContentOfRowKey(result.getRowKey().toBytes());
 			list.add(serviceItem);
 		}
 		return list;

@@ -7,9 +7,9 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
-import com.qingting.customer.model.hbasedo.Filter;
-import com.qingting.customer.model.page.Pagination;
+import com.smart.mvc.model.Pagination;
 import com.qingting.customer.dao.FilterDAO;
+import com.qingting.customer.model.Filter;
 import com.qingting.customer.server.FilterService;
 @Service("filterService")
 public class FilterServiceImpl implements FilterService {

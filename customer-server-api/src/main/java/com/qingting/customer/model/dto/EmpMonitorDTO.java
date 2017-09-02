@@ -3,7 +3,7 @@ package com.qingting.customer.model.dto;
 import java.util.Calendar;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import com.qingting.customer.model.common.PersistentObject;
+import com.smart.mvc.model.PersistentObject;
 
 import io.swagger.annotations.ApiModelProperty;
 

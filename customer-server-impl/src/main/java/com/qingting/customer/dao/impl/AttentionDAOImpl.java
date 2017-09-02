@@ -13,13 +13,13 @@ import com.alipay.simplehbase.client.rowkey.BytesRowKey;
 import com.alipay.simplehbase.client.rowkey.RowKeyUtil;
 import com.alipay.simplehbase.client.rowkey.StringRowKey;
 import com.alipay.simplehbase.util.HbaseOriginService;
-import com.qingting.customer.model.hbasedo.Attention;
-import com.qingting.customer.model.util.DateUtil;
-import com.qingting.customer.model.util.RandomUtil;
+import com.smart.mvc.util.DateUtil;
+import com.smart.mvc.util.RandomUtil;
 import com.qingting.customer.dao.AttentionDAO;
 import com.qingting.customer.dao.util.SHCUtil;
 import com.qingting.customer.hbase.doandkey.SimpleHbaseDOWithKeyResult;
 import com.qingting.customer.hbase.rowkey.RowKey;
+import com.qingting.customer.model.Attention;
 
 @Repository("attentionDAO")
 public class AttentionDAOImpl implements AttentionDAO{

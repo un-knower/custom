@@ -10,9 +10,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.qingting.customer.model.Tag;
 import com.qingting.customer.model.dto.Evaluate;
 import com.qingting.customer.model.dto.TagDTO;
-import com.qingting.customer.model.hbasedo.Tag;
 import com.smart.mvc.model.ResultCode;
 import com.smart.mvc.model.WebResult;
 

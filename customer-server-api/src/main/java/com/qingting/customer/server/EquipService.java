@@ -2,9 +2,9 @@ package com.qingting.customer.server;
 
 import java.util.List;
 
-import com.qingting.customer.model.hbasedo.Attention;
-import com.qingting.customer.model.hbasedo.Equip;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.Attention;
+import com.qingting.customer.model.Equip;
+import com.smart.mvc.model.Pagination;
 import com.smart.mvc.model.WebResult;
 
 public interface EquipService {

@@ -3,8 +3,8 @@ package com.qingting.customer.server;
 import java.util.List;
 import java.util.Map;
 
-import com.qingting.customer.model.hbasedo.Filter;
-import com.qingting.customer.model.page.Pagination;
+import com.qingting.customer.model.Filter;
+import com.smart.mvc.model.Pagination;
 
 public interface FilterService {
 	void insert(Filter filter);
