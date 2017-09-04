@@ -7,7 +7,7 @@
 		<HBaseColumnSchema qualifier="isTop" typeName="boolean" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Attention" defaultFamily="af">
+	<MappingType className="com.qingting.customer.model.Attention" defaultFamily="af">
 		<field name="id"/>
 		<field name="userId"/>
 		<field name="equipCode" />

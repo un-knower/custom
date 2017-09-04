@@ -32,7 +32,7 @@ public interface UserDAO {
 	 * @return void
 	 * @throws
 	 */
-	void updateUserByRowKey(User user);
+	//void updateUserByRowKey(User user);
 	
 	/**
 	 * 

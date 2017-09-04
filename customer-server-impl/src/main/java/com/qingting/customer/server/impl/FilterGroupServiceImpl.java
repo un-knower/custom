@@ -49,7 +49,7 @@ public class FilterGroupServiceImpl implements FilterGroupService {
 	}
 
 	/*@Override
-	public List<com.qingting.customer.model.hbasedo.FilterGroup> list() {
+	public List<com.qingting.customer.model.FilterGroup> list() {
 		return filterGroupDAO.list();
 	}*/
 

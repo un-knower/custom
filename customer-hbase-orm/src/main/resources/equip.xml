@@ -17,7 +17,7 @@
 		<HBaseColumnSchema qualifier="waterAreaId" typeName="int"/>
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Equip" defaultFamily="ef">
+	<MappingType className="com.qingting.customer.model.Equip" defaultFamily="ef">
 		<field name="id"/>
 		<field name="equipCode" />
 		<field name="cardNumber" />

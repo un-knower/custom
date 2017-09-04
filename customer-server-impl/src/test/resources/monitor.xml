@@ -11,7 +11,7 @@
 		<HBaseColumnSchema qualifier="w" typeName="float"/>
 		<HBaseColumnSchema qualifier="version" typeName="byte"/>
 	</HBaseTableSchema>
-	<MappingType className="com.qingting.customer.model.hbasedo.Monitor" defaultFamily="MonitorFamily">
+	<MappingType className="com.qingting.customer.model.Monitor" defaultFamily="MonitorFamily">
 		<field name="rawTds"/>
 		<field name="purTds" />
 		<field name="temp" />

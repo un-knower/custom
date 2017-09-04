@@ -8,6 +8,7 @@ public class City extends PersistentObject{
 	
 	private static final long serialVersionUID = 8083967235776103119L;
 	
+	private Integer id;
 	/**
 	 * 编码
 	 */
@@ -25,6 +26,12 @@ public class City extends PersistentObject{
 	 */
 	private Calendar createTime;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getCode() {
 		return code;
 	}

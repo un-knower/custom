@@ -7,7 +7,7 @@
 		<HBaseColumnSchema qualifier="userId" typeName="int" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Formula" defaultFamily="ff">
+	<MappingType className="com.qingting.customer.model.Formula" defaultFamily="ff">
 		<field name="id"/>
 		<field name="order" />
 		<field name="formula" />

@@ -6,7 +6,7 @@
 		<HBaseColumnSchema qualifier="limit" typeName="float" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.MicroFormula" defaultFamily="mff">
+	<MappingType className="com.qingting.customer.model.MicroFormula" defaultFamily="mff">
 		<field name="id"/>
 		<field name="name" />
 		<field name="formula" />

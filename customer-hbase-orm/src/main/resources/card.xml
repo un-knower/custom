@@ -6,7 +6,7 @@
 		<HBaseColumnSchema qualifier="operatorSort" typeName="byte" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Card" defaultFamily="cf">
+	<MappingType className="com.qingting.customer.model.Card" defaultFamily="cf">
 		<field name="id"/>
 		<field name="number" />
 		<field name="operatorSort" />

@@ -85,11 +85,11 @@ public class UserDAOImpl implements UserDAO {
 		tClient.deleteList(rowKeylist);
 	}
 
-	@Override
+	/*@Override
 	public void updateUserByRowKey(User user) {
 		//tClient.updateObjectWithVersion(RowKeyUtil.getRowKey(user.getRowkey()), user, dataVersion);
 		tClient.putObject(RowKeyUtil.getRowKey(user.getRowkey()), user);
-	}
+	}*/
 
 	@Override
 	public Pagination<User> listUser(Integer pageNo,Integer pageSize) {

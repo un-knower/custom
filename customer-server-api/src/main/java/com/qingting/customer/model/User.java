@@ -11,7 +11,7 @@ public class User extends PersistentObject{
 	
 	private static final long serialVersionUID = 6610579266435676798L;
 	
-	private String rowkey;
+	//private String rowkey;
 	/**
 	 * id
 	 */
@@ -72,12 +72,12 @@ public class User extends PersistentObject{
 	private Calendar createTime;
 	
 	
-	public String getRowkey() {
+	/*public String getRowkey() {
 		return rowkey;
 	}
 	public void setRowkey(String rowkey) {
 		this.rowkey = rowkey;
-	}
+	}*/
 	public Integer getId() {
 		return id;
 	}

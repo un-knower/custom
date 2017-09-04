@@ -4,7 +4,7 @@
 		<HBaseColumnSchema qualifier="name" typeName="string" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.WaterArea" defaultFamily="waf">
+	<MappingType className="com.qingting.customer.model.WaterArea" defaultFamily="waf">
 		<field name="id"/>
 		<field name="name" />
 		<field name="createTime"/>

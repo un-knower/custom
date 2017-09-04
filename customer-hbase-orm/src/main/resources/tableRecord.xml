@@ -18,7 +18,7 @@
 		</statement>
 	</statements>
 	
-	<MappingType className="com.qingting.customer.model.hbasedo.Monitor" defaultFamily="monitorFamily">
+	<MappingType className="com.qingting.customer.model.Monitor" defaultFamily="monitorFamily">
 		<field name="rawTds" qualifier="rawTds" />
 		<field name="purTds" />
 		<field name="temp" />

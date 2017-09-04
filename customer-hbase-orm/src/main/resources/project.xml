@@ -7,7 +7,7 @@
 		<HBaseColumnSchema qualifier="projectSortId" typeName="int"/>
 		<HBaseColumnSchema qualifier="version" typeName="byte"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Project" defaultFamily="projectFamily">
+	<MappingType className="com.qingting.customer.model.Project" defaultFamily="projectFamily">
 		<field name="projectName"/>
 		<field name="equipCount" />
 		<field name="endTime" />

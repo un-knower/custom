@@ -105,7 +105,15 @@
 			        {field:'id', hide : true},
 			        
 			        {field:'number', title:'卡号', mobileHide : true},
-			        {field:'operatorSort', title:'运营商', mobileHide : true},
+			        {field:'operatorSort', title:'运营商', mobileHide : true, replace : function (d){
+			        	if(d.operatorSort==1){
+			        		return "移动";
+			        	}else if(d.operatorSort==2){
+			        		return "联通";
+			        	}else{
+			        		return "未知";
+			        	}
+			        }},
 			        {field:'createTime', title:'入库时间', mobileHide : true},
 				],
 				operate : [

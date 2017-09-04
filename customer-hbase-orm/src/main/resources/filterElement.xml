@@ -6,7 +6,7 @@
 		<HBaseColumnSchema qualifier="lifeTime" typeName="float" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.FilterElement" defaultFamily="fef">
+	<MappingType className="com.qingting.customer.model.FilterElement" defaultFamily="fef">
 		<field name="id"/>
 		<field name="supply"/>
 		<field name="name" />

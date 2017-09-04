@@ -32,7 +32,7 @@ public interface UserService {
 	 * @return void
 	 * @throws
 	 */
-	void updateUserByRowKey(User user);
+	//void updateUserByRowKey(User user);
 	/**
 	 * 
 	 * @Title: getUserByMobile

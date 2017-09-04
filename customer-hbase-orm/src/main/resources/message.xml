@@ -13,7 +13,7 @@
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 		<HBaseColumnSchema qualifier="strParam" typeName="string" />
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Message" defaultFamily="mf">
+	<MappingType className="com.qingting.customer.model.Message" defaultFamily="mf">
 		<field name="id"/>
 		<field name="detailId"/>
 		<field name="userId"/>

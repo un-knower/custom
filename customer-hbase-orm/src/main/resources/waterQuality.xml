@@ -6,7 +6,7 @@
 		<HBaseColumnSchema qualifier="waterAreaId" typeName="int" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.WaterQuality" defaultFamily="wqf">
+	<MappingType className="com.qingting.customer.model.WaterQuality" defaultFamily="wqf">
 		<field name="id"/>
 		<field name="turbidity" />
 		<field name="chlorine" />

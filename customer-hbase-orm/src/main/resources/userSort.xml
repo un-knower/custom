@@ -5,7 +5,7 @@
 		<HBaseColumnSchema qualifier="userId" typeName="int" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.UserSort" defaultFamily="userSortFamily">
+	<MappingType className="com.qingting.customer.model.UserSort" defaultFamily="userSortFamily">
 		<field name="id"/>
 		<field name="sortName" />
 		<field name="userId" />

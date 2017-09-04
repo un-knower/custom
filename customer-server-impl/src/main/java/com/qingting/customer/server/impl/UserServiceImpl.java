@@ -28,10 +28,10 @@ public class UserServiceImpl implements UserService,com.qingting.operation.serve
 		userDAO.deleteUserByRowKey(rowkey);
 	}
 
-	@Override
+	/*@Override
 	public void updateUserByRowKey(User user) {
 		userDAO.updateUserByRowKey(user);
-	}
+	}*/
 
 	@Override
 	public Pagination<User> listUser(Integer pageNo, Integer pageSize) {

@@ -8,7 +8,7 @@
 		<HBaseColumnSchema qualifier="projectId" typeName="int"/>
 		<HBaseColumnSchema qualifier="version" typeName="byte"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Equip" defaultFamily="equipFamily">
+	<MappingType className="com.qingting.customer.model.Equip" defaultFamily="equipFamily">
 		<field name="equipName"/>
 		<field name="equipAddr" />
 		<field name="open" />

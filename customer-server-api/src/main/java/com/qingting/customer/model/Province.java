@@ -8,6 +8,7 @@ public class Province extends PersistentObject{
 
 	private static final long serialVersionUID = 5697613037100670153L;
 	
+	private Integer id;
 	/**
 	 * 编码
 	 */
@@ -21,6 +22,12 @@ public class Province extends PersistentObject{
 	 */
 	private Calendar createTime;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getCode() {
 		return code;
 	}

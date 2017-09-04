@@ -5,7 +5,7 @@
 		<HBaseColumnSchema qualifier="code" typeName="string" />
 		<HBaseColumnSchema qualifier="createTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 	</HBaseTableSchema>	
-	<MappingType className="com.qingting.customer.model.hbasedo.Province" defaultFamily="provinceFamily">
+	<MappingType className="com.qingting.customer.model.Province" defaultFamily="provinceFamily">
 		<field name="id"/>
 		<field name="name"/>
 		<field name="code" />

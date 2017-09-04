@@ -1,12 +1,13 @@
 package com.qingting.customer.model;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
-import com.smart.mvc.model.PersistentObject;
-
-public class Area extends PersistentObject{
+public class Area implements Serializable{
 	
 	private static final long serialVersionUID = -1227679743517632345L;
+	
+	private Integer id;
 	/**
 	 * 编码
 	 */
@@ -24,6 +25,12 @@ public class Area extends PersistentObject{
 	 */
 	private Calendar createTime;
 	
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
 	public String getCode() {
 		return code;
 	}
@@ -50,8 +57,7 @@ public class Area extends PersistentObject{
 	}
 	@Override
 	public String toString() {
-		return "Area [code=" + code + ", name=" + name + ", cityCode=" + cityCode + ", createTime=" + createTime + "]";
+		return "Area [id=" + id + ", code=" + code + ", name=" + name + ", cityCode=" + cityCode + ", createTime="
+				+ createTime + "]";
 	}
-	
-	
 }

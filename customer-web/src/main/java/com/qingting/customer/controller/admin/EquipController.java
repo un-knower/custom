@@ -118,11 +118,7 @@ public class EquipController {
 			){
 		System.out.println("equipCode:"+equipCode+".username:"+username+".password:"+password);
 		cardService.insert(new Card(operatorSort,cardNumber));
-		equipService.insertEquip(new Equip(equipCode,cardNumber),username,password);
-		WebResult<String> result = new WebResult<String>(ResultCode.SUCCESS);
-		result.setData("成功");
-		result.setMessage("入库成功");
-		return result;
+		return equipService.insertEquip(new Equip(equipCode,cardNumber),username,password);
 	}
 	@ApiOperation("后台删除设备")
 	@RequestMapping(value="/delete",method = RequestMethod.POST)
@@ -203,11 +199,22 @@ public class EquipController {
 	@ApiOperation("获得设备编号等参数")
 	@RequestMapping(value="/getEquipParam",method = RequestMethod.GET,produces = "application/json; charset=utf-8")
 	public @ResponseBody WebResult<EquipParamDTO> getEquipParam(
-			@ApiParam(value = "包含的编号前缀", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String preCode,
-			@ApiParam(value = "开始编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String startCode
+			@ApiParam(value = "上次编号", required = true) @RequestParam @ValidateParam({ Validator.NOT_BLANK })String lastCode
 			){
 		EquipParamDTO equipParamDTO=new EquipParamDTO();
-		String equipCode = equipService.getEquipCodeOfNew(preCode);
+		
+		Long code = Long.valueOf(lastCode);
+		String resultCode=String.valueOf(code+1);
+		if(resultCode.length()==lastCode.length()){
+			equipParamDTO.setEquipCode(resultCode);
+		}else{
+			for(int i=0;i<lastCode.length()-resultCode.length();i++){
+				resultCode="0"+resultCode;
+			}
+			equipParamDTO.setEquipCode(resultCode);
+		}
+			
+		/*String equipCode = equipService.getEquipCodeOfNew(preCode);
 		if(!StringUtils.isBlank(equipCode)) {//查找到设备
 			System.out.println("查找到最新设备code:"+equipCode);
 			Long code = Long.valueOf(equipCode);
@@ -224,7 +231,7 @@ public class EquipController {
 		}else{//未查找到设备
 			System.out.println("未查询到库里有设备");
 			equipParamDTO.setEquipCode(startCode);
-		}
+		}*/
 		equipParamDTO.setUsername(RandomUtil.getRandomCode(10));
 		equipParamDTO.setPassword(RandomUtil.getRandomCode(10));
 		WebResult<EquipParamDTO> result=new WebResult<EquipParamDTO>(ResultCode.SUCCESS);

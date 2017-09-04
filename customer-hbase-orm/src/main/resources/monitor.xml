@@ -24,7 +24,7 @@
 		<HBaseColumnSchema qualifier="collectTime" typeName="java.util.Calendar" handler="com.alipay.simplehbase.type.handler.CalendarHandler"/>
 		
 	</HBaseTableSchema>
-	<MappingType className="com.qingting.customer.model.hbasedo.Monitor" defaultFamily="mf">
+	<MappingType className="com.qingting.customer.model.Monitor" defaultFamily="mf">
 		<field name="id"/>
 		<field name="rawTds"/>
 		<field name="purTds" />

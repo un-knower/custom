@@ -46,6 +46,45 @@ public class EquipServiceImpl implements EquipService,com.qingting.operation.ser
 	public WebResult<String> insertEquip(Equip equip,String username,String password) {
 		WebResult<String> result=null;
 		try {
+			
+			String jsonString1=HttpRequestEntityUtils.get(
+					iotAddress+"/equip/getEquip?equipCode="+equip.getEquipCode()	
+					);
+			JSONObject parseObject1 = JSON.parseObject(jsonString1);
+			int code=(int)parseObject1.get("code");
+			
+			Equip equip_temp = equipDAO.getEquip(equip.getEquipCode());
+			
+			if(code==ResultCode.SUCCESS ||
+					( equip_temp!=null && 
+					equip_temp.getEquipCode().equals(equip.getEquipCode()) )
+					){//设备在用户系统已存在或在物联网套件已存在
+				result = new WebResult<String>(ResultCode.FAILURE);
+				result.setMessage("设备已存在");
+			}else{//设备不存在
+				String jsonString2=HttpRequestEntityUtils.post(
+						iotAddress+"/equip/addEquip","equipCode="+equip.getEquipCode()+"&username="+username+"&password="+password	
+						);
+				JSONObject parseObject2 = JSON.parseObject(jsonString2);
+			 	
+				result=new WebResult<String>();
+				result.setCode((int)parseObject2.get("code"));
+				result.setData((String)parseObject2.get("data"));
+				result.setMessage((String)parseObject2.get("message"));
+				
+				if( result.getCode()==ResultCode.SUCCESS ){
+					equipDAO.insertEquip(equip);
+					result.setMessage("入库成功");
+				}
+			}
+			
+			return result;
+			
+			/*result=new WebResult<String>();
+			result.setCode((int)parseObject.get("code"));
+			result.setData((String)parseObject.get("data"));
+			result.setMessage((String)parseObject.get("message"));
+			
 			String jsonString=HttpRequestEntityUtils.post(
 					iotAddress+"/equip/addEquip","equipCode="+equip.getEquipCode()+"&username="+username+"&password="+password	
 					);
@@ -59,7 +98,7 @@ public class EquipServiceImpl implements EquipService,com.qingting.operation.ser
 			if( result.getCode()==ResultCode.SUCCESS ){
 				equipDAO.insertEquip(equip);
 			}
-			return result;
+			return result;*/
 		} catch (IOException e) {
 			e.printStackTrace();
 			return result;

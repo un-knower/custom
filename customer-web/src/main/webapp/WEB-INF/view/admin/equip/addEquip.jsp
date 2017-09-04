@@ -69,11 +69,11 @@
 						<label class="control-label" for="form-field-1"> 物联网卡号： </label>
 						<input id="cardNumber_input" type="text" name="cardNumber"/>
 						<br/><br/>
-						<label class="control-label" for="form-field-1"> 编号前缀： </label>
+						<!-- <label class="control-label" for="form-field-1"> 编号前缀： </label>
 						<input id="preCode_input" type="text"  name="preCode" value="010117"/>
-						<br/><br/>
-						<label class="control-label" for="form-field-1"> 开始编号： </label>
-						<input id="startCode_input" type="text"  name="startCode" value="010117001000"/>
+						<br/><br/> -->
+						<label class="control-label" for="form-field-1"> 上次编号： </label>
+						<input id="lastCode_input" type="text"  name="lastCode" value="010117001000"/>
 						<br/><br/>
 						<label class="control-label" for="form-field-1"> 设备编号： </label>
 						<input id="equipCode_input" type="text"  name="equipCode"/>
@@ -156,11 +156,10 @@
 		    }); */
 		    //注册获取更新单击事件
 			$("#getQRcode").click(function(){
-				var preCode=$("#preCode_input").val();
-				var startCode=$("#startCode_input").val();
+				var lastCode=$("#lastCode_input").val();
 				$.ajax({
 					type : "get", 
-		            url : "${_path}/admin/equip/getEquipParam?preCode="+preCode+"&startCode="+startCode, 
+		            url : "${_path}/admin/equip/getEquipParam?lastCode="+lastCode, 
 		            data : null, 
 		            async : true, 
 		            cache : false,
@@ -176,7 +175,7 @@
 			});
 			//注册设备入库单击事件
 			$("#addEquip").click(function(){
-				var equipSortId=$("#equipSort_select").val();
+				//var equipSortId=$("#equipSort_select").val();
 				var operatorSort=$("#operatorSort_select").val();
 				var cardNumber=$("#cardNumber_input").val();
 				var equipCode=$("#equipCode_input").val();
@@ -200,6 +199,12 @@
 						sticky: false,
 						time: '1000'
 					});
+				}else if(equipCode.length!=12){
+					$.gritter.add({
+						text: "设备编号必须12位",
+						sticky: false,
+						time: '1000'
+					});
 				}else{
 					$.ajax({
 						type : "post", 
@@ -215,6 +220,7 @@
 									sticky: false,
 									time: '1000'
 								});
+								$("#lastCode_input").val(equipCode);
 								reloadGetNew();
 							}else{
 								//这里打印提示信息
@@ -241,11 +247,10 @@
 		        changeEquipImage(equipCode);
 			});
 			function reloadGetNew(){
-				var preCode=$("#preCode_input").val();
-				var startCode=$("#startCode_input").val();
+				var lastCode=$("#lastCode_input").val();
 				$.ajax({
 					type : "get", 
-		            url : "${_path}/admin/equip/getEquipParam?preCode="+preCode+"&startCode="+startCode, 
+		            url : "${_path}/admin/equip/getEquipParam?lastCode="+lastCode, 
 		            data : null, 
 		            async : true, 
 		            cache : false,
